@@ -17,8 +17,8 @@ public class Agent {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "agentID", nullable = false)
-    private Long agentID;
+    @Column(name = "agent_id", nullable = false)
+    private Long agentId;
 
     @Column(name = "name", nullable = false)
     private String name;
