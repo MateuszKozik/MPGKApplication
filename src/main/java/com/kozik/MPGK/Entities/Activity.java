@@ -16,8 +16,8 @@ public class Activity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "Activity_id", nullable = false)
-    private Long ActivityId;
+    @Column(name = "activity_id", nullable = false)
+    private Long activityId;
 
     @Column(name = "name", nullable = false, length = 50)
     private String name;
