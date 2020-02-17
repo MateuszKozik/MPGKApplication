@@ -25,6 +25,6 @@ public class InspectionType {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "inspections_type")
+    @OneToMany(mappedBy = "inspectionType")
     private Set<Connection> connections;
 }

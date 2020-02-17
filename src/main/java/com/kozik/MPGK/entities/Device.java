@@ -28,9 +28,9 @@ public class Device {
     @Column(name = "status", nullable = false)
     private String status;
 
-    @OneToMany(mappedBy = "devices")
+    @OneToMany(mappedBy = "device")
     private Set<FluidRegistry> fluidsRegistry;
 
-    @OneToMany(mappedBy = "devices")
+    @OneToMany(mappedBy = "device")
     private Set<Connection> connections;
 }

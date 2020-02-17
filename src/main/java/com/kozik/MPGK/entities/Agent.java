@@ -26,6 +26,6 @@ public class Agent {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "agents")
+    @OneToMany(mappedBy = "agent")
     private Set<FluidRegistry> fluidsRegistry;
 }
