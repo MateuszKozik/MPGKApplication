@@ -31,4 +31,8 @@ public class FluidRegistry {
     @ManyToOne
     @JoinColumn(name = "agent_id")
     private Agent agent;
+
+    @ManyToOne
+    @JoinColumn(name = "device_id")
+    private Device device;
 }
