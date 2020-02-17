@@ -30,4 +30,7 @@ public class Device {
 
     @OneToMany(mappedBy = "devices")
     private Set<FluidRegistry> fluidsRegistry;
+
+    @OneToMany(mappedBy = "devices")
+    private Set<Connection> connections;
 }
