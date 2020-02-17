@@ -26,7 +26,7 @@ public class Device {
     private String name;
 
     @Column(name = "status", nullable = false)
-    private String status;
+    private Boolean status;
 
     @OneToMany(mappedBy = "device")
     private Set<FluidRegistry> fluidsRegistry;
