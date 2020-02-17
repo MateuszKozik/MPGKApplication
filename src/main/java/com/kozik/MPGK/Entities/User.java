@@ -19,13 +19,13 @@ public class User {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "userID", nullable = false)
-    private Long userID;
+    @Column(name = "user_id", nullable = false)
+    private Long userId;
 
-    @Column(name = "username", nullable = true, length = 35)
+    @Column(name = "username", nullable = false, length = 35)
     private String username;
 
-    @Column(name = "password", nullable = true, length = 60)
+    @Column(name = "password", nullable = false, length = 60)
     private String password;
 
     @Column(name = "enabled", nullable = false)

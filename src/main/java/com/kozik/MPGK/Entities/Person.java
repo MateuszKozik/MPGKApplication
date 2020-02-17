@@ -19,13 +19,13 @@ public class Person{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "personID", nullable = false)
-    private Long personID;
+    @Column(name = "person_id", nullable = false)
+    private Long personId;
 
-    @Column(name = "name", nullable = true, length = 35)
+    @Column(name = "name", nullable = false, length = 35)
     private String name;
 
-    @Column(name = "surname", nullable = true, length = 35)
+    @Column(name = "surname", nullable = false, length = 35)
     private String surname;
 
     @OneToMany(mappedBy = "persons") 
