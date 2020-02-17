@@ -31,4 +31,6 @@ public class Connection {
     @ManyToOne
     @JoinColumn(name = "type_id")
     private InspectionType inspectionType;
+
+    public Connection() {}
 }
