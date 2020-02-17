@@ -1,6 +1,7 @@
 package com.kozik.MPGK.entities;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -37,4 +38,17 @@ public class FluidRegistry {
     private Device device;
 
     public FluidRegistry() {}
+
+    public String getDatetime() {      
+        if(datetime !=null){
+            return datetime.toString();
+        }else{
+            return "";
+        }
+    }
+
+    public void setDatetime(String datetime) {       
+        LocalDateTime formatted = LocalDateTime.parse(datetime,DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+        this.datetime = formatted;
+    }
 }
