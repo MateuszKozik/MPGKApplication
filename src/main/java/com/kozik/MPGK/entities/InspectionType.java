@@ -27,4 +27,6 @@ public class InspectionType {
 
     @OneToMany(mappedBy = "inspectionType")
     private Set<Connection> connections;
+
+    public InspectionType() {}
 }
