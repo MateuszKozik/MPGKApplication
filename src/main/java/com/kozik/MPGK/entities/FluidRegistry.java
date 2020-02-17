@@ -37,6 +37,10 @@ public class FluidRegistry {
     @JoinColumn(name = "device_id")
     private Device device;
 
+    @ManyToOne
+    @JoinColumn(name = "person_id")
+    private Person person;
+
     public FluidRegistry() {}
 
     public String getDatetime() {      

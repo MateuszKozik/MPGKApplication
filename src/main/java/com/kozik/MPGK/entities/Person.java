@@ -31,9 +31,6 @@ public class Person{
     @Column(name = "surname", nullable = false, length = 35)
     private String surname;
 
-    @OneToMany(mappedBy = "persons") 
-    private Set<FluidRegistry> fluids_registry;
-
     @OneToOne(mappedBy = "persons")
     private User user;
 
@@ -43,8 +40,8 @@ public class Person{
     @OneToMany(mappedBy = "persons") 
     private Set<Overview> overview;
 
-    
-
+    @OneToMany(mappedBy = "person") 
+    private Set<FluidRegistry> fluidsRegistry;
 
     public Person(){}
 
