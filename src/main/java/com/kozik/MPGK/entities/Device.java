@@ -33,4 +33,6 @@ public class Device {
 
     @OneToMany(mappedBy = "device")
     private Set<Connection> connections;
+
+    public Device() {}
 }
