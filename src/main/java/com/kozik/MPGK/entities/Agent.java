@@ -1,5 +1,7 @@
 package com.kozik.MPGK.entities;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +11,7 @@ import javax.persistence.Table;
 import lombok.Data;
 
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 @Table(name = "agents")
@@ -22,4 +25,7 @@ public class Agent {
 
     @Column(name = "name", nullable = false)
     private String name;
+
+    @OneToMany(mappedBy = "agents")
+    private Set<FluidRegistry> fluidsRegistry;
 }
