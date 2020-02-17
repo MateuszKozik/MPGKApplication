@@ -19,6 +19,9 @@ public class Device {
     @Column(name = "device_id", nullable = false)
     private Long deviceId;
 
-    @Column(name = "status")
+    @Column(name = "name", nullable = false)
+    private String name;
+
+    @Column(name = "status", nullable = false)
     private String status;
 }
