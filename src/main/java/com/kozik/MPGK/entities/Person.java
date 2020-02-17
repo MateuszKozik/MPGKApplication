@@ -34,8 +34,8 @@ public class Person{
     @OneToOne(mappedBy = "persons")
     private User user;
 
-    @ManyToMany(mappedBy = "persons")
-    private Set<Connection> connection = new HashSet<Connection>();
+    @ManyToMany(mappedBy = "person")
+    private Set<Connection> connection;
 
     @OneToMany(mappedBy = "persons") 
     private Set<Overview> overview;
