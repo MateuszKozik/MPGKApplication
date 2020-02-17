@@ -1,5 +1,6 @@
+package com.kozik.MPGK.entities;
+
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 import javax.persistence.Column;

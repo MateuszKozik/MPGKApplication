@@ -1,3 +1,5 @@
+package com.kozik.MPGK.entities;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -6,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -29,7 +32,7 @@ public class Person{
     private String surname;
 
     @OneToMany(mappedBy = "persons") 
-    private Set<Fluids_registry> fluids_registry;
+    private Set<FluidRegistry> fluids_registry;
 
     @OneToOne(mappedBy = "persons")
     private User user;

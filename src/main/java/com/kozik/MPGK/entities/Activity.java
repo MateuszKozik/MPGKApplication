@@ -1,3 +1,5 @@
+package com.kozik.MPGK.entities;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -38,7 +40,7 @@ public class Activity{
 
     public Activity(){}
 
-    public Activity(String name,String type,String emsr,String setting)
+    public Activity(final String name, final String type, final String emsr, final String setting)
     {
         this.name = name;
         this.type = type;

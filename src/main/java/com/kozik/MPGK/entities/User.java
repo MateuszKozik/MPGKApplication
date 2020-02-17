@@ -1,3 +1,5 @@
+package com.kozik.MPGK.entities;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -39,7 +41,7 @@ public class User {
 
     public User(){}
 
-    public User(String username,String password,Boolean enabled)
+    public User(final String username,final String password,final Boolean enabled)
     {
         this.username = username;
         this.password = password;
