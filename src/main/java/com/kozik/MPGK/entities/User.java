@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -34,7 +36,11 @@ public class User {
     private Boolean enabled = true;
 
     @ManyToMany(mappedBy = "user")
-    private Set<Role> role = new HashSet<Role>();
+    @JoinTable(name = "users_roles", joinColumns = {
+        @JoinColumn(name = "user_username", referencedColumnName = "username")},
+        inverseJoinColumns = {
+            @JoinColumn(name ="role_name", referencedColumnName = "name")})
+    private Set<Role> role;
 
     @OneToOne(mappedBy = "user")
     private Person person;

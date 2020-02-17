@@ -35,7 +35,7 @@ public class Person{
     private User user;
 
     @ManyToMany(mappedBy = "person")
-    private Set<Connection> connection;
+    private Set<Connection> connections;
 
     @OneToMany(mappedBy = "persons") 
     private Set<Overview> overview;

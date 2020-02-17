@@ -1,8 +1,11 @@
 package com.kozik.MPGK.entities;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -15,6 +18,9 @@ public class Role {
     @Id
     @Column(name = "name", nullable = false)
     private String name;
+
+    @ManyToMany(mappedBy = "role")
+    private Set<User> Users;
 
     public Role() {}
 }
