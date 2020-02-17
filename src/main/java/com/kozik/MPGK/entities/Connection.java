@@ -36,6 +36,10 @@ public class Connection {
     @JoinColumn(name = "type_id")
     private InspectionType inspectionType;
 
+    @ManyToOne
+    @JoinColumn(name = "group_id")
+    private ActivityGroup activityGroup;
+
     @ManyToMany
     @JoinTable(name = "connections_persons", joinColumns = {
         @JoinColumn(name = "connection_id", referencedColumnName = "connection_id")},

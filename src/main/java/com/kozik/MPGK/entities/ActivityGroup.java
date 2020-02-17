@@ -28,8 +28,8 @@ public class ActivityGroup{
     @OneToMany(mappedBy = "activities_groups") 
     private Set<Activity> activity;
 
-    @OneToMany(mappedBy = "connections") 
-    private Set<Connection> connection;
+    @OneToMany(mappedBy = "activityGroup") 
+    private Set<Connection> connections;
 
     public ActivityGroup(){}
 
