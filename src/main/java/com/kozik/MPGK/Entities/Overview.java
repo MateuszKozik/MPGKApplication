@@ -40,8 +40,8 @@ public class Overview{
     private Person person;
 
     @ManyToOne
-    @JoinColumn(name = "activitieId", nullable = false)
-    private Activitie activitieId;
+    @JoinColumn(name = "activityId", nullable = false)
+    private Activity activityId;
 
     public Overview(){}
 

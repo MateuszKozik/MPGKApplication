@@ -32,13 +32,13 @@ public class Person{
     private Set<Fluids_registry> fluids_registry;
 
     @OneToOne(mappedBy = "persons")
-    private Users users;
+    private User user;
 
     @ManyToMany(mappedBy = "persons")
-    private Set<Connections> connections = new HashSet<Connections>();
+    private Set<Connection> connection = new HashSet<Connection>();
 
     @OneToMany(mappedBy = "persons") 
-    private Set<Overviews> overviews;
+    private Set<Overview> overview;
 
     
 

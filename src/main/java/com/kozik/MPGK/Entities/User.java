@@ -32,10 +32,10 @@ public class User {
     private Boolean enabled = true;
 
     @ManyToMany(mappedBy = "user")
-    private Set<Roles> roles = new HashSet<Roles>();
+    private Set<Role> role = new HashSet<Role>();
 
     @OneToOne(mappedBy = "user")
-    private Persons persons;
+    private Person person;
 
     public User(){}
 
