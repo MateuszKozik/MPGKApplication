@@ -28,4 +28,7 @@ public class Agent {
 
     @OneToMany(mappedBy = "agent")
     private Set<FluidRegistry> fluidsRegistry;
+
+
+    public Agent() {}
 }
