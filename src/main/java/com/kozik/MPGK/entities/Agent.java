@@ -23,7 +23,7 @@ public class Agent {
     @Column(name = "agent_id", nullable = false)
     private Long agentId;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = false, length = 50)
     private String name;
 
     @OneToMany(mappedBy = "agent")

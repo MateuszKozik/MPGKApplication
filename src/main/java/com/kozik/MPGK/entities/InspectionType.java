@@ -22,7 +22,7 @@ public class InspectionType {
     @Column(name = "type_id", nullable = false)
     private Long typeId;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = false, length = 40)
     private String name;
 
     @OneToMany(mappedBy = "inspectionType")

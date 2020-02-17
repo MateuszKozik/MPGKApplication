@@ -25,7 +25,7 @@ public class Connection {
     @Column(name = "connection_id", nullable = false)
     private Long connectionId;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = false, length = 40)
     private String name;
 
     @ManyToOne

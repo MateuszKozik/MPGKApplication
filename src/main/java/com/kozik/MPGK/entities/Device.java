@@ -22,7 +22,7 @@ public class Device {
     @Column(name = "device_id", nullable = false)
     private Long deviceId;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = false, length = 40)
     private String name;
 
     @Column(name = "status", nullable = false)
