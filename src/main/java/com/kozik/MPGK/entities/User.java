@@ -35,7 +35,7 @@ public class User {
     @Column(name = "enabled", nullable = false)
     private Boolean enabled = true;
 
-    @ManyToMany(mappedBy = "user")
+    @ManyToMany
     @JoinTable(name = "users_roles", joinColumns = {
         @JoinColumn(name = "user_username", referencedColumnName = "username")},
         inverseJoinColumns = {
