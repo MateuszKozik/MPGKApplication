@@ -35,4 +35,6 @@ public class FluidRegistry {
     @ManyToOne
     @JoinColumn(name = "device_id")
     private Device device;
+
+    public FluidRegistry() {}
 }
