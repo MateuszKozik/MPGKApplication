@@ -19,11 +19,11 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public User get(Long id){
+    public User get(String id){
         return userRepository.findById(id).get();
     }
 
-    public void delete(Long id){
+    public void delete(String id){
         userRepository.deleteById(id);
     }
 }
