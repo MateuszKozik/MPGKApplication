@@ -1,6 +1,5 @@
 package com.kozik.MPGK.entities;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -8,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -30,14 +30,15 @@ public class Person{
 
     @Column(name = "surname", nullable = false, length = 35)
     private String surname;
-
-    @OneToOne(mappedBy = "persons")
+    
+    @OneToOne
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @ManyToMany(mappedBy = "person")
     private Set<Connection> connections;
 
-    @OneToMany(mappedBy = "persons") 
+    @OneToMany(mappedBy = "person") 
     private Set<Overview> overview;
 
     @OneToMany(mappedBy = "person") 

@@ -37,11 +37,12 @@ public class Overview{
     private String comment;
 
     @ManyToOne
-    @JoinColumn(name = "personId", nullable = false)
+    @JoinColumn(name = "person_Id", nullable = false)
     private Person person;
+    
 
     @ManyToOne
-    @JoinColumn(name = "activityId", nullable = false)
+    @JoinColumn(name = "activity_Id", nullable = false)
     private Activity activityId;
 
     public Overview(){}

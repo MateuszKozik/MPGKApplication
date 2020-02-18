@@ -1,6 +1,6 @@
 package com.kozik.MPGK.entities;
 
-import java.util.HashSet;
+
 import java.util.Set;
 
 import javax.persistence.Column;

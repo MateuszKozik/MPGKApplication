@@ -25,7 +25,7 @@ public class ActivityGroup{
     @Column(name = "name", nullable = false, length = 50)
     private String name;
 
-    @OneToMany(mappedBy = "activities_groups") 
+    @OneToMany(mappedBy = "activityGroup") 
     private Set<Activity> activity;
 
     @OneToMany(mappedBy = "activityGroup") 
