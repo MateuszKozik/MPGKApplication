@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class IndexController {
     @GetMapping(value = "/")
     public String showHomePage(Model model){
-        return "/main_layout";
+        return "/index";
     }
     
 }
