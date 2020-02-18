@@ -22,10 +22,6 @@ import lombok.Data;
 public class User {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "user_id", nullable = false)
-    private Long userId;
-
     @Column(name = "username", nullable = false, length = 35)
     private String username;
 
