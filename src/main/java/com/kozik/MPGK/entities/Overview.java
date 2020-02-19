@@ -27,10 +27,10 @@ public class Overview{
     @Column(name = "status", nullable = false, length = 20)
     private String status;
 
-    @Column(name = "start_time", nullable = false, length = 10)
+    @Column(name = "start_time", nullable = false, length = 20)
     private LocalDateTime startTime;
 
-    @Column(name = "end_time", nullable = false, length = 10)
+    @Column(name = "end_time", nullable = false, length = 20)
     private LocalDateTime endTime;
 
     @Column(name = "parameter", nullable = false, length = 50)
@@ -66,7 +66,7 @@ public class Overview{
         this.comment = comment;
     }
 
-    public String getstartTime() {      
+    public String getStartTime() {      
         if(startTime !=null){
             return startTime.toString();
         }else{
@@ -74,12 +74,12 @@ public class Overview{
         }
     }
 
-    public void setstartTime(String startTime) {       
+    public void setStartTime(String startTime) {       
         LocalDateTime dataTime = LocalDateTime.parse(startTime,DateTimeFormatter.ISO_LOCAL_DATE_TIME);
         this.startTime = dataTime;
     }
 
-    public String getendTime() {      
+    public String getEndTime() {      
         if(endTime !=null){
             return endTime.toString();
         }else{
@@ -87,7 +87,7 @@ public class Overview{
         }
     }
 
-    public void setendTime(String endTime) {       
+    public void setEndTime(String endTime) {       
         LocalDateTime dataTime = LocalDateTime.parse(endTime,DateTimeFormatter.ISO_LOCAL_DATE_TIME);
         this.endTime = dataTime;
     }
