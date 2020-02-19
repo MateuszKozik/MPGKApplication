@@ -51,7 +51,7 @@ public class FluidController {
         return "redirect:/fluid/list";
     }
 
-    @GetMapping(value = "/item/delete/{id}")
+    @GetMapping(value = "/fluid/delete/{id}")
     public String delete(@PathVariable("id")Long id){
         fluidService.delete(id);
         return "redirect:/fluid/list";
