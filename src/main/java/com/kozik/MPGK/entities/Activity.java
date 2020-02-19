@@ -35,7 +35,7 @@ public class Activity{
     private String setting;
 
     @ManyToOne
-    @JoinColumn(name = "groupId", nullable = false)
+    @JoinColumn(name = "groupId", nullable = true)
     private ActivityGroup activityGroup;
 
     public Activity(){}
