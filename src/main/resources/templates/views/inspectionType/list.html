@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.com"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/main_layout}">     
+    <head>
+        <title>Lista rodzajów przeglądu</title>               
+    </head>
+
+    <body>       
+        <div layout:fragment="content" class="container mt-2">
+            <div class="row">
+                <div class="col-md-4 my-1">
+                    <a href="add" class="btn btn-info" role="button">Dodaj rodzaj przeglądu</a>
+                </div>
+            </div>
+            <div class="table-responsive mt-2">
+                <table class="table table-bordered table-striped">          
+                    <thead class="thead-dark">
+                        <tr  class="active">
+                            <th>Nazwa</th>  
+                            <th>Akcje</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table">                       
+                        <tr th:each ="inspectionType : ${inspectionsType}">                                     
+                            <td> <b  th:text="${inspectionType.name}">...</b> </td>
+                            <td>
+                                <a class="btn btn-primary my-1" th:href="@{'delete/' + ${inspectionType.typeId}}">Usuń</a>
+                                <a class="btn btn-primary my-1" th:href="@{'edit/' + ${inspectionType.typeId}}">Edytuj</a>
+                            </td>             
+                        </tr>
+                    </tbody>          
+                </table>    
+            </div>    
+        </div>
+    </body>
+</html>
