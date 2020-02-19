@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.com" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{fragments/main_layout}">
+
+    <head>
+        <title>Dodaj przegląd</title>
+    </head>
+
+    <body>
+        <div layout:fragment="content" class="container mt-2">
+            <form th:action="@{/overview/add}" method="POST" th:object="${overview}">
+                <div class="row">
+                    <div class="col-md-4 offset-md-4 text-center">
+                        <div class="form-group">
+                            <label>Status</label>
+                            <input class="form-control" type="text" th:field="${overview.status}" required />
+                        </div>
+                        <div class="form-group">
+                            <label>Czas rozpoczęcia</label>
+                            <input class="form-control" type="datetime-local" th:field="${overview.startTime}" required />
+                        </div>
+                        <div class="form-group">
+                            <label>Czas zakończenia</label>
+                            <input class="form-control" type="datetime-local" th:field="${overview.endTime}" required />
+                        </div>
+                        <div class="form-group">
+                            <label>Parametr</label>
+                            <input class="form-control" type="text" th:field="${overview.parameter}" required />
+                        </div>
+                        <div class="form-group">
+                            <label>Uwaga</label>
+                            <input class="form-control" type="text" th:field="${overview.comment}" required />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <button type="submit" class="btn btn-primary">Zapisz</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>
