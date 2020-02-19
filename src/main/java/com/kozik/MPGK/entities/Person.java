@@ -32,7 +32,7 @@ public class Person{
     private String surname;
     
     @OneToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = true)
     private User user;
 
     @ManyToMany(mappedBy = "person")
