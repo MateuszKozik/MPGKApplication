@@ -21,7 +21,7 @@ public class Fluid {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "fluid_id", nullable = false)
-    private Long agentId;
+    private Long fluidId;
 
     @Column(name = "name", nullable = false, length = 50)
     private String name;
