@@ -30,8 +30,8 @@ public class FluidRegistry {
     private LocalDateTime datetime;
 
     @ManyToOne
-    @JoinColumn(name = "agent_id")
-    private Agent agent;
+    @JoinColumn(name = "fluid_id")
+    private Fluid fluid;
 
     @ManyToOne
     @JoinColumn(name = "device_id")

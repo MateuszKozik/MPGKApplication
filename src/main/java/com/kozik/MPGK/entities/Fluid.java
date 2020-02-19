@@ -14,21 +14,21 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity
-@Table(name = "agents")
+@Table(name = "fluids")
 @Data
-public class Agent {
+public class Fluid {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "agent_id", nullable = false)
+    @Column(name = "fluid_id", nullable = false)
     private Long agentId;
 
     @Column(name = "name", nullable = false, length = 50)
     private String name;
 
-    @OneToMany(mappedBy = "agent")
+    @OneToMany(mappedBy = "fluid")
     private Set<FluidRegistry> fluidsRegistry;
 
 
-    public Agent() {}
+    public Fluid() {}
 }
