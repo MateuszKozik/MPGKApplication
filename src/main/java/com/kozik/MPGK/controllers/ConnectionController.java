@@ -35,7 +35,7 @@ public class ConnectionController {
     @PostMapping(value = "/connection/add")
     public String add(@ModelAttribute("connection")Connection connection){
         connectionService.save(connection);
-     
+        return "redirect:/connection/list";
     }
 
     @GetMapping(value = "/connection/edit/{id}")
