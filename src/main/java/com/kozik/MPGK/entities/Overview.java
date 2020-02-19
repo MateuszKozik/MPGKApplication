@@ -40,12 +40,12 @@ public class Overview{
     private String comment;
 
     @ManyToOne
-    @JoinColumn(name = "person_id", nullable = false)
+    @JoinColumn(name = "person_id", nullable = true)
     private Person person;
     
 
     @ManyToOne
-    @JoinColumn(name = "activity_id", nullable = false)
+    @JoinColumn(name = "activity_id", nullable = true)
     private Activity activityId;
 
     public Overview(){}
