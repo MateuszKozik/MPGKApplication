@@ -40,7 +40,7 @@ public class FluidController {
     public String edit(@PathVariable("id")Long id, Model model){
         Fluid fluid = fluidService.get(id);
         model.addAttribute("fluid", fluid);
-        return "views/item/edit";
+        return "views/fluid/edit";
     }
 
     @PostMapping(value = "/fluid/edit/{id}")
