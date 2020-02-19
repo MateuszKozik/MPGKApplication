@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.com"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/main_layout}">     
+    <head>
+        <title>Lista przeglądów</title>               
+    </head>
+
+    <body>       
+        <div layout:fragment="content" class="container mt-2">
+            <div class="row">
+                <div class="col-md-4 my-1">
+                    <a href="add" class="btn btn-info" role="button">Dodaj przegląd</a>
+                </div>
+            </div>
+            <div class="table-responsive mt-2">
+                <table class="table table-bordered table-striped">          
+                    <thead class="thead-dark">
+                        <tr  class="active">
+                            <th>Status</th> 
+                            <th>Czas rozpoczęcia</th>
+                            <th>Czas zakończenia</th>
+                            <th>Parametr</th>
+                            <th>Uwaga</th>  
+                            <th>Akcje</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table">                       
+                        <tr th:each ="overview : ${overviews}">                                     
+                            <td> <b  th:text="${overview.status}">...</b> </td>
+                            <td> <b  th:text="${overview.startTime}">...</b> </td>
+                            <td> <b  th:text="${overview.endTime}">...</b> </td>
+                            <td> <b  th:text="${overview.parameter}">...</b> </td>
+                            <td> <b  th:text="${overview.comment}">...</b> </td>
+
+                            <td>
+                                <a class="btn btn-primary my-1" th:href="@{'delete/' + ${overview.overviewId}}">Usuń</a>
+                                <a class="btn btn-primary my-1" th:href="@{'edit/' + ${overview.overviewId}}">Edytuj</a>
+                            </td>               
+                        </tr>
+                    </tbody>          
+                </table>    
+            </div>    
+        </div>
+    </body>
+</html>
