@@ -24,6 +24,9 @@ public class Overview{
     @Column(name = "overview_id", nullable = false)
     private Long overviewId;
 
+    @Column(name = "status", nullable = false, length = 20)
+    private String status;
+
     @Column(name = "start_time", nullable = false, length = 10)
     private LocalDateTime startTime;
 
@@ -47,8 +50,9 @@ public class Overview{
 
     public Overview(){}
 
-    public Overview(String startTime,String endTime,String parameter,String comment)
+    public Overview(String status,String startTime,String endTime,String parameter,String comment)
     {
+        this.status = status;
         if(startTime == ""){ this.startTime = null;}
         else{
             this.startTime = LocalDateTime.parse(startTime,DateTimeFormatter.ISO_LOCAL_DATE_TIME);
