@@ -1,6 +1,6 @@
 package com.kozik.MPGK.entities;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -45,7 +45,7 @@ public class Connection {
         @JoinColumn(name = "connection_id", referencedColumnName = "connection_id")},
         inverseJoinColumns = {
             @JoinColumn(name = "person_id", referencedColumnName = "person_id")})
-    private Set<Person> person;
+    private List<Person> person;
 
     public Connection() {}
 }

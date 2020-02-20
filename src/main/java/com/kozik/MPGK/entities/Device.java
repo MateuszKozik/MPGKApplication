@@ -1,6 +1,6 @@
 package com.kozik.MPGK.entities;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,10 +29,10 @@ public class Device {
     private Boolean status;
 
     @OneToMany(mappedBy = "device")
-    private Set<FluidRegistry> fluidsRegistry;
+    private List<FluidRegistry> fluidsRegistry;
 
     @OneToMany(mappedBy = "device")
-    private Set<Connection> connections;
+    private List<Connection> connections;
 
     public Device() {}
 }

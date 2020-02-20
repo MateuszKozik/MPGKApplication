@@ -1,6 +1,6 @@
 package com.kozik.MPGK.entities;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,7 +27,7 @@ public class Fluid {
     private String name;
 
     @OneToMany(mappedBy = "fluid")
-    private Set<FluidRegistry> fluidsRegistry;
+    private List<FluidRegistry> fluidsRegistry;
 
 
     public Fluid() {}

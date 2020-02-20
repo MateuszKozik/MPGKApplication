@@ -1,6 +1,6 @@
 package com.kozik.MPGK.entities;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,7 +26,7 @@ public class InspectionType {
     private String name;
 
     @OneToMany(mappedBy = "inspectionType")
-    private Set<Connection> connections;
+    private List<Connection> connections;
 
     public InspectionType() {}
 }

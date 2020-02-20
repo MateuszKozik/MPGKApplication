@@ -1,6 +1,6 @@
 package com.kozik.MPGK.entities;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -36,13 +36,13 @@ public class Person{
     private User user;
 
     @ManyToMany(mappedBy = "person")
-    private Set<Connection> connections;
+    private List<Connection> connections;
 
     @OneToMany(mappedBy = "person") 
-    private Set<Overview> overview;
+    private List<Overview> overview;
 
     @OneToMany(mappedBy = "person") 
-    private Set<FluidRegistry> fluidsRegistry;
+    private List<FluidRegistry> fluidsRegistry;
 
     public Person(){}
 

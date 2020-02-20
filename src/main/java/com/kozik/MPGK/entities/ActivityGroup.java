@@ -1,6 +1,6 @@
 package com.kozik.MPGK.entities;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,10 +26,10 @@ public class ActivityGroup{
     private String name;
 
     @OneToMany(mappedBy = "activityGroup") 
-    private Set<Activity> activity;
+    private List<Activity> activity;
 
     @OneToMany(mappedBy = "activityGroup") 
-    private Set<Connection> connections;
+    private List<Connection> connections;
 
     public ActivityGroup(){}
 
