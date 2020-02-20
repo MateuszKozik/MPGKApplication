@@ -60,9 +60,11 @@ public class OverviewController {
     @GetMapping(value = "/overview/edit/{id}")
     public String edit(@PathVariable("id")Long id, Model model){
         List<Person> personList = personService.listAll();
+        List<Activity> activityList = activityService.listAll();
         Overview overview = overviewService.get(id);
         model.addAttribute("overview", overview);
         model.addAttribute("personList", personList);
+        model.addAttribute("activityList", activityList);
         return "views/overview/edit";
     }
 
@@ -70,10 +72,12 @@ public class OverviewController {
     public String edit(@PathVariable("id")Long id,
     @ModelAttribute("overview")Overview overview,
         @RequestParam(name="person")Person person,
-        @RequestParam(name="corroborator")Person corroborator){
+        @RequestParam(name="corroborator")Person corroborator,
+        @RequestParam(name="activity")Activity activity){
         overview.setOverviewId(id);
         overview.setPerson(person);
         overview.setCorroborator(corroborator);
+        overview.setActivity(activity);
         overviewService.save(overview);
         return "redirect:/overview/list";
     }
