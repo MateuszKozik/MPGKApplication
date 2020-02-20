@@ -27,7 +27,8 @@
                         <tr th:each ="user : ${users}">                                     
                             <td> <b  th:text="${user.username}">...</b> </td>
                             <td> <b  th:text="${user.password}">...</b> </td>
-                            <td> <b  th:text="${user.enabled}">...</b> </td>
+                            <td><b th:if="${user.enabled} == true">Aktywne</b> 
+                                <b th:unless="${user.enabled} == true">Nieaktywne</b> </td>
                             <td>
                                 <a class="btn btn-primary my-1" th:href="@{'delete/' + ${user.username}}">Usuń</a>
                                 <a class="btn btn-primary my-1" th:href="@{'edit/' + ${user.username}}">Edytuj</a>
