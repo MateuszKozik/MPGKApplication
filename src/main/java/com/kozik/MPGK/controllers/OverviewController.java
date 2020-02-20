@@ -43,6 +43,7 @@ public class OverviewController {
     public String add(@ModelAttribute("overview")Overview overview,
         @RequestParam(name="person")Person person){
         overview.setPerson(person);
+        overview.setCorroborator(person);
         overviewService.save(overview);
         return "redirect:/overview/list";
     }
