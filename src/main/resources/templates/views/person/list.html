@@ -27,7 +27,9 @@
                         <tr th:each ="person : ${persons}">                                     
                             <td> <b  th:text="${person.name}">...</b> </td>
                             <td> <b  th:text="${person.surname}">...</b> </td>
-                            <td> <b  th:text="${person.user.username}">...</b> </td>
+                            <td> <b th:if="${person.user}" th:text="${person.user.username}">...</b> 
+                                 <b th:unless="${person.user}">...</b>
+                            </td>
                             <td>
                                 <a class="btn btn-primary my-1" th:href="@{'delete/' + ${person.personId}}">Usuń</a>
                                 <a class="btn btn-primary my-1" th:href="@{'edit/' + ${person.personId}}">Edytuj</a>

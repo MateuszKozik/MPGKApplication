@@ -39,7 +39,7 @@ public class UserController {
     
     @PostMapping(value="/user/add")
     public String add(@ModelAttribute("user")User user,
-        @RequestParam(name="roles")ArrayList<Role> roles){
+        @RequestParam(name="roles",required = false)ArrayList<Role> roles){
         userService.save(user,roles);
         return "redirect:/user/list";
     }
