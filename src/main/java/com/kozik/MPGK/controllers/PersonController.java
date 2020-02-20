@@ -50,15 +50,19 @@ public class PersonController {
 
     @GetMapping(value = "/person/edit/{id}")
     public String edit(@PathVariable("id")Long id, Model model){
+        List<User> roleList = userService.listAll();
         Person person = personService.get(id);
         model.addAttribute("person", person);
+        model.addAttribute("roleList", roleList);
         return "views/person/edit";
     }
 
     @PostMapping(value = "/person/edit/{id}")
     public String edit(@PathVariable("id")Long id,
-    @ModelAttribute("person")Person person){
+    @ModelAttribute("person")Person person,
+    @RequestParam(name="user")User user){
         person.setPersonId(id);
+        person.setUser(user);
         personService.save(person);
         return "redirect:/person/list";
     }
