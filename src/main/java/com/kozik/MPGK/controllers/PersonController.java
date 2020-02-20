@@ -1,9 +1,13 @@
 package com.kozik.MPGK.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.kozik.MPGK.entities.Person;
+import com.kozik.MPGK.entities.User;
 import com.kozik.MPGK.services.PersonService;
+import com.kozik.MPGK.services.UserService;
+
 import org.springframework.ui.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,11 +15,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class PersonController {
 
     @Autowired private PersonService personService;
+    
+    @Autowired private UserService userService;
 
     @GetMapping(value = "/person/list")
     public String getAll(Model model){
@@ -26,13 +33,17 @@ public class PersonController {
 
     @GetMapping(value="/person/add")
     public String add(Model model) {
+        List<User> userList = userService.listAll();
         Person person = new Person();
         model.addAttribute("person", person);
+        model.addAttribute("userList", userList);
         return "views/person/add";
     }
     
     @PostMapping(value="/person/add")
-    public String add(@ModelAttribute("person")Person person){
+    public String add(@ModelAttribute("person")Person person,
+        @RequestParam(name="user")User user){      
+        person.setUser(user);
         personService.save(person);
         return "redirect:/person/list";
     }
