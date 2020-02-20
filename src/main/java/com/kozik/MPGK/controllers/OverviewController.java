@@ -41,7 +41,7 @@ public class OverviewController {
 
     @PostMapping(value="/overview/add")
     public String add(@ModelAttribute("overview")Overview overview,
-    @RequestParam(name="persons")Person person){
+    @RequestParam(name="person")Person person){
         overview.setPerson(person);
         overviewService.save(overview);
         return "redirect:/overview/list";
