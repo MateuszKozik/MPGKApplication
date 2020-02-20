@@ -1,7 +1,9 @@
 package com.kozik.MPGK.controllers;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.kozik.MPGK.entities.Role;
 import com.kozik.MPGK.entities.User;
@@ -47,16 +49,20 @@ public class UserController {
 
     @GetMapping(value = "/user/edit/{username}")
     public String edit(@PathVariable("username")String username, Model model){
+        List<Role> roleList = roleService.listAll();
         User user = userService.get(username);
         model.addAttribute("user", user);
+        model.addAttribute("roleList", roleList);
         return "views/user/edit";
     }
 
     @PostMapping(value = "/user/edit/{username}")
     public String edit(@PathVariable("username")String username,
-    @ModelAttribute("user")User user){
+        @ModelAttribute("user")User user,
+        @RequestParam(name="roles")ArrayList<Role> roleList){
+        Set<Role> roles = new HashSet<Role>(roleList);
         user.setUsername(username);
-        userService.save(user);
+        userService.save(user,roles);
         return "redirect:/user/list";
     }
 
