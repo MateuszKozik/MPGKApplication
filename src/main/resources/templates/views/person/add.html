@@ -19,6 +19,16 @@
                             <label>Nazwisko</label>
                             <input class="form-control" type="text" th:field="${person.surname}" required />
                         </div>
+                        <div class="form-group">  
+                            <label> Użytkownik </label>
+                            <select class="form-control" name="user">
+                                <option value="">Wybierz użytkownika</option>
+                                <option th:each="user : ${userList}"        
+                                        th:value="${user.username}"
+                                        th:text="${user.username}">
+                                </option>
+                            </select>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
