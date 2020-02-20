@@ -47,6 +47,26 @@
                     </div>
                 </div>
 
+                <div class="row">
+                    <div class="col-md-4 offset-md-4 text-center"> 
+                        <div class="form-group">  
+                            <label> Czynnik </label>
+                            <select class="form-control" name="fluid">
+                                <option
+                                    th:value="${fluidRegistry.fluid} ? ${fluidRegistry.fluid.fluidId} : ''" 
+                                    th:text="${fluidRegistry.fluid} ? ${fluidRegistry.fluid.name} : 'Wybierz czynnik'">          
+                                </option>
+                                <option value="">
+                                    Wybierz czynnik
+                                </option>
+                                <option th:each="fluid : ${fluids}"
+                                    th:value="${fluid.fluidId}"
+                                    th:text="${fluid.name}">
+                                </option>
+                            </select>
+                        </div>  
+                    </div>
+                </div>
 
                 <div class="row">
                     <div class="col-md-12 text-center">
