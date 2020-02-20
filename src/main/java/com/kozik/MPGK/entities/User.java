@@ -1,7 +1,6 @@
 package com.kozik.MPGK.entities;
 
-
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,7 +33,7 @@ public class User {
         @JoinColumn(name = "user_username", referencedColumnName = "username")},
         inverseJoinColumns = {
             @JoinColumn(name ="role_name", referencedColumnName = "name")})
-    private Set<Role> role;
+    private List<Role> role;
 
     @OneToOne(mappedBy = "user")
     private Person person;
