@@ -61,9 +61,11 @@ public class OverviewController {
     @PostMapping(value = "/overview/edit/{id}")
     public String edit(@PathVariable("id")Long id,
     @ModelAttribute("overview")Overview overview,
-        @RequestParam(name="person")Person person){
+        @RequestParam(name="person")Person person,
+        @RequestParam(name="corroborator")Person corroborator){
         overview.setOverviewId(id);
         overview.setPerson(person);
+        overview.setCorroborator(corroborator);
         overviewService.save(overview);
         return "redirect:/overview/list";
     }
