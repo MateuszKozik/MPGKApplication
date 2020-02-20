@@ -50,10 +50,10 @@ public class PersonController {
 
     @GetMapping(value = "/person/edit/{id}")
     public String edit(@PathVariable("id")Long id, Model model){
-        List<User> roleList = userService.listAll();
+        List<User> userList = userService.listAll();
         Person person = personService.get(id);
         model.addAttribute("person", person);
-        model.addAttribute("roleList", roleList);
+        model.addAttribute("userList", userList);
         return "views/person/edit";
     }
 
