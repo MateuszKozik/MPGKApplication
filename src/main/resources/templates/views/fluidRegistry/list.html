@@ -19,16 +19,28 @@
                         <tr  class="active">
                             <th>Ilość</th> 
                             <th>Data</th> 
+                            <th>Pracownik</th>
+                            <th>Czynnik</th>
+                            <th>Urządzenie</th>
                             <th>Akcje</th>
                         </tr>
                     </thead>
                     <tbody id="table">                       
-                        <tr th:each ="fluid : ${fluidsRegistry}">                                     
-                            <td> <b  th:text="${fluid.quantity}">...</b> </td>
-                            <td> <b  th:text="${fluid.datetime}">...</b> </td>
+                        <tr th:each ="fluidRegistry : ${fluidsRegistry}">                                     
+                            <td> <b  th:text="${fluidRegistry.quantity}">...</b> </td>
+                            <td> <b  th:text="${fluidRegistry.datetime}">...</b> </td>
+                            <td> <b  th:if="${fluidRegistry.person}" th:text="${fluidRegistry.person.name} + ' ' + ${fluidRegistry.person.surname}"></b>
+                                 <b  th:unless="${fluidRegistry.person}" ></b>
+                            </td>
+                            <td> <b  th:if="${fluidRegistry.fluid}" th:text="${fluidRegistry.fluid.name}"></b>
+                                 <b  th:unless="${fluidRegistry.fluid}" ></b>
+                           </td>
+                           <td> <b  th:if="${fluidRegistry.device}" th:text="${fluidRegistry.device.name}"></b>
+                                <b  th:unless="${fluidRegistry.device}" ></b>
+                            </td>
                             <td>
-                                <a class="btn btn-primary my-1" th:href="@{'delete/' + ${fluid.registryId}}">Usuń</a>
-                                <a class="btn btn-primary my-1" th:href="@{'edit/' + ${fluid.registryId}}">Edytuj</a>
+                                <a class="btn btn-primary my-1" th:href="@{'delete/' + ${fluidRegistry.registryId}}">Usuń</a>
+                                <a class="btn btn-primary my-1" th:href="@{'edit/' + ${fluidRegistry.registryId}}">Edytuj</a>
                             </td>               
                         </tr>
                     </tbody>          
