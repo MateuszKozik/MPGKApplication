@@ -41,7 +41,7 @@ public class OverviewController {
 
     @PostMapping(value="/overview/add")
     public String add(@ModelAttribute("overview")Overview overview,
-    @RequestParam(name="person")Person person){
+        @RequestParam(name="person")Person person){
         overview.setPerson(person);
         overviewService.save(overview);
         return "redirect:/overview/list";
@@ -49,15 +49,19 @@ public class OverviewController {
 
     @GetMapping(value = "/overview/edit/{id}")
     public String edit(@PathVariable("id")Long id, Model model){
+        List<Person> personList = personService.listAll();
         Overview overview = overviewService.get(id);
         model.addAttribute("overview", overview);
+        model.addAttribute("personList", personList);
         return "views/overview/edit";
     }
 
     @PostMapping(value = "/overview/edit/{id}")
     public String edit(@PathVariable("id")Long id,
-    @ModelAttribute("overview")Overview overview){
+    @ModelAttribute("overview")Overview overview,
+        @RequestParam(name="person")Person person){
         overview.setOverviewId(id);
+        overview.setPerson(person);
         overviewService.save(overview);
         return "redirect:/overview/list";
     }
