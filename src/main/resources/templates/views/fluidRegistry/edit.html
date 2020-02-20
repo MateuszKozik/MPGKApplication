@@ -25,6 +25,29 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="col-md-4 offset-md-4 text-center"> 
+                        <div class="form-group">  
+                            <label> Pracownik </label>
+                            <select class="form-control" name="person">
+                                <option
+                                    th:value="${fluidRegistry.person} ? ${fluidRegistry.person.personId} : ''" 
+                                    th:text="${fluidRegistry.person} ? ${fluidRegistry.person.name}+' '+${fluidRegistry.person.surname} : 'Wybierz pracownika'">          
+                                </option>
+                                <option value="">
+                                    Wybierz pracownika
+                                </option>
+                                <option th:each="person : ${persons}"
+                                    th:value="${person.personId}"
+                                    th:text="${person.name}+' '+${person.surname}">
+                                 </option>
+                            </select>
+                        </div>  
+                    </div>
+                </div>
+
+
                 <div class="row">
                     <div class="col-md-12 text-center">
                         <button type="submit" class="btn btn-primary">Zapisz</button>
