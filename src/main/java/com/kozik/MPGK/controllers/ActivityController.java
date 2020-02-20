@@ -48,15 +48,19 @@ public class ActivityController {
 
     @GetMapping(value = "/activity/edit/{id}")
     public String edit(@PathVariable("id")Long id, Model model){
+        List<ActivityGroup> activityGroupList = activityGroupService.listAll();
         Activity activity = activityService.get(id);
         model.addAttribute("activity", activity);
+        model.addAttribute("activityGroupList", activityGroupList);
         return "views/activity/edit";
     }
 
     @PostMapping(value = "/activity/edit/{id}")
     public String edit(@PathVariable("id")Long id,
-    @ModelAttribute("activity")Activity activity){
-    activity.setActivityId(id);
+    @ModelAttribute("activity")Activity activity,
+        @RequestParam(name="activityGroup")ActivityGroup activityGroup){
+        activity.setActivityId(id);
+        activity.setActivityGroup(activityGroup);
         activityService.save(activity);
         return "redirect:/activity/list";
     }
