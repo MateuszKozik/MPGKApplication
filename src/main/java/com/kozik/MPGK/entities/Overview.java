@@ -50,7 +50,7 @@ public class Overview{
 
     @ManyToOne
     @JoinColumn(name = "activity_id", nullable = true)
-    private Activity activityId;
+    private Activity activity;
 
     public Overview(){}
 

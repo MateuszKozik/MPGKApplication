@@ -2,8 +2,10 @@ package com.kozik.MPGK.controllers;
 
 import java.util.List;
 
+import com.kozik.MPGK.entities.Activity;
 import com.kozik.MPGK.entities.Overview;
 import com.kozik.MPGK.entities.Person;
+import com.kozik.MPGK.services.ActivityService;
 import com.kozik.MPGK.services.OverviewService;
 import com.kozik.MPGK.services.PersonService;
 
@@ -23,6 +25,8 @@ public class OverviewController {
 
     @Autowired private PersonService personService;
 
+    @Autowired private ActivityService activityService;
+
     @GetMapping(value = "/overview/list")
     public String getAll(Model model){
         List<Overview> overviews = overviewService.listAll();
@@ -33,18 +37,22 @@ public class OverviewController {
     @GetMapping(value="/overview/add")
     public String add(Model model) {
         List<Person> personList = personService.listAll();
+        List<Activity> activityList = activityService.listAll();
         Overview overview = new Overview();
         model.addAttribute("overview", overview);
         model.addAttribute("personList", personList);
+        model.addAttribute("activityList", activityList);
         return "views/overview/add";
     }
 
     @PostMapping(value="/overview/add")
     public String add(@ModelAttribute("overview")Overview overview,
         @RequestParam(name="person")Person person,
-        @RequestParam(name="corroborator")Person corroborator){
+        @RequestParam(name="corroborator")Person corroborator,
+        @RequestParam(name="activity")Activity activity){
         overview.setPerson(person);
         overview.setCorroborator(corroborator);
+        overview.setActivity(activity);
         overviewService.save(overview);
         return "redirect:/overview/list";
     }
