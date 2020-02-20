@@ -42,7 +42,7 @@ public class UserController {
     
     @PostMapping(value="/user/add")
     public String add(@ModelAttribute("user")User user,
-        @RequestParam(name="roles")HashSet<Role> roles){
+        @RequestParam(name="roles")ArrayList<Role> roles){
         userService.save(user,roles);
         return "redirect:/user/list";
     }
@@ -60,9 +60,8 @@ public class UserController {
     public String edit(@PathVariable("username")String username,
         @ModelAttribute("user")User user,
         @RequestParam(name="roles")ArrayList<Role> roleList){
-        Set<Role> roles = new HashSet<Role>(roleList);
         user.setUsername(username);
-        userService.save(user,roles);
+        userService.save(user,roleList);
         return "redirect:/user/list";
     }
 
