@@ -21,7 +21,8 @@
                             <th>Czas rozpoczęcia</th>
                             <th>Czas zakończenia</th>
                             <th>Parametr</th>
-                            <th>Uwaga</th>  
+                            <th>Uwaga</th>
+                            <th>Osoba</th>  
                             <th>Akcje</th>
                         </tr>
                     </thead>
@@ -32,6 +33,7 @@
                             <td> <b  th:text="${overview.endTime}">...</b> </td>
                             <td> <b  th:text="${overview.parameter}">...</b> </td>
                             <td> <b  th:text="${overview.comment}">...</b> </td>
+                            <td> <b  th:text="${overview.person.name}+' '+${overview.person.surname}">...</b> </td>
 
                             <td>
                                 <a class="btn btn-primary my-1" th:href="@{'delete/' + ${overview.overviewId}}">Usuń</a>
