@@ -1,6 +1,6 @@
 package com.kozik.MPGK.entities;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,7 +20,7 @@ public class Role {
     private String name;
 
     @ManyToMany(mappedBy = "role")
-    private Set<User> Users;
+    private List<User> Users;
 
     public Role() {}
 }
