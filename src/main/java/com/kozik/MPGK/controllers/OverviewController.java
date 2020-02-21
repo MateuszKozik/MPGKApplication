@@ -49,7 +49,9 @@ public class OverviewController {
     public String add(@ModelAttribute("overview")Overview overview,
         @RequestParam(name="person")Person person,
         @RequestParam(name="corroborator")Person corroborator,
-        @RequestParam(name="activity")Activity activity){
+        @RequestParam(name="activity")Activity activity,
+        @RequestParam(name = "parameter")String parameter){
+        overview.setParameter(parameter);
         overview.setPerson(person);
         overview.setCorroborator(corroborator);
         overview.setActivity(activity);
