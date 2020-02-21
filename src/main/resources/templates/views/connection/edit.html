@@ -81,6 +81,21 @@
                     </div>
                 </div>
                 
+                <div class="row">                 
+                    <div class="col-md-4 offset-md-4 text-center">                         
+                        <div class="form-group">  
+                            <label> Pracownicy </label>
+                            <select multiple class="form-control" name="persons">
+                                <option selected value=""> Brak </option>
+                                <option th:each="person : ${persons}"        
+                                        th:value="${person.personId}"
+                                        th:text="${person.name}+' '+${person.surname}">
+                                </option>
+                            </select>       
+                        </div>    
+                    </div>    
+                </div>
+
                 <div class="row">
                     <div class="col-md-12 text-center">
                         <button type="submit" class="btn btn-primary">Zapisz</button>
