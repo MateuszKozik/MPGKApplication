@@ -55,7 +55,7 @@
                         </div>
                         <div class="form-group">  
                             <label> Czynności </label>
-                            <select id="country" onchange="f1()" class="form-control" name="activity">
+                            <select id="activityType" onchange="f1()" class="form-control" name="activity">
                                 <option value="">Wybierz czynność</option>
                                 <option th:each="activity : ${activityList}"
                                         th:value="${activity.activityId}"                                       
@@ -65,13 +65,13 @@
                             </select>
                             <script>
                                 function f1(){
-                                    var e = document.getElementById("country");                              
+                                    var e = document.getElementById("activityType");                              
                                     var result = e.options[e.selectedIndex].text;                                    
                                     console.log(result);
-                                    if(result == "Olej"){
-                                    document.getElementById("result").innerHTML='<div class="form-group"><label>Parametr</label><input class="form-control" type="text" th:field="${overview.parameter}" required /></div>';
-                                    }else if(result == "Marcin"){
-                                        document.getElementById("result").innerHTML='<div class="form-group"><label>Parametr</label><br><label><input type="checkbox"> Tak</label><br><label><input type="checkbox"> Nie</label></div>';
+                                    if(result == "Wymiana oleju"){
+                                    document.getElementById("result").innerHTML='<div class="form-group"><label>Parametr</label><input class="form-control" type="text" name="parameter" required /></div>';
+                                    }else if(result == "Sprawdzenie łańcucha"){
+                                        document.getElementById("result").innerHTML='<div class="form-group"><label>Parametr</label><br><label><input type="checkbox" value="Tak" name="parameter"> Tak</label><br><label><input type="checkbox" value="Nie" name="parameter"> Nie</label></div>';
                                     }else{
                                         document.getElementById("result").innerHTML='';
                                     }
