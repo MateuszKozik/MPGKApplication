@@ -17,11 +17,58 @@
                         </div>                    
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="col-md-4 offset-md-4 text-center"> 
+                        <div class="form-group">  
+                            <label> Grupa czynności </label>
+                            <select class="form-control" name="activityGroup">
+                                <option value="">Wybierz grupę</option>
+                                <option th:each="activityGroup : ${activitiesGroups}"
+                                        th:value="${activityGroup.groupId}"
+                                        th:text="${activityGroup.name}">
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 offset-md-4 text-center"> 
+                        <div class="form-group">  
+                            <label> Rodzaj przeglądu </label>
+                            <select class="form-control" name="inspectionType">
+                                <option value="">Wybierz rodzaj</option>
+                                <option th:each="inspectionType : ${inspectionsType}"
+                                        th:value="${inspectionType.typeId}"
+                                        th:text="${inspectionType.name}">
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 offset-md-4 text-center"> 
+                        <div class="form-group">  
+                            <label> Urządzenie </label>
+                            <select class="form-control" name="device">
+                                <option value="">Wybierz urządzenie</option>
+                                <option th:each="device : ${devices}"
+                                        th:value="${device.deviceId}"
+                                        th:text="${device.name}">
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="row">
                     <div class="col-md-12 text-center">
                         <button type="submit" class="btn btn-primary">Zapisz</button>
                     </div>
                 </div>
+
             </form>
         </div>
     </body>
