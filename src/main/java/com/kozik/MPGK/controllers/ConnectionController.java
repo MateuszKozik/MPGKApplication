@@ -1,15 +1,18 @@
 package com.kozik.MPGK.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.kozik.MPGK.entities.ActivityGroup;
 import com.kozik.MPGK.entities.Connection;
 import com.kozik.MPGK.entities.Device;
 import com.kozik.MPGK.entities.InspectionType;
+import com.kozik.MPGK.entities.Person;
 import com.kozik.MPGK.services.ActivityGroupService;
 import com.kozik.MPGK.services.ConnectionService;
 import com.kozik.MPGK.services.DeviceService;
 import com.kozik.MPGK.services.InspectionTypeService;
+import com.kozik.MPGK.services.PersonService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,6 +30,7 @@ public class ConnectionController {
     @Autowired private ActivityGroupService activityGroupService;
     @Autowired private InspectionTypeService inspectionTypeService;
     @Autowired private DeviceService deviceService;
+    @Autowired private PersonService personService;
 
     @GetMapping(value = "/connection/list")
     public String getAll(Model model){
@@ -40,11 +44,13 @@ public class ConnectionController {
         List<ActivityGroup> activitiesGroups = activityGroupService.listAll();
         List<InspectionType> inspectionsType = inspectionTypeService.listAll();
         List<Device> devices = deviceService.listAll();
+        List<Person> persons = personService.listAll();
         Connection connection = new Connection();
         model.addAttribute("connection", connection);
         model.addAttribute("activitiesGroups", activitiesGroups);
         model.addAttribute("inspectionsType", inspectionsType);
         model.addAttribute("devices", devices);
+        model.addAttribute("persons", persons);
         return "views/connection/add";
     }
 
@@ -52,10 +58,12 @@ public class ConnectionController {
     public String add(@ModelAttribute("connection")Connection connection,
     @RequestParam(name = "activityGroup", required = false)ActivityGroup activityGroup,
     @RequestParam(name = "inspectionType", required = false)InspectionType inspectionType,
-    @RequestParam(name = "device", required = false)Device device){
+    @RequestParam(name = "device", required = false)Device device,
+    @RequestParam(name = "persons", required = false)ArrayList<Person> persons){
         connection.setActivityGroup(activityGroup);
         connection.setInspectionType(inspectionType);
         connection.setDevice(device);
+        connection.setPerson(persons);
         connectionService.save(connection);
         return "redirect:/connection/list";
     }
@@ -65,11 +73,13 @@ public class ConnectionController {
         List<ActivityGroup> activitiesGroups = activityGroupService.listAll();
         List<InspectionType> inspectionsType = inspectionTypeService.listAll();
         List<Device> devices = deviceService.listAll();
+        List<Person> persons = personService.listAll();
         Connection connection = connectionService.get(id);
         model.addAttribute("connection", connection);
         model.addAttribute("activitiesGroups", activitiesGroups);
         model.addAttribute("inspectionsType", inspectionsType);
         model.addAttribute("devices", devices);
+        model.addAttribute("persons", persons);
         return "views/connection/edit";
     }
 
@@ -78,11 +88,13 @@ public class ConnectionController {
     @ModelAttribute("connection")Connection connection,
     @RequestParam(name = "activityGroup", required = false)ActivityGroup activityGroup,
     @RequestParam(name = "inspectionType", required = false)InspectionType inspectionType,
-    @RequestParam(name = "device", required = false)Device device){
+    @RequestParam(name = "device", required = false)Device device,
+    @RequestParam(name = "persons", required = false)ArrayList<Person> persons){
         connection.setConnectionId(id);
         connection.setActivityGroup(activityGroup);
         connection.setInspectionType(inspectionType);
         connection.setDevice(device);
+        connection.setPerson(persons);
         connectionService.save(connection);
         return "redirect:/connection/list";
     }
