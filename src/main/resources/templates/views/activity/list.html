@@ -32,7 +32,7 @@
                             <td> <b  th:text="${activity.emsr}">...</b> </td>
                             <td> <b  th:text="${activity.setting}">...</b> </td>
                             <td> <b th:if="${activity.activityGroup}" th:text="${activity.activityGroup.name}">...</b>
-                                <b th:unless="${activity.activityGroup}">...</b>
+                                <b th:unless="${activity.activityGroup}"></b>
                             </td>
                             <td>
                                 <a class="btn btn-primary my-1" th:href="@{'delete/' + ${activity.activityId}}">Usuń</a>
