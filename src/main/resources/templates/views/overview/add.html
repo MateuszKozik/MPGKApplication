@@ -11,22 +11,22 @@
             <form th:action="@{/overview/add}" method="POST" th:object="${overview}">
                 <div class="row">
                     <div class="col-md-4 offset-md-4 text-center">
+
                         <div class="form-group">
                             <label>Status</label>
                             <input class="form-control" type="text" th:field="${overview.status}" required />
                         </div>
+
                         <div class="form-group">
                             <label>Czas rozpoczęcia</label>
                             <input class="form-control" type="datetime-local" th:field="${overview.startTime}" required />
                         </div>
+
                         <div class="form-group">
                             <label>Czas zakończenia</label>
                             <input class="form-control" type="datetime-local" th:field="${overview.endTime}" required />
                         </div>
-                        <!--<div class="form-group">
-                            <label>Parametr</label>
-                            <input class="form-control" type="text" th:field="${overview.parameter}" required />                                                     
-                            </div>-->
+
                         <div class="form-group">
                             <label>Uwaga</label>
                             <input class="form-control" type="text" th:field="${overview.comment}" required />
@@ -53,33 +53,73 @@
                                 </option>                               
                             </select>
                         </div>
+
                         <div class="form-group">  
                             <label> Czynności </label>
-                            <select id="activityType" onchange="f1()" class="form-control" name="activity">
+                            <select id="activityType" th:onchange="select()" class="form-control" name="activity">
                                 <option value="">Wybierz czynność</option>
                                 <option th:each="activity : ${activityList}"
                                         th:value="${activity.activityId}"                                       
-                                        th:text="${activity.name}">                         
-                                </option> 
-                                                                                             
-                            </select>
-                            <script>
-                                function f1(){
-                                    var e = document.getElementById("activityType");                              
-                                    var result = e.options[e.selectedIndex].text;                                    
-                                    console.log(result);
-                                    if(result == "Wymiana oleju"){
-                                    document.getElementById("result").innerHTML='<div class="form-group"><label>Parametr</label><input class="form-control" type="text" name="parameter" required /></div>';
-                                    }else if(result == "Sprawdzenie łańcucha"){
-                                        document.getElementById("result").innerHTML='<div class="form-group"><label>Parametr</label><br><label><input type="checkbox" value="Tak" name="parameter"> Tak</label><br><label><input type="checkbox" value="Nie" name="parameter"> Nie</label></div>';
-                                    }else{
+                                        th:text="${activity.name}">                                                 
+                                </option>                                                                            
+                            </select>  
+
+                            <script th:inline="javascript">
+                                /*<![CDATA[*/
+                                function select() {
+                                    var activityList = /*[[${activityList}]]*/ null;
+                                    var selectedIndex = $("#activityType option:selected").index() - 1;
+                                    if(selectedIndex == -1){
                                         document.getElementById("result").innerHTML='';
+                                    }else{
+                                        var activity = activityList[selectedIndex];
+                                        console.log(activity.type);
+
+                                        if(activity.type == "Pole tekstowe"){   
+                                            document.getElementById("result").innerHTML=
+                                                ' <div class="form-group"> '+
+                                                ' <label>Parametr</label> '+
+                                                ' <input class="form-control" type="text" name="parameter" required /> '+
+                                                ' </div> ';
+                                        }else if(activity.type == "Zaznaczenie"){
+                                            document.getElementById("result").innerHTML=
+                                                ' <div class="form-group"> '+
+                                                ' <label>Parametr</label></br> '+
+                                                ' <label><input type="checkbox" value="Wykonano" name="parameter" required> Wykonano</label> '+
+                                                ' </div> ';
+                                        }else if(activity.type == "Zakres liczb"){
+                                            document.getElementById("result").innerHTML=
+                                                ' <div class="form-group"> '+
+                                                ' <label>Parametr</label> '+
+                                                ' <input class="form-control" type="number" name="parameter" min="0" step="0.1" max="999.9" required /> '+
+                                                ' </div> ';
+                                        }else if(activity.type == "Pole wyboru"){
+                                            document.getElementById("result").innerHTML=
+                                                ' <div class="form-group"> '+
+                                                ' <label>Parametr</label> </br>'+
+                                                ' <div class="form-check form-check-inline"> '+
+                                                ' <input class="form-check-input" type="radio" name="parameter" value="Tak" required> '+
+                                                ' <label class="form-check-label"> Tak </label> '+
+                                                ' </div> '+
+                                                ' <div class="form-check form-check-inline"> '+
+                                                ' <input class="form-check-input" type="radio" name="parameter" value="Nie"> '+
+                                                ' <label class="form-check-label"> Nie </label> '+
+                                                ' </div> '+
+                                                ' </div> ';
+                                        }
+                                        else{
+                                            document.getElementById("result").innerHTML='';
+                                        }
                                     }
                                 }
-                            </script>
-                            
-                        </div>                          
+                                /*]]>*/
+                            </script>       
+                        </div> 
+                              
+                        <div>                          
                             <p id="result"></p>     
+                        </div>
+                           
                     </div>
                 </div>
                 <div class="row">
