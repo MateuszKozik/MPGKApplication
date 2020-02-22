@@ -25,7 +25,10 @@
                     <tbody id="table">                       
                         <tr th:each ="device : ${devices}">                                     
                             <td> <b  th:text="${device.name}">...</b> </td>
-                            <td> <b  th:text="${device.status}">...</b> </td>
+                            <td> 
+                                <b th:if="${device.status} == true">Aktywne</b> 
+                                <b th:unless="${device.status} == true">Nieaktywne</b> 
+                            </td>
                             <td>
                                 <a class="btn btn-primary my-1" th:href="@{'delete/' + ${device.deviceId}}">Usuń</a>
                                 <a class="btn btn-primary my-1" th:href="@{'edit/' + ${device.deviceId}}">Edytuj</a>
