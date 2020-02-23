@@ -13,7 +13,7 @@
                     <div class="col-md-4 offset-md-4 text-center">
 
                         <div class="form-group">
-                            <label> Rodzaj parametru</label>
+                            <label> Status przeglądu</label>
                             <select class="form-control" name="status" required>
                                 <option value="">Wybierz status</option>
                                 <option value="Nierozpoczęty">Nierozpoczęty</option>
@@ -39,9 +39,13 @@
                         </div>
 
                         <div class="form-group">  
-                            <label> Osobę </label>
+                            <label> Osoba wykonująca przegląd </label>
                             <select class="form-control" name="person">
-                                <option value="">Wybierz użytkownika</option>
+                                <option
+                                th:value="${overview.person} ? ${overview.person.personId} : ''" 
+                                th:text="${overview.person} ? ${overview.person.name}+' '+${overview.person.surname} : 'Wybierz osobę'">          
+                                </option>
+                                <option value="">Wybierz osobę</option>
                                 <option th:each="person : ${personList}"
                                         th:value="${person.personId}"
                                         th:text="${person.name}+' '+${person.surname}">
@@ -62,7 +66,7 @@
 
                         <div class="form-group">  
                             <label> Czynności </label>
-                            <select id="activityType" th:onchange="select()" class="form-control" name="activity">
+                            <select id="activityType" th:onchange="select()" class="form-control" name="activity" required>
                                 <option value="">Wybierz czynność</option>
                                 <option th:each="activity : ${activityList}"
                                         th:value="${activity.activityId}"                                       
