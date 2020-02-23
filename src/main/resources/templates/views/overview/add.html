@@ -29,9 +29,9 @@
                         </div>               
 
                         <div class="form-group">  
-                            <label> Osoba </label>
+                            <label> Osoba wykonująca przegląd</label>
                             <select class="form-control" name="person">
-                                <option value="">Wybierz użytkownika</option>
+                                <option value="">Wybierz osobę</option>
                                 <option th:each="person : ${personList}"
                                         th:value="${person.personId}"
                                         th:text="${person.name}+' '+${person.surname}">
