@@ -28,7 +28,9 @@
                     <tbody id="table">                       
                         <tr th:each ="fluidRegistry : ${fluidsRegistry}">                                     
                             <td> <b  th:text="${fluidRegistry.quantity}">...</b> </td>
-                            <td> <b  th:text="${fluidRegistry.datetime}">...</b> </td>
+                            <td> <b  th:text="${#strings.substring(fluidRegistry.datetime,8,10)} + '-' +  ${#strings.substring(fluidRegistry.datetime,5,7)} 
+                                +'-'+ ${#strings.substring(fluidRegistry.datetime,0,4)}  + ' ' +${#strings.substring(fluidRegistry.datetime,11,13)}
+                                + ':' +${#strings.substring(fluidRegistry.datetime,14,16)} ">...</b> </td>
                             <td> <b  th:if="${fluidRegistry.person}" th:text="${fluidRegistry.person.name} + ' ' + ${fluidRegistry.person.surname}"></b>
                                  <b  th:unless="${fluidRegistry.person}" ></b>
                             </td>

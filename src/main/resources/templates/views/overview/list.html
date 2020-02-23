@@ -31,8 +31,12 @@
                     <tbody id="table">                       
                         <tr th:each ="overview : ${overviews}">                                     
                             <td> <b  th:text="${overview.status}">...</b> </td>
-                            <td> <b  th:text="${overview.startTime}">...</b> </td>
-                            <td> <b  th:text="${overview.endTime}">...</b> </td>
+                            <td> <b  th:text="${#strings.substring(overview.startTime,8,10)} + '-' +  ${#strings.substring(overview.startTime,5,7)} 
+                                +'-'+ ${#strings.substring(overview.startTime,0,4)}  + ' ' +${#strings.substring(overview.startTime,11,13)}
+                                + ':' +${#strings.substring(overview.startTime,14,16)} ">...</b> </td>
+                            <td> <b  th:text="${#strings.substring(overview.endTime,8,10)} + '-' +  ${#strings.substring(overview.endTime,5,7)} 
+                                +'-'+ ${#strings.substring(overview.endTime,0,4)}  + ' ' +${#strings.substring(overview.endTime,11,13)}
+                                + ':' +${#strings.substring(overview.endTime,14,16)} ">...</b> </td>
                             <td> <b  th:text="${overview.parameter}">...</b> </td>
                             <td> <b  th:text="${overview.comment}">...</b> </td>
                             <td> <b th:if="${overview.person}" th:text="${overview.person.name}+' '+${overview.person.surname}">...</b> 
