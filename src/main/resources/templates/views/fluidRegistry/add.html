@@ -12,7 +12,7 @@
                 <div class="row">
                     <div class="col-md-4 offset-md-4 text-center">
                         <div class="form-group">
-                            <label>Ilość</label>
+                            <label>Ilość [w litrach]</label>
                             <input class="form-control" type="number" th:field="${fluidRegistry.quantity}" required />
                         </div>
                     </div>
@@ -36,7 +36,7 @@
                 <div class="row">
                     <div class="col-md-4 offset-md-4 text-center"> 
                         <div class="form-group">  
-                            <label> Czynnik </label>
+                            <label> Rodzaj czynnika </label>
                             <select class="form-control" name="fluid">
                                 <option value="">Wybierz czynnik</option>
                                 <option th:each="fluid : ${fluids}"
@@ -51,9 +51,9 @@
                 <div class="row">
                     <div class="col-md-4 offset-md-4 text-center"> 
                         <div class="form-group">  
-                            <label> Urządzenie </label>
+                            <label> Miejsce dodania </label>
                             <select class="form-control" name="device">
-                                <option value="">Wybierz urządzenie</option>
+                                <option value="">Wybierz miejsce</option>
                                 <option th:each="device : ${devices}"
                                         th:value="${device.deviceId}"
                                         th:text="${device.name}">

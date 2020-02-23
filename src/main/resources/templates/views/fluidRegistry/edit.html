@@ -12,7 +12,7 @@
                 <div class="row">
                     <div class="col-md-4 offset-md-4 text-center">
                         <div class="form-group">
-                            <label>Ilość</label>
+                            <label>Ilość [w litrach]</label>
                             <input class="form-control" type="number" th:field="${fluidRegistry.quantity}" required />
                         </div>
                     </div>
@@ -20,7 +20,7 @@
                 <div class="row">
                     <div class="col-md-4 offset-md-4 text-center">
                         <div class="form-group">
-                            <label>Data</label>
+                            <label>Data i godzina</label>
                             <input class="form-control" type="datetime-local" th:field="${fluidRegistry.datetime}" required />
                         </div>
                     </div>
@@ -50,7 +50,7 @@
                 <div class="row">
                     <div class="col-md-4 offset-md-4 text-center"> 
                         <div class="form-group">  
-                            <label> Czynnik </label>
+                            <label> Rodzaj czynnika </label>
                             <select class="form-control" name="fluid">
                                 <option
                                     th:value="${fluidRegistry.fluid} ? ${fluidRegistry.fluid.fluidId} : ''" 
@@ -71,14 +71,14 @@
                 <div class="row">
                     <div class="col-md-4 offset-md-4 text-center"> 
                         <div class="form-group">  
-                            <label> Urządzenie </label>
+                            <label> Miejsce dodania </label>
                             <select class="form-control" name="device">
                                 <option
                                     th:value="${fluidRegistry.device} ? ${fluidRegistry.device.deviceId} : ''" 
-                                    th:text="${fluidRegistry.device} ? ${fluidRegistry.device.name} : 'Wybierz urządzenie'">          
+                                    th:text="${fluidRegistry.device} ? ${fluidRegistry.device.name} : 'Wybierz miejsce'">          
                                 </option>
                                 <option value="">
-                                    Wybierz urządzenie
+                                    Wybierz miejsce
                                 </option>
                                 <option th:each="device : ${devices}"
                                     th:value="${device.deviceId}"
