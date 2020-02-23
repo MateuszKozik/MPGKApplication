@@ -13,8 +13,14 @@
                     <div class="col-md-4 offset-md-4 text-center">
 
                         <div class="form-group">
-                            <label>Status</label>
-                            <input class="form-control" type="text" th:field="${overview.status}" required />
+                            <label> Rodzaj parametru</label>
+                            <select class="form-control" name="status" required>
+                                <option value="">Wybierz status</option>
+                                <option value="Nierozpoczęty">Nierozpoczęty</option>
+                                <option value="Rozpoczęty">Rozpoczęty</option>    
+                                <option value="Wykonany">Wykonany</option>
+                                <option value="Niewykonany">Niewykonany</option>       
+                            </select>   
                         </div>
 
                         <div class="form-group">
