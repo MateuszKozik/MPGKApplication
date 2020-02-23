@@ -27,11 +27,11 @@ public class Activity{
     @Column(name = "type", nullable = false, length = 100)
     private String type;
 
-    @Column(name = "emsr", nullable = false, length = 25)
+    @Column(name = "emsr", nullable = true, length = 25)
     private String emsr;
 
     
-    @Column(name = "setting", nullable = false, length = 35)
+    @Column(name = "setting", nullable = true, length = 35)
     private String setting;
 
     @ManyToOne
