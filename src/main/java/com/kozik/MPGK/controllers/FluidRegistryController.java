@@ -1,5 +1,6 @@
 package com.kozik.MPGK.controllers;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.kozik.MPGK.entities.Device;
@@ -56,6 +57,8 @@ public class FluidRegistryController {
         fluidRegistry.setPerson(person);
         fluidRegistry.setFluid(fluid);
         fluidRegistry.setDevice(device);
+        LocalDateTime now = LocalDateTime.now();
+        fluidRegistry.setDatetime(now.withNano(0).withSecond(0).toString());
         fluidRegistryService.save(fluidRegistry);
         return "redirect:/fluidRegistry/list";
     }
