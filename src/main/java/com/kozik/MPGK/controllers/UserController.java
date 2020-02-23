@@ -56,7 +56,7 @@ public class UserController {
     @PostMapping(value = "/user/edit/{username}")
     public String edit(@PathVariable("username")String username,
         @ModelAttribute("user")User user,
-        @RequestParam(name="roles")ArrayList<Role> roleList){
+        @RequestParam(name="roles", required = false)ArrayList<Role> roleList){
         user.setUsername(username);
         userService.save(user,roleList);
         return "redirect:/user/list";
