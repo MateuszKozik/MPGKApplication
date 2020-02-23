@@ -36,7 +36,7 @@ public class Overview{
     @Column(name = "parameter", nullable = false, length = 50)
     private String parameter;
 
-    @Column(name = "comment", nullable = false, length = 100)
+    @Column(name = "comment", nullable = true, length = 100)
     private String comment;
 
     @ManyToOne
