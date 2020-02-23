@@ -1,5 +1,7 @@
 package com.kozik.MPGK.controllers;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 import com.kozik.MPGK.entities.Activity;
@@ -55,6 +57,10 @@ public class OverviewController {
         overview.setPerson(person);
         overview.setCorroborator(corroborator);
         overview.setActivity(activity);
+        LocalDateTime today = LocalDateTime.now().with(LocalTime.of(0,0));
+        LocalDateTime now = LocalDateTime.now();
+        overview.setStartTime(today.toString());
+        overview.setEndTime(now.withNano(0).withSecond(0).toString());
         overviewService.save(overview);
         return "redirect:/overview/list";
     }
