@@ -3,12 +3,10 @@ package com.kozik.MPGK.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.kozik.MPGK.entities.ActivityGroup;
 import com.kozik.MPGK.entities.Connection;
 import com.kozik.MPGK.entities.Device;
 import com.kozik.MPGK.entities.InspectionType;
 import com.kozik.MPGK.entities.Person;
-import com.kozik.MPGK.services.ActivityGroupService;
 import com.kozik.MPGK.services.ConnectionService;
 import com.kozik.MPGK.services.DeviceService;
 import com.kozik.MPGK.services.InspectionTypeService;
@@ -27,7 +25,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class ConnectionController {
 
     @Autowired private ConnectionService connectionService;
-    @Autowired private ActivityGroupService activityGroupService;
     @Autowired private InspectionTypeService inspectionTypeService;
     @Autowired private DeviceService deviceService;
     @Autowired private PersonService personService;
@@ -41,13 +38,11 @@ public class ConnectionController {
 
     @GetMapping(value = "/connection/add")
     public String add(Model model){
-        List<ActivityGroup> activitiesGroups = activityGroupService.listAll();
         List<InspectionType> inspectionsType = inspectionTypeService.listAll();
         List<Device> devices = deviceService.listAll();
         List<Person> persons = personService.listAll();
         Connection connection = new Connection();
         model.addAttribute("connection", connection);
-        model.addAttribute("activitiesGroups", activitiesGroups);
         model.addAttribute("inspectionsType", inspectionsType);
         model.addAttribute("devices", devices);
         model.addAttribute("persons", persons);
@@ -56,11 +51,9 @@ public class ConnectionController {
 
     @PostMapping(value = "/connection/add")
     public String add(@ModelAttribute("connection")Connection connection,
-    @RequestParam(name = "activityGroup", required = false)ActivityGroup activityGroup,
     @RequestParam(name = "inspectionType", required = false)InspectionType inspectionType,
     @RequestParam(name = "device", required = false)Device device,
     @RequestParam(name = "persons", required = false)ArrayList<Person> persons){
-        connection.setActivityGroup(activityGroup);
         connection.setInspectionType(inspectionType);
         connection.setDevice(device);
         connection.setPerson(persons);
@@ -70,13 +63,11 @@ public class ConnectionController {
 
     @GetMapping(value = "/connection/edit/{id}")
     public String edit(@PathVariable("id")Long id, Model model){
-        List<ActivityGroup> activitiesGroups = activityGroupService.listAll();
         List<InspectionType> inspectionsType = inspectionTypeService.listAll();
         List<Device> devices = deviceService.listAll();
         List<Person> persons = personService.listAll();
         Connection connection = connectionService.get(id);
         model.addAttribute("connection", connection);
-        model.addAttribute("activitiesGroups", activitiesGroups);
         model.addAttribute("inspectionsType", inspectionsType);
         model.addAttribute("devices", devices);
         model.addAttribute("persons", persons);
@@ -86,12 +77,10 @@ public class ConnectionController {
     @PostMapping(value = "/connection/edit/{id}")
     public String edit(@PathVariable("id")Long id,
     @ModelAttribute("connection")Connection connection,
-    @RequestParam(name = "activityGroup", required = false)ActivityGroup activityGroup,
     @RequestParam(name = "inspectionType", required = false)InspectionType inspectionType,
     @RequestParam(name = "device", required = false)Device device,
     @RequestParam(name = "persons", required = false)ArrayList<Person> persons){
         connection.setConnectionId(id);
-        connection.setActivityGroup(activityGroup);
         connection.setInspectionType(inspectionType);
         connection.setDevice(device);
         connection.setPerson(persons);
