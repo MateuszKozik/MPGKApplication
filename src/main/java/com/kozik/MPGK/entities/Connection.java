@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -36,9 +37,8 @@ public class Connection {
     @JoinColumn(name = "type_id")
     private InspectionType inspectionType;
 
-    @ManyToOne
-    @JoinColumn(name = "group_id")
-    private ActivityGroup activityGroup;
+    @OneToMany(mappedBy = "connection") 
+    private List<ActivityGroup> activitiesGroups;
 
     @ManyToMany
     @JoinTable(name = "connections_persons", joinColumns = {
