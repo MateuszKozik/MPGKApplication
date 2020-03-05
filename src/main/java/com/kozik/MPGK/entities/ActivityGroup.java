@@ -22,7 +22,7 @@ public class ActivityGroup{
     @Column(name = "group_id", nullable = false)
     private Long groupId;
 
-    @Column(name = "name", nullable = false, length = 50)
+    @Column(name = "name", nullable = false, length = 100)
     private String name;
 
     @OneToMany(mappedBy = "activityGroup") 
