@@ -74,40 +74,38 @@
                                 <option value="">Wybierz czynność</option>
                                 <option th:each="activity : ${activityList}"
                                         th:value="${activity.activityId}"                                       
-                                        th:text="${activity.name}">                                                 
+                                        th:text="${activity.type}"
+                                        th:label="${activity.name}">                                                 
                                 </option>                                                                            
                             </select>  
 
                             <script th:inline="javascript">
                                 /*<![CDATA[*/
                                 function select() {
-                                    var activityList = /*[[${activityList}]]*/ null;
+                                    var type = $("#activityType option:selected").text();
                                     var selectedIndex = $("#activityType option:selected").index() - 1;
                                     if(selectedIndex == -1){
                                         document.getElementById("result").innerHTML='';
                                     }else{
-                                        var activity = activityList[selectedIndex];
-                                        console.log(activity.type);
-
-                                        if(activity.type == "Pole tekstowe"){   
+                                          if(type == "Pole tekstowe"){   
                                             document.getElementById("result").innerHTML=
                                                 ' <div class="form-group"> '+
                                                 ' <label>Parametr</label> '+
                                                 ' <input class="form-control" type="text" name="parameter" required /> '+
                                                 ' </div> ';
-                                        }else if(activity.type == "Zaznaczenie"){
+                                        }else if(type == "Zaznaczenie"){
                                             document.getElementById("result").innerHTML=
                                                 ' <div class="form-group"> '+
                                                 ' <label>Parametr</label></br> '+
                                                 ' <label><input type="checkbox" value="Wykonano" name="parameter" required> Wykonano</label> '+
                                                 ' </div> ';
-                                        }else if(activity.type == "Zakres liczb"){
+                                        }else if(type == "Zakres liczb"){
                                             document.getElementById("result").innerHTML=
                                                 ' <div class="form-group"> '+
                                                 ' <label>Parametr</label> '+
                                                 ' <input class="form-control" type="number" name="parameter" min="0" step="0.1" max="999.9" required /> '+
                                                 ' </div> ';
-                                        }else if(activity.type == "Pole wyboru"){
+                                        }else if(type == "Pole wyboru"){
                                             document.getElementById("result").innerHTML=
                                                 ' <div class="form-group"> '+
                                                 ' <label>Parametr</label> </br>'+
@@ -127,7 +125,7 @@
                                     }
                                 }
                                 /*]]>*/
-                            </script>       
+                            </script> 
                         </div> 
 
                         <div>                          
