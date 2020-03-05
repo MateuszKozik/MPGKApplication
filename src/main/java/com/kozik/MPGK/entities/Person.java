@@ -42,6 +42,9 @@ public class Person{
     @OneToMany(mappedBy = "person") 
     private List<Overview> overview;
 
+    @OneToMany(mappedBy = "corroborator") 
+    private List<Overview> overviewCorroborator;
+
     @OneToMany(mappedBy = "person") 
     private List<FluidRegistry> fluidsRegistry;
 
