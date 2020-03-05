@@ -18,7 +18,6 @@
                     <thead class="thead-dark">
                         <tr  class="active">
                             <th>Nazwa</th> 
-                            <th>Grupa czynności</th>
                             <th>Typ przeglądu</th>
                             <th>Urządzenie</th>
                             <th>Pracownicy</th>
@@ -28,9 +27,6 @@
                     <tbody id="table">                       
                         <tr th:each ="connection : ${connections}">                                     
                             <td> <b  th:text="${connection.name}">...</b> </td>
-                            <td> <b  th:if="${connection.activityGroup}" th:text="${connection.activityGroup.name}"></b>
-                                 <b  th:unless="${connection.activityGroup}" ></b>
-                            </td>
                             <td> <b  th:if="${connection.inspectionType}" th:text="${connection.inspectionType.name}"></b>
                                  <b  th:unless="${connection.inspectionType}" ></b>
                             </td>

@@ -21,21 +21,6 @@
                 <div class="row">
                     <div class="col-md-4 offset-md-4 text-center"> 
                         <div class="form-group">  
-                            <label> Grupa czynności </label>
-                            <select class="form-control" name="activityGroup">
-                                <option value="">Wybierz grupę</option>
-                                <option th:each="activityGroup : ${activitiesGroups}"
-                                        th:value="${activityGroup.groupId}"
-                                        th:text="${activityGroup.name}">
-                                </option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-4 offset-md-4 text-center"> 
-                        <div class="form-group">  
                             <label> Rodzaj przeglądu </label>
                             <select class="form-control" name="inspectionType">
                                 <option value="">Wybierz rodzaj</option>
