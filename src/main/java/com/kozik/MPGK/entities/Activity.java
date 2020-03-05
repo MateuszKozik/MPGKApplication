@@ -21,10 +21,10 @@ public class Activity{
     @Column(name = "activity_id", nullable = false)
     private Long activityId;
 
-    @Column(name = "name", nullable = false, length = 50)
+    @Column(name = "name", nullable = false, columnDefinition = "TEXT" )
     private String name;
 
-    @Column(name = "type", nullable = false, length = 100)
+    @Column(name = "type", nullable = false, length = 25)
     private String type;
 
     @Column(name = "emsr", nullable = true, length = 25)
