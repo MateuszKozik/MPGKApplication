@@ -17,6 +17,22 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="col-md-4 offset-md-4 text-center"> 
+                        <div class="form-group">  
+                            <label> Powiązanie </label>
+                            <select class="form-control" name="connection">
+                                <option value="">Wybierz powiązanie</option>
+                                <option th:each="connection : ${connections}"
+                                        th:value="${connection.connectionId}"
+                                        th:text="${connection.name}">
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="row">
                     <div class="col-md-12 text-center">
                         <button type="submit" class="btn btn-primary">Zapisz</button>

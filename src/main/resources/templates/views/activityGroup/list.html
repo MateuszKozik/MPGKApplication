@@ -18,12 +18,16 @@
                     <thead class="thead-dark">
                         <tr  class="active">
                             <th>Nazwa</th>   
+                            <th>Powiązanie</th>
                             <th>Akcje</th>
                         </tr>
                     </thead>
                     <tbody id="table">                       
                         <tr th:each ="group : ${activitiesGroups}">                                     
                             <td> <b  th:text="${group.name}">...</b> </td>
+                            <td> <b  th:if="${group.connection}" th:text="${group.connection.name}"></b>
+                                <b  th:unless="${group.connection}" ></b>
+                           </td>
                             <td>
                                 <a class="btn btn-primary my-1" th:href="@{'delete/' + ${group.groupId}}">Usuń</a>
                                 <a class="btn btn-primary my-1" th:href="@{'edit/' + ${group.groupId}}">Edytuj</a>
