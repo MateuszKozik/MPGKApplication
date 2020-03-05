@@ -55,6 +55,10 @@
                         <div class="form-group">  
                             <label> Przełożony </label>
                             <select class="form-control" name="corroborator">
+                                <option
+                                th:value="${overview.corroborator} ? ${overview.corroborator.personId} : ''" 
+                                th:text="${overview.corroborator} ? ${overview.corroborator.name}+' '+${overview.corroborator.surname} : 'Wybierz osobę'">          
+                                </option>
                                 <option value="">Wybierz przełożonego</option>
                                 <option th:each="person : ${personList}"
                                         th:value="${person.personId}"
