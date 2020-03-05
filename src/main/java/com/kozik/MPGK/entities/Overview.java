@@ -44,8 +44,8 @@ public class Overview{
     private Person person;
 
     @ManyToOne
-    @JoinColumn(name = "corroborator_id", nullable = true)
-    private Person corroborator;
+    @JoinColumn(name = "supervisor_id", nullable = true)
+    private Person supervisor;
     
 
     @ManyToOne

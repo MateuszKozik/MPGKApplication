@@ -50,12 +50,12 @@ public class OverviewController {
     @PostMapping(value="/overview/add")
     public String add(@ModelAttribute("overview")Overview overview,
         @RequestParam(name="person")Person person,
-        @RequestParam(name="corroborator")Person corroborator,
+        @RequestParam(name="supervisor")Person supervisor,
         @RequestParam(name="activity")Activity activity,
         @RequestParam(name = "parameter")String parameter){
         overview.setParameter(parameter);
         overview.setPerson(person);
-        overview.setCorroborator(corroborator);
+        overview.setSupervisor(supervisor);
         overview.setActivity(activity);
         LocalDateTime today = LocalDateTime.now().with(LocalTime.of(0,0));
         LocalDateTime now = LocalDateTime.now();
@@ -80,11 +80,11 @@ public class OverviewController {
     public String edit(@PathVariable("id")Long id,
     @ModelAttribute("overview")Overview overview,
         @RequestParam(name="person")Person person,
-        @RequestParam(name="corroborator")Person corroborator,
+        @RequestParam(name="supervisor")Person supervisor,
         @RequestParam(name="activity")Activity activity){
         overview.setOverviewId(id);
         overview.setPerson(person);
-        overview.setCorroborator(corroborator);
+        overview.setSupervisor(supervisor);
         overview.setActivity(activity);
         overviewService.save(overview);
         return "redirect:/overview/list";

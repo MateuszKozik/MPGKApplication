@@ -41,7 +41,7 @@
 
                         <div class="form-group">  
                             <label> Przełożony </label>
-                            <select class="form-control" name="corroborator">
+                            <select class="form-control" name="supervisor">
                                 <option value="">Wybierz przełożonego</option>
                                 <option th:each="person : ${personList}"
                                         th:value="${person.personId}"
@@ -52,7 +52,7 @@
 
                         <div class="form-group">  
                             <label> Czynności </label>
-                            <select id="activityType" th:onchange="select()" class="form-control" name="activity">
+                            <select id="activityType" th:onchange="select()" class="form-control" name="activity" required>
                                 <option value="">Wybierz czynność</option>
                                 <option th:each="activity : ${activityList}"
                                         th:value="${activity.activityId}"                                       

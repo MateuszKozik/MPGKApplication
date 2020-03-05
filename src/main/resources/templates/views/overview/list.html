@@ -42,8 +42,8 @@
                             <td> <b th:if="${overview.person}" th:text="${overview.person.name}+' '+${overview.person.surname}">...</b> 
                                  <b th:unless="${overview.person}" ></b>
                             </td>
-                            <td> <b th:if="${overview.corroborator}" th:text="${overview.corroborator.name}+' '+${overview.corroborator.surname}">...</b>
-                                <b th:unless="${overview.corroborator}"></b>
+                            <td> <b th:if="${overview.supervisor}" th:text="${overview.supervisor.name}+' '+${overview.supervisor.surname}">...</b>
+                                <b th:unless="${overview.supervisor}"></b>
                             </td>
                             <td> <b th:if="${overview.activity}" th:text="${overview.activity.name}">...</b> 
                                 <b th:unless="${overview.activity}"></b>

@@ -42,7 +42,7 @@ public class Person{
     @OneToMany(mappedBy = "person") 
     private List<Overview> overview;
 
-    @OneToMany(mappedBy = "corroborator") 
+    @OneToMany(mappedBy = "supervisor") 
     private List<Overview> overviewCorroborator;
 
     @OneToMany(mappedBy = "person") 

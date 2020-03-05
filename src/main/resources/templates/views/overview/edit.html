@@ -54,10 +54,10 @@
                         </div>
                         <div class="form-group">  
                             <label> Przełożony </label>
-                            <select class="form-control" name="corroborator">
+                            <select class="form-control" name="supervisor">
                                 <option
-                                th:value="${overview.corroborator} ? ${overview.corroborator.personId} : ''" 
-                                th:text="${overview.corroborator} ? ${overview.corroborator.name}+' '+${overview.corroborator.surname} : 'Wybierz osobę'">          
+                                th:value="${overview.supervisor} ? ${overview.supervisor.personId} : ''" 
+                                th:text="${overview.supervisor} ? ${overview.supervisor.name}+' '+${overview.supervisor.surname} : 'Wybierz przełożonego'">          
                                 </option>
                                 <option value="">Wybierz przełożonego</option>
                                 <option th:each="person : ${personList}"
