@@ -33,7 +33,7 @@ public class Overview{
     @Column(name = "end_time", nullable = false, length = 20)
     private LocalDateTime endTime;
 
-    @Column(name = "parameter", nullable = false, length = 50)
+    @Column(name = "parameter", nullable = true, length = 50)
     private String parameter;
 
     @Column(name = "comment", nullable = true, length = 100)
