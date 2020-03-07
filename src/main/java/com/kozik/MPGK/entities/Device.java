@@ -29,7 +29,7 @@ public class Device {
     private Boolean status;
 
     @Column(name = "type", nullable = false)
-    private String type;
+    private Boolean type;
     
     @OneToMany(mappedBy = "device")
     private List<FluidRegistry> fluidsRegistry;
