@@ -13,10 +13,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "activities_groups")
 @Data
+@NoArgsConstructor
+@Table(name = "activities_groups")
 public class ActivityGroup{
 
     @Id
@@ -33,12 +35,4 @@ public class ActivityGroup{
     @ManyToOne
     @JoinColumn(name = "connection_id")
     private Connection connection;
-
-    public ActivityGroup(){}
-
-    public ActivityGroup(String name)
-    {
-        this.name = name;
-    }
-
 }

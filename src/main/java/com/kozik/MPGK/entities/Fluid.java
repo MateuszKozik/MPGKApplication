@@ -9,13 +9,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Table;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity
-@Table(name = "fluids")
 @Data
+@NoArgsConstructor
+@Table(name = "fluids")
 public class Fluid {
 
     @Id
@@ -28,7 +30,4 @@ public class Fluid {
 
     @OneToMany(mappedBy = "fluid")
     private List<FluidRegistry> fluidsRegistry;
-
-
-    public Fluid() {}
 }

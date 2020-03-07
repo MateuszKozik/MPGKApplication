@@ -13,10 +13,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "overviews")
 @Data
+@NoArgsConstructor
+@Table(name = "overviews")
 public class Overview{
 
     @Id
@@ -51,24 +53,6 @@ public class Overview{
     @JoinColumn(name = "activity_id", nullable = true)
     private Activity activity;
 
-    public Overview(){}
-
-    public Overview(String status,String startTime,String endTime,String parameter,String comment)
-    {
-        this.status = status;
-        if(startTime == ""){ this.startTime = null;}
-        else{
-            this.startTime = LocalDateTime.parse(startTime,DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-        }
-
-        if(endTime == ""){ this.endTime = null;}
-        else{
-            this.endTime = LocalDateTime.parse(endTime,DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-        }
-        this.parameter = parameter;
-        this.comment = comment;
-    }
-
     public String getStartTime() {      
         if(startTime !=null){
             return startTime.toString();
@@ -94,5 +78,4 @@ public class Overview{
         LocalDateTime dataTime = LocalDateTime.parse(endTime,DateTimeFormatter.ISO_LOCAL_DATE_TIME);
         this.endTime = dataTime;
     }
-
 }

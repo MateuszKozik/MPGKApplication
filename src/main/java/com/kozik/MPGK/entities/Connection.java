@@ -15,10 +15,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "connections")
 @Data
+@NoArgsConstructor
+@Table(name = "connections")
 public class Connection {
 
     @Id
@@ -46,6 +48,4 @@ public class Connection {
         inverseJoinColumns = {
             @JoinColumn(name = "person_id", referencedColumnName = "person_id")})
     private List<Person> persons;
-
-    public Connection() {}
 }

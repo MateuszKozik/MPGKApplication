@@ -13,10 +13,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "activities")
 @Data
+@NoArgsConstructor
+@Table(name = "activities")
 public class Activity{
 
     @Id
@@ -42,16 +44,4 @@ public class Activity{
     @ManyToOne
     @JoinColumn(name = "groupId", nullable = true)
     private ActivityGroup activityGroup;
-
-    public Activity(){}
-
-    public Activity(final String name, final String type, final String emsr, final String setting)
-    {
-        this.name = name;
-        this.type = type;
-        this.emsr = emsr;
-        this.setting = setting;
-    }
-
-
 }

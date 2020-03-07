@@ -11,10 +11,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "devices")
 @Data
+@NoArgsConstructor
+@Table(name = "devices")
 public class Device {
 
     @Id
@@ -36,6 +38,4 @@ public class Device {
 
     @OneToMany(mappedBy = "device")
     private List<Connection> connections;
-
-    public Device() {}
 }

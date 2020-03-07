@@ -12,10 +12,12 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "users")
 @Data
+@NoArgsConstructor
+@Table(name = "users")
 public class User {
     
     @Id
@@ -37,17 +39,4 @@ public class User {
 
     @OneToOne(mappedBy = "user")
     private Person person;
-
-    public User(){}
-
-    public User(final String username,final String password,final Boolean enabled)
-    {
-        this.username = username;
-        this.password = password;
-        this.enabled = enabled;
-    }
-
-
-
-
 }

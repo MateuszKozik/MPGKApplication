@@ -15,10 +15,12 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "persons")
 @Data
+@NoArgsConstructor
+@Table(name = "persons")
 public class Person{
 
     @Id
@@ -47,16 +49,4 @@ public class Person{
 
     @OneToMany(mappedBy = "person") 
     private List<FluidRegistry> fluidsRegistry;
-
-    public Person(){}
-
-    public Person(String name,String surname)
-    {
-        this.name = name;
-        this.surname = surname;
-    }
-
-
-
-
 }

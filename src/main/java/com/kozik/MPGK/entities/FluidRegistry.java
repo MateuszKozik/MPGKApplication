@@ -12,10 +12,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "fluids_registry")
 @Data
+@NoArgsConstructor
+@Table(name = "fluids_registry")
 public class FluidRegistry {
 
     @Id
@@ -40,8 +42,6 @@ public class FluidRegistry {
     @ManyToOne
     @JoinColumn(name = "person_id")
     private Person person;
-
-    public FluidRegistry() {}
 
     public String getDatetime() {      
         if(datetime !=null){

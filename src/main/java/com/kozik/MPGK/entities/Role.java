@@ -9,10 +9,12 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "roles")
 @Data
+@NoArgsConstructor
+@Table(name = "roles")
 public class Role {
 
     @Id
@@ -21,6 +23,4 @@ public class Role {
 
     @ManyToMany(mappedBy = "role")
     private List<User> users;
-
-    public Role() {}
 }

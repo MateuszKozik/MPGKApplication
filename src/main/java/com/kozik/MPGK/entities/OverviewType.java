@@ -11,10 +11,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "overview_types")
 @Data
+@NoArgsConstructor
+@Table(name = "overview_types")
 public class OverviewType {
 
     @Id
@@ -27,6 +29,4 @@ public class OverviewType {
 
     @OneToMany(mappedBy = "overviewType")
     private List<Connection> connections;
-
-    public OverviewType() {}
 }
