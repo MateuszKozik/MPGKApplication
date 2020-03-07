@@ -32,15 +32,15 @@ public class FluidRegistry {
     private LocalDateTime datetime;
 
     @ManyToOne
-    @JoinColumn(name = "fluid_id")
+    @JoinColumn(name = "fluid_id", nullable = true)
     private Fluid fluid;
 
     @ManyToOne
-    @JoinColumn(name = "device_id")
+    @JoinColumn(name = "device_id", nullable = true)
     private Device device;
 
     @ManyToOne
-    @JoinColumn(name = "person_id")
+    @JoinColumn(name = "person_id", nullable = true)
     private Person person;
 
     public String getDatetime() {      

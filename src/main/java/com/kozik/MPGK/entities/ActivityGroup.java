@@ -33,6 +33,6 @@ public class ActivityGroup{
     private List<Activity> activities;
 
     @ManyToOne
-    @JoinColumn(name = "connection_id")
+    @JoinColumn(name = "connection_id", nullable = true)
     private Connection connection;
 }

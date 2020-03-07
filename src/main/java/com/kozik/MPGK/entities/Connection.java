@@ -32,11 +32,11 @@ public class Connection {
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "device_id")
+    @JoinColumn(name = "device_id", nullable = true)
     private Device device;
 
     @ManyToOne
-    @JoinColumn(name = "type_id")
+    @JoinColumn(name = "type_id", nullable = true)
     private OverviewType overviewType;
 
     @OneToMany(mappedBy = "connection") 
