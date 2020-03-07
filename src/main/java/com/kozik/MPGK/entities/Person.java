@@ -36,14 +36,14 @@ public class Person{
     @JoinColumn(name = "user_id", nullable = true)
     private User user;
 
-    @ManyToMany(mappedBy = "person")
+    @ManyToMany(mappedBy = "persons")
     private List<Connection> connections;
 
     @OneToMany(mappedBy = "person") 
-    private List<Overview> overview;
+    private List<Overview> overviews;
 
     @OneToMany(mappedBy = "supervisor") 
-    private List<Overview> overviewCorroborator;
+    private List<Overview> overviewSupervisors;
 
     @OneToMany(mappedBy = "person") 
     private List<FluidRegistry> fluidsRegistry;

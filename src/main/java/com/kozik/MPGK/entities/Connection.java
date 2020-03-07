@@ -45,7 +45,7 @@ public class Connection {
         @JoinColumn(name = "connection_id", referencedColumnName = "connection_id")},
         inverseJoinColumns = {
             @JoinColumn(name = "person_id", referencedColumnName = "person_id")})
-    private List<Person> person;
+    private List<Person> persons;
 
     public Connection() {}
 }

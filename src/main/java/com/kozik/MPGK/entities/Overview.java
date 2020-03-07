@@ -46,7 +46,6 @@ public class Overview{
     @ManyToOne
     @JoinColumn(name = "supervisor_id", nullable = true)
     private Person supervisor;
-    
 
     @ManyToOne
     @JoinColumn(name = "activity_id", nullable = true)

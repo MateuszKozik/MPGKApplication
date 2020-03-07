@@ -28,7 +28,7 @@ public class ActivityGroup{
     private String name;
 
     @OneToMany(mappedBy = "activityGroup") 
-    private List<Activity> activity;
+    private List<Activity> activities;
 
     @ManyToOne
     @JoinColumn(name = "connection_id")

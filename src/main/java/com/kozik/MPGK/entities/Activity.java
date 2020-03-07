@@ -29,7 +29,6 @@ public class Activity{
 
     @Column(name = "emsr", nullable = true, length = 25)
     private String emsr;
-
     
     @Column(name = "setting", nullable = true, length = 35)
     private String setting;
