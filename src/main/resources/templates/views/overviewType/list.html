@@ -22,11 +22,11 @@
                         </tr>
                     </thead>
                     <tbody id="table">                       
-                        <tr th:each ="inspectionType : ${inspectionsType}">                                     
-                            <td> <b  th:text="${inspectionType.name}">...</b> </td>
+                        <tr th:each ="overviewType : ${overviewTypes}">                                     
+                            <td> <b  th:text="${overviewType.name}">...</b> </td>
                             <td>
-                                <a class="btn btn-primary my-1" th:href="@{'delete/' + ${inspectionType.typeId}}">Usuń</a>
-                                <a class="btn btn-primary my-1" th:href="@{'edit/' + ${inspectionType.typeId}}">Edytuj</a>
+                                <a class="btn btn-primary my-1" th:href="@{'delete/' + ${overviewType.typeId}}">Usuń</a>
+                                <a class="btn btn-primary my-1" th:href="@{'edit/' + ${overviewType.typeId}}">Edytuj</a>
                             </td>             
                         </tr>
                     </tbody>          

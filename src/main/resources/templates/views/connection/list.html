@@ -18,7 +18,7 @@
                     <thead class="thead-dark">
                         <tr  class="active">
                             <th>Nazwa</th> 
-                            <th>Typ przeglądu</th>
+                            <th>Rodzaj przeglądu</th>
                             <th>Urządzenie</th>
                             <th>Pracownicy</th>
                             <th>Akcje</th>
@@ -27,16 +27,17 @@
                     <tbody id="table">                       
                         <tr th:each ="connection : ${connections}">                                     
                             <td> <b  th:text="${connection.name}">...</b> </td>
-                            <td> <b  th:if="${connection.inspectionType}" th:text="${connection.inspectionType.name}"></b>
-                                 <b  th:unless="${connection.inspectionType}" ></b>
+                            <td> <b  th:if="${connection.overviewType}" th:text="${connection.overviewType.name}"></b>
+                                 <b  th:unless="${connection.overviewType}" ></b>
                             </td>
                             <td> <b  th:if="${connection.device}" th:text="${connection.device.name}"></b>
                                  <b  th:unless="${connection.device}" ></b>
                             </td>
                             <td> 
-                                <div class="form-check" th:each="person : ${connection.person}">
+                                <div th:if="${connection.persons}"  class="form-check" th:each="person : ${connection.persons}">
                                     <b> <label class="form-check-label"  th:text="${person.name} + ' ' + ${person.surname}"></label></b>
                                 </div>
+                                <b  th:unless="${connection.persons}" ></b>
                             <td>
                                 <a class="btn btn-primary my-1" th:href="@{'delete/' + ${connection.connectionId}}">Usuń</a>
                                 <a class="btn btn-primary my-1" th:href="@{'edit/' + ${connection.connectionId}}">Edytuj</a>

@@ -5,11 +5,11 @@ import java.util.List;
 
 import com.kozik.MPGK.entities.Connection;
 import com.kozik.MPGK.entities.Device;
-import com.kozik.MPGK.entities.InspectionType;
+import com.kozik.MPGK.entities.OverviewType;
 import com.kozik.MPGK.entities.Person;
 import com.kozik.MPGK.services.ConnectionService;
 import com.kozik.MPGK.services.DeviceService;
-import com.kozik.MPGK.services.InspectionTypeService;
+import com.kozik.MPGK.services.OverviewTypeService;
 import com.kozik.MPGK.services.PersonService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class ConnectionController {
 
     @Autowired private ConnectionService connectionService;
-    @Autowired private InspectionTypeService inspectionTypeService;
+    @Autowired private OverviewTypeService overviewTypeService;
     @Autowired private DeviceService deviceService;
     @Autowired private PersonService personService;
 
@@ -38,12 +38,12 @@ public class ConnectionController {
 
     @GetMapping(value = "/connection/add")
     public String add(Model model){
-        List<InspectionType> inspectionsType = inspectionTypeService.listAll();
+        List<OverviewType> overviewTypes = overviewTypeService.listAll();
         List<Device> devices = deviceService.listAll();
         List<Person> persons = personService.listAll();
         Connection connection = new Connection();
         model.addAttribute("connection", connection);
-        model.addAttribute("inspectionsType", inspectionsType);
+        model.addAttribute("overviewTypes", overviewTypes);
         model.addAttribute("devices", devices);
         model.addAttribute("persons", persons);
         return "views/connection/add";
@@ -51,10 +51,10 @@ public class ConnectionController {
 
     @PostMapping(value = "/connection/add")
     public String add(@ModelAttribute("connection")Connection connection,
-    @RequestParam(name = "inspectionType", required = false)InspectionType inspectionType,
+    @RequestParam(name = "overviewType", required = false)OverviewType overviewType,
     @RequestParam(name = "device", required = false)Device device,
     @RequestParam(name = "persons", required = false)ArrayList<Person> persons){
-        connection.setInspectionType(inspectionType);
+        connection.setOverviewType(overviewType);
         connection.setDevice(device);
         connection.setPersons(persons);
         connectionService.save(connection);
@@ -63,12 +63,12 @@ public class ConnectionController {
 
     @GetMapping(value = "/connection/edit/{id}")
     public String edit(@PathVariable("id")Long id, Model model){
-        List<InspectionType> inspectionsType = inspectionTypeService.listAll();
+        List<OverviewType> overviewTypes = overviewTypeService.listAll();
         List<Device> devices = deviceService.listAll();
         List<Person> persons = personService.listAll();
         Connection connection = connectionService.get(id);
         model.addAttribute("connection", connection);
-        model.addAttribute("inspectionsType", inspectionsType);
+        model.addAttribute("overviewTypes", overviewTypes);
         model.addAttribute("devices", devices);
         model.addAttribute("persons", persons);
         return "views/connection/edit";
@@ -77,11 +77,11 @@ public class ConnectionController {
     @PostMapping(value = "/connection/edit/{id}")
     public String edit(@PathVariable("id")Long id,
     @ModelAttribute("connection")Connection connection,
-    @RequestParam(name = "inspectionType", required = false)InspectionType inspectionType,
+    @RequestParam(name = "overviewType", required = false)OverviewType overviewType,
     @RequestParam(name = "device", required = false)Device device,
     @RequestParam(name = "persons", required = false)ArrayList<Person> persons){
         connection.setConnectionId(id);
-        connection.setInspectionType(inspectionType);
+        connection.setOverviewType(overviewType);
         connection.setDevice(device);
         connection.setPersons(persons);
         connectionService.save(connection);

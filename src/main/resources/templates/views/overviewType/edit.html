@@ -8,12 +8,12 @@
 
     <body>
         <div layout:fragment="content" class="container mt-2">
-            <form th:action="@{|/inspectionType/edit/${id}|}" method="POST" th:object="${inspectionType}">
+            <form th:action="@{|/overviewType/edit/${id}|}" method="POST" th:object="${overviewType}">
                 <div class="row">
                     <div class="col-md-4 offset-md-4 text-center">
                         <div class="form-group">
                             <label>Nazwa</label>
-                            <input class="form-control" type="text" th:field="${inspectionType.name}" required />
+                            <input class="form-control" type="text" th:field="${overviewType.name}" required />
                         </div>
                     </div>
                 </div>

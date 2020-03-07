@@ -13,9 +13,9 @@ import javax.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name = "inspections_type")
+@Table(name = "overview_types")
 @Data
-public class InspectionType {
+public class OverviewType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,8 +25,8 @@ public class InspectionType {
     @Column(name = "name", nullable = false, length = 40)
     private String name;
 
-    @OneToMany(mappedBy = "inspectionType")
+    @OneToMany(mappedBy = "overviewType")
     private List<Connection> connections;
 
-    public InspectionType() {}
+    public OverviewType() {}
 }

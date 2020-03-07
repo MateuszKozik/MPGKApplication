@@ -22,17 +22,17 @@
                     <div class="col-md-4 offset-md-4 text-center"> 
                         <div class="form-group">  
                             <label> Rodzaj przeglądu </label>
-                            <select class="form-control" name="inspectionType">
+                            <select class="form-control" name="overviewType">
                                 <option
-                                    th:value="${connection.inspectionType} ? ${connection.inspectionType.typeId} : ''" 
-                                    th:text="${connection.inspectionType} ? ${connection.inspectionType.name} : 'Wybierz rodzaj'">          
+                                    th:value="${connection.overviewType} ? ${connection.overviewType.typeId} : ''" 
+                                    th:text="${connection.overviewType} ? ${connection.overviewType.name} : 'Wybierz rodzaj'">          
                                 </option>
                                 <option value="">
                                     Wybierz rodzaj
                                 </option>
-                                <option th:each="inspectionType : ${inspectionsType}"
-                                        th:value="${inspectionType.typeId}"
-                                        th:text="${inspectionType.name}">
+                                <option th:each="overviewType : ${overviewType}"
+                                        th:value="${overviewType.typeId}"
+                                        th:text="${overviewType.name}">
                                 </option>
                             </select>
                         </div>  
