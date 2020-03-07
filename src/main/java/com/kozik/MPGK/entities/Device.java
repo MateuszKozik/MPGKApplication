@@ -28,7 +28,7 @@ public class Device {
     @Column(name = "status", nullable = false)
     private Boolean status;
 
-    @Column(name = "tpye", nullable = false)
+    @Column(name = "type", nullable = false)
     private String type;
     
     @OneToMany(mappedBy = "device")
