@@ -56,7 +56,7 @@ public class ConnectionController {
     @RequestParam(name = "persons", required = false)ArrayList<Person> persons){
         connection.setInspectionType(inspectionType);
         connection.setDevice(device);
-        connection.setPerson(persons);
+        connection.setPersons(persons);
         connectionService.save(connection);
         return "redirect:/connection/list";
     }
@@ -83,7 +83,7 @@ public class ConnectionController {
         connection.setConnectionId(id);
         connection.setInspectionType(inspectionType);
         connection.setDevice(device);
-        connection.setPerson(persons);
+        connection.setPersons(persons);
         connectionService.save(connection);
         return "redirect:/connection/list";
     }
