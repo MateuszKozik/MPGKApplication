@@ -28,6 +28,9 @@ public class Device {
     @Column(name = "status", nullable = false)
     private Boolean status;
 
+    @Column(name = "tpye", nullable = false)
+    private String type;
+    
     @OneToMany(mappedBy = "device")
     private List<FluidRegistry> fluidsRegistry;
 
