@@ -32,6 +32,25 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="col-md-4 offset-md-4 text-center">
+                        <div class="form-group">
+                            <label>Typ urządzenia</label>
+                            <div class="form-group"> 
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" th:field="${device.type}" value="true" required>
+                                    <label class="form-check-label"> Z przeglądem </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" th:field="${device.type}" value="false">
+                                    <label class="form-check-label"> Bez przeglądu </label>
+                                </div>
+                            </div>
+                         </div>
+                    </div>
+                </div>
+                
                 <div class="row">
                     <div class="col-md-12 text-center">
                         <button type="submit" class="btn btn-primary">Zapisz</button>

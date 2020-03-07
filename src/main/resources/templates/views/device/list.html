@@ -18,7 +18,8 @@
                     <thead class="thead-dark">
                         <tr  class="active">
                             <th>Nazwa</th>  
-                            <th>Status</th>  
+                            <th>Status</th> 
+                            <th>Typ urządzenia</th> 
                             <th>Akcje</th>
                         </tr>
                     </thead>
@@ -28,6 +29,10 @@
                             <td> 
                                 <b th:if="${device.status} == true">Aktywne</b> 
                                 <b th:unless="${device.status} == true">Nieaktywne</b> 
+                            </td>
+                            <td> 
+                                <b th:if="${device.type} == true">Z przeglądem</b> 
+                                <b th:unless="${device.type} == true">Bez przeglądu</b> 
                             </td>
                             <td>
                                 <a class="btn btn-primary my-1" th:href="@{'delete/' + ${device.deviceId}}">Usuń</a>
