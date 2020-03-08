@@ -21,11 +21,19 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public void savee(User user){
+        userRepository.save(user);
+    }
+
     public User get(String username){
         return userRepository.findById(username).get();
     }
 
     public void delete(String username){
         userRepository.deleteById(username);
+    }
+
+    public Boolean isUserExist(String username){
+        return userRepository.existsById(username);
     }
 }
