@@ -27,4 +27,8 @@ public class OverviewService {
     public void delete(Long id){
         overviewRepository.deleteById(id);
     }
+
+    public Boolean isOverviewExist(Long id){
+        return overviewRepository.existsById(id);
+    }
 }
