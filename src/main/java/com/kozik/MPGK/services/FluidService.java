@@ -27,4 +27,8 @@ public class FluidService {
     public void delete(Long id){
         fluidRepository.deleteById(id);
     }
+
+    public Boolean isFluidExist(Long id){
+        return fluidRepository.existsById(id);
+    }
 }
