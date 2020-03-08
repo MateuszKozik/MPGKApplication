@@ -27,4 +27,8 @@ public class ActivityGroupService {
     public void delete(Long id){
         activityGroupRepository.deleteById(id);
     }
+
+    public Boolean isActivityGroupExist(Long id){
+        return activityGroupRepository.existsById(id);
+    }
 }
