@@ -27,4 +27,8 @@ public class PersonService {
     public void delete(Long id){
         personRepository.deleteById(id);
     }
+
+    public Boolean isPersonExist(Long id){
+        return personRepository.existsById(id);
+    }
 }
