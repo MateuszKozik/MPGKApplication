@@ -21,7 +21,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("/api")
-public class PersonRestController {
+public class PersonController {
 
     @Autowired private PersonService personService;
 
