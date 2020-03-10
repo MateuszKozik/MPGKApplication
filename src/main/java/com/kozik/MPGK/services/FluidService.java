@@ -31,4 +31,11 @@ public class FluidService {
     public Boolean isFluidExist(Long id){
         return fluidRepository.existsById(id);
     }
+
+    public Fluid update(Long id, Fluid fluid){
+        Fluid currentFluid = get(id);
+        currentFluid.setName(fluid.getName());
+        save(currentFluid);
+        return currentFluid;
+    }
 }
