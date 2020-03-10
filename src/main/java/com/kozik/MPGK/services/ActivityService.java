@@ -31,4 +31,15 @@ public class ActivityService {
     public Boolean isActivityExist(Long id){
         return activityRepository.existsById(id);
     }
+
+    public Activity update(Long id, Activity activity){
+        Activity currentActivity = get(id);
+        currentActivity.setName(activity.getName());
+        currentActivity.setType(activity.getType());
+        currentActivity.setEmsr(activity.getEmsr());
+        currentActivity.setSetting(activity.getSetting());
+        save(currentActivity);
+        
+        return currentActivity;
+    }
 }
