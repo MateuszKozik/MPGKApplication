@@ -68,9 +68,7 @@ public class FluidController {
             return new ResponseEntity<>(new ErrorMessage("Unable to update. Fluid with id " + fluidId + " not found."),
             HttpStatus.NOT_FOUND);
         }
-        Fluid currentFluid = fluidService.get(fluidId);
-        currentFluid.setName(fluid.getName());
-        fluidService.save(currentFluid);
+        Fluid currentFluid = fluidService.update(fluidId, fluid);
         return new ResponseEntity<Fluid>(currentFluid, HttpStatus.OK);
     }
 
