@@ -66,7 +66,7 @@ public class FluidRegistryController {
     @PutMapping("fluid-registries/{registryId}")
     public ResponseEntity<?> updateFluidRegistry(@PathVariable("registryId")Long registryId, @RequestBody FluidRegistry fluidRegistry){
         if(!fluidRegistryService.isFluidRegistryExist(registryId)){
-            return new ResponseEntity<>(new ErrorMessage("Registry with id " + registryId + " not found."),
+            return new ResponseEntity<>(new ErrorMessage("Unable to update. Registry with id " + registryId + " not found."),
             HttpStatus.NOT_FOUND);
         }
         FluidRegistry currentFluidRegistry = fluidRegistryService.update(registryId, fluidRegistry);
@@ -77,7 +77,7 @@ public class FluidRegistryController {
     @DeleteMapping("fluid-registries/{registryId}")
     public ResponseEntity<?> deleteFluidRegistry(@PathVariable("registryId")Long registryId){
         if(!fluidRegistryService.isFluidRegistryExist(registryId)){
-            return new ResponseEntity<>(new ErrorMessage("Registry with id " + registryId + " not found."),
+            return new ResponseEntity<>(new ErrorMessage("Unable to delete. Registry with id " + registryId + " not found."),
             HttpStatus.NOT_FOUND);
         }
         fluidRegistryService.delete(registryId);
