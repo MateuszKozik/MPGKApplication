@@ -31,4 +31,12 @@ public class ActivityGroupService {
     public Boolean isActivityGroupExist(Long id){
         return activityGroupRepository.existsById(id);
     }
+
+    public ActivityGroup update(Long id, ActivityGroup activityGroup){
+        ActivityGroup currentActivityGroup = get(id);
+        currentActivityGroup.setName(activityGroup.getName());
+        save(currentActivityGroup);
+
+        return currentActivityGroup;
+    }
 }
