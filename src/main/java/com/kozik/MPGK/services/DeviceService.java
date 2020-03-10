@@ -28,4 +28,8 @@ public class DeviceService {
     public void delete(Long id){
         deviceRepository.deleteById(id);
     }
+
+    public Boolean isDeviceExist(Long id){
+       return deviceRepository.existsById(id);
+    }
 }
