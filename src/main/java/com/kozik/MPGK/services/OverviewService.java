@@ -31,4 +31,16 @@ public class OverviewService {
     public Boolean isOverviewExist(Long id){
         return overviewRepository.existsById(id);
     }
+
+    public Overview update(Long id,Overview overview){
+        Overview currnetOverview = get(id);
+        currnetOverview.setStatus(overview.getStatus());
+        currnetOverview.setStartTime(overview.getStartTime());
+        currnetOverview.setEndTime(overview.getEndTime());
+        currnetOverview.setParameter(overview.getParameter());
+        currnetOverview.setComment(overview.getComment());
+        save(currnetOverview);
+
+        return currnetOverview;
+    }
 }
