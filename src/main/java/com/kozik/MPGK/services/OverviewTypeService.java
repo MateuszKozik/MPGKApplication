@@ -17,8 +17,8 @@ public class OverviewTypeService {
         return overviewTypeRepository.findAll();
     }
 
-    public void save(OverviewType inspectionType){
-        overviewTypeRepository.save(inspectionType);
+    public void save(OverviewType overviewType){
+        overviewTypeRepository.save(overviewType);
     }
 
     public OverviewType get(Long id){
