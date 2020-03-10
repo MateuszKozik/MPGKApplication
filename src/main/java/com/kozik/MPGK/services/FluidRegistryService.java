@@ -28,4 +28,8 @@ public class FluidRegistryService {
     public void delete(Long id){
         fluidRegistryRepository.deleteById(id);
     }
+
+    public Boolean isFluidRegistryExist(Long id){
+        return fluidRegistryRepository.existsById(id);
+    }
 }
