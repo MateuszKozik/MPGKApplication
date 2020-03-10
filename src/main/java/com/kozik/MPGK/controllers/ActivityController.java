@@ -67,12 +67,7 @@ public class ActivityController {
             return new ResponseEntity<>(new ErrorMessage("Unable to update. Activity with id " + activityId + " not found."),
             HttpStatus.NOT_FOUND);
         }
-        Activity currentActivity = activityService.get(activityId);
-        currentActivity.setName(activity.getName());
-        currentActivity.setType(activity.getType());
-        currentActivity.setEmsr(activity.getEmsr());
-        currentActivity.setSetting(activity.getSetting());
-        activityService.save(currentActivity);
+        Activity currentActivity = activityService.update(activityId, activity);      
         return new ResponseEntity<Activity>(currentActivity, HttpStatus.OK);
     }
 
