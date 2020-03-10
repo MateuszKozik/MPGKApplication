@@ -21,7 +21,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("/api")
-public class ActivityGroupRestController {
+public class ActivityGroupController {
 
     @Autowired private ActivityGroupService activityGroupService;
 
