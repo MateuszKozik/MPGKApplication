@@ -31,4 +31,13 @@ public class PersonService {
     public Boolean isPersonExist(Long id){
         return personRepository.existsById(id);
     }
+
+    public Person update(Long id, Person person){
+        Person currentPerson = get(id);
+        currentPerson.setName(person.getName());
+        currentPerson.setSurname(person.getSurname());
+        save(currentPerson);
+
+        return currentPerson;
+    }
 }
