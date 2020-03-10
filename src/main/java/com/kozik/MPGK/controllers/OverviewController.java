@@ -21,7 +21,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("/api")
-public class OverviewRestController {
+public class OverviewController {
 
     @Autowired private OverviewService overviewService;
 
