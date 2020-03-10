@@ -36,4 +36,15 @@ public class UserService {
     public Boolean isUserExist(String username){
         return userRepository.existsById(username);
     }
+
+    public User update(String username,User user){
+        User currentUser = get(username);
+        currentUser.setUsername(user.getUsername());
+        currentUser.setPassword(user.getPassword());
+        currentUser.setEnabled(user.getEnabled());
+        savee(currentUser);
+
+        return currentUser;
+
+    }
 }
