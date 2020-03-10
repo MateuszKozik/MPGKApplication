@@ -67,9 +67,7 @@ public class ActivityGroupController {
             return new ResponseEntity<>(new ErrorMessage("Unable to update. Group with id " + groupId + " not found."),
             HttpStatus.NOT_FOUND);
         }
-        ActivityGroup currentActivityGroup = activityGroupService.get(groupId);
-        currentActivityGroup.setName(activityGroup.getName());
-        activityGroupService.save(currentActivityGroup);
+        ActivityGroup currentActivityGroup = activityGroupService.update(groupId,activityGroup);
         return new ResponseEntity<ActivityGroup>(currentActivityGroup, HttpStatus.OK);
     }
 
