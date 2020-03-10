@@ -28,4 +28,8 @@ public class ConnectionService {
     public void delete(Long id){
         connectionRepository.deleteById(id);
     }
+
+    public Boolean isConnectionExist(Long id){
+        return connectionRepository.existsById(id);
+    }
 }
