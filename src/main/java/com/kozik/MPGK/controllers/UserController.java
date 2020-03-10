@@ -68,11 +68,7 @@ public class UserController {
             return new ResponseEntity<>(new ErrorMessage("Unable to update. User with name " + username + " not found."),
             HttpStatus.NOT_FOUND);
         }
-        User currentUser = userService.get(username);
-        currentUser.setUsername(user.getUsername());
-        currentUser.setPassword(user.getPassword());
-        currentUser.setEnabled(user.getEnabled());
-        userService.savee(currentUser);
+        User currentUser = userService.update(username,user);
         return new ResponseEntity<User>(currentUser, HttpStatus.OK);
     }
 
