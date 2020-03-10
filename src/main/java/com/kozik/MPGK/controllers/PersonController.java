@@ -67,10 +67,7 @@ public class PersonController {
             return new ResponseEntity<>(new ErrorMessage("Unable to update. Person with id " + personId + " not found."),
             HttpStatus.NOT_FOUND);
         }
-        Person currentPerson = personService.get(personId);
-        currentPerson.setName(person.getName());
-        currentPerson.setSurname(person.getSurname());
-        personService.save(currentPerson);
+        Person currentPerson = personService.update(personId,person);
         return new ResponseEntity<Person>(currentPerson, HttpStatus.OK);
     }
 
