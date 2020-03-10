@@ -27,7 +27,7 @@ public class FluidRegistryController {
     @Autowired private FluidRegistryService fluidRegistryService;
 
     //Get all fluid registries
-    @GetMapping("fluid-registries")
+    @GetMapping("/fluid-registries")
     public ResponseEntity<List<FluidRegistry>> getFluidRegistries(){
         List<FluidRegistry> fluidRegistries = fluidRegistryService.listAll();
         if(fluidRegistries.isEmpty()){
@@ -37,7 +37,7 @@ public class FluidRegistryController {
     }
 
     //Get single fluid registry
-    @GetMapping("fluid-registries/{registryId}")
+    @GetMapping("/fluid-registries/{registryId}")
     public ResponseEntity<?> getFluidRegistry(@PathVariable("registryId")Long registryId){
         if(!fluidRegistryService.isFluidRegistryExist(registryId)){
             return new ResponseEntity<>(new ErrorMessage("Registry with id " + registryId + " not found."),
@@ -48,7 +48,7 @@ public class FluidRegistryController {
     }
 
     //Create fluid registry
-    @PostMapping("fluid-registries")
+    @PostMapping("/fluid-registries")
     public ResponseEntity<?> createFluidRegistry(@RequestBody FluidRegistry fluidRegistry,
     UriComponentsBuilder builder){
         Long registryId = fluidRegistry.getRegistryId();
@@ -63,7 +63,7 @@ public class FluidRegistryController {
     }
 
     //Update fluid registry
-    @PutMapping("fluid-registries/{registryId}")
+    @PutMapping("/fluid-registries/{registryId}")
     public ResponseEntity<?> updateFluidRegistry(@PathVariable("registryId")Long registryId, @RequestBody FluidRegistry fluidRegistry){
         if(!fluidRegistryService.isFluidRegistryExist(registryId)){
             return new ResponseEntity<>(new ErrorMessage("Unable to update. Registry with id " + registryId + " not found."),
@@ -74,7 +74,7 @@ public class FluidRegistryController {
     }
 
     //Delete fluid registry
-    @DeleteMapping("fluid-registries/{registryId}")
+    @DeleteMapping("/fluid-registries/{registryId}")
     public ResponseEntity<?> deleteFluidRegistry(@PathVariable("registryId")Long registryId){
         if(!fluidRegistryService.isFluidRegistryExist(registryId)){
             return new ResponseEntity<>(new ErrorMessage("Unable to delete. Registry with id " + registryId + " not found."),
