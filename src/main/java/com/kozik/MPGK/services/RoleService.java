@@ -28,4 +28,8 @@ public class RoleService {
    public void delete(String name){
        roleRepository.deleteById(name);
    }
+
+   public Boolean isRoleExist(String name){
+       return roleRepository.existsById(name);
+   }
 }
