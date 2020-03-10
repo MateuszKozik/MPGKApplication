@@ -22,7 +22,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("/api")
-public class FluidRestController {
+public class FluidController {
 
     @Autowired private FluidService fluidService;
 
