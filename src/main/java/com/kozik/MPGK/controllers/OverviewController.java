@@ -67,13 +67,7 @@ public class OverviewController {
             return new ResponseEntity<>(new ErrorMessage("Unable to update. Overwiew with id " + overviewId + " not found."),
             HttpStatus.NOT_FOUND);
         }
-        Overview currentOverview = overviewService.get(overviewId);
-        currentOverview.setStatus(overview.getStatus());
-        currentOverview.setStartTime(overview.getStartTime());
-        currentOverview.setEndTime(overview.getEndTime());
-        currentOverview.setParameter(overview.getParameter());
-        currentOverview.setComment(overview.getComment());
-        overviewService.save(currentOverview);
+        Overview currentOverview = overviewService.update(overviewId,overview);
         return new ResponseEntity<Overview>(currentOverview, HttpStatus.OK);
     }
 
