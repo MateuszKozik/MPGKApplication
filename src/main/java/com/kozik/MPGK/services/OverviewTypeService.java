@@ -32,4 +32,11 @@ public class OverviewTypeService {
     public Boolean isOverviewTypeExist(Long id){
         return overviewTypeRepository.existsById(id);
     }
+
+    public OverviewType update(Long id, OverviewType overviewType){
+        OverviewType currentOverviewType = get(id);
+        currentOverviewType.setName(overviewType.getName());
+        save(currentOverviewType);
+        return currentOverviewType;
+    }
 }
