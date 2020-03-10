@@ -32,4 +32,11 @@ public class ConnectionService {
     public Boolean isConnectionExist(Long id){
         return connectionRepository.existsById(id);
     }
+
+    public Connection update(Long id, Connection connection){
+        Connection currentConnection = get(id);
+        currentConnection.setName(connection.getName());
+        save(currentConnection);
+        return currentConnection;
+    }
 }
