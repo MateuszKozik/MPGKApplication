@@ -28,4 +28,8 @@ public class OverviewTypeService {
     public void delete(Long id){
         overviewTypeRepository.deleteById(id);
     }
+
+    public Boolean isOverviewTypeExist(Long id){
+        return overviewTypeRepository.existsById(id);
+    }
 }
