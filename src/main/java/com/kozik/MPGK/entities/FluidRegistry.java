@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "fluids_registry")
+@Table(name = "fluid_registries")
 public class FluidRegistry {
 
     @Id

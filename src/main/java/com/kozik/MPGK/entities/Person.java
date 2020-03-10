@@ -48,5 +48,5 @@ public class Person{
     private List<Overview> overviewSupervisors;
 
     @OneToMany(mappedBy = "person") 
-    private List<FluidRegistry> fluidsRegistry;
+    private List<FluidRegistry> fluidRegistries;
 }

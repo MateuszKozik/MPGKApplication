@@ -29,5 +29,5 @@ public class Fluid {
     private String name;
 
     @OneToMany(mappedBy = "fluid")
-    private List<FluidRegistry> fluidsRegistry;
+    private List<FluidRegistry> fluidRegistries;
 }

@@ -34,7 +34,7 @@ public class Device {
     private Boolean type;
     
     @OneToMany(mappedBy = "device")
-    private List<FluidRegistry> fluidsRegistry;
+    private List<FluidRegistry> fluidRegistries;
 
     @OneToMany(mappedBy = "device")
     private List<Connection> connections;
