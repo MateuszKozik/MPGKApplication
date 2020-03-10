@@ -32,4 +32,13 @@ public class DeviceService {
     public Boolean isDeviceExist(Long id){
        return deviceRepository.existsById(id);
     }
+
+    public Device update(Long id, Device device){
+        Device currentDevice = get(id);
+        currentDevice.setName(device.getName());
+        currentDevice.setStatus(device.getStatus());
+        currentDevice.setType(device.getType());
+        save(currentDevice);
+        return currentDevice;
+    }
 }
