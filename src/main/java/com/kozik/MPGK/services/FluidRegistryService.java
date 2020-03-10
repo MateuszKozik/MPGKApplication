@@ -32,4 +32,12 @@ public class FluidRegistryService {
     public Boolean isFluidRegistryExist(Long id){
         return fluidRegistryRepository.existsById(id);
     }
+
+    public FluidRegistry update(Long id, FluidRegistry fluidRegistry){
+        FluidRegistry currentFluidRegistry = get(id);
+        currentFluidRegistry.setQuantity(fluidRegistry.getQuantity());
+        currentFluidRegistry.setDatetime(fluidRegistry.getDatetime());
+        save(currentFluidRegistry);
+        return currentFluidRegistry;
+    }
 }
