@@ -4,10 +4,9 @@ import java.util.List;
 
 import com.kozik.MPGK.entities.Device;
 import com.kozik.MPGK.services.DeviceService;
-import com.kozik.MPGK.utilities.ErrorMessage;
+import com.kozik.MPGK.utilities.Message;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,68 +17,52 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/devices")
 public class DeviceController {
 
-    @Autowired private DeviceService deviceService;
+    @Autowired
+    private DeviceService deviceService;
 
-    //Get all devices
-    @GetMapping("/devices")
-    public ResponseEntity<List<Device>> getDevices(){
+    // Get all devices
+    @GetMapping("")
+    public ResponseEntity<List<Device>> getDevices() {
+
         List<Device> devices = deviceService.listAll();
-        if(devices.isEmpty()){
+        if (devices.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<List<Device>>(devices, HttpStatus.OK);
     }
 
-    //Get single device
-    @GetMapping("/devices/{deviceId}")
-    public ResponseEntity<?> getDevice(@PathVariable("deviceId")Long deviceId){
-        if(!deviceService.isDeviceExist(deviceId)){
-            return new ResponseEntity<>(new ErrorMessage("Device with id " + deviceId + " not found."),
-            HttpStatus.NOT_FOUND);
-        }
-        Device device = deviceService.get(deviceId);
-        return new ResponseEntity<Device>(device, HttpStatus.OK);
+    // Get single device
+    @GetMapping("/{deviceId}")
+    public ResponseEntity<?> getDevice(@PathVariable Long deviceId) {
+
+        return new ResponseEntity<Device>(deviceService.get(deviceId), HttpStatus.OK);
     }
 
-    //Create device
-    @PostMapping("/devices")
-    public ResponseEntity<?> createDevice(@RequestBody Device device, UriComponentsBuilder builder){
-        Long deviceId = device.getDeviceId();
-        if(deviceId != null){
-            return new ResponseEntity<>(new ErrorMessage("Unable to create. Device with id " + deviceId
-            + " already exist."), HttpStatus.CONFLICT);
-        }
-        deviceService.save(device);
-        HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(builder.path("/api/devices/{deviceId}").buildAndExpand(device.getDeviceId()).toUri());
-        return new ResponseEntity<String>(headers, HttpStatus.CREATED);
+    // Create device
+    @PostMapping("")
+    public ResponseEntity<?> createDevice(@RequestBody Device device) {
+
+        return new ResponseEntity<Device>(deviceService.save(device), HttpStatus.CREATED);
     }
 
-    //Update device
-    @PutMapping("/devices/{deviceId}")
-    public ResponseEntity<?> updateDevice(@PathVariable("deviceId")Long deviceId, @RequestBody Device device){
-        if(!deviceService.isDeviceExist(deviceId)){
-            return new ResponseEntity<>(new ErrorMessage("Unable to update. Device with id " + deviceId + " not found."),
-            HttpStatus.NOT_FOUND);
-        }
-        Device currentDevice = deviceService.update(deviceId, device);
-        return new ResponseEntity<Device>(currentDevice, HttpStatus.OK);
+    // Update device
+    @PutMapping("/{deviceId}")
+    public ResponseEntity<?> updateDevice(@PathVariable Long deviceId, @RequestBody Device device) {
+
+        return new ResponseEntity<Device>(deviceService.update(deviceId, device), HttpStatus.OK);
     }
 
-    //Delete device
-    @DeleteMapping("/devices/{deviceId}")
-    public ResponseEntity<?> deleteDevice(@PathVariable("deviceId")Long deviceId){
-        if(!deviceService.isDeviceExist(deviceId)){
-            return new ResponseEntity<>(new ErrorMessage("Unable to delete. Device with id " + deviceId + " not found."),
-            HttpStatus.NOT_FOUND);
-        } 
+    // Delete device
+    @DeleteMapping("/{deviceId}")
+    public ResponseEntity<?> deleteDevice(@PathVariable("deviceId") Long deviceId) {
+
         deviceService.delete(deviceId);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<Message>(new Message("Device with id: " + deviceId + " has been removed"),
+                HttpStatus.OK);
     }
 }
