@@ -4,5 +4,5 @@ import deviceReducer from "./deviceReducer";
 
 export default combineReducers({
     errors: errorReducer,
-    devices: deviceReducer
+    device: deviceReducer
 });
