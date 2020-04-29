@@ -34,7 +34,7 @@ public class Device {
     @Column(name = "status", nullable = false)
     private Boolean status;
 
-    @NotNull(message = "Wybór czy urządzenie ma mieć przeglądy jest wymagane")
+    @NotNull(message = "Należy wybrać odpowiednią opcję")
     @Column(name = "type", nullable = false)
     private Boolean type;
 
