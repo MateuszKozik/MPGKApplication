@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { addDevice } from "../../actions/deviceActions";
+import classnames from "classnames";
 
 class AddDevice extends Component {
     constructor() {
@@ -9,8 +10,9 @@ class AddDevice extends Component {
 
         this.state = {
             name: "",
-            type: "true",
-            status: "true"
+            type: "",
+            status: "",
+            errors: {}
         };
 
         this.onChange = this.onChange.bind(this);
@@ -33,7 +35,17 @@ class AddDevice extends Component {
         this.props.addDevice(newDevice, this.props.history);
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.errors) {
+            this.setState({
+                errors: nextProps.errors
+            });
+        }
+    }
+
     render() {
+        const { errors } = this.state;
+
         return (
             <div className="container mt-4">
                 <h1 className="h2">Dodaj urządzenie</h1>
@@ -42,13 +54,20 @@ class AddDevice extends Component {
                         <div className="col-md-4 offset-md-4 text-center">
                             <div className="form-group">
                                 <input
-                                    className="form-control"
+                                    className={classnames("form-control", {
+                                        "is-invalid": errors.name
+                                    })}
                                     name="name"
                                     type="text"
                                     value={this.state.name}
                                     onChange={this.onChange}
                                     placeholder="Nazwa urządzenia"
                                 />
+                                {errors.name && (
+                                    <div className="invalid-feedback">
+                                        {errors.name}
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>
@@ -58,9 +77,12 @@ class AddDevice extends Component {
                             <div className="form-group ">
                                 <label>Status urządzenia</label>
                                 <br />
-                                <div className="form-check form-check-inline">
+                                <div className="form-check">
                                     <input
-                                        className="form-check-input"
+                                        className={classnames(
+                                            "form-check-input",
+                                            { "is-invalid": errors.status }
+                                        )}
                                         type="radio"
                                         name="status"
                                         value="true"
@@ -71,9 +93,14 @@ class AddDevice extends Component {
                                         Aktywne
                                     </label>
                                 </div>
-                                <div className="form-check form-check-inline">
+                                <div className="form-check">
                                     <input
-                                        className="form-check-input"
+                                        className={classnames(
+                                            "form-check-input",
+                                            {
+                                                "is-invalid": errors.status
+                                            }
+                                        )}
                                         type="radio"
                                         name="status"
                                         value="false"
@@ -83,6 +110,11 @@ class AddDevice extends Component {
                                     <label className="form-check-label">
                                         Nieaktywne
                                     </label>
+                                    {errors.status && (
+                                        <div className="invalid-feedback">
+                                            {errors.status}
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>
@@ -93,9 +125,14 @@ class AddDevice extends Component {
                             <div className="form-group">
                                 <label>Typ urządzenia</label>
                                 <br />
-                                <div className="form-check form-check-inline">
+                                <div className="form-check">
                                     <input
-                                        className="form-check-input"
+                                        className={classnames(
+                                            "form-check-input",
+                                            {
+                                                "is-invalid": errors.type
+                                            }
+                                        )}
                                         type="radio"
                                         name="type"
                                         value="true"
@@ -106,9 +143,12 @@ class AddDevice extends Component {
                                         Z przeglądem
                                     </label>
                                 </div>
-                                <div className="form-check form-check-inline">
+                                <div className="form-check">
                                     <input
-                                        className="form-check-input"
+                                        className={classnames(
+                                            "form-check-input",
+                                            { "is-invalid": errors.type }
+                                        )}
                                         type="radio"
                                         name="type"
                                         value="false"
@@ -118,6 +158,11 @@ class AddDevice extends Component {
                                     <label className="form-check-label">
                                         Bez przeglądu
                                     </label>
+                                    {errors.type && (
+                                        <div className="invalid-feedback">
+                                            {errors.type}
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>
@@ -137,7 +182,11 @@ class AddDevice extends Component {
 }
 
 AddDevice.propTypes = {
-    addDevice: PropTypes.func.isRequired
+    addDevice: PropTypes.func.isRequired,
+    errors: PropTypes.object.isRequired
 };
 
-export default connect(null, { addDevice })(AddDevice);
+const mapStateToProps = (state) => ({
+    errors: state.errors
+});
+export default connect(mapStateToProps, { addDevice })(AddDevice);
