@@ -1,12 +1,13 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 class Header extends Component {
     render() {
         return (
-            <nav className="navbar navbar-dark bg-primary navbar-expand-lg fixed-top">
-                <a className="navbar-brand" href="/">
+            <nav className="navbar navbar-dark bg-primary navbar-expand-lg">
+                <Link className="navbar-brand" to="/">
                     MPGK
-                </a>
+                </Link>
 
                 <button
                     className="navbar-toggler"
@@ -23,9 +24,9 @@ class Header extends Component {
                 <div className="collapse navbar-collapse" id="mainmenu">
                     <ul className="navbar-nav mr-auto">
                         <li className="nav-item">
-                            <a className="nav-link" href="/devices">
+                            <Link className="nav-link" to="/devices">
                                 Urządzenia
-                            </a>
+                            </Link>
                         </li>
                     </ul>
                 </div>
