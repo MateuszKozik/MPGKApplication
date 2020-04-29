@@ -1,13 +1,10 @@
 package com.kozik.MPGK.utilities;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+@Data
+@AllArgsConstructor
 public class ErrorMessage {
-    private String errorMessage;
-
-    public ErrorMessage(String errorMessage){
-        this.errorMessage = errorMessage;
-    }
-
-    public String getErrorMessage() {
-        return errorMessage;
-    }   
+    private String message;
 }
