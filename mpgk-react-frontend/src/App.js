@@ -1,13 +1,18 @@
 import React from "react";
 import "./App.css";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Header from "./components/Layout/Header";
+import DeviceList from "./components/Device/DeviceList";
 
 function App() {
     return (
-        <div className="App">
-            <Header />
-        </div>
+        <Router>
+            <div className="App">
+                <Header />
+                <Route exact path="/devices" component={DeviceList} />
+            </div>
+        </Router>
     );
 }
 
