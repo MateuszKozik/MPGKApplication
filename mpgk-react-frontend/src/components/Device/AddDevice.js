@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { addDevice } from "../../actions/deviceActions";
 
 class AddDevice extends Component {
     constructor() {
@@ -27,7 +30,7 @@ class AddDevice extends Component {
             status: this.state.status
         };
 
-        console.log(newDevice);
+        this.props.addDevice(newDevice, this.props.history);
     }
 
     render() {
@@ -133,4 +136,8 @@ class AddDevice extends Component {
     }
 }
 
-export default AddDevice;
+AddDevice.propTypes = {
+    addDevice: PropTypes.func.isRequired
+};
+
+export default connect(null, { addDevice })(AddDevice);
