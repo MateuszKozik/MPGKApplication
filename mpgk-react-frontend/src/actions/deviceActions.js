@@ -36,3 +36,19 @@ export const getDevice = (id, history) => async (dispatch) => {
         history.push("/devices");
     }
 };
+
+export const updateDevice = (id, updateDevice, history) => async (dispatch) => {
+    try {
+        await axios.put(`/api/devices/${id}`, updateDevice);
+        history.push("/devices");
+        dispatch({
+            type: GET_ERRORS,
+            payload: {}
+        });
+    } catch (error) {
+        dispatch({
+            type: GET_ERRORS,
+            payload: error.response.data
+        });
+    }
+};

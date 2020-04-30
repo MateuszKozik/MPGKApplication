@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import classnames from "classnames";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { getDevice } from "../../actions/deviceActions";
+import { getDevice, updateDevice } from "../../actions/deviceActions";
 
 class UpdateDevice extends Component {
     constructor() {
@@ -12,10 +12,12 @@ class UpdateDevice extends Component {
             id: "",
             name: "",
             status: "",
-            type: ""
+            type: "",
+            errors: {}
         };
 
         this.onChange = this.onChange.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
     }
 
     onChange(e) {
@@ -29,7 +31,7 @@ class UpdateDevice extends Component {
 
     componentDidUpdate(props, state, snapshot) {
         if (this.props.device !== props.device) {
-            const { id, name, status, type } = this.props.device;
+            const { deviceId, name, status, type } = this.props.device;
             let editStatus;
             let editType;
             if (status === true) {
@@ -43,7 +45,7 @@ class UpdateDevice extends Component {
                 editType = "false";
             }
             this.setState({
-                id: id,
+                id: deviceId,
                 name: name,
                 status: editStatus,
                 type: editType
@@ -51,7 +53,33 @@ class UpdateDevice extends Component {
         }
     }
 
+    onSubmit(e) {
+        e.preventDefault();
+
+        const updatedDevice = {
+            id: this.state.id,
+            name: this.state.name,
+            status: this.state.status,
+            type: this.state.type
+        };
+
+        this.props.updateDevice(
+            this.state.id,
+            updatedDevice,
+            this.props.history
+        );
+    }
+
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (nextProps.errors !== prevState.errors) {
+            return { errors: nextProps.errors };
+        } else {
+            return null;
+        }
+    }
+
     render() {
+        const { errors } = this.props;
         return (
             <div className="container mt-4">
                 <h1 className="h2">Edytuj urządzenie</h1>
@@ -60,13 +88,20 @@ class UpdateDevice extends Component {
                         <div className="col-md-4 offset-md-4 text-center">
                             <div className="form-group">
                                 <input
-                                    className="form-control"
+                                    className={classnames("form-control", {
+                                        "is-invalid": errors.name
+                                    })}
                                     name="name"
                                     type="text"
                                     value={this.state.name || ""}
                                     onChange={this.onChange}
                                     placeholder="Nazwa urządzenia"
                                 />
+                                {errors.name && (
+                                    <div className="invalid-feedback">
+                                        {errors.name}
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>
@@ -78,7 +113,10 @@ class UpdateDevice extends Component {
                                 <br />
                                 <div className="form-check">
                                     <input
-                                        className="form-check-input"
+                                        className={classnames(
+                                            "form-check-input",
+                                            { "is-invalid": errors.status }
+                                        )}
                                         type="radio"
                                         name="status"
                                         value="true"
@@ -91,7 +129,10 @@ class UpdateDevice extends Component {
                                 </div>
                                 <div className="form-check">
                                     <input
-                                        className="form-check-input"
+                                        className={classnames(
+                                            "form-check-input",
+                                            { "is-invalid": errors.status }
+                                        )}
                                         type="radio"
                                         name="status"
                                         value="false"
@@ -101,6 +142,11 @@ class UpdateDevice extends Component {
                                     <label className="form-check-label">
                                         Nieaktywne
                                     </label>
+                                    {errors.status && (
+                                        <div className="invalid-feedback">
+                                            {errors.status}
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>
@@ -113,7 +159,12 @@ class UpdateDevice extends Component {
                                 <br />
                                 <div className="form-check">
                                     <input
-                                        className="form-check-input"
+                                        className={classnames(
+                                            "form-check-input",
+                                            {
+                                                "is-invalid": errors.type
+                                            }
+                                        )}
                                         type="radio"
                                         name="type"
                                         value="true"
@@ -126,7 +177,12 @@ class UpdateDevice extends Component {
                                 </div>
                                 <div className="form-check">
                                     <input
-                                        className="form-check-input"
+                                        className={classnames(
+                                            "form-check-input",
+                                            {
+                                                "is-invalid": errors.type
+                                            }
+                                        )}
                                         type="radio"
                                         name="type"
                                         value="false"
@@ -136,6 +192,11 @@ class UpdateDevice extends Component {
                                     <label className="form-check-label">
                                         Bez przeglądu
                                     </label>
+                                    {errors.type && (
+                                        <div className="invalid-feedback">
+                                            {errors.type}
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>
@@ -156,11 +217,16 @@ class UpdateDevice extends Component {
 
 UpdateDevice.propTypes = {
     getDevice: PropTypes.func.isRequired,
-    device: PropTypes.object.isRequired
+    device: PropTypes.object.isRequired,
+    updateDevice: PropTypes.func.isRequired,
+    errors: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
-    device: state.device.device
+    device: state.device.device,
+    errors: state.errors
 });
 
-export default connect(mapStateToProps, { getDevice })(UpdateDevice);
+export default connect(mapStateToProps, { getDevice, updateDevice })(
+    UpdateDevice
+);
