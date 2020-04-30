@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_ERRORS, GET_DEVICES } from "./types";
+import { GET_ERRORS, GET_DEVICES, GET_DEVICE } from "./types";
 
 export const addDevice = (device, history) => async (dispatch) => {
     try {
@@ -23,4 +23,16 @@ export const getDevices = () => async (dispatch) => {
         type: GET_DEVICES,
         payload: res.data
     });
+};
+
+export const getDevice = (id, history) => async (dispatch) => {
+    try {
+        const res = await axios.get(`/api/devices/${id}`);
+        dispatch({
+            type: GET_DEVICE,
+            payload: res.data
+        });
+    } catch (error) {
+        history.push("/devices");
+    }
 };

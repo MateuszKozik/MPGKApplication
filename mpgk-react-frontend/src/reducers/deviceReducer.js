@@ -1,4 +1,4 @@
-import { GET_DEVICES } from "../actions/types";
+import { GET_DEVICES, GET_DEVICE } from "../actions/types";
 
 const initialState = {
     devices: [],
@@ -11,6 +11,12 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 devices: action.payload
+            };
+
+        case GET_DEVICE:
+            return {
+                ...state,
+                device: action.payload
             };
 
         default:

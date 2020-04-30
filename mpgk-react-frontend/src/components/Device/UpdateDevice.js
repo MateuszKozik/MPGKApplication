@@ -2,8 +2,55 @@ import React, { Component } from "react";
 import classnames from "classnames";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { getDevice } from "../../actions/deviceActions";
 
 class UpdateDevice extends Component {
+    constructor() {
+        super();
+
+        this.state = {
+            id: "",
+            name: "",
+            status: "",
+            type: ""
+        };
+
+        this.onChange = this.onChange.bind(this);
+    }
+
+    onChange(e) {
+        this.setState({ [e.target.name]: e.target.value });
+    }
+
+    componentDidMount() {
+        const { id } = this.props.match.params;
+        this.props.getDevice(id, this.props.history);
+    }
+
+    componentDidUpdate(props, state, snapshot) {
+        if (this.props.device !== props.device) {
+            const { id, name, status, type } = this.props.device;
+            let editStatus;
+            let editType;
+            if (status === true) {
+                editStatus = "true";
+            } else {
+                editStatus = "false";
+            }
+            if (type === true) {
+                editType = "true";
+            } else {
+                editType = "false";
+            }
+            this.setState({
+                id: id,
+                name: name,
+                status: editStatus,
+                type: editType
+            });
+        }
+    }
+
     render() {
         return (
             <div className="container mt-4">
@@ -16,6 +63,8 @@ class UpdateDevice extends Component {
                                     className="form-control"
                                     name="name"
                                     type="text"
+                                    value={this.state.name || ""}
+                                    onChange={this.onChange}
                                     placeholder="Nazwa urządzenia"
                                 />
                             </div>
@@ -33,6 +82,8 @@ class UpdateDevice extends Component {
                                         type="radio"
                                         name="status"
                                         value="true"
+                                        checked={this.state.status === "true"}
+                                        onChange={this.onChange}
                                     />
                                     <label className="form-check-label">
                                         Aktywne
@@ -44,6 +95,8 @@ class UpdateDevice extends Component {
                                         type="radio"
                                         name="status"
                                         value="false"
+                                        checked={this.state.status === "false"}
+                                        onChange={this.onChange}
                                     />
                                     <label className="form-check-label">
                                         Nieaktywne
@@ -64,6 +117,8 @@ class UpdateDevice extends Component {
                                         type="radio"
                                         name="type"
                                         value="true"
+                                        checked={this.state.type === "true"}
+                                        onChange={this.onChange}
                                     />
                                     <label className="form-check-label">
                                         Z przeglądem
@@ -75,6 +130,8 @@ class UpdateDevice extends Component {
                                         type="radio"
                                         name="type"
                                         value="false"
+                                        checked={this.state.type === "false"}
+                                        onChange={this.onChange}
                                     />
                                     <label className="form-check-label">
                                         Bez przeglądu
@@ -97,4 +154,13 @@ class UpdateDevice extends Component {
     }
 }
 
-export default UpdateDevice;
+UpdateDevice.propTypes = {
+    getDevice: PropTypes.func.isRequired,
+    device: PropTypes.object.isRequired
+};
+
+const mapStateToProps = (state) => ({
+    device: state.device.device
+});
+
+export default connect(mapStateToProps, { getDevice })(UpdateDevice);
