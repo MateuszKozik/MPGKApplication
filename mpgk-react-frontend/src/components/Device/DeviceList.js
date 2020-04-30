@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import AddDeviceButton from "./AddDeviceButton";
 import { connect } from "react-redux";
-import { getDevices } from "../../actions/deviceActions";
+import { getDevices, deleteDevice } from "../../actions/deviceActions";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
@@ -9,6 +9,10 @@ class DeviceList extends Component {
     componentDidMount() {
         this.props.getDevices();
     }
+
+    onDeleteClick = (id) => {
+        this.props.deleteDevice(id);
+    };
 
     render() {
         const { devices } = this.props.device;
@@ -55,7 +59,13 @@ class DeviceList extends Component {
                                     >
                                         Edytuj
                                     </Link>
-                                    <button className="btn btn-danger ml-2 my-1">
+                                    <button
+                                        onClick={this.onDeleteClick.bind(
+                                            this,
+                                            device.deviceId
+                                        )}
+                                        className="btn btn-danger ml-2 my-1"
+                                    >
                                         Usuń
                                     </button>
                                 </td>
@@ -70,11 +80,14 @@ class DeviceList extends Component {
 
 DeviceList.propTypes = {
     device: PropTypes.object.isRequired,
-    getDevices: PropTypes.func.isRequired
+    getDevices: PropTypes.func.isRequired,
+    deleteDevice: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
     device: state.device
 });
 
-export default connect(mapStateToProps, { getDevices })(DeviceList);
+export default connect(mapStateToProps, { getDevices, deleteDevice })(
+    DeviceList
+);

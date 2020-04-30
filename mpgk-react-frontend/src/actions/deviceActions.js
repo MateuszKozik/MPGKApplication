@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_ERRORS, GET_DEVICES, GET_DEVICE } from "./types";
+import { GET_ERRORS, GET_DEVICES, GET_DEVICE, DELETE_DEVICE } from "./types";
 
 export const addDevice = (device, history) => async (dispatch) => {
     try {
@@ -49,6 +49,16 @@ export const updateDevice = (id, updateDevice, history) => async (dispatch) => {
         dispatch({
             type: GET_ERRORS,
             payload: error.response.data
+        });
+    }
+};
+
+export const deleteDevice = (id) => async (dispatch) => {
+    if (window.confirm("Czy jesteś pewny? Spowoduje to usunięcie urządzenia")) {
+        await axios.delete(`/api/devices/${id}`);
+        dispatch({
+            type: DELETE_DEVICE,
+            payload: id
         });
     }
 };

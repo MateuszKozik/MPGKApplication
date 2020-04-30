@@ -1,4 +1,4 @@
-import { GET_DEVICES, GET_DEVICE } from "../actions/types";
+import { GET_DEVICES, GET_DEVICE, DELETE_DEVICE } from "../actions/types";
 
 const initialState = {
     devices: [],
@@ -18,6 +18,15 @@ export default function (state = initialState, action) {
                 ...state,
                 device: action.payload
             };
+
+        case DELETE_DEVICE: {
+            return {
+                ...state,
+                devices: state.devices.filter(
+                    (device) => device.deviceId !== action.payload
+                )
+            };
+        }
 
         default:
             return state;
