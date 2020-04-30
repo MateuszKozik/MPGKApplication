@@ -3,6 +3,7 @@ import AddDeviceButton from "./AddDeviceButton";
 import { connect } from "react-redux";
 import { getDevices } from "../../actions/deviceActions";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 class DeviceList extends Component {
     componentDidMount() {
@@ -48,9 +49,12 @@ class DeviceList extends Component {
                                     )}
                                 </td>
                                 <td>
-                                    <button className="btn btn-primary my-1">
+                                    <Link
+                                        to={`/devices/update/${device.deviceId}`}
+                                        className="btn btn-primary my-1"
+                                    >
                                         Edytuj
-                                    </button>
+                                    </Link>
                                     <button className="btn btn-danger ml-2 my-1">
                                         Usuń
                                     </button>
