@@ -35,11 +35,11 @@ class AddDevice extends Component {
         this.props.addDevice(newDevice, this.props.history);
     }
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.errors) {
-            this.setState({
-                errors: nextProps.errors
-            });
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (nextProps.errors !== prevState.errors) {
+            return { errors: nextProps.errors };
+        } else {
+            return null;
         }
     }
 
