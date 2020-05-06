@@ -28,6 +28,11 @@ class Header extends Component {
                                 Urządzenia
                             </Link>
                         </li>
+                        <li className="navbar-nav mr-auto">
+                            <Link className="nav-link" to="/fluids">
+                                Płyny
+                            </Link>
+                        </li>
                     </ul>
                 </div>
             </nav>
