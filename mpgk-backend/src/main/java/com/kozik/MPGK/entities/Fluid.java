@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,6 +26,7 @@ public class Fluid {
     @Column(name = "fluid_id", nullable = false)
     private Long fluidId;
 
+    @NotNull(message = "Nazwa płynu jest wymagana")
     @Column(name = "name", nullable = false, length = 50)
     private String name;
 
