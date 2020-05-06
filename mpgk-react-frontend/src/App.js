@@ -9,6 +9,7 @@ import { Provider } from "react-redux";
 import store from "./store";
 import UpdateDevice from "./components/Device/UpdateDevice";
 import FluidList from "./components/Fluid/FluidList";
+import AddFluid from "./components/Fluid/AddFluid";
 
 function App() {
     return (
@@ -24,6 +25,7 @@ function App() {
                         component={UpdateDevice}
                     />
                     <Route exact path="/fluids" component={FluidList} />
+                    <Route exact path="/fluids/add" component={AddFluid} />
                 </div>
             </Router>
         </Provider>
