@@ -1,7 +1,5 @@
 package com.kozik.MPGK.controllers;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
 import com.kozik.MPGK.entities.Device;
@@ -34,13 +32,8 @@ public class DeviceController {
 
     // Get all devices
     @GetMapping("")
-    public ResponseEntity<List<Device>> getDevices() {
-
-        List<Device> devices = deviceService.listAll();
-        if (devices.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<List<Device>>(devices, HttpStatus.OK);
+    public Iterable<Device> getDevices() {
+        return deviceService.listAll();
     }
 
     // Get single device

@@ -1,7 +1,5 @@
 package com.kozik.MPGK.services;
 
-import java.util.List;
-
 import com.kozik.MPGK.entities.Device;
 import com.kozik.MPGK.exceptions.deviceExceptions.DeviceAlreadyExistException;
 import com.kozik.MPGK.exceptions.deviceExceptions.DeviceNotFoundException;
@@ -16,7 +14,7 @@ public class DeviceService {
     @Autowired
     private DeviceRepository deviceRepository;
 
-    public List<Device> listAll() {
+    public Iterable<Device> listAll() {
         return deviceRepository.findAll();
     }
 

@@ -1,7 +1,5 @@
 package com.kozik.MPGK.services;
 
-import java.util.List;
-
 import com.kozik.MPGK.entities.Fluid;
 import com.kozik.MPGK.exceptions.fluidExceptions.FluidAlreadyExistException;
 import com.kozik.MPGK.exceptions.fluidExceptions.FluidNotFoundException;
@@ -16,7 +14,7 @@ public class FluidService {
     @Autowired
     private FluidRepository fluidRepository;
 
-    public List<Fluid> listAll() {
+    public Iterable<Fluid> listAll() {
         return fluidRepository.findAll();
     }
 

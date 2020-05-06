@@ -1,7 +1,5 @@
 package com.kozik.MPGK.controllers;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
 import com.kozik.MPGK.entities.Fluid;
@@ -34,12 +32,8 @@ public class FluidController {
 
     // Get all fluids
     @GetMapping("")
-    public ResponseEntity<List<Fluid>> getFluids() {
-        List<Fluid> fluids = fluidService.listAll();
-        if (fluids.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<List<Fluid>>(fluids, HttpStatus.OK);
+    public Iterable<Fluid> getFluids() {
+        return fluidService.listAll();
     }
 
     // Get single fluid
