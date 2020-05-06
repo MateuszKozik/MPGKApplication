@@ -2,14 +2,17 @@ package com.kozik.MPGK.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import com.kozik.MPGK.entities.Fluid;
 import com.kozik.MPGK.services.FluidService;
-import com.kozik.MPGK.utilities.ErrorMessage;
+import com.kozik.MPGK.services.MapValidationErrorService;
+import com.kozik.MPGK.utilities.Message;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,68 +21,59 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/fluids")
 public class FluidController {
 
-    @Autowired private FluidService fluidService;
+    @Autowired
+    private FluidService fluidService;
 
-    //Get all fluids
-    @GetMapping("/fluids")
-    public ResponseEntity<List<Fluid>> getFluids(){
+    @Autowired
+    private MapValidationErrorService mapValidationErrorService;
+
+    // Get all fluids
+    @GetMapping("")
+    public ResponseEntity<List<Fluid>> getFluids() {
         List<Fluid> fluids = fluidService.listAll();
-        if(fluids.isEmpty()){
+        if (fluids.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<List<Fluid>>(fluids, HttpStatus.OK);
     }
 
-    //Get single fluid
-    @GetMapping("/fluids/{fluidId}")
-    public ResponseEntity<?> getFluid(@PathVariable("fluidId")Long fluidId){
-        if(!fluidService.isFluidExist(fluidId)){
-            return new ResponseEntity<>(new ErrorMessage("Fluid with id " + fluidId + " not found."),
-            HttpStatus.NOT_FOUND);
-        }
-        Fluid fluid = fluidService.get(fluidId);
-        return new ResponseEntity<Fluid>(fluid, HttpStatus.OK);
+    // Get single fluid
+    @GetMapping("/{fluidId}")
+    public ResponseEntity<?> getFluid(@PathVariable Long fluidId) {
+        return new ResponseEntity<Fluid>(fluidService.get(fluidId), HttpStatus.OK);
     }
 
-    //Create fluid
-    @PostMapping("/fluids")
-    public ResponseEntity<?> createFluid(@RequestBody Fluid fluid, UriComponentsBuilder builder){
-        Long fluidId = fluid.getFluidId();
-        if(fluidId != null){
-            return new ResponseEntity<>(new ErrorMessage("Unable to create. Fluid with id " + fluidId 
-            + " already exist."), HttpStatus.CONFLICT);
+    // Create fluid
+    @PostMapping("")
+    public ResponseEntity<?> createFluid(@Valid @RequestBody Fluid fluid, BindingResult result) {
+        if (result.hasErrors()) {
+            return mapValidationErrorService.MapValidationService(result);
         }
-        fluidService.save(fluid);
-        HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(builder.path("/api/fluids/{fluidId}").buildAndExpand(fluid.getFluidId()).toUri());
-        return new ResponseEntity<String>(headers, HttpStatus.CREATED);
+
+        return new ResponseEntity<Fluid>(fluidService.save(fluid), HttpStatus.CREATED);
     }
 
-    //Update fluid
-    @PutMapping("/fluids/{fluidId}")
-    public ResponseEntity<?> updateFluid(@PathVariable("fluidId")Long fluidId, @RequestBody Fluid fluid){
-        if(!fluidService.isFluidExist(fluidId)){
-            return new ResponseEntity<>(new ErrorMessage("Unable to update. Fluid with id " + fluidId + " not found."),
-            HttpStatus.NOT_FOUND);
+    // Update fluid
+    @PutMapping("/{fluidId}")
+    public ResponseEntity<?> updateFluid(@PathVariable Long fluidId, @Valid @RequestBody Fluid fluid,
+            BindingResult result) {
+        if (result.hasErrors()) {
+            return mapValidationErrorService.MapValidationService(result);
         }
-        Fluid currentFluid = fluidService.update(fluidId, fluid);
-        return new ResponseEntity<Fluid>(currentFluid, HttpStatus.OK);
+
+        return new ResponseEntity<Fluid>(fluidService.update(fluidId, fluid), HttpStatus.OK);
     }
 
-    //Delete fluid
-    @DeleteMapping("/fluids/{fluidId}")
-    public ResponseEntity<?> deleteFluid(@PathVariable("fluidId")Long fluidId){
-        if(!fluidService.isFluidExist(fluidId)){
-            return new ResponseEntity<>(new ErrorMessage("Unable to delete. Fluid with id " + fluidId + " not found"),
-            HttpStatus.NOT_FOUND);
-        }
+    // Delete fluid
+    @DeleteMapping("/{fluidId}")
+    public ResponseEntity<?> deleteFluid(@PathVariable("fluidId") Long fluidId) {
         fluidService.delete(fluidId);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<Message>(new Message("Fluid with id: " + fluidId + " has been removed."),
+                HttpStatus.OK);
     }
 }
