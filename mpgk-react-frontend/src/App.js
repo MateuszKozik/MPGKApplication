@@ -10,6 +10,7 @@ import store from "./store";
 import UpdateDevice from "./components/Device/UpdateDevice";
 import FluidList from "./components/Fluid/FluidList";
 import AddFluid from "./components/Fluid/AddFluid";
+import UpdateFluid from "./components/Fluid/UpdateFluid";
 
 function App() {
     return (
@@ -26,6 +27,11 @@ function App() {
                     />
                     <Route exact path="/fluids" component={FluidList} />
                     <Route exact path="/fluids/add" component={AddFluid} />
+                    <Route
+                        exact
+                        path="/fluids/update/:fluidId"
+                        component={UpdateFluid}
+                    />
                 </div>
             </Router>
         </Provider>
