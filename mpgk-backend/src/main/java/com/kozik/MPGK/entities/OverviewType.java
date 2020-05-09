@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,10 +21,11 @@ import lombok.NoArgsConstructor;
 public class OverviewType {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "type_id", nullable = false)
     private Long typeId;
 
+    @NotBlank(message = "Nazwa rodzaju przeglądu jest wymagana")
     @Column(name = "name", nullable = false, length = 40)
     private String name;
 
