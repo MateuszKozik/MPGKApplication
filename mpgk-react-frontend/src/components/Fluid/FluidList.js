@@ -20,7 +20,9 @@ class FluidList extends Component {
             <div className="container mt-2">
                 <h1 className="display-4 text-center mt-2">Płyny</h1>
                 <div className="row">
-                    <AddFluidButton />
+                    <div className="col-md-4 my-1">
+                        <AddFluidButton />
+                    </div>
                 </div>
                 <div className="table-responsive mt-2">
                     <table className="table ">

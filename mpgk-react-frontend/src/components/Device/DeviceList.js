@@ -20,7 +20,9 @@ class DeviceList extends Component {
             <div className="container">
                 <h1 className="display-4 text-center mt-2">Urządzenia</h1>
                 <div className="row">
-                    <AddDeviceButton className="float-left" />
+                    <div className="col-md-4 my-1">
+                        <AddDeviceButton />
+                    </div>
                 </div>
 
                 <table className="table mt-4">
