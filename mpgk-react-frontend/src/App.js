@@ -13,6 +13,7 @@ import AddFluid from "./components/Fluid/AddFluid";
 import UpdateFluid from "./components/Fluid/UpdateFluid";
 import OverviewTypeList from "./components/OverviewType/OverviewTypeList";
 import AddOverviewType from "./components/OverviewType/AddOverviewType";
+import UpdateOverviewType from "./components/OverviewType/UpdateOverviewType";
 
 function App() {
     return (
@@ -43,6 +44,11 @@ function App() {
                         exact
                         path="/overview-types/add"
                         component={AddOverviewType}
+                    />
+                    <Route
+                        exact
+                        path="/overview-types/update/:typeId"
+                        component={UpdateOverviewType}
                     />
                 </div>
             </Router>
