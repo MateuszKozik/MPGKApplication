@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import AddOvervievTypeButton from "./AddOverviewTypeButton";
 
 class OverviewTypeList extends Component {
     render() {
@@ -9,9 +10,7 @@ class OverviewTypeList extends Component {
                 </h1>
                 <div className="row">
                     <div className="col-md-4 my-1">
-                        <a href="add" className="btn btn-info" role="button">
-                            Dodaj rodzaj przeglądu
-                        </a>
+                        <AddOvervievTypeButton />
                     </div>
                 </div>
                 <div className="table-responsive mt-2">
