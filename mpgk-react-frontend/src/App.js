@@ -12,6 +12,7 @@ import FluidList from "./components/Fluid/FluidList";
 import AddFluid from "./components/Fluid/AddFluid";
 import UpdateFluid from "./components/Fluid/UpdateFluid";
 import OverviewTypeList from "./components/OverviewType/OverviewTypeList";
+import AddOverviewType from "./components/OverviewType/AddOverviewType";
 
 function App() {
     return (
@@ -37,6 +38,11 @@ function App() {
                         exact
                         path="/overview-types"
                         component={OverviewTypeList}
+                    />
+                    <Route
+                        exact
+                        path="/overview-types/add"
+                        component={AddOverviewType}
                     />
                 </div>
             </Router>
