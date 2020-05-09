@@ -22,7 +22,7 @@ import javax.persistence.OneToMany;
 public class Fluid {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "fluid_id", nullable = false)
     private Long fluidId;
 
