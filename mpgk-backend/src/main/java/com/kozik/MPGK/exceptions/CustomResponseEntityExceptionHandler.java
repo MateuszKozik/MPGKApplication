@@ -8,6 +8,10 @@ import com.kozik.MPGK.exceptions.fluidExceptions.FluidAlreadyExistException;
 import com.kozik.MPGK.exceptions.fluidExceptions.FluidAlreadyExistResponse;
 import com.kozik.MPGK.exceptions.fluidExceptions.FluidNotFoundException;
 import com.kozik.MPGK.exceptions.fluidExceptions.FluidNotFoundExceptionResponse;
+import com.kozik.MPGK.exceptions.overviewTypeExceptions.OverviewTypeAlreadyExistException;
+import com.kozik.MPGK.exceptions.overviewTypeExceptions.OverviewTypeAlreadyExistResponse;
+import com.kozik.MPGK.exceptions.overviewTypeExceptions.OverviewTypeNotFoundException;
+import com.kozik.MPGK.exceptions.overviewTypeExceptions.OverviewTypeNotFoundExceptionResonse;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,6 +48,21 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
     public final ResponseEntity<Object> handleFluidAlreadyExistException(FluidAlreadyExistException ex,
             WebRequest request) {
         FluidAlreadyExistResponse existResponse = new FluidAlreadyExistResponse(ex.getMessage());
+        return new ResponseEntity<Object>(existResponse, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler
+    public final ResponseEntity<Object> handleOverviewTypeNotFoundException(OverviewTypeNotFoundException ex,
+            WebRequest request) {
+        OverviewTypeNotFoundExceptionResonse exceptionResonse = new OverviewTypeNotFoundExceptionResonse(
+                ex.getMessage());
+        return new ResponseEntity<Object>(exceptionResonse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler
+    public final ResponseEntity<Object> handleOverviewTypeAlreadyExistException(OverviewTypeAlreadyExistException ex,
+            WebRequest request) {
+        OverviewTypeAlreadyExistResponse existResponse = new OverviewTypeAlreadyExistResponse(ex.getMessage());
         return new ResponseEntity<Object>(existResponse, HttpStatus.CONFLICT);
     }
 }
