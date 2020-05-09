@@ -33,6 +33,11 @@ class Header extends Component {
                                 Płyny
                             </Link>
                         </li>
+                        <li className="navbra-nav mr-auto">
+                            <Link className="nav-link" to="/overview-types">
+                                Rodzaje przeglądów
+                            </Link>
+                        </li>
                     </ul>
                 </div>
             </nav>

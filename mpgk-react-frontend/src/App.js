@@ -11,6 +11,7 @@ import UpdateDevice from "./components/Device/UpdateDevice";
 import FluidList from "./components/Fluid/FluidList";
 import AddFluid from "./components/Fluid/AddFluid";
 import UpdateFluid from "./components/Fluid/UpdateFluid";
+import OverviewTypeList from "./components/OverviewType/OverviewTypeList";
 
 function App() {
     return (
@@ -31,6 +32,11 @@ function App() {
                         exact
                         path="/fluids/update/:fluidId"
                         component={UpdateFluid}
+                    />
+                    <Route
+                        exact
+                        path="/overview-types"
+                        component={OverviewTypeList}
                     />
                 </div>
             </Router>
