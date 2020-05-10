@@ -1,5 +1,9 @@
 package com.kozik.MPGK.exceptions;
 
+import com.kozik.MPGK.exceptions.connectionExceptions.ConnectionAlreadyExistException;
+import com.kozik.MPGK.exceptions.connectionExceptions.ConnectionAlreadyExistResponse;
+import com.kozik.MPGK.exceptions.connectionExceptions.ConnectionNotFoundException;
+import com.kozik.MPGK.exceptions.connectionExceptions.ConnectionNotFoundExceptionResponse;
 import com.kozik.MPGK.exceptions.deviceExceptions.DeviceAlreadyExistException;
 import com.kozik.MPGK.exceptions.deviceExceptions.DeviceAlreadyExistResponse;
 import com.kozik.MPGK.exceptions.deviceExceptions.DeviceNotFoundException;
@@ -63,6 +67,21 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
     public final ResponseEntity<Object> handleOverviewTypeAlreadyExistException(OverviewTypeAlreadyExistException ex,
             WebRequest request) {
         OverviewTypeAlreadyExistResponse existResponse = new OverviewTypeAlreadyExistResponse(ex.getMessage());
+        return new ResponseEntity<Object>(existResponse, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler
+    public final ResponseEntity<Object> handleConnectionNotFoundException(ConnectionNotFoundException ex,
+            WebRequest request) {
+        ConnectionNotFoundExceptionResponse exceptionResponse = new ConnectionNotFoundExceptionResponse(
+                ex.getMessage());
+        return new ResponseEntity<Object>(exceptionResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler
+    public final ResponseEntity<Object> handleConnectionAlreadyExistException(ConnectionAlreadyExistException ex,
+            WebRequest request) {
+        ConnectionAlreadyExistResponse existResponse = new ConnectionAlreadyExistResponse(ex.getMessage());
         return new ResponseEntity<Object>(existResponse, HttpStatus.CONFLICT);
     }
 }
