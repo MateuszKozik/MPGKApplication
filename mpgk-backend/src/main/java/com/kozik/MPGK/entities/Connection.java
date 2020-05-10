@@ -25,7 +25,7 @@ import lombok.NoArgsConstructor;
 public class Connection {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "connection_id", nullable = false)
     private Long connectionId;
 
