@@ -1,8 +1,8 @@
 package com.kozik.MPGK.services;
 
-import java.util.List;
-
 import com.kozik.MPGK.entities.Connection;
+import com.kozik.MPGK.exceptions.connectionExceptions.ConnectionAlreadyExistException;
+import com.kozik.MPGK.exceptions.connectionExceptions.ConnectionNotFoundException;
 import com.kozik.MPGK.repositories.ConnectionRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,32 +11,39 @@ import org.springframework.stereotype.Service;
 @Service
 public class ConnectionService {
 
-    @Autowired private ConnectionRepository connectionRepository;
-    
-    public List<Connection> listAll(){
+    @Autowired
+    private ConnectionRepository connectionRepository;
+
+    public Iterable<Connection> listAll() {
         return connectionRepository.findAll();
     }
 
-    public void save(Connection connection){
-        connectionRepository.save(connection);
+    public Connection save(Connection connection) {
+        if (connection.getConnectionId() != null) {
+            throw new ConnectionAlreadyExistException(connection.getConnectionId());
+        }
+        return connectionRepository.save(connection);
     }
 
-    public Connection get(Long id){
-        return connectionRepository.findById(id).get();
+    public Connection get(Long connectionId) {
+        Connection connection = connectionRepository.findById(connectionId)
+                .orElseThrow(() -> new ConnectionNotFoundException(connectionId));
+        return connection;
     }
 
-    public void delete(Long id){
-        connectionRepository.deleteById(id);
+    public void delete(Long connectionId) {
+        connectionRepository.delete(get(connectionId));
     }
 
-    public Boolean isConnectionExist(Long id){
+    public Boolean isConnectionExist(Long id) {
         return connectionRepository.existsById(id);
     }
 
-    public Connection update(Long id, Connection connection){
-        Connection currentConnection = get(id);
-        currentConnection.setName(connection.getName());
-        save(currentConnection);
-        return currentConnection;
+    public Connection update(Long connectionId, Connection connection) {
+        Connection newConnection = connectionRepository.findById(connectionId).map(element -> {
+            element.setName(connection.getName());
+            return connectionRepository.save(element);
+        }).orElseThrow(() -> new ConnectionNotFoundException(connectionId));
+        return newConnection;
     }
 }

@@ -1,15 +1,16 @@
 package com.kozik.MPGK.controllers;
 
-import java.util.List;
+import javax.validation.Valid;
 
 import com.kozik.MPGK.entities.Connection;
 import com.kozik.MPGK.services.ConnectionService;
-import com.kozik.MPGK.utilities.ErrorMessage;
+import com.kozik.MPGK.services.MapValidationErrorService;
+import com.kozik.MPGK.utilities.Message;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,68 +19,53 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/connections")
 public class ConnectionController {
 
-    @Autowired private ConnectionService connectionService;
+    @Autowired
+    private ConnectionService connectionService;
 
-    //Get all connections
-    @GetMapping("/connections")
-    public ResponseEntity<List<Connection>> getConnections(){
-        List<Connection> connections = connectionService.listAll();
-        if(connections.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<List<Connection>>(connections, HttpStatus.OK);
+    @Autowired
+    private MapValidationErrorService mapValidationErrorService;
+
+    // Get all connections
+    @GetMapping("")
+    public Iterable<Connection> getConnections() {
+        return connectionService.listAll();
     }
 
-    //Get single connection
-    @GetMapping("/connections/{connectionId}")
-    public ResponseEntity<?> getConnection(@PathVariable("connectionId")Long connectionId){
-        if(!connectionService.isConnectionExist(connectionId)){
-            return new ResponseEntity<>(new ErrorMessage("Connection with id " + connectionId + " not found."),
-            HttpStatus.NOT_FOUND);
-        }
-        Connection connection = connectionService.get(connectionId);
-        return new ResponseEntity<Connection>(connection, HttpStatus.OK);
+    // Get single connection
+    @GetMapping("/{connectionId}")
+    public ResponseEntity<?> getConnection(@PathVariable Long connectionId) {
+        return new ResponseEntity<Connection>(connectionService.get(connectionId), HttpStatus.OK);
     }
 
-    //Create connection
-    @PostMapping("/connections")
-    public ResponseEntity<?> createConnection(@RequestBody Connection connection, UriComponentsBuilder builder){
-        Long connectionId = connection.getConnectionId();
-        if(connectionId != null){
-            return new ResponseEntity<>(new ErrorMessage("Unable to create. Connection with id " + connectionId 
-            + " already exist."), HttpStatus.CONFLICT);
-        }
-        connectionService.save(connection);
-        HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(builder.path("/api/connections/{connectionId}").buildAndExpand(connection.getConnectionId()).toUri());
-        return new ResponseEntity<String>(headers, HttpStatus.CREATED);
+    // Create connection
+    @PostMapping("")
+    public ResponseEntity<?> createConnection(@Valid @RequestBody Connection connection, BindingResult result) {
+        if (result.hasErrors())
+            return mapValidationErrorService.MapValidationService(result);
+
+        return new ResponseEntity<Connection>(connectionService.save(connection), HttpStatus.CREATED);
     }
 
-    //Update connection
-    @PutMapping("/connections/{connectionId}")
-    public ResponseEntity<?> updateConnection(@PathVariable("connectionId")Long connectionId, @RequestBody Connection connection){
-        if(!connectionService.isConnectionExist(connectionId)){
-            return new ResponseEntity<>(new ErrorMessage("Unable to update. Connection with id " + connectionId + " not found."),
-            HttpStatus.NOT_FOUND);
-        }
-        Connection currentConnection = connectionService.update(connectionId, connection);
-        return new ResponseEntity<Connection>(currentConnection, HttpStatus.OK);
+    // Update connection
+    @PutMapping("/{connectionId}")
+    public ResponseEntity<?> updateConnection(@PathVariable Long connectionId,
+            @Valid @RequestBody Connection connection, BindingResult result) {
+        if (result.hasErrors())
+            return mapValidationErrorService.MapValidationService(result);
+
+        return new ResponseEntity<Connection>(connectionService.update(connectionId, connection), HttpStatus.OK);
     }
 
-    //Delete connection
-    @DeleteMapping("/connections/{connectionId}")
-    public ResponseEntity<?> deleteConnection(@PathVariable("connectionId")Long connectionId){
-        if(!connectionService.isConnectionExist(connectionId)){
-            return new ResponseEntity<>(new ErrorMessage("Unable to delete. Connection with id " + connectionId + " not found."),
-            HttpStatus.NOT_FOUND);
-        }
+    // Delete connection
+    @DeleteMapping("/{connectionId}")
+    public ResponseEntity<?> deleteConnection(@PathVariable Long connectionId) {
         connectionService.delete(connectionId);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<Message>(new Message("Connection with id: " + connectionId + " has been removed."),
+                HttpStatus.OK);
     }
 }
