@@ -13,6 +13,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,6 +29,7 @@ public class Connection {
     @Column(name = "connection_id", nullable = false)
     private Long connectionId;
 
+    @NotBlank(message = "Nazwa powiązania jest wymagana")
     @Column(name = "name", nullable = false, length = 40)
     private String name;
 
@@ -39,13 +41,12 @@ public class Connection {
     @JoinColumn(name = "type_id", nullable = true)
     private OverviewType overviewType;
 
-    @OneToMany(mappedBy = "connection") 
+    @OneToMany(mappedBy = "connection")
     private List<ActivityGroup> activitiesGroups;
 
     @ManyToMany
     @JoinTable(name = "connections_persons", joinColumns = {
-        @JoinColumn(name = "connection_id", referencedColumnName = "connection_id")},
-        inverseJoinColumns = {
-            @JoinColumn(name = "person_id", referencedColumnName = "person_id")})
+            @JoinColumn(name = "connection_id", referencedColumnName = "connection_id") }, inverseJoinColumns = {
+                    @JoinColumn(name = "person_id", referencedColumnName = "person_id") })
     private List<Person> persons;
 }
