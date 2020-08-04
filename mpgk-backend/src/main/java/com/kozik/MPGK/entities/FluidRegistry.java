@@ -43,16 +43,20 @@ public class FluidRegistry {
     @JoinColumn(name = "person_id", nullable = true)
     private Person person;
 
-    public String getDatetime() {      
-        if(datetime !=null){
+    @ManyToOne
+    @JoinColumn(name = "place_id", nullable = true)
+    private FluidPlace fluidPlace;
+
+    public String getDatetime() {
+        if (datetime != null) {
             return datetime.toString();
-        }else{
+        } else {
             return "";
         }
     }
 
-    public void setDatetime(String datetime) {       
-        LocalDateTime formatted = LocalDateTime.parse(datetime,DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+    public void setDatetime(String datetime) {
+        LocalDateTime formatted = LocalDateTime.parse(datetime, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
         this.datetime = formatted;
     }
 }
