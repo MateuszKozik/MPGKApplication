@@ -1,42 +1,49 @@
 package com.kozik.MPGK.services;
 
-import java.util.List;
+
 
 import com.kozik.MPGK.entities.ActivityGroup;
 import com.kozik.MPGK.repositories.ActivityGroupRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.kozik.MPGK.exceptions.activityGroupExceptions.ActivityGroupAlreadyExistException;
+import com.kozik.MPGK.exceptions.activityGroupExceptions.ActivityGroupNotFoundException;
 
 @Service
 public class ActivityGroupService {
     @Autowired private ActivityGroupRepository activityGroupRepository;
 
-    public List<ActivityGroup> listAll(){
+    public Iterable<ActivityGroup> listAll(){
         return activityGroupRepository.findAll();
     }
 
-    public void save(ActivityGroup activityGroup){
-        activityGroupRepository.save(activityGroup);
+    public ActivityGroup save(ActivityGroup activityGroup) {
+        if (activityGroup.getGroupId() != null) {
+            throw new ActivityGroupAlreadyExistException(activityGroup.getGroupId());
+        }
+        return activityGroupRepository.save(activityGroup);
     }
 
-    public ActivityGroup get(Long id){
-        return activityGroupRepository.findById(id).get();
+    public ActivityGroup get(Long groupId) {
+        ActivityGroup activityGroup = activityGroupRepository.findById(groupId).orElseThrow(() -> new ActivityGroupNotFoundException(groupId));
+        return activityGroup;
     }
 
-    public void delete(Long id){
-        activityGroupRepository.deleteById(id);
+    public void delete(Long groupId) {
+        activityGroupRepository.delete(get(groupId));
     }
 
     public Boolean isActivityGroupExist(Long id){
         return activityGroupRepository.existsById(id);
     }
 
-    public ActivityGroup update(Long id, ActivityGroup activityGroup){
-        ActivityGroup currentActivityGroup = get(id);
-        currentActivityGroup.setName(activityGroup.getName());
-        save(currentActivityGroup);
+    public ActivityGroup update(Long groupId, ActivityGroup activityGroup) {
+        ActivityGroup newActivityGroup = activityGroupRepository.findById(groupId).map(element -> {
+            element.setName(activityGroup.getName());
+            return activityGroupRepository.save(element);
+        }).orElseThrow(() -> new ActivityGroupNotFoundException(groupId));
 
-        return currentActivityGroup;
+        return newActivityGroup;
     }
 }
