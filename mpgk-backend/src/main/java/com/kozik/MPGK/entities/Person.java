@@ -13,6 +13,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,9 +29,11 @@ public class Person{
     @Column(name = "person_id", nullable = false)
     private Long personId;
 
+    @NotBlank(message = "Imię jest wymagana")
     @Column(name = "name", nullable = false, length = 35)
     private String name;
 
+    @NotBlank(message = "Nazwisko jest wymagana")
     @Column(name = "surname", nullable = false, length = 35)
     private String surname;
     
