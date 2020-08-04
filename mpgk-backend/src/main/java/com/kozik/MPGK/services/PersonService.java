@@ -1,10 +1,11 @@
 package com.kozik.MPGK.services;
 
-import java.util.List;
+
 
 import com.kozik.MPGK.entities.Person;
 import com.kozik.MPGK.repositories.PersonRepository;
 import com.kozik.MPGK.exceptions.personExceptions.PersonAlreadyExistException;
+import com.kozik.MPGK.exceptions.personExceptions.PersonNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,24 +24,26 @@ public class PersonService {
         return personRepository.save(persId);
     }
 
-    public Person get(Long id){
-        return personRepository.findById(id).get();
+    public Person get(Long personId) {
+        Person person = personRepository.findById(personId).orElseThrow(() -> new PersonNotFoundException(personId));
+        return person;
     }
 
-    public void delete(Long id){
-        personRepository.deleteById(id);
+    public void delete(Long personId) {
+        personRepository.delete(get(personId));
     }
 
     public Boolean isPersonExist(Long id){
         return personRepository.existsById(id);
     }
 
-    public Person update(Long id, Person person){
-        Person currentPerson = get(id);
-        currentPerson.setName(person.getName());
-        currentPerson.setSurname(person.getSurname());
-        save(currentPerson);
+    public Person update(Long personId, Person person) {
+        Person newPerson = personRepository.findById(personId).map(element -> {
+            element.setName(person.getName());
+            element.setSurname(person.getSurname());
+            return personRepository.save(element);
+        }).orElseThrow(() -> new PersonNotFoundException(personId));
 
-        return currentPerson;
+        return newPerson;
     }
 }
