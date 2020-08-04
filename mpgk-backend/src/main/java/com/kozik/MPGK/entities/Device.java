@@ -34,10 +34,6 @@ public class Device {
     @Column(name = "status", nullable = false)
     private Boolean status;
 
-    @NotNull(message = "Należy wybrać odpowiednią opcję")
-    @Column(name = "type", nullable = false)
-    private Boolean type;
-
     @OneToMany(mappedBy = "device")
     private List<FluidRegistry> fluidRegistries;
 

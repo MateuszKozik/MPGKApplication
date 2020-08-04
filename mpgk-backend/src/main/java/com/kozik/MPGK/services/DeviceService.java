@@ -42,7 +42,6 @@ public class DeviceService {
         Device newDevice = deviceRepository.findById(deviceId).map(element -> {
             element.setName(device.getName());
             element.setStatus(device.getStatus());
-            element.setType(device.getType());
             return deviceRepository.save(element);
         }).orElseThrow(() -> new DeviceNotFoundException(deviceId));
 
