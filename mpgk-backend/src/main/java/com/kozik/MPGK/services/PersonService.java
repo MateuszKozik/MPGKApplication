@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.kozik.MPGK.entities.Person;
 import com.kozik.MPGK.repositories.PersonRepository;
-
+import com.kozik.MPGK.exceptions.personExceptions.PersonAlreadyExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,12 +12,15 @@ import org.springframework.stereotype.Service;
 public class PersonService {
     @Autowired private PersonRepository personRepository;
 
-    public List<Person> listAll(){
+    public Iterable<Person> listAll(){
         return personRepository.findAll();
     }
 
-    public void save(Person person){
-        personRepository.save(person);
+    public Person save(Person persId) {
+        if (persId.getPersonId() != null) {
+            throw new PersonAlreadyExistException(persId.getPersonId());
+        }
+        return personRepository.save(persId);
     }
 
     public Person get(Long id){
