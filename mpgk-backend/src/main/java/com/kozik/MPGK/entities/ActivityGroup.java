@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,6 +27,7 @@ public class ActivityGroup{
     @Column(name = "group_id", nullable = false)
     private Long groupId;
 
+    @NotBlank(message = "Nazwa czynności jest wymagana")
     @Column(name = "name", nullable = false, length = 100)
     private String name;
 
