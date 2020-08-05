@@ -16,6 +16,10 @@ import com.kozik.MPGK.exceptions.overviewTypeExceptions.OverviewTypeAlreadyExist
 import com.kozik.MPGK.exceptions.overviewTypeExceptions.OverviewTypeAlreadyExistResponse;
 import com.kozik.MPGK.exceptions.overviewTypeExceptions.OverviewTypeNotFoundException;
 import com.kozik.MPGK.exceptions.overviewTypeExceptions.OverviewTypeNotFoundExceptionResonse;
+import com.kozik.MPGK.exceptions.roleExceptions.RoleAlreadyExistException;
+import com.kozik.MPGK.exceptions.roleExceptions.RoleAlreadyExistResponse;
+import com.kozik.MPGK.exceptions.roleExceptions.RoleNotFoundException;
+import com.kozik.MPGK.exceptions.roleExceptions.RoleNotFoundExceptionResponse;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -82,6 +86,19 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
     public final ResponseEntity<Object> handleConnectionAlreadyExistException(ConnectionAlreadyExistException ex,
             WebRequest request) {
         ConnectionAlreadyExistResponse existResponse = new ConnectionAlreadyExistResponse(ex.getMessage());
+        return new ResponseEntity<Object>(existResponse, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler
+    public final ResponseEntity<Object> handleRoleNotFoundException(RoleNotFoundException ex, WebRequest request) {
+        RoleNotFoundExceptionResponse exceptionResponse = new RoleNotFoundExceptionResponse(ex.getMessage());
+        return new ResponseEntity<Object>(exceptionResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler
+    public final ResponseEntity<Object> handleRoleAlreadyExistException(RoleAlreadyExistException ex,
+            WebRequest request) {
+        RoleAlreadyExistResponse existResponse = new RoleAlreadyExistResponse(ex.getMessage());
         return new ResponseEntity<Object>(existResponse, HttpStatus.CONFLICT);
     }
 }
