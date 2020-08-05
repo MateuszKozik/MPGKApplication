@@ -48,6 +48,11 @@ class Header extends Component {
                                 Grupy czynności
                             </Link>
                         </li>
+                        <li className="navbra-nav mr-auto">
+                            <Link className="nav-link" to="/activities">
+                                Czynności
+                            </Link>
+                        </li>
                     </ul>
                 </div>
             </nav>
