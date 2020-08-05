@@ -43,6 +43,7 @@ class AddActivityGroup extends Component {
 
         return (
             <div className="container mt-2">
+                <h1 className="h2 mb-4">Dodaj grupę czynności</h1>
                 <form onSubmit={this.onSubmit}>
                     <div className="row">
                         <div className="col-md-4 offset-md-4 text-center">
