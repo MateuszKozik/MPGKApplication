@@ -17,6 +17,7 @@ import UpdateOverviewType from "./components/OverviewType/UpdateOverviewType";
 import PersonList from "./components/Person/PersonList";
 import AddPerson from "./components/Person/AddPerson";
 import UpdatePerson from "./components/Person/UpdatePerson";
+import ActivityGroupList from "./components/ActivityGroup/ActivityGroupList";
 
 function App() {
     return (
@@ -60,6 +61,7 @@ function App() {
                         path="/persons/update/:personId"
                         component={UpdatePerson}
                     />
+                    <Route exact path="/groups" component={ActivityGroupList} />
                     
                 </div>
             </Router>
