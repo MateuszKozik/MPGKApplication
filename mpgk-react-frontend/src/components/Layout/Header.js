@@ -38,6 +38,11 @@ class Header extends Component {
                                 Rodzaje przeglądów
                             </Link>
                         </li>
+                        <li className="navbra-nav mr-auto">
+                            <Link className="nav-link" to="/persons">
+                                Osoby
+                            </Link>
+                        </li>
                     </ul>
                 </div>
             </nav>
