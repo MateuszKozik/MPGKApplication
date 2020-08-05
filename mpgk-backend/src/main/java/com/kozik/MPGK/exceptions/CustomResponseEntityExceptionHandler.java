@@ -28,6 +28,10 @@ import com.kozik.MPGK.exceptions.roleExceptions.RoleAlreadyExistException;
 import com.kozik.MPGK.exceptions.roleExceptions.RoleAlreadyExistResponse;
 import com.kozik.MPGK.exceptions.roleExceptions.RoleNotFoundException;
 import com.kozik.MPGK.exceptions.roleExceptions.RoleNotFoundExceptionResponse;
+import com.kozik.MPGK.exceptions.personExceptions.PersonNotFoundException;
+import com.kozik.MPGK.exceptions.personExceptions.PersonNotFoundExceptionResponse;
+import com.kozik.MPGK.exceptions.personExceptions.PersonAlreadyExistException;
+import com.kozik.MPGK.exceptions.personExceptions.PersonAlreadyExistResponse;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -137,6 +141,19 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
     public final ResponseEntity<Object> handleFluidPlaceAlreadyExistException(FluidPlaceAlreadyExistException ex,
             WebRequest request) {
         FluidPlaceAlreadyExistResponse existResponse = new FluidPlaceAlreadyExistResponse(ex.getMessage());
+        return new ResponseEntity<Object>(existResponse, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler
+    public final ResponseEntity<Object> handlePersonNotFoundException(PersonNotFoundException ex, WebRequest request) {
+        PersonNotFoundExceptionResponse exceptionResponse = new PersonNotFoundExceptionResponse(ex.getMessage());
+        return new ResponseEntity<Object>(exceptionResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler
+    public final ResponseEntity<Object> handlePersonAlreadyExistException(PersonAlreadyExistException ex,
+            WebRequest request) {
+                PersonAlreadyExistResponse existResponse = new PersonAlreadyExistResponse(ex.getMessage());
         return new ResponseEntity<Object>(existResponse, HttpStatus.CONFLICT);
     }
 }
