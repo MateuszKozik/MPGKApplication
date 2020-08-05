@@ -19,3 +19,8 @@ export const DELETE_OVERVIEW_TYPE = "DELETE_OVERVIEW_TYPE";
 export const GET_PERSONS = "GET_PERSONS";
 export const GET_PERSON = "GET_PERSON";
 export const DELETE_PERSON = "DELETE_PERSON";
+
+//activity group
+export const GET_GROUPS = "GET_GROUPS";
+export const GET_GROUP = "GET_GROUP";
+export const DELETE_GROUP = "DELETE_GROUP";
