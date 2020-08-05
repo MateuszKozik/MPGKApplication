@@ -43,6 +43,11 @@ class Header extends Component {
                                 Osoby
                             </Link>
                         </li>
+                        <li className="navbra-nav mr-auto">
+                            <Link className="nav-link" to="/groups">
+                                Grupy czynności
+                            </Link>
+                        </li>
                     </ul>
                 </div>
             </nav>
