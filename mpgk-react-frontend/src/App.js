@@ -14,6 +14,7 @@ import UpdateFluid from "./components/Fluid/UpdateFluid";
 import OverviewTypeList from "./components/OverviewType/OverviewTypeList";
 import AddOverviewType from "./components/OverviewType/AddOverviewType";
 import UpdateOverviewType from "./components/OverviewType/UpdateOverviewType";
+import PersonList from "./components/Person/PersonList";
 
 function App() {
     return (
@@ -50,6 +51,8 @@ function App() {
                         path="/overview-types/update/:typeId"
                         component={UpdateOverviewType}
                     />
+                    <Route exact path="/persons" component={PersonList} />
+                    
                 </div>
             </Router>
         </Provider>
