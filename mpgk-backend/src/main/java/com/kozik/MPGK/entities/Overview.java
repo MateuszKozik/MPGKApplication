@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,12 +27,15 @@ public class Overview {
     @Column(name = "overview_id", nullable = false)
     private Long overviewId;
 
+    @NotNull(message = "Status przeglądu jest wymagany")
     @Column(name = "status", nullable = false, length = 20)
     private String status;
 
+    @NotNull(message = "Czas rozpoczęcia przeglądu jest wymagany")
     @Column(name = "start_time", nullable = false, length = 20)
     private LocalDateTime startTime;
 
+    @NotNull(message = "Czas zakończenia przeglądu jest wymagany")
     @Column(name = "end_time", nullable = false, length = 20)
     private LocalDateTime endTime;
 
