@@ -64,7 +64,7 @@ class UpdateActivity extends Component {
 
         this.props.updateActivity(
             this.state.activityId,
-            updateActivity,
+            updatedActivity,
             this.props.history
         );
     }
