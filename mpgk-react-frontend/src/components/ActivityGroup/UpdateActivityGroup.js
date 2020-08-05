@@ -108,7 +108,7 @@ UpdateActivityGroup.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-    fluid: state.fluid.fluid,
+    group: state.group.group,
     errors: state.errors
 });
 
