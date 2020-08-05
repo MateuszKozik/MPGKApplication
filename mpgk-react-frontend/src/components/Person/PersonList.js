@@ -21,7 +21,7 @@ class PersonList extends Component {
                 <h1 className="display-4 text-center mt-2">Osoby</h1>
                 <div className="row">
                     <div className="col-md-4 my-1">
-                        <AddFluidButton />
+                        <AddPersonButton />
                     </div>
                 </div>
                 <div className="table-responsive mt-2">
@@ -29,6 +29,7 @@ class PersonList extends Component {
                         <thead>
                             <tr>
                                 <th>Imię</th>
+                                <th>Nazwisko</th>
                                 <th>Akcje</th>
                             </tr>
                         </thead>
@@ -36,6 +37,7 @@ class PersonList extends Component {
                             {persons.map((person) => (
                                 <tr key={person.personId}>
                                     <td>{person.name}</td>
+                                    <td>{person.surname}</td>
                                     <td>
                                         <Link
                                             to={`/persons/update/${person.personId}`}
