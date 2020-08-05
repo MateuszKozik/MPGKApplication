@@ -22,6 +22,7 @@ import AddActivityGroup from "./components/ActivityGroup/AddActivityGroup";
 import UpdateActivityGroup from "./components/ActivityGroup/UpdateActivityGroup";
 import ActivityList from "./components/Activity/ActivityList";
 import AddActivity from "./components/Activity/AddActivity";
+import UpdateActivity from "./components/Activity/UpdateActivity";
 
 function App() {
     return (
@@ -74,6 +75,11 @@ function App() {
                     />
                     <Route exact path="/activities" component={ActivityList} />
                     <Route exact path="/activities/add" component={AddActivity} />
+                    <Route
+                        exact
+                        path="/activities/update/:activityId"
+                        component={UpdateActivity}
+                    />
                     
                 </div>
             </Router>
