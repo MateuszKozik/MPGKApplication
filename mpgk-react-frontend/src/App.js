@@ -21,6 +21,7 @@ import ActivityGroupList from "./components/ActivityGroup/ActivityGroupList";
 import AddActivityGroup from "./components/ActivityGroup/AddActivityGroup";
 import UpdateActivityGroup from "./components/ActivityGroup/UpdateActivityGroup";
 import ActivityList from "./components/Activity/ActivityList";
+import AddActivity from "./components/Activity/AddActivity";
 
 function App() {
     return (
@@ -72,6 +73,7 @@ function App() {
                         component={UpdateActivityGroup}
                     />
                     <Route exact path="/activities" component={ActivityList} />
+                    <Route exact path="/activities/add" component={AddActivity} />
                     
                 </div>
             </Router>
