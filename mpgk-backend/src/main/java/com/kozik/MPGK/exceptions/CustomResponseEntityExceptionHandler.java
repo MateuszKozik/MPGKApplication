@@ -12,6 +12,10 @@ import com.kozik.MPGK.exceptions.fluidExceptions.FluidAlreadyExistException;
 import com.kozik.MPGK.exceptions.fluidExceptions.FluidAlreadyExistResponse;
 import com.kozik.MPGK.exceptions.fluidExceptions.FluidNotFoundException;
 import com.kozik.MPGK.exceptions.fluidExceptions.FluidNotFoundExceptionResponse;
+import com.kozik.MPGK.exceptions.fluidPlaceExceptions.FluidPlaceAlreadyExistException;
+import com.kozik.MPGK.exceptions.fluidPlaceExceptions.FluidPlaceAlreadyExistResponse;
+import com.kozik.MPGK.exceptions.fluidPlaceExceptions.FluidPlaceNotFoundException;
+import com.kozik.MPGK.exceptions.fluidPlaceExceptions.FluidPlaceNotFoundExceptionResponse;
 import com.kozik.MPGK.exceptions.fluidRegistryExceptions.FluidRegistryAlreadyExistException;
 import com.kozik.MPGK.exceptions.fluidRegistryExceptions.FluidRegistryAlreadyExistResponse;
 import com.kozik.MPGK.exceptions.fluidRegistryExceptions.FluidRegistryNotFoundException;
@@ -118,6 +122,21 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
     public final ResponseEntity<Object> handleFluidRegistryAlreadyExistException(FluidRegistryAlreadyExistException ex,
             WebRequest request) {
         FluidRegistryAlreadyExistResponse existResponse = new FluidRegistryAlreadyExistResponse(ex.getMessage());
+        return new ResponseEntity<Object>(existResponse, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler
+    public final ResponseEntity<Object> handleFluidPlaceNotFoundException(FluidPlaceNotFoundException ex,
+            WebRequest request) {
+        FluidPlaceNotFoundExceptionResponse exceptionResponse = new FluidPlaceNotFoundExceptionResponse(
+                ex.getMessage());
+        return new ResponseEntity<Object>(exceptionResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler
+    public final ResponseEntity<Object> handleFluidPlaceAlreadyExistException(FluidPlaceAlreadyExistException ex,
+            WebRequest request) {
+        FluidPlaceAlreadyExistResponse existResponse = new FluidPlaceAlreadyExistResponse(ex.getMessage());
         return new ResponseEntity<Object>(existResponse, HttpStatus.CONFLICT);
     }
 }
