@@ -28,7 +28,10 @@ class AddActivity extends Component {
         e.preventDefault();
 
         const newActivity = {
-            name: this.state.name
+            name: this.state.name,
+            type: this.state.type,
+            emsr: this.state.emsr,
+            setting: this.state.setting
         };
         this.props.addActivity(newActivity, this.props.history);
     }
