@@ -20,6 +20,7 @@ import UpdatePerson from "./components/Person/UpdatePerson";
 import ActivityGroupList from "./components/ActivityGroup/ActivityGroupList";
 import AddActivityGroup from "./components/ActivityGroup/AddActivityGroup";
 import UpdateActivityGroup from "./components/ActivityGroup/UpdateActivityGroup";
+import ActivityList from "./components/Activity/ActivityList";
 
 function App() {
     return (
@@ -70,6 +71,7 @@ function App() {
                         path="/groups/update/:groupId"
                         component={UpdateActivityGroup}
                     />
+                    <Route exact path="/activities" component={ActivityList} />
                     
                 </div>
             </Router>
