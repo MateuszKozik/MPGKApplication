@@ -1,11 +1,9 @@
 package com.kozik.MPGK.controllers;
 
-import java.util.List;
+
 
 import com.kozik.MPGK.entities.Overview;
 import com.kozik.MPGK.services.OverviewService;
-import com.kozik.MPGK.utilities.ErrorMessage;
-import org.springframework.http.HttpHeaders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,69 +15,59 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.UriComponentsBuilder;
+import com.kozik.MPGK.services.MapValidationErrorService;
+import org.springframework.validation.BindingResult;
+import javax.validation.Valid;
+import com.kozik.MPGK.utilities.Message;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/overviews")
 public class OverviewController {
 
     @Autowired private OverviewService overviewService;
 
+    @Autowired
+    private MapValidationErrorService mapValidationErrorService;
+
     //Get all overviews
-    @GetMapping("/overviews")
-    public ResponseEntity<List<Overview>> getOverviews(){
-        List<Overview> overviews = overviewService.listAll();
-        if(overviews.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<List<Overview>>(overviews, HttpStatus.OK);
+    @GetMapping("")
+    public Iterable<Overview> getOverviews() {
+        return overviewService.listAll();
     }
 
     //Get single overview
-    @GetMapping("/overviews/{overviewId}")
-    public ResponseEntity<?> getOverwiew(@PathVariable("overviewId")Long overviewId){
-        if(!overviewService.isOverviewExist(overviewId)){
-            return new ResponseEntity<>(new ErrorMessage("Overwiew with id " + overviewId + " not found."),
-            HttpStatus.NOT_FOUND);
-        }
-        Overview overview = overviewService.get(overviewId);
-        return new ResponseEntity<Overview>(overview, HttpStatus.OK);
+    @GetMapping("/{overviewId}")
+    public ResponseEntity<?> getOverwiew(@PathVariable Long overviewId) {
+        return new ResponseEntity<Overview>(overviewService.get(overviewId), HttpStatus.OK);
     }
 
     //Create overview
-    @PostMapping("/overviews")
-    public ResponseEntity<?> createOverwiew(@RequestBody Overview overview, UriComponentsBuilder builder){
-        Long overviewId = overview.getOverviewId();
-        if(overviewId != null){
-            return new ResponseEntity<>(new ErrorMessage("Unable to create. Overview with id " + overviewId 
-            + " already exist."), HttpStatus.CONFLICT);
+    @PostMapping("")
+    public ResponseEntity<?> createOverwiew(@Valid @RequestBody Overview overview, BindingResult result) {
+        if (result.hasErrors()) {
+            return mapValidationErrorService.MapValidationService(result);
         }
-        overviewService.save(overview);
-        HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(builder.path("/api/overwiews/{overviewId}").buildAndExpand(overview.getOverviewId()).toUri());
-        return new ResponseEntity<String>(headers, HttpStatus.CREATED);
+
+        return new ResponseEntity<Overview>(overviewService.save(overview), HttpStatus.CREATED);
     }
 
     //Update overview
-    @PutMapping("/overviews/{overviewId}")
-    public ResponseEntity<?> updateFluid(@PathVariable("overviewId")Long overviewId, @RequestBody Overview overview){
-        if(!overviewService.isOverviewExist(overviewId)){
-            return new ResponseEntity<>(new ErrorMessage("Unable to update. Overwiew with id " + overviewId + " not found."),
-            HttpStatus.NOT_FOUND);
+    @PutMapping("/{overviewId}")
+    public ResponseEntity<?> updateOverwiew(@PathVariable Long overviewId, @Valid @RequestBody Overview overview,
+            BindingResult result) {
+        if (result.hasErrors()) {
+            return mapValidationErrorService.MapValidationService(result);
         }
-        Overview currentOverview = overviewService.update(overviewId,overview);
-        return new ResponseEntity<Overview>(currentOverview, HttpStatus.OK);
+
+        return new ResponseEntity<Overview>(overviewService.update(overviewId, overview), HttpStatus.OK);
     }
 
     //Delete overview
-    @DeleteMapping("/overviews/{overviewId}")
-    public ResponseEntity<?> deleteOverview(@PathVariable("overviewId")Long overviewId){
-        if(!overviewService.isOverviewExist(overviewId)){
-            return new ResponseEntity<>(new ErrorMessage("Unable to delete. Overview with id " + overviewId + " not found"),
-            HttpStatus.NOT_FOUND);
-        }
+    @DeleteMapping("/{overviewId}")
+    public ResponseEntity<?> deleteOverview(@PathVariable("overviewId") Long overviewId) {
         overviewService.delete(overviewId);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<Message>(new Message("Overview with id: " + overviewId + " has been removed."),
+                HttpStatus.OK);
     }
 
     
