@@ -29,6 +29,9 @@ class ActivityList extends Component {
                         <thead>
                             <tr>
                                 <th>Nazwa</th>
+                                <th>Rodzaj</th>
+                                <th>EMSR</th>
+                                <th>Nastawa</th>
                                 <th>Akcje</th>
                             </tr>
                         </thead>
@@ -36,6 +39,9 @@ class ActivityList extends Component {
                             {activities.map((activity) => (
                                 <tr key={activity.activityId}>
                                     <td>{activity.name}</td>
+                                    <td>{activity.type}</td>
+                                    <td>{activity.emsr}</td>
+                                    <td>{activity.setting}</td>
                                     <td>
                                         <Link
                                             to={`/activities/update/${activity.activityId}`}
