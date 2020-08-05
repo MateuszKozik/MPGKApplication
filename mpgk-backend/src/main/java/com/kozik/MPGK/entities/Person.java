@@ -28,11 +28,11 @@ public class Person {
     @Column(name = "person_id", nullable = false)
     private Long personId;
 
-    @NotBlank(message = "Imię jest wymagana")
+    @NotBlank(message = "Imię jest wymagane")
     @Column(name = "name", nullable = false, length = 35)
     private String name;
 
-    @NotBlank(message = "Nazwisko jest wymagana")
+    @NotBlank(message = "Nazwisko jest wymagane")
     @Column(name = "surname", nullable = false, length = 35)
     private String surname;
 
