@@ -14,3 +14,8 @@ export const DELETE_FLUID = "DELETE_FLUID";
 export const GET_OVERVIEW_TYPES = "GET_OVERVIEW_TYPES";
 export const GET_OVERVIEW_TYPE = "GET_OVERVIEW_TYPE";
 export const DELETE_OVERVIEW_TYPE = "DELETE_OVERVIEW_TYPE";
+
+//persons
+export const GET_PERSONS = "GET_PERSONS";
+export const GET_PERSON = "GET_PERSON";
+export const DELETE_PERSON = "DELETE_PERSON";
