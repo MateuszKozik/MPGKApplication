@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 class ActivityList extends Component {
     componentDidMount() {
-        this.props.getFluids();
+        this.props.getActivities();
     }
 
     onDeleteClick = (activityId) => {
