@@ -20,10 +20,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Table(name = "activities_groups")
-public class ActivityGroup{
+public class ActivityGroup {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "group_id", nullable = false)
     private Long groupId;
 
@@ -31,7 +31,7 @@ public class ActivityGroup{
     @Column(name = "name", nullable = false, length = 100)
     private String name;
 
-    @OneToMany(mappedBy = "activityGroup") 
+    @OneToMany(mappedBy = "activityGroup")
     private List<Activity> activities;
 
     @ManyToOne

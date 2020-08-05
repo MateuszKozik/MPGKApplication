@@ -1,6 +1,5 @@
 package com.kozik.MPGK.entities;
 
-
 import java.util.List;
 
 import javax.persistence.Column;
@@ -22,10 +21,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Table(name = "persons")
-public class Person{
+public class Person {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "person_id", nullable = false)
     private Long personId;
 
@@ -36,7 +35,7 @@ public class Person{
     @NotBlank(message = "Nazwisko jest wymagana")
     @Column(name = "surname", nullable = false, length = 35)
     private String surname;
-    
+
     @OneToOne
     @JoinColumn(name = "user_id", nullable = true)
     private User user;
@@ -44,12 +43,12 @@ public class Person{
     @ManyToMany(mappedBy = "persons")
     private List<Connection> connections;
 
-    @OneToMany(mappedBy = "person") 
+    @OneToMany(mappedBy = "person")
     private List<Overview> overviews;
 
-    @OneToMany(mappedBy = "supervisor") 
+    @OneToMany(mappedBy = "supervisor")
     private List<Overview> overviewSupervisors;
 
-    @OneToMany(mappedBy = "person") 
+    @OneToMany(mappedBy = "person")
     private List<FluidRegistry> fluidRegistries;
 }

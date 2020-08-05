@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 public class FluidPlace {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "place_id", nullable = false)
     private Long placeId;
 

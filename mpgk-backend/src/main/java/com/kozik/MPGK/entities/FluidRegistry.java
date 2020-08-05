@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 public class FluidRegistry {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "registry_id", nullable = false)
     private Long registryId;
 

@@ -19,10 +19,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Table(name = "overviews")
-public class Overview{
+public class Overview {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "overview_id", nullable = false)
     private Long overviewId;
 
@@ -53,29 +53,29 @@ public class Overview{
     @JoinColumn(name = "activity_id", nullable = true)
     private Activity activity;
 
-    public String getStartTime() {      
-        if(startTime !=null){
+    public String getStartTime() {
+        if (startTime != null) {
             return startTime.toString();
-        }else{
+        } else {
             return "";
         }
     }
 
-    public void setStartTime(String startTime) {       
-        LocalDateTime dataTime = LocalDateTime.parse(startTime,DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+    public void setStartTime(String startTime) {
+        LocalDateTime dataTime = LocalDateTime.parse(startTime, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
         this.startTime = dataTime;
     }
 
-    public String getEndTime() {      
-        if(endTime !=null){
+    public String getEndTime() {
+        if (endTime != null) {
             return endTime.toString();
-        }else{
+        } else {
             return "";
         }
     }
 
-    public void setEndTime(String endTime) {       
-        LocalDateTime dataTime = LocalDateTime.parse(endTime,DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+    public void setEndTime(String endTime) {
+        LocalDateTime dataTime = LocalDateTime.parse(endTime, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
         this.endTime = dataTime;
     }
 }

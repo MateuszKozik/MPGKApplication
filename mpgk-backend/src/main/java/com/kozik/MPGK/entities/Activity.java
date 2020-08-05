@@ -19,14 +19,14 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Table(name = "activities")
-public class Activity{
+public class Activity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "activity_id", nullable = false)
     private Long activityId;
 
-    @Column(name = "name", nullable = false, columnDefinition = "TEXT" )
+    @Column(name = "name", nullable = false, columnDefinition = "TEXT")
     private String name;
 
     @Column(name = "type", nullable = false, length = 25)
@@ -34,7 +34,7 @@ public class Activity{
 
     @Column(name = "emsr", nullable = true, length = 25)
     private String emsr;
-    
+
     @Column(name = "setting", nullable = true, length = 35)
     private String setting;
 
