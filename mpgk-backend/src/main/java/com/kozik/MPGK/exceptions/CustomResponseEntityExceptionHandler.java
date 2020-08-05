@@ -35,6 +35,7 @@ import com.kozik.MPGK.exceptions.personExceptions.PersonAlreadyExistResponse;
 
 import com.kozik.MPGK.exceptions.activityExceptions.*;
 import com.kozik.MPGK.exceptions.activityGroupExceptions.*;
+import com.kozik.MPGK.exceptions.overviewExceptions.*;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -183,6 +184,19 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
     public final ResponseEntity<Object> handleActivityGroupAlreadyExistException(ActivityGroupAlreadyExistException ex,
             WebRequest request) {
                 ActivityGroupAlreadyExistResponse existResponse = new ActivityGroupAlreadyExistResponse(ex.getMessage());
+        return new ResponseEntity<Object>(existResponse, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler
+    public final ResponseEntity<Object> handleOverviewNotFoundException(OverviewNotFoundException ex, WebRequest request) {
+        OverviewNotFoundExceptionResponse exceptionResponse = new OverviewNotFoundExceptionResponse(ex.getMessage());
+        return new ResponseEntity<Object>(exceptionResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler
+    public final ResponseEntity<Object> handleOverviewAlreadyExistException(OverviewAlreadyExistException ex,
+            WebRequest request) {
+                OverviewAlreadyExistResponse existResponse = new OverviewAlreadyExistResponse(ex.getMessage());
         return new ResponseEntity<Object>(existResponse, HttpStatus.CONFLICT);
     }
 }
