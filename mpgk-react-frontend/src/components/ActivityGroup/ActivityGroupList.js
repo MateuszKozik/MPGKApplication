@@ -21,7 +21,7 @@ class ActivityGroupList extends Component {
                 <h1 className="display-4 text-center mt-2">Grupy czynności</h1>
                 <div className="row">
                     <div className="col-md-4 my-1">
-                        <AddFluidButton />
+                        <AddActivityGroupButton />
                     </div>
                 </div>
                 <div className="table-responsive mt-2">
