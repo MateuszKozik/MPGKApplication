@@ -7,5 +7,5 @@ import lombok.Data;
 @AllArgsConstructor
 public class ActivityGroupAlreadyExistResponse {
 
-    public String ActivityGroupAlreadyExist;
+    private String activityGroupAlreadyExist;
 }

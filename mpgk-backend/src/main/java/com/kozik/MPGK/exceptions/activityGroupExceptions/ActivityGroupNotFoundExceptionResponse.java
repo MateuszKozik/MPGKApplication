@@ -7,5 +7,5 @@ import lombok.Data;
 @AllArgsConstructor
 public class ActivityGroupNotFoundExceptionResponse {
 
-    private String ActivityGroupNotFound;
+    private String activityGroupNotFound;
 }

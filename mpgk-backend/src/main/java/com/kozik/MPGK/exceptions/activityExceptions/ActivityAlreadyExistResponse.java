@@ -7,5 +7,5 @@ import lombok.Data;
 @AllArgsConstructor
 public class ActivityAlreadyExistResponse {
 
-    public String ActivityAlreadyExist;
+    private String activityAlreadyExist;
 }

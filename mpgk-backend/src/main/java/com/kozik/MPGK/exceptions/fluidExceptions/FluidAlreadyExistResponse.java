@@ -7,5 +7,5 @@ import lombok.Data;
 @AllArgsConstructor
 public class FluidAlreadyExistResponse {
 
-    public String fluidAlreadyExist;
+    private String fluidAlreadyExist;
 }

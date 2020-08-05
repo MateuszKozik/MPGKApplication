@@ -7,5 +7,5 @@ import lombok.Data;
 @AllArgsConstructor
 public class OverviewAlreadyExistResponse {
 
-    public String overviewAlreadyExist;
+    private String overviewAlreadyExist;
 }

@@ -7,5 +7,5 @@ import lombok.Data;
 @AllArgsConstructor
 public class PersonNotFoundExceptionResponse {
 
-    private String PersonNotFound;
+    private String personNotFound;
 }

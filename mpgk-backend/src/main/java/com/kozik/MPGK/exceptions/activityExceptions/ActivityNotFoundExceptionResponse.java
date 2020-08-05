@@ -7,5 +7,5 @@ import lombok.Data;
 @AllArgsConstructor
 public class ActivityNotFoundExceptionResponse {
 
-    private String ActivityNotFound;
+    private String activityNotFound;
 }
