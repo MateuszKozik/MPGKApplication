@@ -19,6 +19,7 @@ import AddPerson from "./components/Person/AddPerson";
 import UpdatePerson from "./components/Person/UpdatePerson";
 import ActivityGroupList from "./components/ActivityGroup/ActivityGroupList";
 import AddActivityGroup from "./components/ActivityGroup/AddActivityGroup";
+import UpdateActivityGroup from "./components/ActivityGroup/UpdateActivityGroup";
 
 function App() {
     return (
@@ -64,6 +65,11 @@ function App() {
                     />
                     <Route exact path="/groups" component={ActivityGroupList} />
                     <Route exact path="/groups/add" component={AddActivityGroup} />
+                    <Route
+                        exact
+                        path="/groups/update/:groupId"
+                        component={UpdateActivityGroup}
+                    />
                     
                 </div>
             </Router>
