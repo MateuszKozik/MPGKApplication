@@ -59,7 +59,7 @@ export const deletePerson = (personId) => async (dispatch) => {
     if (window.confirm("Czy jesteś pewny? Spowoduje to usunięcie osoby")) {
         await axios.delete(`/api/persons/${personId}`);
         dispatch({
-            type: DELETE_FLUID,
+            type: DELETE_PERSON,
             payload: personId
         });
     }
