@@ -53,7 +53,7 @@ class UpdateActivityGroup extends Component {
             name: this.state.name
         };
 
-        this.props.updateActivityGroup(
+        this.props.updateGroup(
             this.state.groupId,
             updateActivityGroup,
             this.props.history
