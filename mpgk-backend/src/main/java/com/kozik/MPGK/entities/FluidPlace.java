@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,6 +25,7 @@ public class FluidPlace {
     @Column(name = "place_id", nullable = false)
     private Long placeId;
 
+    @NotBlank(message = "Nazwa miejsca dodania czynnika jest wymagana")
     @Column(name = "name", nullable = false)
     private String name;
 
