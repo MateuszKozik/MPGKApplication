@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,6 +27,7 @@ public class Activity {
     @Column(name = "activity_id", nullable = false)
     private Long activityId;
 
+    @NotBlank(message = "Nazwa czynnosci jest wymagana")
     @Column(name = "name", nullable = false, columnDefinition = "TEXT")
     private String name;
 
