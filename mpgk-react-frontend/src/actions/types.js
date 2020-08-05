@@ -24,3 +24,8 @@ export const DELETE_PERSON = "DELETE_PERSON";
 export const GET_GROUPS = "GET_GROUPS";
 export const GET_GROUP = "GET_GROUP";
 export const DELETE_GROUP = "DELETE_GROUP";
+
+//activity
+export const GET_ACTIVITIES = "GET_ACTIVITIES";
+export const GET_ACTIVITY = "GET_ACTIVITY";
+export const DELETE_ACTIVITY = "DELETE_ACTIVITY";
