@@ -5,6 +5,7 @@ import fluidReducer from "./fluidReducer";
 import overviewTypeReducer from "./overviewTypeReducer";
 import personReducer from "./personReducer";
 import activityGroupReducer from "./activityGroupReducer";
+import activityReducer from "./activityReducer";
 
 export default combineReducers({
     errors: errorReducer,
@@ -12,5 +13,6 @@ export default combineReducers({
     fluid: fluidReducer,
     overviewType: overviewTypeReducer,
     person: personReducer,
-    group: activityGroupReducer
+    group: activityGroupReducer,
+    activity: activityReducer
 });
