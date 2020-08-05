@@ -16,6 +16,7 @@ import AddOverviewType from "./components/OverviewType/AddOverviewType";
 import UpdateOverviewType from "./components/OverviewType/UpdateOverviewType";
 import PersonList from "./components/Person/PersonList";
 import AddPerson from "./components/Person/AddPerson";
+import UpdatePerson from "./components/Person/UpdatePerson";
 
 function App() {
     return (
@@ -54,6 +55,11 @@ function App() {
                     />
                     <Route exact path="/persons" component={PersonList} />
                     <Route exact path="/persons/add" component={AddPerson} />
+                    <Route
+                        exact
+                        path="/persons/update/:personId"
+                        component={UpdatePerson}
+                    />
                     
                 </div>
             </Router>
