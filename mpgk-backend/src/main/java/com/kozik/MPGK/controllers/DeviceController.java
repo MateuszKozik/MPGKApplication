@@ -66,7 +66,7 @@ public class DeviceController {
 
     // Delete device
     @DeleteMapping("/{deviceId}")
-    public ResponseEntity<?> deleteDevice(@PathVariable("deviceId") Long deviceId) {
+    public ResponseEntity<?> deleteDevice(@PathVariable Long deviceId) {
 
         deviceService.delete(deviceId);
         return new ResponseEntity<Message>(new Message("Device with id: " + deviceId + " has been removed"),

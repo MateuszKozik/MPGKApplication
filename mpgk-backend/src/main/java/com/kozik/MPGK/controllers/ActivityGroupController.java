@@ -1,7 +1,5 @@
 package com.kozik.MPGK.controllers;
 
-
-
 import com.kozik.MPGK.entities.ActivityGroup;
 import com.kozik.MPGK.services.ActivityGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,26 +22,28 @@ import com.kozik.MPGK.utilities.Message;
 @RequestMapping("/api/groups")
 public class ActivityGroupController {
 
-    @Autowired private ActivityGroupService activityGroupService;
+    @Autowired
+    private ActivityGroupService activityGroupService;
 
     @Autowired
     private MapValidationErrorService mapValidationErrorService;
 
-    //Get all activities groups
+    // Get all activities groups
     @GetMapping("")
     public Iterable<ActivityGroup> getActivityGroups() {
         return activityGroupService.listAll();
     }
 
-    //Get single activity group
+    // Get single activity group
     @GetMapping("/{groupId}")
     public ResponseEntity<?> getActivityGroup(@PathVariable Long groupId) {
         return new ResponseEntity<ActivityGroup>(activityGroupService.get(groupId), HttpStatus.OK);
     }
 
-    //Create activity group
+    // Create activity group
     @PostMapping("")
-    public ResponseEntity<?> createActivityGroup(@Valid @RequestBody ActivityGroup activityGroup, BindingResult result) {
+    public ResponseEntity<?> createActivityGroup(@Valid @RequestBody ActivityGroup activityGroup,
+            BindingResult result) {
         if (result.hasErrors()) {
             return mapValidationErrorService.MapValidationService(result);
         }
@@ -51,10 +51,10 @@ public class ActivityGroupController {
         return new ResponseEntity<ActivityGroup>(activityGroupService.save(activityGroup), HttpStatus.CREATED);
     }
 
-    //Update activity group
+    // Update activity group
     @PutMapping("/{groupId}")
-    public ResponseEntity<?> updateActivityGroup(@PathVariable Long groupId, @Valid @RequestBody ActivityGroup activityGroup,
-            BindingResult result) {
+    public ResponseEntity<?> updateActivityGroup(@PathVariable Long groupId,
+            @Valid @RequestBody ActivityGroup activityGroup, BindingResult result) {
         if (result.hasErrors()) {
             return mapValidationErrorService.MapValidationService(result);
         }
@@ -62,9 +62,9 @@ public class ActivityGroupController {
         return new ResponseEntity<ActivityGroup>(activityGroupService.update(groupId, activityGroup), HttpStatus.OK);
     }
 
-    //Delete activity group
+    // Delete activity group
     @DeleteMapping("/{groupId}")
-    public ResponseEntity<?> deleteActivityGroup(@PathVariable("groupId") Long groupId) {
+    public ResponseEntity<?> deleteActivityGroup(@PathVariable Long groupId) {
         activityGroupService.delete(groupId);
         return new ResponseEntity<Message>(new Message("Activity group with id: " + groupId + " has been removed."),
                 HttpStatus.OK);

@@ -1,7 +1,5 @@
 package com.kozik.MPGK.controllers;
 
-
-
 import com.kozik.MPGK.entities.Activity;
 import com.kozik.MPGK.services.ActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,24 +22,25 @@ import org.springframework.validation.BindingResult;
 @RequestMapping("/api/activities")
 public class ActivityController {
 
-    @Autowired private ActivityService activityService;
+    @Autowired
+    private ActivityService activityService;
 
     @Autowired
     private MapValidationErrorService mapValidationErrorService;
 
-    //Get all activities
+    // Get all activities
     @GetMapping("")
     public Iterable<Activity> getActivities() {
         return activityService.listAll();
     }
 
-    //Get single activity
+    // Get single activity
     @GetMapping("/{activityId}")
     public ResponseEntity<?> getActivity(@PathVariable Long activityId) {
         return new ResponseEntity<Activity>(activityService.get(activityId), HttpStatus.OK);
     }
 
-    //Create activity
+    // Create activity
     @PostMapping("")
     public ResponseEntity<?> createActivity(@Valid @RequestBody Activity activity, BindingResult result) {
         if (result.hasErrors()) {
@@ -51,10 +50,10 @@ public class ActivityController {
         return new ResponseEntity<Activity>(activityService.save(activity), HttpStatus.CREATED);
     }
 
-    //Update activity
+    // Update activity
     @PutMapping("/{activityId}")
-    public ResponseEntity<?> updateupdateActivityFluid(@PathVariable Long activityId, @Valid @RequestBody Activity activity,
-            BindingResult result) {
+    public ResponseEntity<?> updateupdateActivityFluid(@PathVariable Long activityId,
+            @Valid @RequestBody Activity activity, BindingResult result) {
         if (result.hasErrors()) {
             return mapValidationErrorService.MapValidationService(result);
         }
@@ -62,9 +61,9 @@ public class ActivityController {
         return new ResponseEntity<Activity>(activityService.update(activityId, activity), HttpStatus.OK);
     }
 
-    //Delete activity
+    // Delete activity
     @DeleteMapping("/{activityId}")
-    public ResponseEntity<?> deleteActivity(@PathVariable("activityId") Long activityId) {
+    public ResponseEntity<?> deleteActivity(@PathVariable Long activityId) {
         activityService.delete(activityId);
         return new ResponseEntity<Message>(new Message("Activity with id: " + activityId + " has been removed."),
                 HttpStatus.OK);

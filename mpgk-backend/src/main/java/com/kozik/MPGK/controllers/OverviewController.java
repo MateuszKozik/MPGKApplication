@@ -1,7 +1,5 @@
 package com.kozik.MPGK.controllers;
 
-
-
 import com.kozik.MPGK.entities.Overview;
 import com.kozik.MPGK.services.OverviewService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,24 +22,25 @@ import com.kozik.MPGK.utilities.Message;
 @RequestMapping("/api/overviews")
 public class OverviewController {
 
-    @Autowired private OverviewService overviewService;
+    @Autowired
+    private OverviewService overviewService;
 
     @Autowired
     private MapValidationErrorService mapValidationErrorService;
 
-    //Get all overviews
+    // Get all overviews
     @GetMapping("")
     public Iterable<Overview> getOverviews() {
         return overviewService.listAll();
     }
 
-    //Get single overview
+    // Get single overview
     @GetMapping("/{overviewId}")
     public ResponseEntity<?> getOverwiew(@PathVariable Long overviewId) {
         return new ResponseEntity<Overview>(overviewService.get(overviewId), HttpStatus.OK);
     }
 
-    //Create overview
+    // Create overview
     @PostMapping("")
     public ResponseEntity<?> createOverwiew(@Valid @RequestBody Overview overview, BindingResult result) {
         if (result.hasErrors()) {
@@ -51,7 +50,7 @@ public class OverviewController {
         return new ResponseEntity<Overview>(overviewService.save(overview), HttpStatus.CREATED);
     }
 
-    //Update overview
+    // Update overview
     @PutMapping("/{overviewId}")
     public ResponseEntity<?> updateOverwiew(@PathVariable Long overviewId, @Valid @RequestBody Overview overview,
             BindingResult result) {
@@ -62,13 +61,12 @@ public class OverviewController {
         return new ResponseEntity<Overview>(overviewService.update(overviewId, overview), HttpStatus.OK);
     }
 
-    //Delete overview
+    // Delete overview
     @DeleteMapping("/{overviewId}")
-    public ResponseEntity<?> deleteOverview(@PathVariable("overviewId") Long overviewId) {
+    public ResponseEntity<?> deleteOverview(@PathVariable Long overviewId) {
         overviewService.delete(overviewId);
         return new ResponseEntity<Message>(new Message("Overview with id: " + overviewId + " has been removed."),
                 HttpStatus.OK);
     }
 
-    
 }

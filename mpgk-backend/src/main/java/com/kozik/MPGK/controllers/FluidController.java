@@ -65,7 +65,7 @@ public class FluidController {
 
     // Delete fluid
     @DeleteMapping("/{fluidId}")
-    public ResponseEntity<?> deleteFluid(@PathVariable("fluidId") Long fluidId) {
+    public ResponseEntity<?> deleteFluid(@PathVariable Long fluidId) {
         fluidService.delete(fluidId);
         return new ResponseEntity<Message>(new Message("Fluid with id: " + fluidId + " has been removed."),
                 HttpStatus.OK);
