@@ -36,13 +36,13 @@ public class OverviewController {
 
     // Get single overview
     @GetMapping("/{overviewId}")
-    public ResponseEntity<?> getOverwiew(@PathVariable Long overviewId) {
+    public ResponseEntity<?> getOverview(@PathVariable Long overviewId) {
         return new ResponseEntity<Overview>(overviewService.get(overviewId), HttpStatus.OK);
     }
 
     // Create overview
     @PostMapping("")
-    public ResponseEntity<?> createOverwiew(@Valid @RequestBody Overview overview, BindingResult result) {
+    public ResponseEntity<?> createOverview(@Valid @RequestBody Overview overview, BindingResult result) {
         if (result.hasErrors()) {
             return mapValidationErrorService.MapValidationService(result);
         }
@@ -52,7 +52,7 @@ public class OverviewController {
 
     // Update overview
     @PutMapping("/{overviewId}")
-    public ResponseEntity<?> updateOverwiew(@PathVariable Long overviewId, @Valid @RequestBody Overview overview,
+    public ResponseEntity<?> updateOverview(@PathVariable Long overviewId, @Valid @RequestBody Overview overview,
             BindingResult result) {
         if (result.hasErrors()) {
             return mapValidationErrorService.MapValidationService(result);
