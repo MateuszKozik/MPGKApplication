@@ -1,15 +1,16 @@
 package com.kozik.MPGK.controllers;
 
-import java.util.List;
+import javax.validation.Valid;
 
 import com.kozik.MPGK.entities.Role;
+import com.kozik.MPGK.services.MapValidationErrorService;
 import com.kozik.MPGK.services.RoleService;
-import com.kozik.MPGK.utilities.ErrorMessage;
+import com.kozik.MPGK.utilities.Message;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,58 +18,44 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/roles")
 public class RoleController {
 
-    @Autowired private RoleService roleService;
+    @Autowired
+    private RoleService roleService;
 
-    //Get all roles
-    @GetMapping("/roles")
-    public ResponseEntity<List<Role>> getRoles() {
-        List<Role> roles = roleService.listAll();
-        if (roles.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<List<Role>>(roles, HttpStatus.OK);
+    @Autowired
+    private MapValidationErrorService mapValidationErrorService;
+
+    // Get all roles
+    @GetMapping("")
+    public Iterable<Role> getRoles() {
+        return roleService.listAll();
     }
 
-    //Get single role
-    @GetMapping("/roles/{name}")
-    public ResponseEntity<?> getRole(@PathVariable("name") String name) {
-        if (!roleService.isRoleExist(name)) {
-            return new ResponseEntity<>(new ErrorMessage("Role with name " + name + " not found."),
-                    HttpStatus.NOT_FOUND);
-        }
-        Role role = roleService.get(name);
-        return new ResponseEntity<Role>(role, HttpStatus.OK);
+    // Get single role
+    @GetMapping("/{name}")
+    public ResponseEntity<?> getRole(@PathVariable String name) {
+        return new ResponseEntity<Role>(roleService.get(name), HttpStatus.OK);
     }
 
-    //Create role
-    @PostMapping("/roles")
-    public ResponseEntity<?> createRole(@RequestBody Role role, UriComponentsBuilder builder) {
-        String name = role.getName();
-        if (roleService.isRoleExist(name)) {
-            return new ResponseEntity<>(
-                    new ErrorMessage("Unable to create. A Role with name " + name + " already exist."),
-                    HttpStatus.CONFLICT);
+    // Create role
+    @PostMapping("")
+    public ResponseEntity<?> createRole(@Valid @RequestBody Role role, BindingResult result) {
+        if (result.hasErrors()) {
+            return mapValidationErrorService.MapValidationService(result);
         }
-        roleService.save(role);
-        HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(builder.path("/api/roles/{name}").buildAndExpand(role.getName()).toUri());
-        return new ResponseEntity<String>(headers, HttpStatus.CREATED);
+
+        return new ResponseEntity<Role>(roleService.save(role), HttpStatus.CREATED);
     }
 
-    //Delete role
-    @DeleteMapping("/roles/{name}")
-    public ResponseEntity<?> deleteRole(@PathVariable("name") String name) {
-        if (!roleService.isRoleExist(name)) {
-            return new ResponseEntity<>(new ErrorMessage("Unable to delete. Role with name " + name + " not found."),
-                    HttpStatus.NOT_FOUND);
-        }
+    // Delete role
+    @DeleteMapping("/{name}")
+    public ResponseEntity<?> deleteRole(@PathVariable String name) {
         roleService.delete(name);
-        return new ResponseEntity<Role>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<Message>(new Message("Role with name: " + name + " has been removed."),
+                HttpStatus.OK);
     }
 }
