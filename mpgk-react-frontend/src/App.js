@@ -25,6 +25,7 @@ import AddActivity from "./components/Activity/AddActivity";
 import UpdateActivity from "./components/Activity/UpdateActivity";
 import OverviewList from "./components/Overview/OverviewList";
 import AddOverview from "./components/Overview/AddOverview";
+import UpdateOverview from "./components/Overview/UpdateOverview";
 
 function App() {
     return (
@@ -84,6 +85,11 @@ function App() {
                     />
                     <Route exact path="/overviews" component={OverviewList} />
                     <Route exact path="/overviews/add" component={AddOverview} />
+                    <Route
+                        exact
+                        path="/overviews/update/:overviewId"
+                        component={UpdateOverview}
+                    />
                     
                 </div>
             </Router>
