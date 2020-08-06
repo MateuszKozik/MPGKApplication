@@ -1,8 +1,8 @@
 package com.kozik.MPGK.services;
 
-import java.util.List;
-
 import com.kozik.MPGK.entities.FluidRegistry;
+import com.kozik.MPGK.exceptions.fluidRegistryExceptions.FluidRegistryAlreadyExistException;
+import com.kozik.MPGK.exceptions.fluidRegistryExceptions.FluidRegistryNotFoundException;
 import com.kozik.MPGK.repositories.FluidRegistryRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,33 +11,41 @@ import org.springframework.stereotype.Service;
 @Service
 public class FluidRegistryService {
 
-    @Autowired private FluidRegistryRepository fluidRegistryRepository;
+    @Autowired
+    private FluidRegistryRepository fluidRegistryRepository;
 
-    public List<FluidRegistry> listAll(){
+    public Iterable<FluidRegistry> listAll() {
         return fluidRegistryRepository.findAll();
     }
 
-    public void save(FluidRegistry fluidRegistry){
-        fluidRegistryRepository.save(fluidRegistry);
+    public FluidRegistry save(FluidRegistry fluidRegistry) {
+        if (fluidRegistry.getRegistryId() != null) {
+            throw new FluidRegistryAlreadyExistException(fluidRegistry.getRegistryId());
+        }
+        return fluidRegistryRepository.save(fluidRegistry);
     }
 
-    public FluidRegistry get(Long id){
-        return fluidRegistryRepository.findById(id).get();
+    public FluidRegistry get(Long registryId) {
+        FluidRegistry fluidRegistry = fluidRegistryRepository.findById(registryId)
+                .orElseThrow(() -> new FluidRegistryNotFoundException(registryId));
+        return fluidRegistry;
     }
 
-    public void delete(Long id){
-        fluidRegistryRepository.deleteById(id);
+    public void delete(Long registryId) {
+        fluidRegistryRepository.delete(get(registryId));
     }
 
-    public Boolean isFluidRegistryExist(Long id){
-        return fluidRegistryRepository.existsById(id);
+    public Boolean isFluidRegistryExist(Long registryId) {
+        return fluidRegistryRepository.existsById(registryId);
     }
 
-    public FluidRegistry update(Long id, FluidRegistry fluidRegistry){
-        FluidRegistry currentFluidRegistry = get(id);
-        currentFluidRegistry.setQuantity(fluidRegistry.getQuantity());
-        currentFluidRegistry.setDatetime(fluidRegistry.getDatetime());
-        save(currentFluidRegistry);
-        return currentFluidRegistry;
+    public FluidRegistry update(Long registryId, FluidRegistry fluidRegistry) {
+        FluidRegistry newFluidRegistry = fluidRegistryRepository.findById(registryId).map(element -> {
+            element.setQuantity(fluidRegistry.getQuantity());
+            element.setDatetime(fluidRegistry.getDatetime());
+            return fluidRegistryRepository.save(element);
+        }).orElseThrow(() -> new FluidRegistryNotFoundException(registryId));
+
+        return newFluidRegistry;
     }
 }

@@ -1,8 +1,8 @@
 package com.kozik.MPGK.services;
 
-import java.util.List;
-
 import com.kozik.MPGK.entities.Role;
+import com.kozik.MPGK.exceptions.roleExceptions.RoleAlreadyExistException;
+import com.kozik.MPGK.exceptions.roleExceptions.RoleNotFoundException;
 import com.kozik.MPGK.repositories.RoleRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,25 +11,30 @@ import org.springframework.stereotype.Service;
 @Service
 public class RoleService {
 
-   @Autowired RoleRepository roleRepository;
+    @Autowired
+    RoleRepository roleRepository;
 
-   public List<Role> listAll(){
-       return roleRepository.findAll();
-   }
+    public Iterable<Role> listAll() {
+        return roleRepository.findAll();
+    }
 
-   public void save(Role role){
-       roleRepository.save(role);
-   }
-   
-   public Role get(String name){
-       return roleRepository.findById(name).get();
-   }
+    public Role save(Role role) {
+        if (roleRepository.existsById(role.getName())) {
+            throw new RoleAlreadyExistException(role.getName());
+        }
+        return roleRepository.save(role);
+    }
 
-   public void delete(String name){
-       roleRepository.deleteById(name);
-   }
+    public Role get(String name) throws RoleNotFoundException {
+        Role role = roleRepository.findById(name).orElseThrow(() -> new RoleNotFoundException(name));
+        return role;
+    }
 
-   public Boolean isRoleExist(String name){
-       return roleRepository.existsById(name);
-   }
+    public void delete(String name) {
+        roleRepository.delete(get(name));
+    }
+
+    public Boolean isRoleExist(String name) {
+        return roleRepository.existsById(name);
+    }
 }
