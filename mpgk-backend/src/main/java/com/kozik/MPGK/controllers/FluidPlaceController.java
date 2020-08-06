@@ -63,6 +63,7 @@ public class FluidPlaceController {
         return new ResponseEntity<>(fluidPlaceService.update(placeId, fluidPlace), HttpStatus.OK);
     }
 
+    // Delete fluid place
     @DeleteMapping("{placeId}")
     public ResponseEntity<?> deleteFluidPlace(@PathVariable Long placeId) {
         fluidPlaceService.delete(placeId);
