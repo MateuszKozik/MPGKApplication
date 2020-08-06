@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -25,9 +27,11 @@ public class FluidRegistry {
     @Column(name = "registry_id", nullable = false)
     private Long registryId;
 
+    @NotNull(message = "Ilość dolanego płynu jest wymagana")
     @Column(name = "quantity", nullable = false)
     private Long quantity;
 
+    @NotNull(message = "Data dolania płynu jest wymagana")
     @Column(name = "datetime", nullable = false)
     private LocalDateTime datetime;
 
