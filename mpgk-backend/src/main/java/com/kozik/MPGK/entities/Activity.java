@@ -31,6 +31,7 @@ public class Activity {
     @Column(name = "name", nullable = false, columnDefinition = "TEXT")
     private String name;
 
+    @NotBlank(message = "Typ czynności jest wymagany")
     @Column(name = "type", nullable = false, length = 25)
     private String type;
 
