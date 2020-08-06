@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import lombok.Data;
@@ -27,7 +28,7 @@ public class Overview {
     @Column(name = "overview_id", nullable = false)
     private Long overviewId;
 
-    @NotNull(message = "Status przeglądu jest wymagany")
+    @NotBlank(message = "Status przeglądu jest wymagany")
     @Column(name = "status", nullable = false, length = 20)
     private String status;
 
