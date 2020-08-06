@@ -25,6 +25,7 @@ import UpdateActivity from "./components/Activity/UpdateActivity";
 import OverviewList from "./components/Overview/OverviewList";
 import AddOverview from "./components/Overview/AddOverview";
 import UpdateOverview from "./components/Overview/UpdateOverview";
+import ConnectionList from "./components/Connection/ConnectionList";
 
 function App() {
 	return (
@@ -73,6 +74,7 @@ function App() {
 						path="/overviews/update/:overviewId"
 						component={UpdateOverview}
 					/>
+					<Route exact path="/connections" component={ConnectionList} />
 				</div>
 			</Router>
 		</Provider>
