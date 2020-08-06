@@ -23,6 +23,7 @@ import UpdateActivityGroup from "./components/ActivityGroup/UpdateActivityGroup"
 import ActivityList from "./components/Activity/ActivityList";
 import AddActivity from "./components/Activity/AddActivity";
 import UpdateActivity from "./components/Activity/UpdateActivity";
+import OverviewList from "./components/Overview/OverviewList";
 
 function App() {
     return (
@@ -80,6 +81,7 @@ function App() {
                         path="/activities/update/:activityId"
                         component={UpdateActivity}
                     />
+                    <Route exact path="/overviews" component={OverviewList} />
                     
                 </div>
             </Router>
