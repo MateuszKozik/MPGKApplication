@@ -6,6 +6,7 @@ import overviewTypeReducer from "./overviewTypeReducer";
 import personReducer from "./personReducer";
 import activityGroupReducer from "./activityGroupReducer";
 import activityReducer from "./activityReducer";
+import overviewReducer from "./overviewReducer";
 
 export default combineReducers({
     errors: errorReducer,
@@ -14,5 +15,6 @@ export default combineReducers({
     overviewType: overviewTypeReducer,
     person: personReducer,
     group: activityGroupReducer,
-    activity: activityReducer
+    activity: activityReducer,
+    overview: overviewReducer
 });
