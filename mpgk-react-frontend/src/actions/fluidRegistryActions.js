@@ -25,7 +25,7 @@ export const addFluidRegistry = (fluidRegistry, history) => async (
 };
 
 export const getFluidRegistries = () => async (dispatch) => {
-	res = await axios.get("/api/fluid-registries");
+	const res = await axios.get("/api/fluid-registries");
 	dispatch({
 		type: GET_FLUID_REGISTRIES,
 		payload: res.data
@@ -34,7 +34,7 @@ export const getFluidRegistries = () => async (dispatch) => {
 
 export const getFluidRegistry = (registryId, history) => async (dispatch) => {
 	try {
-		res = await axios.get(`/api/fluid-registries/${registryId}`);
+		const res = await axios.get(`/api/fluid-registries/${registryId}`);
 		dispatch({
 			type: GET_FLUID_REGISTRY,
 			payload: res.data
@@ -56,7 +56,7 @@ export const updateFLuidRegistry = (
 			type: GET_ERRORS,
 			payload: {}
 		});
-	} catch (errors) {
+	} catch (error) {
 		dispatch({
 			type: GET_ERRORS,
 			payload: error.response.data
@@ -65,7 +65,7 @@ export const updateFLuidRegistry = (
 };
 
 export const deleteFluidRegistry = (registryId) => async (dispatch) => {
-	if (window.confirm("Czy jesteś pewny? Spowoduje to usunięcie uprawnień")) {
+	if (window.confirm("Czy jesteś pewny? Spowoduje to usunięcie rejestru?")) {
 		await axios.delete(`/api/fluid-registries/${registryId}`);
 		dispatch({
 			type: DELETE_FLUID_REGISTRY,
