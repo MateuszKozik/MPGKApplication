@@ -50,6 +50,7 @@ public class Person {
     private List<Overview> overviews;
 
     @OneToMany(mappedBy = "supervisor")
+    @JsonIgnore
     private List<Overview> overviewSupervisors;
 
     @OneToMany(mappedBy = "person")
