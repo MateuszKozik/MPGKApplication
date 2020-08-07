@@ -27,6 +27,7 @@ import AddOverview from "./components/Overview/AddOverview";
 import UpdateOverview from "./components/Overview/UpdateOverview";
 import ConnectionList from "./components/Connection/ConnectionList";
 import AddConnection from "./components/Connection/AddConnection";
+import UpdateConnection from "./components/Connection/UpdateConnection";
 
 function App() {
 	return (
@@ -77,6 +78,11 @@ function App() {
 					/>
 					<Route exact path="/connections" component={ConnectionList} />
 					<Route exact path="/connections/add" component={AddConnection} />
+					<Route
+						exact
+						path="/connections/update/:connectionId"
+						component={UpdateConnection}
+					/>
 				</div>
 			</Router>
 		</Provider>
