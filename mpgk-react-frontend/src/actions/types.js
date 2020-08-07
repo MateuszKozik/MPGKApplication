@@ -39,3 +39,8 @@ export const DELETE_OVERVIEW = "DELETE_OVERVIEW";
 export const GET_CONNECTIONS = "GET_CONNECTIONS";
 export const GET_CONNECTION = "GET_CONNECTION";
 export const DELETE_CONNECTION = "DELETE_CONNECTION";
+
+//role
+export const GET_ROLES = "GET_ROLES";
+export const GET_ROLE = "GET_ROLE";
+export const DELETE_ROLE = "DELETE_ROLE";
