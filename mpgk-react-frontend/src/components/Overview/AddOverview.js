@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import classNames from "classnames";
 import { addOverview } from "../../actions/overviewActions";
 import { getActivities } from "../../actions/activityActions";
+import { getPersons } from "../../actions/personActions";
 
 class AddOverview extends Component {
     constructor() {
@@ -18,6 +19,9 @@ class AddOverview extends Component {
             activity: {
                 activityId: null
             },
+            person: {
+                personId: null 
+            },
             errors: {}
         };
 
@@ -30,7 +34,11 @@ class AddOverview extends Component {
 			let activity = Object.assign({}, this.state.activity);
 			activity[e.target.id] = e.target.value;
 			this.setState({ activity });
-		} else {
+		}else if(e.target.id === "personId"){
+            let person = Object.assign({}, this.state.person);
+			person[e.target.id] = e.target.value;
+			this.setState({ person });
+        } else {
 			this.setState({ [e.target.name]: e.target.value });
 		}
 	};
@@ -46,6 +54,9 @@ class AddOverview extends Component {
             comment: this.state.comment,
             activity: {
                 activityId: this.state.activity.activityId
+            },
+            person: {
+                personId: this.state.person.personId 
             }
         };
         this.props.addOverview(newOverview, this.props.history);
@@ -60,12 +71,14 @@ class AddOverview extends Component {
     }
 
     componentDidMount() {
-		this.props.getActivities();
+        this.props.getActivities();
+        this.props.getPersons();
 	}
 
     render() {
         const { errors } = this.state;
         const { activities } = this.props.activity;
+        const { persons } = this.props.person;
 
         return (
             <div className="container mt-2">
@@ -177,6 +190,21 @@ class AddOverview extends Component {
 									))}
 								</select>
 							</div>
+                            <div className="form-group">
+								<label>Osoby</label>
+								<select
+									id="personId"
+									onChange={this.onChange}
+									className={classNames("form-control")}
+								>
+									<option>Wybierz osobę</option>
+									{persons.map((person) => (
+										<option key={person.personId} value={person.personId}>
+											{person.name}
+										</option>
+									))}
+								</select>
+							</div>
                             
                         </div>
                     </div>
@@ -197,12 +225,15 @@ AddOverview.propTypes = {
     addOverview: PropTypes.func.isRequired,
     errors: PropTypes.object.isRequired,
     activity: PropTypes.object.isRequired,
-    getActivities: PropTypes.func.isRequired
+    getActivities: PropTypes.func.isRequired,
+    person: PropTypes.object.isRequired,
+    getPersons: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
     errors: state.errors,
-    activity: state.activity
+    activity: state.activity,
+    person: state.person
 });
 
-export default connect(mapStateToProps, { addOverview,getActivities })(AddOverview);
+export default connect(mapStateToProps, { addOverview,getActivities, getPersons })(AddOverview);
