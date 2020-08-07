@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import classNames from "classnames";
 import { addOverview } from "../../actions/overviewActions";
+import { getActivities } from "../../actions/activityActions";
 
 class AddOverview extends Component {
     constructor() {
@@ -14,6 +15,9 @@ class AddOverview extends Component {
             endTime: "",
             parameter: "",
             comment: "",
+            activity: {
+                activityId: null
+            },
             errors: {}
         };
 
@@ -21,9 +25,15 @@ class AddOverview extends Component {
         this.onSubmit = this.onSubmit.bind(this);
     }
 
-    onChange(e) {
-        this.setState({ [e.target.name]: e.target.value });
-    }
+    onChange = (e) => {
+		if (e.target.id === "activityId") {
+			let activity = Object.assign({}, this.state.activity);
+			activity[e.target.id] = e.target.value;
+			this.setState({ activity });
+		} else {
+			this.setState({ [e.target.name]: e.target.value });
+		}
+	};
 
     onSubmit(e) {
         e.preventDefault();
@@ -33,7 +43,10 @@ class AddOverview extends Component {
             startTime: this.state.startTime,
             endTime: this.state.endTime,
             parameter: this.state.parameter,
-            comment: this.state.comment
+            comment: this.state.comment,
+            activity: {
+                activityId: this.state.activity.activityId
+            }
         };
         this.props.addOverview(newOverview, this.props.history);
     }
@@ -46,8 +59,13 @@ class AddOverview extends Component {
         }
     }
 
+    componentDidMount() {
+		this.props.getActivities();
+	}
+
     render() {
         const { errors } = this.state;
+        const { activities } = this.props.activity;
 
         return (
             <div className="container mt-2">
@@ -143,6 +161,22 @@ class AddOverview extends Component {
                                     </div>
                                 )}
                             </div>
+
+                            <div className="form-group">
+								<label>Czynności</label>
+								<select
+									id="activityId"
+									onChange={this.onChange}
+									className={classNames("form-control")}
+								>
+									<option>Wybierz czynność</option>
+									{activities.map((activity) => (
+										<option key={activity.activityId} value={activity.activityId}>
+											{activity.name}
+										</option>
+									))}
+								</select>
+							</div>
                             
                         </div>
                     </div>
@@ -161,11 +195,14 @@ class AddOverview extends Component {
 
 AddOverview.propTypes = {
     addOverview: PropTypes.func.isRequired,
-    errors: PropTypes.object.isRequired
+    errors: PropTypes.object.isRequired,
+    activity: PropTypes.object.isRequired,
+    getActivities: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
-    errors: state.errors
+    errors: state.errors,
+    activity: state.activity
 });
 
-export default connect(mapStateToProps, { addOverview })(AddOverview);
+export default connect(mapStateToProps, { addOverview,getActivities })(AddOverview);
