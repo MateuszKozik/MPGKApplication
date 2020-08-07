@@ -32,6 +32,7 @@ import RoleList from "./components/Role/RoleList";
 import AddRole from "./components/Role/AddRole";
 import FluidRegistryList from "./components/FluidRegistry/FluidRegistryList";
 import AddFluidRegistry from "./components/FluidRegistry/AddFluidRegistry";
+import UpdateFluidRegistry from "./components/FluidRegistry/UpdateFluidRegistry";
 
 function App() {
 	return (
@@ -94,6 +95,11 @@ function App() {
 						exact
 						path="/fluid-registries/add"
 						component={AddFluidRegistry}
+					/>
+					<Route
+						exact
+						path="/fluid-registries/update/:registryId"
+						component={UpdateFluidRegistry}
 					/>
 				</div>
 			</Router>

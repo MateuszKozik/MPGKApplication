@@ -2,13 +2,17 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import classNames from "classnames";
-import { addFluidRegistry } from "../../actions/fluidRegistryActions";
+import {
+	getFluidRegistry,
+	updateFluidRegistry
+} from "../../actions/fluidRegistryActions";
 
-class AddFluidRegistry extends Component {
+class UpdateFluidRegistry extends Component {
 	constructor() {
 		super();
 
 		this.state = {
+			registryId: "",
 			quantity: "",
 			datetime: "",
 			errors: {}
@@ -22,14 +26,37 @@ class AddFluidRegistry extends Component {
 		this.setState({ [e.target.name]: e.target.value });
 	}
 
+	componentDidMount() {
+		const { registryId } = this.props.match.params;
+		this.props.getFluidRegistry(registryId, this.props.history);
+	}
+
+	componentDidUpdate(props, state, snapshot) {
+		if (this.props.fluidRegistry !== props.fluidRegistry) {
+			const { registryId, quantity, datetime } = this.props.fluidRegistry;
+
+			this.setState({
+				registryId: registryId,
+				quantity: quantity,
+				datetime: datetime
+			});
+		}
+	}
+
 	onSubmit(e) {
 		e.preventDefault();
 
-		const newFluidRegistry = {
+		const updatedFluidRegistry = {
+			registryId: this.state.registryId,
 			quantity: this.state.quantity,
 			datetime: this.state.datetime
 		};
-		this.props.addFluidRegistry(newFluidRegistry, this.props.history);
+
+		this.props.updateFluidRegistry(
+			this.state.registryId,
+			updatedFluidRegistry,
+			this.props.history
+		);
 	}
 
 	static getDerivedStateFromProps(nextProps, prevState) {
@@ -45,7 +72,7 @@ class AddFluidRegistry extends Component {
 
 		return (
 			<div className="container mt-2">
-				<h1 className="h2 mb-4">Dodaj rejestr płynu</h1>
+				<h1 className="h2 mb-4">Edytuj resjestr płynu</h1>
 				<form onSubmit={this.onSubmit}>
 					<div className="row">
 						<div className="col-md-4 offset-md-4 text-center">
@@ -89,13 +116,19 @@ class AddFluidRegistry extends Component {
 	}
 }
 
-AddFluidRegistry.propTypes = {
-	addFluidRegistry: PropTypes.func.isRequired,
+UpdateFluidRegistry.propTypes = {
+	getFluidRegistry: PropTypes.func.isRequired,
+	fluidRegistry: PropTypes.object.isRequired,
+	updateFluidRegistry: PropTypes.func.isRequired,
 	errors: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
+	fluidRegistry: state.fluidRegistry.fluidRegistry,
 	errors: state.errors
 });
 
-export default connect(mapStateToProps, { addFluidRegistry })(AddFluidRegistry);
+export default connect(mapStateToProps, {
+	getFluidRegistry,
+	updateFluidRegistry
+})(UpdateFluidRegistry);
