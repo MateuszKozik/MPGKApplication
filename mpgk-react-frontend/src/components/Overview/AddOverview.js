@@ -37,10 +37,17 @@ class AddOverview extends Component {
 			let activity = Object.assign({}, this.state.activity);
 			activity[e.target.id] = e.target.value;
 			this.setState({ activity });
-		}else if(e.target.id === "personId"){
-            let person = Object.assign({}, this.state.person);
-			person[e.target.id] = e.target.value;
-			this.setState({ person });
+		}
+        else if(e.target.id === "personId"){
+            if(e.target.name === "supervisor"){
+                let supervisor = Object.assign({}, this.state.supervisor);
+                supervisor[e.target.id] = e.target.value;
+                this.setState({ supervisor });
+            }else{
+                let person = Object.assign({}, this.state.person);
+			    person[e.target.id] = e.target.value;
+			    this.setState({ person });
+            }
         } else {
 			this.setState({ [e.target.name]: e.target.value });
 		}
@@ -62,7 +69,7 @@ class AddOverview extends Component {
                 personId: this.state.person.personId 
             },
             supervisor: {
-                personId: this.state.person.personId 
+                personId: this.state.supervisor.personId 
             }
         };
         this.props.addOverview(newOverview, this.props.history);
@@ -214,7 +221,8 @@ class AddOverview extends Component {
                             <div className="form-group">
 								<label>Przełożony</label>
 								<select
-									id="personId"
+                                    id="personId"
+                                    name="supervisor"
 									onChange={this.onChange}
 									className={classNames("form-control")}
 								>
