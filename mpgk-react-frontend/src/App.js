@@ -31,6 +31,7 @@ import UpdateConnection from "./components/Connection/UpdateConnection";
 import RoleList from "./components/Role/RoleList";
 import AddRole from "./components/Role/AddRole";
 import FluidRegistryList from "./components/FluidRegistry/FluidRegistryList";
+import AddFluidRegistry from "./components/FluidRegistry/AddFluidRegistry";
 
 function App() {
 	return (
@@ -89,6 +90,11 @@ function App() {
 					<Route exact path="/roles" component={RoleList} />
 					<Route exact path="/roles/add" component={AddRole} />
 					<Route exact path="/fluid-registries" component={FluidRegistryList} />
+					<Route
+						exact
+						path="/fluid-registries/add"
+						component={AddFluidRegistry}
+					/>
 				</div>
 			</Router>
 		</Provider>
