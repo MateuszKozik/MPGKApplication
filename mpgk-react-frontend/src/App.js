@@ -28,6 +28,7 @@ import UpdateOverview from "./components/Overview/UpdateOverview";
 import ConnectionList from "./components/Connection/ConnectionList";
 import AddConnection from "./components/Connection/AddConnection";
 import UpdateConnection from "./components/Connection/UpdateConnection";
+import RoleList from "./components/Role/RoleList";
 
 function App() {
 	return (
@@ -83,6 +84,7 @@ function App() {
 						path="/connections/update/:connectionId"
 						component={UpdateConnection}
 					/>
+					<Route exact path="/roles" component={RoleList} />
 				</div>
 			</Router>
 		</Provider>
