@@ -42,7 +42,7 @@ export const deleteRole = (name) => async (dispatch) => {
 		await axios.delete(`/api/roles/${name}`);
 		dispatch({
 			type: DELETE_ROLE,
-			payload: res.data
+			payload: name
 		});
 	}
 };
