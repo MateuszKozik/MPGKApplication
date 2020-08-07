@@ -44,7 +44,7 @@ export const getFluidRegistry = (registryId, history) => async (dispatch) => {
 	}
 };
 
-export const updateFLuidRegistry = (
+export const updateFluidRegistry = (
 	registryId,
 	fluidRegistry,
 	history
