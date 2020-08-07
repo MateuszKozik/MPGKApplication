@@ -9,6 +9,7 @@ import activityReducer from "./activityReducer";
 import overviewReducer from "./overviewReducer";
 import connectionReducer from "./connectionReducer";
 import roleReducer from "./roleReducer";
+import fluidRegistryReducer from "./fluidRegistryReducer";
 
 export default combineReducers({
 	errors: errorReducer,
@@ -20,5 +21,6 @@ export default combineReducers({
 	activity: activityReducer,
 	overview: overviewReducer,
 	connection: connectionReducer,
-	role: roleReducer
+	role: roleReducer,
+	fluidRegistry: fluidRegistryReducer
 });
