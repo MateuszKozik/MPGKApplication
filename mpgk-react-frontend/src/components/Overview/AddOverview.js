@@ -22,6 +22,9 @@ class AddOverview extends Component {
             person: {
                 personId: null 
             },
+            supervisor: {
+                personId: null
+            },
             errors: {}
         };
 
@@ -56,6 +59,9 @@ class AddOverview extends Component {
                 activityId: this.state.activity.activityId
             },
             person: {
+                personId: this.state.person.personId 
+            },
+            supervisor: {
                 personId: this.state.person.personId 
             }
         };
@@ -198,6 +204,21 @@ class AddOverview extends Component {
 									className={classNames("form-control")}
 								>
 									<option>Wybierz osobę</option>
+									{persons.map((person) => (
+										<option key={person.personId} value={person.personId}>
+											{person.name}
+										</option>
+									))}
+								</select>
+							</div>
+                            <div className="form-group">
+								<label>Przełożony</label>
+								<select
+									id="personId"
+									onChange={this.onChange}
+									className={classNames("form-control")}
+								>
+									<option>Wybierz przełożonego</option>
 									{persons.map((person) => (
 										<option key={person.personId} value={person.personId}>
 											{person.name}
