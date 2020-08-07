@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import classNames from "classnames";
 import { addActivity } from "../../actions/activityActions";
+import { getGroups } from "../../actions/activityGroupActions";
 
 class AddActivity extends Component {
     constructor() {
@@ -13,6 +14,9 @@ class AddActivity extends Component {
             type: "",
             emsr: "",
             setting: "",
+            activityGroup: {
+                groupId: null 
+            },
             errors: {}
         };
 
@@ -20,8 +24,23 @@ class AddActivity extends Component {
         this.onSubmit = this.onSubmit.bind(this);
     }
 
-    onChange(e) {
+    /*onChange(e) {
         this.setState({ [e.target.name]: e.target.value });
+        
+        
+    }*/
+
+    onChange = e => {
+        if (e.target.id === "groupId") {
+            console.log(e.target.name)
+            let activityGroup = Object.assign({}, this.state.activityGroup); 
+            activityGroup[e.target.id] = e.target.value; 
+            this.setState({ activityGroup });
+          }else{
+            this.setState({ [e.target.name]: e.target.value });
+          }
+        
+        
     }
 
     onSubmit(e) {
@@ -31,7 +50,10 @@ class AddActivity extends Component {
             name: this.state.name,
             type: this.state.type,
             emsr: this.state.emsr,
-            setting: this.state.setting
+            setting: this.state.setting,
+            activityGroup: {
+                groupId: this.state.activityGroup.groupId 
+            } 
         };
         this.props.addActivity(newActivity, this.props.history);
     }
@@ -43,9 +65,13 @@ class AddActivity extends Component {
             return null;
         }
     }
+    componentDidMount() {
+        this.props.getGroups();
+    }
 
     render() {
         const { errors } = this.state;
+        const { groups } = this.props.group;
 
         return (
             <div className="container mt-2">
@@ -121,6 +147,16 @@ class AddActivity extends Component {
                                     </div>
                                 )}
                             </div>
+                            <div className="form-group">
+                            <label>Id grupy</label>
+                            <select  id="groupId"  onChange={this.onChange} className={classNames("form-control")}>
+                            <option >Wybierz grupe</option>
+                            {groups.map((group) => (
+                                <option  value={group.groupId}>{group.groupId}</option>
+                                ))} 
+                            </select>
+                           
+                            </div>
                         </div>
                     </div>
                     <div className="row">
@@ -138,11 +174,16 @@ class AddActivity extends Component {
 
 AddActivity.propTypes = {
     addActivity: PropTypes.func.isRequired,
-    errors: PropTypes.object.isRequired
+    errors: PropTypes.object.isRequired,
+    group: PropTypes.object.isRequired,
+    activity: PropTypes.object.isRequired,
+    getGroups: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
-    errors: state.errors
+    errors: state.errors,
+    group: state.group,
+    activity: state.activity
 });
 
-export default connect(mapStateToProps, { addActivity })(AddActivity);
+export default connect(mapStateToProps, { addActivity,getGroups })(AddActivity);
