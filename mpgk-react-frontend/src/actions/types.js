@@ -44,3 +44,8 @@ export const DELETE_CONNECTION = "DELETE_CONNECTION";
 export const GET_ROLES = "GET_ROLES";
 export const GET_ROLE = "GET_ROLE";
 export const DELETE_ROLE = "DELETE_ROLE";
+
+//fluid registry
+export const GET_FLUID_REGISTRIES = "GET_FLUID_REGISTRIES";
+export const GET_FLUID_REGISTRY = "GET_FLUID_REGISTRY";
+export const DELETE_FLUID_REGISTRY = "DELETE_FLUID_REGISTRY";
