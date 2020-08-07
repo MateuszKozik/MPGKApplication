@@ -8,6 +8,7 @@ import activityGroupReducer from "./activityGroupReducer";
 import activityReducer from "./activityReducer";
 import overviewReducer from "./overviewReducer";
 import connectionReducer from "./connectionReducer";
+import roleReducer from "./roleReducer";
 
 export default combineReducers({
 	errors: errorReducer,
@@ -18,5 +19,6 @@ export default combineReducers({
 	group: activityGroupReducer,
 	activity: activityReducer,
 	overview: overviewReducer,
-	connection: connectionReducer
+	connection: connectionReducer,
+	role: roleReducer
 });
