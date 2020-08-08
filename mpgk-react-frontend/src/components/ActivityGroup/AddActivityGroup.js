@@ -11,9 +11,7 @@ class AddActivityGroup extends Component {
 
 		this.state = {
 			name: "",
-			connection: {
-				connectionId: ""
-			},
+			connectionId: "",
 			errors: {}
 		};
 
@@ -22,22 +20,22 @@ class AddActivityGroup extends Component {
 	}
 
 	onChange(e) {
-		if (e.target.name === "connectionId") {
-			let connection = Object.assign({}, this.state.connection);
-			connection[e.target.name] = e.target.value;
-			this.setState({ connection });
-		} else {
-			this.setState({ [e.target.name]: e.target.value });
-		}
+		this.setState({ [e.target.name]: e.target.value });
 	}
 
 	onSubmit(e) {
 		e.preventDefault();
-
-		const newGroup = {
-			name: this.state.name,
-			connection: { connectionId: this.state.connection.connectionId }
-		};
+		let newGroup = {};
+		if (this.state.connectionId !== "") {
+			newGroup = {
+				name: this.state.name,
+				connection: { connectionId: this.state.connectionId }
+			};
+		} else {
+			newGroup = {
+				name: this.state.name
+			};
+		}
 		this.props.addGroup(newGroup, this.props.history);
 	}
 
@@ -82,7 +80,7 @@ class AddActivityGroup extends Component {
 								<select
 									name="connectionId"
 									onChange={this.onChange}
-									className={classNames("form-control")}
+									className="form-control"
 								>
 									<option value="">Wybierz powiązanie </option>
 									{connections.map((connection) => (
