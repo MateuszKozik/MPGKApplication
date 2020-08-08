@@ -13,7 +13,7 @@ class FluidPlaceList extends Component {
 	}
 
 	onDeleteClick = (placeId) => {
-		this.props.deleteFluid(placeId);
+		this.props.deleteFluidPlace(placeId);
 	};
 
 	render() {
