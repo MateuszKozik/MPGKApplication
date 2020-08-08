@@ -40,7 +40,7 @@ class FluidPlaceList extends Component {
 									<td>{fluidPlace.name}</td>
 									<td>
 										<Link
-											to={`/fluids/update/${fluidPlace.placeId}`}
+											to={`/fluid-places/update/${fluidPlace.placeId}`}
 											className="btn btn-primary my-1"
 										>
 											Edytuj
