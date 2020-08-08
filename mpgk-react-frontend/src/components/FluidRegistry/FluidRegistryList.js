@@ -68,17 +68,17 @@ class FluidRegistryList extends Component {
 	}
 }
 
-FluidRegistryList.propTypes = {
-	fluidRegistry: PropTypes.object.isRequired,
-	getFluidRegistries: PropTypes.func.isRequired,
-	deleteFluidRegistry: PropTypes.func.isRequired
-};
+const mapDispatchToProps = (dispatch) => ({
+	getFluidRegistries: () => {
+		dispatch(getFluidRegistries());
+	},
+	deleteFluidRegistry: (registryId) => {
+		dispatch(deleteFluidRegistry(registryId));
+	}
+});
 
 const mapStateToProps = (state) => ({
 	fluidRegistry: state.fluidRegistry
 });
 
-export default connect(mapStateToProps, {
-	getFluidRegistries,
-	deleteFluidRegistry
-})(FluidRegistryList);
+export default connect(mapStateToProps, mapDispatchToProps)(FluidRegistryList);
