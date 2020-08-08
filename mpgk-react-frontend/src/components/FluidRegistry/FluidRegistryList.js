@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import AddFluidRegistryButton from "./AddFluidRegistryButton";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import {
 	getFluidRegistries,
