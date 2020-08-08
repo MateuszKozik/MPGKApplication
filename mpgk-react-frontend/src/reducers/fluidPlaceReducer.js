@@ -1,7 +1,7 @@
 import {
 	GET_FLUID_PLACES,
 	GET_FLUID_PLACE,
-	DELETE_GROUP
+	DELETE_FLUID_PLACE
 } from "../actions/types";
 
 const initialState = {
@@ -23,7 +23,7 @@ export default function (state = initialState, action) {
 				fluidPlace: action.payload
 			};
 
-		case DELETE_GROUP:
+		case DELETE_FLUID_PLACE:
 			return {
 				...state,
 				fluidPlaces: state.fluidPlaces.filter(
