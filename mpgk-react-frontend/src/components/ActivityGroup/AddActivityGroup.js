@@ -25,15 +25,11 @@ class AddActivityGroup extends Component {
 
 	onSubmit(e) {
 		e.preventDefault();
-		let newGroup = {};
+		let newGroup = { name: this.state.name };
 		if (this.state.connectionId !== "") {
 			newGroup = {
-				name: this.state.name,
+				...newGroup,
 				connection: { connectionId: this.state.connectionId }
-			};
-		} else {
-			newGroup = {
-				name: this.state.name
 			};
 		}
 		this.props.addGroup(newGroup, this.props.history);
