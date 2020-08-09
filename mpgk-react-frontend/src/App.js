@@ -36,6 +36,7 @@ import UpdateFluidRegistry from "./components/FluidRegistry/UpdateFluidRegistry"
 import FluidPlaceList from "./components/FluidPlace/FluidPlaceList";
 import AddFluidPlace from "./components/FluidPlace/AddFluidPlace";
 import UpdateFluidPlace from "./components/FluidPlace/UpdateFluidPlace";
+import Home from "./components/Pages/Home";
 
 function App() {
 	return (
@@ -43,6 +44,7 @@ function App() {
 			<Router>
 				<div className="App">
 					<Header />
+					<Route exact path="/" component={Home} />
 					<Route exact path="/devices" component={DeviceList} />
 					<Route exact path="/devices/add" component={AddDevice} />
 					<Route exact path="/devices/update/:id" component={UpdateDevice} />
