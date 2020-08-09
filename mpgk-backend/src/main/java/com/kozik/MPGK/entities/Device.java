@@ -37,9 +37,6 @@ public class Device {
     private Boolean status;
 
     @OneToMany(mappedBy = "device")
-    private List<FluidRegistry> fluidRegistries;
-
-    @OneToMany(mappedBy = "device")
     @JsonIgnore
     private List<Connection> connections;
 }

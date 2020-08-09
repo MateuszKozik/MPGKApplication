@@ -40,10 +40,6 @@ public class FluidRegistry {
     private Fluid fluid;
 
     @ManyToOne
-    @JoinColumn(name = "device_id", nullable = true)
-    private Device device;
-
-    @ManyToOne
     @JoinColumn(name = "person_id", nullable = true)
     private Person person;
 
