@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { addConnection } from "../../actions/connectionActions";
 import classnames from "classnames";
+import { getOverviewTypes } from "../../actions/overviewTypeActions";
+import { getDevices } from "../../actions/deviceActions";
 
 class AddConnection extends Component {
 	constructor() {
@@ -10,11 +12,18 @@ class AddConnection extends Component {
 
 		this.state = {
 			name: "",
+			typeId: "",
+			deviceId: "",
 			errors: {}
 		};
 
 		this.onChange = this.onChange.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
+	}
+
+	componentDidMount() {
+		this.props.getOverviewTypes();
+		this.props.getDevices();
 	}
 
 	onChange(e) {
@@ -23,11 +32,19 @@ class AddConnection extends Component {
 
 	onSubmit(e) {
 		e.preventDefault();
-
-		const newConnection = {
-			name: this.state.name
-		};
-
+		let newConnection = { name: this.state.name };
+		if (this.state.deviceId !== "") {
+			newConnection = {
+				...newConnection,
+				device: { deviceId: this.state.deviceId }
+			};
+		}
+		if (this.state.typeId !== "") {
+			newConnection = {
+				...newConnection,
+				overviewType: { typeId: this.state.typeId }
+			};
+		}
 		this.props.addConnection(newConnection, this.props.history);
 	}
 
@@ -41,7 +58,8 @@ class AddConnection extends Component {
 
 	render() {
 		const { errors } = this.state;
-
+		const { overviewTypes } = this.props.overviewType;
+		const { devices } = this.props.device;
 		return (
 			<div className="container mt-4">
 				<h1 className="h2">Dodaj powiązanie</h1>
@@ -63,6 +81,39 @@ class AddConnection extends Component {
 									<div className="invalid-feedback">{errors.name}</div>
 								)}
 							</div>
+							<div className="form-group">
+								<label>Rodzaj przeglądu</label>
+								<select
+									name="typeId"
+									onChange={this.onChange}
+									className="form-control"
+								>
+									<option value="">Wybierz rodzaj przeglądu </option>
+									{overviewTypes.map((overviewType) => (
+										<option
+											key={overviewType.typeId}
+											value={overviewType.typeId}
+										>
+											{overviewType.name}
+										</option>
+									))}
+								</select>
+							</div>
+							<div className="form-group">
+								<label>Urządzenie</label>
+								<select
+									name="deviceId"
+									onChange={this.onChange}
+									className="form-control"
+								>
+									<option value="">Wybierz urządzenie </option>
+									{devices.map((device) => (
+										<option key={device.deviceId} value={device.deviceId}>
+											{device.name}
+										</option>
+									))}
+								</select>
+							</div>
 						</div>
 					</div>
 
@@ -81,11 +132,21 @@ class AddConnection extends Component {
 
 AddConnection.propTypes = {
 	addConnection: PropTypes.func.isRequired,
+	overviewType: PropTypes.object.isRequired,
+	device: PropTypes.object.isRequired,
+	getOverviewTypes: PropTypes.func.isRequired,
+	getDevices: PropTypes.func.isRequired,
 	errors: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
+	overviewType: state.overviewType,
+	device: state.device,
 	errors: state.errors
 });
 
-export default connect(mapStateToProps, { addConnection })(AddConnection);
+export default connect(mapStateToProps, {
+	addConnection,
+	getOverviewTypes,
+	getDevices
+})(AddConnection);
