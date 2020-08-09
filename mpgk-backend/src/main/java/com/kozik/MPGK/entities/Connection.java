@@ -32,7 +32,7 @@ public class Connection {
     private Long connectionId;
 
     @NotBlank(message = "Nazwa powiązania jest wymagana")
-    @Column(name = "name", nullable = false, length = 40)
+    @Column(name = "name", nullable = false, length = 70)
     private String name;
 
     @ManyToOne
