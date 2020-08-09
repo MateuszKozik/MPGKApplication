@@ -140,7 +140,7 @@ class AddActivity extends Component {
 									<option value="">Wybierz grupę czynności</option>
 									{groups.map((group) => (
 										<option key={group.groupId} value={group.groupId}>
-											{group.name}
+											{group.name + " - " + group.connection.device.name}
 										</option>
 									))}
 								</select>
