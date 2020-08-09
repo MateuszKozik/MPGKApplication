@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -31,5 +33,6 @@ public class Fluid {
     private String name;
 
     @OneToMany(mappedBy = "fluid")
+    @JsonIgnore
     private List<FluidRegistry> fluidRegistries;
 }

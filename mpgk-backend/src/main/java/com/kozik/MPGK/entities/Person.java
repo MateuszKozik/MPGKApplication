@@ -54,5 +54,6 @@ public class Person {
     private List<Overview> overviewSupervisors;
 
     @OneToMany(mappedBy = "person")
+    @JsonIgnore
     private List<FluidRegistry> fluidRegistries;
 }
