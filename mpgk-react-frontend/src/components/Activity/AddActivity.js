@@ -14,9 +14,7 @@ class AddActivity extends Component {
 			type: "",
 			emsr: "",
 			setting: "",
-			activityGroup: {
-				groupId: null
-			},
+			groupId: "",
 			errors: {}
 		};
 
@@ -25,27 +23,24 @@ class AddActivity extends Component {
 	}
 
 	onChange = (e) => {
-		if (e.target.id === "groupId") {
-			let activityGroup = Object.assign({}, this.state.activityGroup);
-			activityGroup[e.target.id] = e.target.value;
-			this.setState({ activityGroup });
-		} else {
-			this.setState({ [e.target.name]: e.target.value });
-		}
+		this.setState({ [e.target.name]: e.target.value });
 	};
 
 	onSubmit(e) {
 		e.preventDefault();
-
-		const newActivity = {
+		let newActivity = {
 			name: this.state.name,
 			type: this.state.type,
 			emsr: this.state.emsr,
-			setting: this.state.setting,
-			activityGroup: {
-				groupId: this.state.activityGroup.groupId
-			}
+			setting: this.state.setting
 		};
+
+		if (this.state.groupId !== "") {
+			newActivity = {
+				...newActivity,
+				activityGroup: { groupId: this.state.groupId }
+			};
+		}
 		this.props.addActivity(newActivity, this.props.history);
 	}
 
@@ -133,11 +128,11 @@ class AddActivity extends Component {
 							<div className="form-group">
 								<label>Grupy czynności</label>
 								<select
-									id="groupId"
+									name="groupId"
 									onChange={this.onChange}
-									className={classNames("form-control")}
+									className="form-control"
 								>
-									<option>Wybierz grupę czynności</option>
+									<option value="">Wybierz grupę czynności</option>
 									{groups.map((group) => (
 										<option key={group.groupId} value={group.groupId}>
 											{group.name}
