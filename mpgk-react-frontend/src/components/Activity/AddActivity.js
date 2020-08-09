@@ -81,16 +81,21 @@ class AddActivity extends Component {
 								)}
 							</div>
 							<div className="form-group">
-								<label>Rodzaj</label>
-								<input
+								<label>Typ pola</label>
+								<select
+									name="type"
+									onChange={this.onChange}
 									className={classNames("form-control", {
 										"is-invalid": errors.type
 									})}
-									name="type"
-									type="text"
-									onChange={this.onChange}
-									value={this.state.type}
-								/>
+								>
+									<option value="">Wybierz typ</option>
+									<option value="Pole tekstowe">Pole tekstowe</option>
+									<option value="Zaznaczenie">Zaznaczenie</option>
+									<option value="Zakres liczb">Zakres liczb</option>
+									<option value="Pole wyboru">Pole wyboru</option>
+								</select>
+
 								{errors.type && (
 									<div className="invalid-feedback">{errors.type}</div>
 								)}
