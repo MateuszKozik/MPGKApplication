@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getConnections } from "../../actions/connectionActions";
+import { Link } from "react-router-dom";
 
 class Home extends Component {
 	componentDidMount() {
@@ -93,7 +94,12 @@ class Home extends Component {
 						<h4>Rejestr płynów roboczych ORC</h4>
 					</div>
 					<div className="col-md-6">
-						<button className="btn btn-block btn-primary">Otwórz</button>
+						<Link
+							to="/new-fluid-registry"
+							className="btn btn-block btn-primary"
+						>
+							Otwórz
+						</Link>
 					</div>
 				</div>
 				<div className="row mt-4">

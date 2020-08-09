@@ -37,6 +37,7 @@ import FluidPlaceList from "./components/FluidPlace/FluidPlaceList";
 import AddFluidPlace from "./components/FluidPlace/AddFluidPlace";
 import UpdateFluidPlace from "./components/FluidPlace/UpdateFluidPlace";
 import Home from "./components/Pages/Home";
+import FluidRegistry from "./components/Pages/FluidRegistry";
 
 function App() {
 	return (
@@ -113,6 +114,7 @@ function App() {
 						path="/fluid-places/update/:placeId"
 						component={UpdateFluidPlace}
 					/>
+					<Route exact path="/new-fluid-registry" component={FluidRegistry} />
 				</div>
 			</Router>
 		</Provider>
