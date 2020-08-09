@@ -12,6 +12,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -38,5 +40,6 @@ public class Device {
     private List<FluidRegistry> fluidRegistries;
 
     @OneToMany(mappedBy = "device")
+    @JsonIgnore
     private List<Connection> connections;
 }

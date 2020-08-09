@@ -11,6 +11,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -30,5 +32,6 @@ public class OverviewType {
     private String name;
 
     @OneToMany(mappedBy = "overviewType")
+    @JsonIgnore
     private List<Connection> connections;
 }
