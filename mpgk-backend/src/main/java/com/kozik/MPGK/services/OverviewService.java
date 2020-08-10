@@ -1,7 +1,5 @@
 package com.kozik.MPGK.services;
 
-
-
 import com.kozik.MPGK.entities.Overview;
 import com.kozik.MPGK.repositories.OverviewRepository;
 import com.kozik.MPGK.exceptions.overviewExceptions.OverviewAlreadyExistException;
@@ -11,9 +9,10 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class OverviewService {
-    @Autowired private OverviewRepository overviewRepository;
+    @Autowired
+    private OverviewRepository overviewRepository;
 
-    public Iterable<Overview> listAll(){
+    public Iterable<Overview> listAll() {
         return overviewRepository.findAll();
     }
 
@@ -25,7 +24,8 @@ public class OverviewService {
     }
 
     public Overview get(Long overviewId) {
-        Overview overview = overviewRepository.findById(overviewId).orElseThrow(() -> new OverviewNotFoundException(overviewId));
+        Overview overview = overviewRepository.findById(overviewId)
+                .orElseThrow(() -> new OverviewNotFoundException(overviewId));
         return overview;
     }
 
@@ -33,7 +33,7 @@ public class OverviewService {
         overviewRepository.delete(get(overviewId));
     }
 
-    public Boolean isOverviewExist(Long id){
+    public Boolean isOverviewExist(Long id) {
         return overviewRepository.existsById(id);
     }
 
@@ -44,6 +44,7 @@ public class OverviewService {
             element.setEndTime(overview.getEndTime());
             element.setParameter(overview.getParameter());
             element.setComment(overview.getComment());
+            element.setDatetime(overview.getDatetime());
             return overviewRepository.save(element);
         }).orElseThrow(() -> new OverviewNotFoundException(overviewId));
 
