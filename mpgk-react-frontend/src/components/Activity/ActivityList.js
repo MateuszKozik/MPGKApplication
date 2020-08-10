@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import AddActivityButton from "./AddActivityButton";
 import { connect } from "react-redux";
 import { getActivities, deleteActivity } from "../../actions/activityActions";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import AddButton from "../Common/AddButton";
 
 class ActivityList extends Component {
 	componentDidMount() {
@@ -21,7 +21,11 @@ class ActivityList extends Component {
 				<h1 className="display-4 text-center mt-2">Czynności</h1>
 				<div className="row">
 					<div className="col-md-4 my-1">
-						<AddActivityButton />
+						<AddButton
+							link="/activities/add"
+							className="btn btn-info"
+							message="Dodaj czynność"
+						/>
 					</div>
 				</div>
 				<div className="table-responsive mt-2">

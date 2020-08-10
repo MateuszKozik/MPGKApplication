@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import AddPersonButton from "./AddPersonButton";
 import { connect } from "react-redux";
 import { getPersons, deletePerson } from "../../actions/personActions";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import AddButton from "../Common/AddButton";
 
 class PersonList extends Component {
 	componentDidMount() {
@@ -21,7 +21,11 @@ class PersonList extends Component {
 				<h1 className="display-4 text-center mt-2">Osoby</h1>
 				<div className="row">
 					<div className="col-md-4 my-1">
-						<AddPersonButton />
+						<AddButton
+							link="/persons/add"
+							className="btn btn-info"
+							message="Dodaj osobę"
+						/>
 					</div>
 				</div>
 				<div className="table-responsive mt-2">

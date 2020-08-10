@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import AddFluidRegistryButton from "./AddFluidRegistryButton";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import {
 	getFluidRegistries,
 	deleteFluidRegistry
 } from "../../actions/fluidRegistryActions";
+import AddButton from "../Common/AddButton";
 
 class FluidRegistryList extends Component {
 	componentDidMount() {
@@ -23,7 +23,11 @@ class FluidRegistryList extends Component {
 				<h1 className="display-4 text-center mt-2">Rejestry płynów</h1>
 				<div className="row">
 					<div className="col-md-4 my-1">
-						<AddFluidRegistryButton />
+						<AddButton
+							link="/fluid-registries/add"
+							className="btn btn-info"
+							message="Dodaj rejestr płynu"
+						/>
 					</div>
 				</div>
 				<div className="table-responsive mt-2">

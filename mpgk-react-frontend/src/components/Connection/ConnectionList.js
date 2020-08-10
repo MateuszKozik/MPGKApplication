@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import AddConnectionButton from "./AddConnectionButton";
 import { connect } from "react-redux";
 import {
 	getConnections,
@@ -7,6 +6,7 @@ import {
 } from "../../actions/connectionActions";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import AddButton from "../Common/AddButton";
 
 export class ConnectionList extends Component {
 	componentDidMount() {
@@ -24,7 +24,11 @@ export class ConnectionList extends Component {
 				<h1 className="display-4 text-center mt-2">Powiązania</h1>
 				<div className="row">
 					<div className="col-md-4 my-1">
-						<AddConnectionButton />
+						<AddButton
+							link="/connections/add"
+							className="btn btn-info"
+							message="Dodaj powiązanie"
+						/>
 					</div>
 				</div>
 

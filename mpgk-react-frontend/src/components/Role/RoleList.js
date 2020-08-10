@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import AddRoleButton from "./AddRoleButton";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { getRoles, deleteRole } from "../../actions/roleActions";
+import AddButton from "../Common/AddButton";
 
 class RoleList extends Component {
 	componentDidMount() {
@@ -20,7 +20,11 @@ class RoleList extends Component {
 				<h1 className="display-4 text-center mt-2">Uprawnienia</h1>
 				<div className="row">
 					<div className="col-md-4 my-1">
-						<AddRoleButton />
+						<AddButton
+							link="/roles/add"
+							className="btn btn-info"
+							message="Dodaj uprawnienie"
+						/>
 					</div>
 				</div>
 				<div className="table-responsive mt-2">

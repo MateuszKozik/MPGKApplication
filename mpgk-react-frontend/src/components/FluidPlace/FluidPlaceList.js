@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import AddFluidPlaceButton from "./AddFluidPlaceButton";
 import PropTypes from "prop-types";
 
 import {
 	getFluidPlaces,
 	deleteFluidPlace
 } from "../../actions/fluidPlaceActions";
+import AddButton from "../Common/AddButton";
 
 class FluidPlaceList extends Component {
 	componentDidMount() {
@@ -25,7 +25,11 @@ class FluidPlaceList extends Component {
 				<h1 className="display-4 text-center mt-2">Miejsca dodania płynów</h1>
 				<div className="row">
 					<div className="col-md-4 my-1">
-						<AddFluidPlaceButton />
+						<AddButton
+							link="/fluid-places/add"
+							className="btn btn-info"
+							message="Dodaj miejsce dodania czynnika"
+						/>
 					</div>
 				</div>
 				<div className="table-responsive mt-2">

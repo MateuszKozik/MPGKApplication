@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import AddDeviceButton from "./AddDeviceButton";
 import { connect } from "react-redux";
 import { getDevices, deleteDevice } from "../../actions/deviceActions";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import AddButton from "../Common/AddButton";
 
 class DeviceList extends Component {
 	componentDidMount() {
@@ -21,7 +21,11 @@ class DeviceList extends Component {
 				<h1 className="display-4 text-center mt-2">Urządzenia</h1>
 				<div className="row">
 					<div className="col-md-4 my-1">
-						<AddDeviceButton />
+						<AddButton
+							link="/devices/add"
+							className="btn btn-info"
+							message="Dodaj urządzenie"
+						/>
 					</div>
 				</div>
 
