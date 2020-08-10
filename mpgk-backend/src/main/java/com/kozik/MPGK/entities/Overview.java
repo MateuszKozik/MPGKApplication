@@ -33,12 +33,15 @@ public class Overview {
     private String status;
 
     @NotNull(message = "Czas rozpoczęcia przeglądu jest wymagany")
-    @Column(name = "start_time", nullable = false, length = 20)
+    @Column(name = "start_time", nullable = false)
     private LocalDateTime startTime;
 
     @NotNull(message = "Czas zakończenia przeglądu jest wymagany")
-    @Column(name = "end_time", nullable = false, length = 20)
+    @Column(name = "end_time", nullable = false)
     private LocalDateTime endTime;
+
+    @Column(name = "datetime", nullable = true)
+    private LocalDateTime datetime;
 
     @Column(name = "parameter", nullable = true, length = 50)
     private String parameter;
