@@ -71,6 +71,7 @@ class UpdateOverview extends Component {
 			status: this.state.status,
 			startTime: this.state.startTime,
 			endTime: this.state.endTime,
+			datetime: this.state.datetime,
 			parameter: this.state.parameter,
 			comment: this.state.comment
 		};
