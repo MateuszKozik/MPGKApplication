@@ -69,4 +69,11 @@ public class OverviewController {
                 HttpStatus.OK);
     }
 
+    // Delete all overviews
+    @DeleteMapping("")
+    public ResponseEntity<?> deleteAllOverviews() {
+        overviewService.deleteAll();
+        return new ResponseEntity<Message>(new Message("All reviews have been deleted."), HttpStatus.OK);
+    }
+
 }

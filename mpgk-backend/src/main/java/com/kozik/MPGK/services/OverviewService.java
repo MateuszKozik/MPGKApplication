@@ -50,4 +50,8 @@ public class OverviewService {
 
         return newOverview;
     }
+
+    public void deleteAll() {
+        overviewRepository.deleteAll();
+    }
 }
