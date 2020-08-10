@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import AddFluidPlaceButton from "./AddFluidPlaceButton";
+import PropTypes from "prop-types";
+
 import {
 	getFluidPlaces,
 	deleteFluidPlace
@@ -64,6 +66,12 @@ class FluidPlaceList extends Component {
 		);
 	}
 }
+
+FluidPlaceList.propTypes = {
+	fluidPlace: PropTypes.object.isRequired,
+	getFluidPlaces: PropTypes.func.isRequired,
+	deleteFluidPlace: PropTypes.func.isRequired
+};
 
 const mapDispatchToProps = (dispatch) => ({
 	getFluidPlaces: () => {
