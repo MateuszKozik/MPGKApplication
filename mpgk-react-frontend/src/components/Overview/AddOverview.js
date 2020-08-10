@@ -14,6 +14,7 @@ class AddOverview extends Component {
 			status: "",
 			startTime: "",
 			endTime: "",
+			datetime: "",
 			parameter: "",
 			comment: "",
 			activityId: "",
@@ -52,6 +53,7 @@ class AddOverview extends Component {
 		let newOverview = {
 			status: this.state.status,
 			startTime: this.state.startTime,
+			datetime: this.state.datetime,
 			endTime: this.state.endTime,
 			parameter: this.state.parameter,
 			comment: this.state.comment
@@ -134,6 +136,21 @@ class AddOverview extends Component {
 
 							<div className="form-group">
 								<label>Czas wykonania</label>
+								<input
+									className={classNames("form-control", {
+										"is-invalid": errors.datetime
+									})}
+									name="datetime"
+									type="datetime-local"
+									onChange={this.onChange}
+									value={this.state.datetime}
+								/>
+								{errors.datetime && (
+									<div className="invalid-feedback">{errors.datetime}</div>
+								)}
+							</div>
+							<div className="form-group">
+								<label>Czas zakończenia</label>
 								<input
 									className={classNames("form-control", {
 										"is-invalid": errors.endTime
