@@ -6,6 +6,7 @@ import com.kozik.MPGK.utilities.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -54,9 +55,9 @@ public class TaskController {
     }
 
     // Generate on demand overviews
-    @PostMapping("/on-demand")
-    public ResponseEntity<?> createOnDemandOverviews() {
-        taskService.onDemand();
+    @PostMapping("/on-demand/{connectionId}")
+    public ResponseEntity<?> createOnDemandOverviews(@PathVariable Long connectionId) {
+        taskService.onDemand(connectionId);
         return new ResponseEntity<Message>(new Message("On demand overviews have been generated."), HttpStatus.CREATED);
     }
 }

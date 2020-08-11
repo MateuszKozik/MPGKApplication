@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.kozik.MPGK.entities.Activity;
 import com.kozik.MPGK.entities.ActivityGroup;
+import com.kozik.MPGK.entities.Connection;
 import com.kozik.MPGK.entities.Overview;
 import com.kozik.MPGK.exceptions.EmptyListException;
 import com.kozik.MPGK.repositories.ActivityGroupRepository;
@@ -20,6 +21,9 @@ public class TaskService {
 
     @Autowired
     private OverviewService overviewService;
+
+    @Autowired
+    private ConnectionService connectionService;
 
     // Daily overviews
     public void daily() {
@@ -123,9 +127,10 @@ public class TaskService {
     }
 
     // Overview on demand
-    public void onDemand() {
+    public void onDemand(Long connectionId) {
+        Connection connection = connectionService.get(connectionId);
         List<ActivityGroup> groupList = activityGroupRepository
-                .findByConnectionOverviewTypeNameAndConnectionDeviceStatus("Raz w roku", true);
+                .findByConnectionOverviewTypeNameAndConnectionDeviceStatusAndConnection("Raz w roku", true, connection);
         if (groupList.isEmpty()) {
             throw new EmptyListException("Activity group");
         }
