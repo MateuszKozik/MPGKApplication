@@ -34,7 +34,7 @@ public class Activity {
     private String name;
 
     @NotBlank(message = "Typ czynności jest wymagany")
-    @Column(name = "type", nullable = false, length = 25)
+    @Column(name = "type", nullable = false, length = 100)
     private String type;
 
     @Column(name = "emsr", nullable = true, length = 100)
