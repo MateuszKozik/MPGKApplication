@@ -33,6 +33,7 @@ export const DELETE_ACTIVITY = "DELETE_ACTIVITY";
 //overview
 export const GET_OVERVIEWS = "GET_OVERVIEWS";
 export const GET_OVERVIEW = "GET_OVERVIEW";
+export const GET_OVERVIEWS_BY_CONNECTION = "GET_OVERVIEWS_BY_CONNECTION";
 export const DELETE_OVERVIEW = "DELETE_OVERVIEW";
 
 //connection

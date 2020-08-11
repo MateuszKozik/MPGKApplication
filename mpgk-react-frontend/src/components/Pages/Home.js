@@ -33,7 +33,11 @@ class Home extends Component {
 								.map((connection, i) => (
 									<tr key={i}>
 										<td>{i + 1}</td>
-										<td>{connection.name}</td>
+										<td>
+											<Link to={`/overviews/list/${connection.connectionId}`}>
+												{connection.name}
+											</Link>
+										</td>
 										<td></td>
 										<td></td>
 										<td></td>
@@ -78,10 +82,7 @@ class Home extends Component {
 						<h4>Lista wykonawców</h4>
 					</div>
 					<div className="col-md-6">
-					<Link
-							to="/performers-list"
-							className="btn btn-block btn-primary"
-						>
+						<Link to="/performers-list" className="btn btn-block btn-primary">
 							Pokaż
 						</Link>
 					</div>

@@ -78,9 +78,6 @@ public class OverviewService {
             LocalDateTime now = LocalDateTime.now();
             List<Overview> overviews = overviewRepository
                     .findByActivityActivityGroupAndEndTimeGreaterThan(activityGroup, now);
-            if (overviews.isEmpty()) {
-                throw new EmptyListException("Overviews");
-            }
 
             OverviewObject overviewObject = new OverviewObject();
             overviewObject.setActivityGroup(activityGroup);
