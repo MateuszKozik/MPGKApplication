@@ -1,7 +1,16 @@
 package com.kozik.MPGK.services;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.kozik.MPGK.entities.ActivityGroup;
+import com.kozik.MPGK.entities.Connection;
 import com.kozik.MPGK.entities.Overview;
+import com.kozik.MPGK.repositories.ActivityGroupRepository;
 import com.kozik.MPGK.repositories.OverviewRepository;
+import com.kozik.MPGK.utilities.OverviewObject;
+import com.kozik.MPGK.exceptions.EmptyListException;
 import com.kozik.MPGK.exceptions.overviewExceptions.OverviewAlreadyExistException;
 import com.kozik.MPGK.exceptions.overviewExceptions.OverviewNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +20,12 @@ import org.springframework.stereotype.Service;
 public class OverviewService {
     @Autowired
     private OverviewRepository overviewRepository;
+
+    @Autowired
+    private ConnectionService connectionService;
+
+    @Autowired
+    private ActivityGroupRepository activityGroupRepository;
 
     public Iterable<Overview> listAll() {
         return overviewRepository.findAll();
@@ -49,6 +64,31 @@ public class OverviewService {
         }).orElseThrow(() -> new OverviewNotFoundException(overviewId));
 
         return newOverview;
+    }
+
+    public ArrayList<OverviewObject> getOverviewsByConnection(Long connectionId) {
+        Connection connection = connectionService.get(connectionId);
+        List<ActivityGroup> groups = activityGroupRepository.findByConnection(connection);
+        if (groups.isEmpty()) {
+            throw new EmptyListException("Activity group");
+        }
+        ArrayList<OverviewObject> overviewList = new ArrayList<>();
+
+        for (ActivityGroup activityGroup : groups) {
+            LocalDateTime now = LocalDateTime.now();
+            List<Overview> overviews = overviewRepository
+                    .findByActivityActivityGroupAndEndTimeGreaterThan(activityGroup, now);
+            if (overviews.isEmpty()) {
+                throw new EmptyListException("Overviews");
+            }
+
+            OverviewObject overviewObject = new OverviewObject();
+            overviewObject.setActivityGroup(activityGroup);
+            overviewObject.setOverviews(overviews);
+            overviewList.add(overviewObject);
+        }
+
+        return overviewList;
     }
 
     public void deleteAll() {
