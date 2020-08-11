@@ -35,9 +35,7 @@ public class TaskService {
 
         for (ActivityGroup activityGroup : groupList) {
             List<Activity> activities = activityGroup.getActivities();
-            if (activities.isEmpty()) {
-                throw new EmptyListException("Activity");
-            }
+
             for (Activity activity : activities) {
                 Overview overview = new Overview();
                 overview.setStatus("Nowy");
@@ -59,9 +57,7 @@ public class TaskService {
 
         for (ActivityGroup activityGroup : groupList) {
             List<Activity> activities = activityGroup.getActivities();
-            if (activities.isEmpty()) {
-                throw new EmptyListException("Activity");
-            }
+
             for (Activity activity : activities) {
                 Overview overview = new Overview();
                 overview.setStatus("Nowy");
@@ -88,9 +84,7 @@ public class TaskService {
 
         for (ActivityGroup activityGroup : groupList) {
             List<Activity> activities = activityGroup.getActivities();
-            if (activities.isEmpty()) {
-                throw new EmptyListException("Activity");
-            }
+
             for (Activity activity : activities) {
                 Overview overview = new Overview();
                 overview.setStatus("Nowy");
@@ -112,9 +106,7 @@ public class TaskService {
 
         for (ActivityGroup activityGroup : groupList) {
             List<Activity> activities = activityGroup.getActivities();
-            if (activities.isEmpty()) {
-                throw new EmptyListException("Activity");
-            }
+
             for (Activity activity : activities) {
                 Overview overview = new Overview();
                 overview.setStatus("Nowy");
@@ -130,16 +122,14 @@ public class TaskService {
     public void onDemand(Long connectionId) {
         Connection connection = connectionService.get(connectionId);
         List<ActivityGroup> groupList = activityGroupRepository
-                .findByConnectionOverviewTypeNameAndConnectionDeviceStatusAndConnection("Raz w roku", true, connection);
+                .findByConnectionOverviewTypeNameAndConnectionDeviceStatusAndConnection("Na żądanie", true, connection);
         if (groupList.isEmpty()) {
             throw new EmptyListException("Activity group");
         }
 
         for (ActivityGroup activityGroup : groupList) {
             List<Activity> activities = activityGroup.getActivities();
-            if (activities.isEmpty()) {
-                throw new EmptyListException("Activity");
-            }
+
             for (Activity activity : activities) {
                 Overview overview = new Overview();
                 overview.setStatus("Nowy");
