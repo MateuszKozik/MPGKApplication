@@ -1,5 +1,7 @@
 package com.kozik.MPGK.services;
 
+import java.time.LocalDateTime;
+
 import com.kozik.MPGK.entities.FluidRegistry;
 import com.kozik.MPGK.exceptions.fluidRegistryExceptions.FluidRegistryAlreadyExistException;
 import com.kozik.MPGK.exceptions.fluidRegistryExceptions.FluidRegistryNotFoundException;
@@ -22,6 +24,7 @@ public class FluidRegistryService {
         if (fluidRegistry.getRegistryId() != null) {
             throw new FluidRegistryAlreadyExistException(fluidRegistry.getRegistryId());
         }
+         fluidRegistry.setDatetime(LocalDateTime.now().toString());
         return fluidRegistryRepository.save(fluidRegistry);
     }
 
