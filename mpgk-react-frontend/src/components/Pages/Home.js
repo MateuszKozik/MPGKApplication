@@ -2,11 +2,13 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getConnections } from "../../actions/connectionActions";
 import { Link } from "react-router-dom";
+import { createOnDemandOverviews } from "../../actions/taskActions";
 
 class Home extends Component {
 	componentDidMount() {
 		this.props.getConnections();
 	}
+
 	render() {
 		const { connections } = this.props.connection;
 		return (
@@ -67,11 +69,27 @@ class Home extends Component {
 								.map((connection, i) => (
 									<tr key={i}>
 										<td>{i + 1}</td>
-										<td>{connection.name}</td>
+										<td>
+											<Link to={`/overviews/list/${connection.connectionId}`}>
+												{connection.name}
+											</Link>
+										</td>
 										<td></td>
 										<td></td>
 										<td></td>
-										<td></td>
+										<td>
+											<button
+												onClick={() =>
+													this.props.createOnDemandOverviews(
+														connection.connectionId,
+														this.props.history
+													)
+												}
+												className="btn btn-primary"
+											>
+												Rozpocznij
+											</button>
+										</td>
 									</tr>
 								))}
 						</tbody>
@@ -123,6 +141,9 @@ class Home extends Component {
 const mapDispatchToProps = (dispatch) => ({
 	getConnections: () => {
 		dispatch(getConnections());
+	},
+	createOnDemandOverviews: (connectionId, history) => {
+		dispatch(createOnDemandOverviews(connectionId, history));
 	}
 });
 
