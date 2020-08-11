@@ -31,7 +31,7 @@ public class FluidRegistry {
     @Column(name = "quantity", nullable = false)
     private Long quantity;
 
-    @NotNull(message = "Data dolania płynu jest wymagana")
+    //@NotNull(message = "Data dolania płynu jest wymagana")
     @Column(name = "datetime", nullable = false)
     private LocalDateTime datetime;
 
