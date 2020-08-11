@@ -40,7 +40,7 @@ public class Activity {
     @Column(name = "emsr", nullable = true, length = 25)
     private String emsr;
 
-    @Column(name = "setting", nullable = true, length = 35)
+    @Column(name = "setting", nullable = true, length = 100)
     private String setting;
 
     @OneToMany(mappedBy = "activity")
