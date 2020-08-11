@@ -6,12 +6,11 @@ import java.util.List;
 import com.kozik.MPGK.entities.Activity;
 import com.kozik.MPGK.entities.ActivityGroup;
 import com.kozik.MPGK.entities.Overview;
+import com.kozik.MPGK.exceptions.EmptyListException;
 import com.kozik.MPGK.repositories.ActivityGroupRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 @Service
 public class TaskService {
@@ -27,13 +26,13 @@ public class TaskService {
         List<ActivityGroup> groupList = activityGroupRepository
                 .findByConnectionOverviewTypeNameAndConnectionDeviceStatus("Codziennie", true);
         if (groupList.isEmpty()) {
-            // Exception
+            throw new EmptyListException("Activity group");
         }
 
         for (ActivityGroup activityGroup : groupList) {
             List<Activity> activities = activityGroup.getActivities();
             if (activities.isEmpty()) {
-                // Exception
+                throw new EmptyListException("Activity");
             }
             for (Activity activity : activities) {
                 Overview overview = new Overview();
@@ -51,13 +50,13 @@ public class TaskService {
         List<ActivityGroup> groupList = activityGroupRepository
                 .findByConnectionOverviewTypeNameAndConnectionDeviceStatus("Raz w tygodniu", true);
         if (groupList.isEmpty()) {
-            // Exception
+            throw new EmptyListException("Activity group");
         }
 
         for (ActivityGroup activityGroup : groupList) {
             List<Activity> activities = activityGroup.getActivities();
             if (activities.isEmpty()) {
-                // Exception
+                throw new EmptyListException("Activity");
             }
             for (Activity activity : activities) {
                 Overview overview = new Overview();
@@ -80,13 +79,13 @@ public class TaskService {
         List<ActivityGroup> groupList = activityGroupRepository
                 .findByConnectionOverviewTypeNameAndConnectionDeviceStatus("Raz na dwa miesiące", true);
         if (groupList.isEmpty()) {
-            // Exception
+            throw new EmptyListException("Activity group");
         }
 
         for (ActivityGroup activityGroup : groupList) {
             List<Activity> activities = activityGroup.getActivities();
             if (activities.isEmpty()) {
-                // Exception
+                throw new EmptyListException("Activity");
             }
             for (Activity activity : activities) {
                 Overview overview = new Overview();
@@ -104,13 +103,13 @@ public class TaskService {
         List<ActivityGroup> groupList = activityGroupRepository
                 .findByConnectionOverviewTypeNameAndConnectionDeviceStatus("Raz w roku", true);
         if (groupList.isEmpty()) {
-            // Exception
+            throw new EmptyListException("Activity group");
         }
 
         for (ActivityGroup activityGroup : groupList) {
             List<Activity> activities = activityGroup.getActivities();
             if (activities.isEmpty()) {
-                // Exception
+                throw new EmptyListException("Activity");
             }
             for (Activity activity : activities) {
                 Overview overview = new Overview();
@@ -128,13 +127,13 @@ public class TaskService {
         List<ActivityGroup> groupList = activityGroupRepository
                 .findByConnectionOverviewTypeNameAndConnectionDeviceStatus("Raz w roku", true);
         if (groupList.isEmpty()) {
-            // Exception
+            throw new EmptyListException("Activity group");
         }
 
         for (ActivityGroup activityGroup : groupList) {
             List<Activity> activities = activityGroup.getActivities();
             if (activities.isEmpty()) {
-                // Exception
+                throw new EmptyListException("Activity");
             }
             for (Activity activity : activities) {
                 Overview overview = new Overview();
