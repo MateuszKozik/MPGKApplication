@@ -132,12 +132,13 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
     @ExceptionHandler
     public final ResponseEntity<Object> handlePersonAlreadyExistException(PersonAlreadyExistException ex,
             WebRequest request) {
-                PersonAlreadyExistResponse existResponse = new PersonAlreadyExistResponse(ex.getMessage());
+        PersonAlreadyExistResponse existResponse = new PersonAlreadyExistResponse(ex.getMessage());
         return new ResponseEntity<Object>(existResponse, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler
-    public final ResponseEntity<Object> handleActivityNotFoundException(ActivityNotFoundException ex, WebRequest request) {
+    public final ResponseEntity<Object> handleActivityNotFoundException(ActivityNotFoundException ex,
+            WebRequest request) {
         ActivityNotFoundExceptionResponse exceptionResponse = new ActivityNotFoundExceptionResponse(ex.getMessage());
         return new ResponseEntity<Object>(exceptionResponse, HttpStatus.NOT_FOUND);
     }
@@ -145,25 +146,28 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
     @ExceptionHandler
     public final ResponseEntity<Object> handleActivityAlreadyExistException(ActivityAlreadyExistException ex,
             WebRequest request) {
-                ActivityAlreadyExistResponse existResponse = new ActivityAlreadyExistResponse(ex.getMessage());
+        ActivityAlreadyExistResponse existResponse = new ActivityAlreadyExistResponse(ex.getMessage());
         return new ResponseEntity<Object>(existResponse, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler
-    public final ResponseEntity<Object> handleActivityGroupNotFoundException(ActivityGroupNotFoundException ex, WebRequest request) {
-        ActivityGroupNotFoundExceptionResponse exceptionResponse = new ActivityGroupNotFoundExceptionResponse(ex.getMessage());
+    public final ResponseEntity<Object> handleActivityGroupNotFoundException(ActivityGroupNotFoundException ex,
+            WebRequest request) {
+        ActivityGroupNotFoundExceptionResponse exceptionResponse = new ActivityGroupNotFoundExceptionResponse(
+                ex.getMessage());
         return new ResponseEntity<Object>(exceptionResponse, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler
     public final ResponseEntity<Object> handleActivityGroupAlreadyExistException(ActivityGroupAlreadyExistException ex,
             WebRequest request) {
-                ActivityGroupAlreadyExistResponse existResponse = new ActivityGroupAlreadyExistResponse(ex.getMessage());
+        ActivityGroupAlreadyExistResponse existResponse = new ActivityGroupAlreadyExistResponse(ex.getMessage());
         return new ResponseEntity<Object>(existResponse, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler
-    public final ResponseEntity<Object> handleOverviewNotFoundException(OverviewNotFoundException ex, WebRequest request) {
+    public final ResponseEntity<Object> handleOverviewNotFoundException(OverviewNotFoundException ex,
+            WebRequest request) {
         OverviewNotFoundExceptionResponse exceptionResponse = new OverviewNotFoundExceptionResponse(ex.getMessage());
         return new ResponseEntity<Object>(exceptionResponse, HttpStatus.NOT_FOUND);
     }
@@ -171,7 +175,13 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
     @ExceptionHandler
     public final ResponseEntity<Object> handleOverviewAlreadyExistException(OverviewAlreadyExistException ex,
             WebRequest request) {
-                OverviewAlreadyExistResponse existResponse = new OverviewAlreadyExistResponse(ex.getMessage());
+        OverviewAlreadyExistResponse existResponse = new OverviewAlreadyExistResponse(ex.getMessage());
         return new ResponseEntity<Object>(existResponse, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler
+    public final ResponseEntity<Object> handleEmptyListException(EmptyListException ex, WebRequest request) {
+        EmptyListResponse response = new EmptyListResponse(ex.getMessage());
+        return new ResponseEntity<Object>(response, HttpStatus.NOT_FOUND);
     }
 }
