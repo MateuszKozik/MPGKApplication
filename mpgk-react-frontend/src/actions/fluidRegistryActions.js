@@ -24,6 +24,24 @@ export const addFluidRegistry = (fluidRegistry, history) => async (
 	}
 };
 
+export const addNewFluidRegistry = (fluidRegistry, history) => async (
+	dispatch
+) => {
+	try {
+		await axios.post("/api/fluid-registries", fluidRegistry);
+		history.push("/new-fluid-registry");
+		dispatch({
+			type: GET_ERRORS,
+			payload: {}
+		});
+	} catch (error) {
+		dispatch({
+			type: GET_ERRORS,
+			payload: error.response.data
+		});
+	}
+};
+
 export const getFluidRegistries = () => async (dispatch) => {
 	const res = await axios.get("/api/fluid-registries");
 	dispatch({
