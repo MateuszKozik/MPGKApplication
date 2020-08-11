@@ -15,8 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.kozik.MPGK.services.MapValidationErrorService;
 import org.springframework.validation.BindingResult;
+
+import java.util.ArrayList;
+
 import javax.validation.Valid;
 import com.kozik.MPGK.utilities.Message;
+import com.kozik.MPGK.utilities.OverviewObject;
 
 @RestController
 @RequestMapping("/api/overviews")
@@ -74,6 +78,13 @@ public class OverviewController {
     public ResponseEntity<?> deleteAllOverviews() {
         overviewService.deleteAll();
         return new ResponseEntity<Message>(new Message("All reviews have been deleted."), HttpStatus.OK);
+    }
+
+    // Get overviews by connection
+    @GetMapping("/list/{connectionId}")
+    public ResponseEntity<?> getOverviewsByConnecion(@PathVariable Long connectionId) {
+        ArrayList<OverviewObject> overviews = overviewService.getOverviewsByConnection(connectionId);
+        return new ResponseEntity<ArrayList<OverviewObject>>(overviews, HttpStatus.OK);
     }
 
 }
