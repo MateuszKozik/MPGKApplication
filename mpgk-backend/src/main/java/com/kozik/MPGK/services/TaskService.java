@@ -10,6 +10,8 @@ import com.kozik.MPGK.repositories.ActivityGroupRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @Service
 public class TaskService {
@@ -22,7 +24,8 @@ public class TaskService {
 
     // Daily overviews
     public void daily() {
-        List<ActivityGroup> groupList = activityGroupRepository.findByConnectionOverviewTypeName("Codziennie");
+        List<ActivityGroup> groupList = activityGroupRepository
+                .findByConnectionOverviewTypeNameAndConnectionDeviceStatus("Codziennie", true);
         if (groupList.isEmpty()) {
             // Exception
         }
@@ -45,7 +48,8 @@ public class TaskService {
 
     // Weekly overviews
     public void weekly() {
-        List<ActivityGroup> groupList = activityGroupRepository.findByConnectionOverviewTypeName("Raz w tygodniu");
+        List<ActivityGroup> groupList = activityGroupRepository
+                .findByConnectionOverviewTypeNameAndConnectionDeviceStatus("Raz w tygodniu", true);
         if (groupList.isEmpty()) {
             // Exception
         }
@@ -73,7 +77,8 @@ public class TaskService {
 
     // Overview every two months
     public void everyTwoMonths() {
-        List<ActivityGroup> groupList = activityGroupRepository.findByConnectionOverviewTypeName("Raz na dwa miesiące");
+        List<ActivityGroup> groupList = activityGroupRepository
+                .findByConnectionOverviewTypeNameAndConnectionDeviceStatus("Raz na dwa miesiące", true);
         if (groupList.isEmpty()) {
             // Exception
         }
@@ -96,7 +101,8 @@ public class TaskService {
 
     // Yearly overview
     public void yearly() {
-        List<ActivityGroup> groupList = activityGroupRepository.findByConnectionOverviewTypeName("Raz w roku");
+        List<ActivityGroup> groupList = activityGroupRepository
+                .findByConnectionOverviewTypeNameAndConnectionDeviceStatus("Raz w roku", true);
         if (groupList.isEmpty()) {
             // Exception
         }
@@ -119,7 +125,8 @@ public class TaskService {
 
     // Overview on demand
     public void onDemand() {
-        List<ActivityGroup> groupList = activityGroupRepository.findByConnectionOverviewTypeName("Raz w roku");
+        List<ActivityGroup> groupList = activityGroupRepository
+                .findByConnectionOverviewTypeNameAndConnectionDeviceStatus("Raz w roku", true);
         if (groupList.isEmpty()) {
             // Exception
         }
