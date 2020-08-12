@@ -1,20 +1,25 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { performOverview } from "../../actions/overviewActions";
 
 class OverviewItem extends Component {
 	constructor() {
 		super();
 		this.state = {
 			parameter: "",
-			comment: ""
+			comment: "",
+			status: ""
 		};
 
 		this.onChange = this.onChange.bind(this);
+		this.onSubmit = this.onSubmit.bind(this);
 	}
 
 	componentDidMount() {
 		this.setState({
 			parameter: this.props.parameter,
-			comment: this.props.comment
+			comment: this.props.comment,
+			status: this.props.status
 		});
 	}
 
@@ -28,6 +33,30 @@ class OverviewItem extends Component {
 		}
 	}
 
+	onSubmit(e) {
+		this.setState({
+			status: "Wykonany"
+		});
+		e.preventDefault();
+
+		const updatedOverview = {
+			overviewId: this.props.overviewId,
+			status: "Wykonany",
+			startTime: this.props.startTime,
+			endTime: this.props.endTime,
+			parameter: this.state.parameter,
+			activity: this.props.activity,
+			comment: this.state.comment
+		};
+
+		this.props.performOverview(
+			this.props.overviewId,
+			updatedOverview,
+			this.props.connectionId,
+			this.props.history
+		);
+	}
+
 	selectInput(type) {
 		switch (type) {
 			case "Pole tekstowe":
@@ -38,6 +67,7 @@ class OverviewItem extends Component {
 						onChange={this.onChange}
 						className="form-control"
 						name="parameter"
+						required
 					/>
 				);
 			case "Zaznaczenie":
@@ -49,6 +79,7 @@ class OverviewItem extends Component {
 							onChange={this.onChange}
 							className="form-control"
 							name="parameter"
+							required
 						/>
 					);
 				} else {
@@ -58,6 +89,7 @@ class OverviewItem extends Component {
 							onChange={this.onChange}
 							className="form-control"
 							name="parameter"
+							required
 						/>
 					);
 				}
@@ -71,6 +103,7 @@ class OverviewItem extends Component {
 						onChange={this.onChange}
 						name="parameter"
 						placeholder="Wartość liczbowa"
+						required
 					/>
 				);
 			case "Pole wyboru":
@@ -84,6 +117,7 @@ class OverviewItem extends Component {
 								onChange={this.onChange}
 								defaultChecked
 								value="TAK"
+								required
 							/>
 							<label>NIE</label>
 							<input
@@ -91,6 +125,7 @@ class OverviewItem extends Component {
 								name={this.props.overviewId + "parametr"}
 								onChange={this.onChange}
 								value="NIE"
+								required
 							/>
 						</div>
 					);
@@ -103,6 +138,7 @@ class OverviewItem extends Component {
 								name={this.props.overviewId + "parametr"}
 								onChange={this.onChange}
 								value="TAK"
+								required
 							/>
 							<label>NIE</label>
 							<input
@@ -111,6 +147,7 @@ class OverviewItem extends Component {
 								defaultChecked
 								onChange={this.onChange}
 								value="NIE"
+								required
 							/>
 						</div>
 					);
@@ -123,6 +160,7 @@ class OverviewItem extends Component {
 								name={this.props.overviewId + "parametr"}
 								onChange={this.onChange}
 								value="TAK"
+								required
 							/>
 							<label>NIE</label>
 							<input
@@ -130,6 +168,7 @@ class OverviewItem extends Component {
 								name={this.props.overviewId + "parametr"}
 								onChange={this.onChange}
 								value="NIE"
+								required
 							/>
 						</div>
 					);
@@ -151,7 +190,7 @@ class OverviewItem extends Component {
 	render() {
 		return (
 			<div className="container p-2 my-2 border-bottom">
-				<div className="row my-1 ">
+				<form className="row my-1 " onSubmit={this.onSubmit}>
 					<div className="col-md-5">{this.props.activity.name}</div>
 					<div className="col-md-2">
 						{this.selectInput(this.props.activity.type)}
@@ -167,12 +206,18 @@ class OverviewItem extends Component {
 						/>
 					</div>
 					<div className="col-md-2 my-1 text-center">
-						<button className="btn btn-primary">Zapisz</button>
+						{this.state.status === "Nowy" ? (
+							<button type="submit" className="btn btn-primary">
+								Zapisz
+							</button>
+						) : null}
 					</div>
-				</div>
+				</form>
 			</div>
 		);
 	}
 }
 
-export default OverviewItem;
+const mapStateToProps = (state) => ({});
+
+export default connect(mapStateToProps, { performOverview })(OverviewItem);

@@ -1,13 +1,20 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { getOverviewsByConnection } from "../../actions/overviewActions";
+import {
+	getOverviewsByConnection,
+	clearOverviewsListState
+} from "../../actions/overviewActions";
 import OverviewItem from "../Common/OverviewItem";
 
 class Overview extends Component {
 	componentDidMount() {
 		const { connectionId } = this.props.match.params;
 		this.props.getOverviewsByConnection(connectionId, this.props.history);
+	}
+
+	componentWillUnmount() {
+		this.props.clearOverviewsListState();
 	}
 
 	render() {
@@ -22,7 +29,11 @@ class Overview extends Component {
 						</div>
 
 						{overviewList.overviews.map((overview, i) => (
-							<OverviewItem key={i} {...overview} />
+							<OverviewItem
+								key={i}
+								{...overview}
+								connectionId={this.props.match.params.connectionId}
+							/>
 						))}
 					</div>
 				))}
@@ -33,11 +44,15 @@ class Overview extends Component {
 
 Overview.propTypes = {
 	overview: PropTypes.object.isRequired,
-	getOverviewsByConnection: PropTypes.func.isRequired
+	getOverviewsByConnection: PropTypes.func.isRequired,
+	clearOverviewsListState: PropTypes.func.isRequired
 };
 
 const mapStateToPros = (state) => ({
 	overview: state.overview
 });
 
-export default connect(mapStateToPros, { getOverviewsByConnection })(Overview);
+export default connect(mapStateToPros, {
+	getOverviewsByConnection,
+	clearOverviewsListState
+})(Overview);
