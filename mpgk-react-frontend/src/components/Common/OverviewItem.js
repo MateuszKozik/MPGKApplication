@@ -1,34 +1,150 @@
 import React, { Component } from "react";
 
 class OverviewItem extends Component {
+	constructor() {
+		super();
+		this.state = {
+			parameter: "",
+			comment: ""
+		};
+
+		this.onChange = this.onChange.bind(this);
+	}
+
+	componentDidMount() {
+		this.setState({
+			parameter: this.props.parameter,
+			comment: this.props.comment
+		});
+	}
+
+	onChange(e) {
+		if (e.target.type === "checkbox") {
+			this.setState({ [e.target.name]: e.target.checked });
+		} else if (e.target.type === "radio") {
+			this.setState({ parameter: e.target.value });
+		} else {
+			this.setState({ [e.target.name]: e.target.value });
+		}
+	}
+
 	selectInput(type) {
 		switch (type) {
 			case "Pole tekstowe":
-				return <input type="text" className="form-control" name="parametr" />;
-			case "Zaznaczenie":
 				return (
-					<input type="checkbox" className="form-control" name="parametr" />
+					<input
+						type="text"
+						value={this.state.parameter || ""}
+						onChange={this.onChange}
+						className="form-control"
+						name="parameter"
+					/>
 				);
+			case "Zaznaczenie":
+				if (this.props.parameter === "true") {
+					return (
+						<input
+							type="checkbox"
+							defaultChecked
+							onChange={this.onChange}
+							className="form-control"
+							name="parameter"
+						/>
+					);
+				} else {
+					return (
+						<input
+							type="checkbox"
+							onChange={this.onChange}
+							className="form-control"
+							name="parameter"
+						/>
+					);
+				}
+
 			case "Zakres liczb":
 				return (
 					<input
 						type="number"
+						value={this.state.parameter || ""}
 						className="form-control"
-						name="parametr"
+						onChange={this.onChange}
+						name="parameter"
 						placeholder="Wartość liczbowa"
 					/>
 				);
 			case "Pole wyboru":
-				return (
-					<div className="form-check">
-						<label>TAK</label>
-						<input type="radio" name="parametr" value="TAK" />
-						<label>NIE</label>
-						<input type="radio" name="parametr" value="NIE" />
-					</div>
-				);
+				if (this.props.parameter === "TAK") {
+					return (
+						<div className="form-check">
+							<label>TAK</label>
+							<input
+								type="radio"
+								name={this.props.overviewId + "parametr"}
+								onChange={this.onChange}
+								defaultChecked
+								value="TAK"
+							/>
+							<label>NIE</label>
+							<input
+								type="radio"
+								name={this.props.overviewId + "parametr"}
+								onChange={this.onChange}
+								value="NIE"
+							/>
+						</div>
+					);
+				} else if (this.props.parameter === "NIE") {
+					return (
+						<div className="form-check">
+							<label>TAK</label>
+							<input
+								type="radio"
+								name={this.props.overviewId + "parametr"}
+								onChange={this.onChange}
+								value="TAK"
+							/>
+							<label>NIE</label>
+							<input
+								type="radio"
+								name={this.props.overviewId + "parametr"}
+								defaultChecked
+								onChange={this.onChange}
+								value="NIE"
+							/>
+						</div>
+					);
+				} else {
+					return (
+						<div className="form-check">
+							<label>TAK</label>
+							<input
+								type="radio"
+								name={this.props.overviewId + "parametr"}
+								onChange={this.onChange}
+								value="TAK"
+							/>
+							<label>NIE</label>
+							<input
+								type="radio"
+								name={this.props.overviewId + "parametr"}
+								onChange={this.onChange}
+								value="NIE"
+							/>
+						</div>
+					);
+				}
+
 			default:
-				return <input type="text" className="form-control" name="comment" />;
+				return (
+					<input
+						value={this.state.parametr || ""}
+						type="text"
+						className="form-control"
+						onChange={this.onChange}
+						name="parameter"
+					/>
+				);
 		}
 	}
 
@@ -44,8 +160,10 @@ class OverviewItem extends Component {
 						<input
 							type="text"
 							className="form-control"
+							value={this.state.comment || ""}
 							name="comment"
 							placeholder="Komentarz"
+							onChange={this.onChange}
 						/>
 					</div>
 					<div className="col-md-2 my-1 text-center">
