@@ -88,6 +88,12 @@ public class OverviewService {
         return overviewList;
     }
 
+    public List<Overview> getActionsByName(String name, String parameter){
+        List<Overview> overviews = overviewRepository.findByActivityNameAndParameter(name, parameter);
+
+        return overviews;
+    }
+
     public void deleteAll() {
         overviewRepository.deleteAll();
     }
