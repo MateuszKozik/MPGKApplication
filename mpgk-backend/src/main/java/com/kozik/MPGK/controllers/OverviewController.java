@@ -17,6 +17,7 @@ import com.kozik.MPGK.services.MapValidationErrorService;
 import org.springframework.validation.BindingResult;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.validation.Valid;
 import com.kozik.MPGK.utilities.Message;
@@ -85,6 +86,12 @@ public class OverviewController {
     public ResponseEntity<?> getOverviewsByConnecion(@PathVariable Long connectionId) {
         ArrayList<OverviewObject> overviews = overviewService.getOverviewsByConnection(connectionId);
         return new ResponseEntity<ArrayList<OverviewObject>>(overviews, HttpStatus.OK);
+    }
+
+    @GetMapping("/nitrogen")
+    public ResponseEntity<?> getActionsByName() {
+        List<Overview> overviews = overviewService.getActionsByName("Czy na bieżącej zmianie wymieniona została butla z azotem?","Tak");
+        return new ResponseEntity<List<Overview>>(overviews, HttpStatus.OK);
     }
 
 }
