@@ -2,7 +2,8 @@ import {
 	GET_OVERVIEWS,
 	GET_OVERVIEW,
 	DELETE_OVERVIEW,
-	GET_OVERVIEWS_BY_CONNECTION
+	GET_OVERVIEWS_BY_CONNECTION,
+	CLEAR_OVERVIEWS_LIST_STATE
 } from "../actions/types";
 
 const initialState = {
@@ -37,6 +38,12 @@ export default function (state = initialState, action) {
 				overviews: state.overviews.filter(
 					(overview) => overview.overviewId !== action.payload
 				)
+			};
+
+		case CLEAR_OVERVIEWS_LIST_STATE:
+			return {
+				...state,
+				overviewsList: []
 			};
 
 		default:

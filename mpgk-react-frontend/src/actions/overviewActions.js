@@ -4,7 +4,8 @@ import {
 	GET_OVERVIEWS,
 	GET_OVERVIEW,
 	DELETE_OVERVIEW,
-	GET_OVERVIEWS_BY_CONNECTION
+	GET_OVERVIEWS_BY_CONNECTION,
+	CLEAR_OVERVIEWS_LIST_STATE
 } from "./types";
 
 export const addOverview = (overview, history) => async (dispatch) => {
@@ -61,6 +62,17 @@ export const updateOverview = (overviewId, updateOverview, history) => async (
 	}
 };
 
+export const performOverview = (
+	overviewId,
+	updateOverview,
+	connectionId,
+	history
+) => async (dispatch) => {
+	try {
+		await axios.put(`/api/overviews/${overviewId}`, updateOverview);
+	} catch (error) {}
+};
+
 export const deleteOverview = (overviewId) => async (dispatch) => {
 	if (window.confirm("Czy jesteś pewny? Spowoduje to usunięcie przeglądu")) {
 		await axios.delete(`/api/overviews/${overviewId}`);
@@ -83,4 +95,11 @@ export const getOverviewsByConnection = (connectionId, history) => async (
 	} catch (error) {
 		history.push("/");
 	}
+};
+
+export const clearOverviewsListState = () => (dispatch) => {
+	dispatch({
+		type: CLEAR_OVERVIEWS_LIST_STATE,
+		payload: []
+	});
 };
