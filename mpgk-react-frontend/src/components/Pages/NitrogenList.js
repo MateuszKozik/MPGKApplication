@@ -50,8 +50,7 @@ class NitrogenList extends Component {
 
 NitrogenList.propTypes = {
 	overview: PropTypes.object.isRequired,
-    getActionsByName: PropTypes.func.isRequired,
-    getPersons: PropTypes.func.isRequired
+    getActionsByName: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
