@@ -3,7 +3,8 @@ import {
 	GET_OVERVIEW,
 	DELETE_OVERVIEW,
 	GET_OVERVIEWS_BY_CONNECTION,
-	CLEAR_OVERVIEWS_LIST_STATE
+	CLEAR_OVERVIEWS_LIST_STATE,
+	GET_OVERVIEWS_BY_NAME_ACTIONS
 } from "../actions/types";
 
 const initialState = {
@@ -44,6 +45,11 @@ export default function (state = initialState, action) {
 			return {
 				...state,
 				overviewsList: []
+			};
+		case GET_OVERVIEWS_BY_NAME_ACTIONS:
+			return {
+				...state,
+				overviews: action.payload
 			};
 
 		default:
