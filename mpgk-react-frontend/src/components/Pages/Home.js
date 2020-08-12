@@ -110,7 +110,9 @@ class Home extends Component {
 						<h4>Wymiana butli z azotem</h4>
 					</div>
 					<div className="col-md-6">
-						<button className="btn btn-block btn-primary">Pokaż</button>
+					<Link to="/nitrogen-list" className="btn btn-block btn-primary">
+							Pokaż
+						</Link>
 					</div>
 				</div>
 				<div className="row mt-4">
