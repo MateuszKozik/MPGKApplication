@@ -5,7 +5,8 @@ import {
 	GET_OVERVIEW,
 	DELETE_OVERVIEW,
 	GET_OVERVIEWS_BY_CONNECTION,
-	CLEAR_OVERVIEWS_LIST_STATE
+	CLEAR_OVERVIEWS_LIST_STATE,
+	GET_OVERVIEWS_BY_NAME_ACTIONS
 } from "./types";
 
 export const addOverview = (overview, history) => async (dispatch) => {
@@ -90,6 +91,20 @@ export const getOverviewsByConnection = (connectionId, history) => async (
 		const res = await axios.get(`/api/overviews/list/${connectionId}`);
 		dispatch({
 			type: GET_OVERVIEWS_BY_CONNECTION,
+			payload: res.data
+		});
+	} catch (error) {
+		history.push("/");
+	}
+};
+
+export const getActionsByName = (history) => async (
+	dispatch
+) => {
+	try {
+		const res = await axios.get(`/api/overviews/nitrogen`);
+		dispatch({
+			type: GET_OVERVIEWS_BY_NAME_ACTIONS,
 			payload: res.data
 		});
 	} catch (error) {
