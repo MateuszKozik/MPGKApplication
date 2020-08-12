@@ -11,4 +11,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface OverviewRepository extends JpaRepository<Overview, Long> {
 
     List<Overview> findByActivityActivityGroupAndEndTimeGreaterThan(ActivityGroup activityGroup, LocalDateTime endTime);
+    List<Overview> findByActivityNameAndParameter(String name, String parameter);
 }
