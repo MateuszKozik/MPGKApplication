@@ -223,7 +223,7 @@ class OverviewItem extends Component {
 				);
 
 			case "Pole wyboru":
-				if (this.props.parameter === "TAK") {
+				if (this.state.parameter === "TAK") {
 					return (
 						<div className="form-check">
 							<label>TAK</label>
