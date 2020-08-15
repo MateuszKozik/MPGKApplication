@@ -113,7 +113,7 @@ class OverviewItem extends Component {
 							<label>TAK</label>
 							<input
 								type="radio"
-								name={this.props.overviewId + "parametr"}
+								name={this.props.overviewId + "parameter"}
 								onChange={this.onChange}
 								defaultChecked
 								value="TAK"
@@ -122,7 +122,7 @@ class OverviewItem extends Component {
 							<label>NIE</label>
 							<input
 								type="radio"
-								name={this.props.overviewId + "parametr"}
+								name={this.props.overviewId + "parameter"}
 								onChange={this.onChange}
 								value="NIE"
 								required
@@ -135,7 +135,7 @@ class OverviewItem extends Component {
 							<label>TAK</label>
 							<input
 								type="radio"
-								name={this.props.overviewId + "parametr"}
+								name={this.props.overviewId + "parameter"}
 								onChange={this.onChange}
 								value="TAK"
 								required
@@ -143,7 +143,7 @@ class OverviewItem extends Component {
 							<label>NIE</label>
 							<input
 								type="radio"
-								name={this.props.overviewId + "parametr"}
+								name={this.props.overviewId + "parameter"}
 								defaultChecked
 								onChange={this.onChange}
 								value="NIE"
@@ -157,7 +157,7 @@ class OverviewItem extends Component {
 							<label>TAK</label>
 							<input
 								type="radio"
-								name={this.props.overviewId + "parametr"}
+								name={this.props.overviewId + "parameter"}
 								onChange={this.onChange}
 								value="TAK"
 								required
@@ -165,7 +165,7 @@ class OverviewItem extends Component {
 							<label>NIE</label>
 							<input
 								type="radio"
-								name={this.props.overviewId + "parametr"}
+								name={this.props.overviewId + "parameter"}
 								onChange={this.onChange}
 								value="NIE"
 								required
@@ -177,11 +177,12 @@ class OverviewItem extends Component {
 			default:
 				return (
 					<input
-						value={this.state.parametr || ""}
+						value={this.state.parameter || ""}
 						type="text"
 						className="form-control"
 						onChange={this.onChange}
-						name="parameter"
+						name={this.props.overviewId + "parameter"}
+						required
 					/>
 				);
 		}
