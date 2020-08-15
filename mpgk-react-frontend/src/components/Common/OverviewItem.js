@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import classNames from "classnames";
 import { connect } from "react-redux";
 import { performOverview } from "../../actions/overviewActions";
 
@@ -181,39 +182,148 @@ class OverviewItem extends Component {
 						type="text"
 						className="form-control"
 						onChange={this.onChange}
-						name={this.props.overviewId + "parameter"}
+						name="parameter"
 						required
 					/>
 				);
 		}
 	}
 
+	displayValue(type) {
+		switch (type) {
+			case "Pole tekstowe":
+				return (
+					<input
+						type="text"
+						value={this.state.parameter || ""}
+						readOnly
+						className="form-control"
+						name="parameter"
+					/>
+				);
+			case "Zaznaczenie":
+				return (
+					<input
+						type="checkbox"
+						defaultChecked
+						disabled
+						className="form-control"
+						name="parameter"
+					/>
+				);
+			case "Zakres liczb":
+				return (
+					<input
+						type="number"
+						value={this.state.parameter || ""}
+						className="form-control"
+						disabled
+						name="parameter"
+					/>
+				);
+
+			case "Pole wyboru":
+				if (this.props.parameter === "TAK") {
+					return (
+						<div className="form-check">
+							<label>TAK</label>
+							<input
+								type="radio"
+								name={this.props.overviewId + "parameter"}
+								disabled
+								defaultChecked
+								value="TAK"
+								required
+							/>
+							<label>NIE</label>
+							<input
+								type="radio"
+								name={this.props.overviewId + "parameter"}
+								disabled
+								value="NIE"
+								required
+							/>
+						</div>
+					);
+				} else {
+					return (
+						<div className="form-check">
+							<label>TAK</label>
+							<input
+								type="radio"
+								name={this.props.overviewId + "parameter"}
+								disabled
+								value="TAK"
+							/>
+							<label>NIE</label>
+							<input
+								type="radio"
+								name={this.props.overviewId + "parameter"}
+								disabled
+								defaultChecked
+								value="NIE"
+							/>
+						</div>
+					);
+				}
+			default:
+				return (
+					<input
+						value={this.state.parameter || ""}
+						type="text"
+						className="form-control"
+						readOnly
+						name="parameter"
+					/>
+				);
+		}
+	}
+
 	render() {
+		const { name, type } = this.props.activity;
 		return (
-			<div className="container p-2 my-2 border-bottom">
-				<form className="row my-1 " onSubmit={this.onSubmit}>
-					<div className="col-md-5">{this.props.activity.name}</div>
-					<div className="col-md-2">
-						{this.selectInput(this.props.activity.type)}
-					</div>
-					<div className="col-md-2 my-1">
-						<input
-							type="text"
-							className="form-control"
-							value={this.state.comment || ""}
-							name="comment"
-							placeholder="Komentarz"
-							onChange={this.onChange}
-						/>
-					</div>
-					<div className="col-md-2 my-1 text-center">
-						{this.state.status === "Nowy" ? (
+			<div
+				className={classNames("container p-2 my-2 border-bottom", {
+					overviewComplete: this.state.status === "Wykonany"
+				})}
+			>
+				{this.state.status === "Nowy" || this.state.status === "Zaległy" ? (
+					<form className="row my-1 " onSubmit={this.onSubmit}>
+						<div className="col-md-5">{name}</div>
+
+						<div className="col-md-2">{this.selectInput(type)}</div>
+						<div className="col-md-2 my-1">
+							<input
+								type="text"
+								className="form-control"
+								value={this.state.comment || ""}
+								name="comment"
+								placeholder="Komentarz"
+								onChange={this.onChange}
+							/>
+						</div>
+						<div className="col-md-2 my-1 text-center">
 							<button type="submit" className="btn btn-primary">
 								Zapisz
 							</button>
-						) : null}
+						</div>
+					</form>
+				) : (
+					<div className="row my-1">
+						<div className="col-md-5">{name}</div>
+						<div className="col-md-2">{this.displayValue(type)}</div>
+						<div className="col-md-2 my-1">
+							<input
+								type="text"
+								className="form-control"
+								value={this.state.comment || ""}
+								name="comment"
+								placeholder="Komentarz"
+								readOnly
+							/>
+						</div>
 					</div>
-				</form>
+				)}
 			</div>
 		);
 	}
