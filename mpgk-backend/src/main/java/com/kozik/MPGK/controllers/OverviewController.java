@@ -90,7 +90,8 @@ public class OverviewController {
 
     @GetMapping("/nitrogen")
     public ResponseEntity<?> getActionsByName() {
-        List<Overview> overviews = overviewService.getActionsByName("Czy na bieżącej zmianie wymieniona została butla z azotem?","Tak");
+        List<Overview> overviews = overviewService
+                .getActionsByName("Czy na bieżącej zmianie wymieniona została butla z azotem?", "TAK");
         return new ResponseEntity<List<Overview>>(overviews, HttpStatus.OK);
     }
 
