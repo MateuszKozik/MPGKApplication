@@ -1,11 +1,13 @@
 import {
 	GET_CONNECTIONS,
 	GET_CONNECTION,
-	DELETE_CONNECTION
+	DELETE_CONNECTION,
+	GET_PERIODIC_CONNECTION
 } from "../actions/types";
 
 const initialState = {
 	connections: [],
+	periodicConnections: [],
 	connection: {}
 };
 
@@ -21,6 +23,12 @@ export default function (state = initialState, action) {
 			return {
 				...state,
 				connection: action.payload
+			};
+
+		case GET_PERIODIC_CONNECTION:
+			return {
+				...state,
+				periodicConnections: action.payload
 			};
 
 		case DELETE_CONNECTION:
