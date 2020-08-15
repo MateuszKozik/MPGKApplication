@@ -2,15 +2,22 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getConnections } from "../../actions/connectionActions";
 import { Link } from "react-router-dom";
-import { createOnDemandOverviews } from "../../actions/taskActions";
+import {
+	createOnDemandOverviews,
+	getPeriodicConnections
+} from "../../actions/taskActions";
+import Timer from "../Common/Timer";
+import FormatDate from "../Common/FormatDate";
 
 class Home extends Component {
 	componentDidMount() {
 		this.props.getConnections();
+		this.props.getPeriodicConnections();
 	}
 
 	render() {
 		const { connections } = this.props.connection;
+		const { periodicConnections } = this.props.connection;
 		return (
 			<div className="container mt-3">
 				<div className="table-responsive mt-2">
@@ -21,31 +28,45 @@ class Home extends Component {
 								<th>
 									<b>OEC - Przeglądy okresowe</b>
 								</th>
-								<th>Wykonany</th>
-								<th>W trakcie</th>
-								<th>Niewykonany</th>
-								<th>Czas do zakończenia</th>
+								<th>Status</th>
+								<th>Zaległe</th>
+								<th>Plan</th>
+								<th>Czas do końca</th>
 							</tr>
 						</thead>
 						<tbody>
-							{connections
-								.filter(
-									(connection) => connection.overviewType.name !== "Na żądanie"
-								)
-								.map((connection, i) => (
-									<tr key={i}>
-										<td>{i + 1}</td>
-										<td>
-											<Link to={`/overviews/list/${connection.connectionId}`}>
-												{connection.name}
-											</Link>
-										</td>
-										<td></td>
-										<td></td>
-										<td></td>
-										<td></td>
-									</tr>
-								))}
+							{periodicConnections.map((periodic, i) => (
+								<tr key={i}>
+									<td>{i + 1}</td>
+									<td>
+										<Link
+											to={`/overviews/list/${periodic.connection.connectionId}`}
+										>
+											{periodic.connection.name}
+										</Link>
+									</td>
+									<td>
+										{periodic.status === "Wykonany" ? (
+											<p>Wykonany</p>
+										) : (
+											<p>W trakcie</p>
+										)}
+									</td>
+
+									<td>
+										{periodic.overdudeCount > 0 ? (
+											<p>Zaległych: {periodic.overdudeCount}</p>
+										) : null}
+									</td>
+									<td>
+										Od <FormatDate date={periodic.startTime} /> Do
+										<FormatDate date={periodic.endTime} />
+									</td>
+									<td>
+										<Timer date={periodic.endTime} />
+									</td>
+								</tr>
+							))}
 						</tbody>
 					</table>
 					<table className="table ">
@@ -110,7 +131,7 @@ class Home extends Component {
 						<h4>Wymiana butli z azotem</h4>
 					</div>
 					<div className="col-md-6">
-					<Link to="/nitrogen-list" className="btn btn-block btn-primary">
+						<Link to="/nitrogen-list" className="btn btn-block btn-primary">
 							Pokaż
 						</Link>
 					</div>
@@ -146,11 +167,15 @@ const mapDispatchToProps = (dispatch) => ({
 	},
 	createOnDemandOverviews: (connectionId, history) => {
 		dispatch(createOnDemandOverviews(connectionId, history));
+	},
+	getPeriodicConnections: () => {
+		dispatch(getPeriodicConnections());
 	}
 });
 
 const mapStateToProps = (state) => ({
-	connection: state.connection
+	connection: state.connection,
+	periodicConnections: state.connection
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
