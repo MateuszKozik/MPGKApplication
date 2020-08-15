@@ -10,7 +10,7 @@ import com.kozik.MPGK.entities.Overview;
 import com.kozik.MPGK.repositories.ActivityGroupRepository;
 import com.kozik.MPGK.repositories.OverviewRepository;
 import com.kozik.MPGK.utilities.OverviewObject;
-import com.kozik.MPGK.exceptions.EmptyListException;
+
 import com.kozik.MPGK.exceptions.overviewExceptions.OverviewAlreadyExistException;
 import com.kozik.MPGK.exceptions.overviewExceptions.OverviewNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,9 +69,7 @@ public class OverviewService {
     public ArrayList<OverviewObject> getOverviewsByConnection(Long connectionId) {
         Connection connection = connectionService.get(connectionId);
         List<ActivityGroup> groups = activityGroupRepository.findByConnection(connection);
-        if (groups.isEmpty()) {
-            throw new EmptyListException("Activity group");
-        }
+
         ArrayList<OverviewObject> overviewList = new ArrayList<>();
 
         for (ActivityGroup activityGroup : groups) {
@@ -88,7 +86,7 @@ public class OverviewService {
         return overviewList;
     }
 
-    public List<Overview> getActionsByName(String name, String parameter){
+    public List<Overview> getActionsByName(String name, String parameter) {
         List<Overview> overviews = overviewRepository.findByActivityNameAndParameter(name, parameter);
 
         return overviews;

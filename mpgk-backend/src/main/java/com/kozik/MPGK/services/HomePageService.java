@@ -46,7 +46,12 @@ public class HomePageService {
             ArrayList<OverviewObject> listOverviewsObject = overviewService
                     .getOverviewsByConnection(connection.getConnectionId());
 
-            List<Overview> overviews = listOverviewsObject.get(0).getOverviews();
+            List<Overview> overviews = new ArrayList<>();
+
+            if (!listOverviewsObject.isEmpty()) {
+                overviews = listOverviewsObject.get(0).getOverviews();
+            }
+
             if (!overviews.isEmpty()) {
                 object.setStartTime(overviews.get(0).getStartTime());
                 object.setEndTime(overviews.get(0).getEndTime());
