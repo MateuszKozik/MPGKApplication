@@ -1,30 +1,29 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getConnections } from "../../actions/connectionActions";
 import { Link } from "react-router-dom";
 import {
 	createOnDemandOverviews,
-	getPeriodicConnections
+	getPeriodicConnections,
+	getOnDemandConnections
 } from "../../actions/taskActions";
 import Timer from "../Common/Timer";
 import FormatDate from "../Common/FormatDate";
 
 class Home extends Component {
 	componentDidMount() {
-		this.props.getConnections();
 		this.props.getPeriodicConnections();
+		this.props.getOnDemandConnections();
 	}
 
 	render() {
-		const { connections } = this.props.connection;
 		const { periodicConnections } = this.props.connection;
+		const { onDemandConnections } = this.props.connection;
 		return (
 			<div className="container mt-3">
 				<div className="table-responsive mt-2">
 					<table className="table ">
 						<thead>
 							<tr>
-								<th></th>
 								<th>
 									<b>OEC - Przeglądy okresowe</b>
 								</th>
@@ -37,7 +36,6 @@ class Home extends Component {
 						<tbody>
 							{periodicConnections.map((periodic, i) => (
 								<tr key={i}>
-									<td>{i + 1}</td>
 									<td>
 										<Link
 											to={`/overviews/list/${periodic.connection.connectionId}`}
@@ -72,47 +70,62 @@ class Home extends Component {
 					<table className="table ">
 						<thead>
 							<tr>
-								<th></th>
 								<th>
 									<b>OEC - Przeglądy okresowe na żądanie</b>
 								</th>
-								<th>Wykonany</th>
-								<th>W trakcie</th>
-								<th>Niewykonany</th>
-								<th>Czas do zakończenia</th>
+								<th>Status</th>
+								<th>Zaległe</th>
+								<th>Plan</th>
+								<th>Czas do końca</th>
 							</tr>
 						</thead>
 						<tbody>
-							{connections
-								.filter(
-									(connection) => connection.overviewType.name === "Na żądanie"
-								)
-								.map((connection, i) => (
-									<tr key={i}>
-										<td>{i + 1}</td>
-										<td>
-											<Link to={`/overviews/list/${connection.connectionId}`}>
-												{connection.name}
-											</Link>
-										</td>
-										<td></td>
-										<td></td>
-										<td></td>
-										<td>
+							{onDemandConnections.map((onDemand, i) => (
+								<tr key={i}>
+									<td>
+										<Link
+											to={`/overviews/list/${onDemand.connection.connectionId}`}
+										>
+											{onDemand.connection.name}
+										</Link>
+									</td>
+									<td>
+										{onDemand.status === "Wykonany" ? (
+											<p>Wykonany</p>
+										) : (
+											<p>W trakcie</p>
+										)}
+									</td>
+
+									<td>
+										{onDemand.overdudeCount > 0 ? (
+											<p>Zaległych: {onDemand.overdudeCount}</p>
+										) : null}
+									</td>
+									<td>
+										Od <FormatDate date={onDemand.startTime} /> Do
+										<FormatDate date={onDemand.endTime} />
+									</td>
+									<td>
+										{onDemand.button ? (
 											<button
-												onClick={() =>
+												onClick={() => {
 													this.props.createOnDemandOverviews(
-														connection.connectionId,
+														onDemand.connection.connectionId,
 														this.props.history
-													)
-												}
+													);
+													window.location.reload(false);
+												}}
 												className="btn btn-primary"
 											>
 												Rozpocznij
 											</button>
-										</td>
-									</tr>
-								))}
+										) : (
+											<Timer date={onDemand.endTime} />
+										)}
+									</td>
+								</tr>
+							))}
 						</tbody>
 					</table>
 				</div>
@@ -162,20 +175,21 @@ class Home extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-	getConnections: () => {
-		dispatch(getConnections());
-	},
 	createOnDemandOverviews: (connectionId, history) => {
 		dispatch(createOnDemandOverviews(connectionId, history));
 	},
 	getPeriodicConnections: () => {
 		dispatch(getPeriodicConnections());
+	},
+	getOnDemandConnections: () => {
+		dispatch(getOnDemandConnections());
 	}
 });
 
 const mapStateToProps = (state) => ({
 	connection: state.connection,
-	periodicConnections: state.connection
+	periodicConnections: state.connection,
+	onDemandConnections: state.connection
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
