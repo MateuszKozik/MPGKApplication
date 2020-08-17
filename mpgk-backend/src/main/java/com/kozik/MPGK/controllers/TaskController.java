@@ -19,38 +19,38 @@ public class TaskController {
     private TaskService taskService;
 
     // Generate daily overviews
-    @PostMapping("/daily")
-    public ResponseEntity<?> crateDailyOverviews() {
-        taskService.daily();
+    @PostMapping("/daily/{connectionId}")
+    public ResponseEntity<?> crateDailyOverviews(@PathVariable Long connectionId) {
+        taskService.daily(connectionId);
         return new ResponseEntity<Message>(new Message("Daily overviews have been generated."), HttpStatus.CREATED);
     }
 
     // Generate weekly overviews
-    @PostMapping("/weekly")
-    public ResponseEntity<?> createWeeklyOverviews() {
-        taskService.weekly();
+    @PostMapping("/weekly/{connectionId}")
+    public ResponseEntity<?> createWeeklyOverviews(@PathVariable Long connectionId) {
+        taskService.weekly(connectionId);
         return new ResponseEntity<Message>(new Message("Weekly overviews have been generated."), HttpStatus.CREATED);
     }
 
     // Generate day shift overviews
-    @PostMapping("/day-shift")
-    public ResponseEntity<?> createDayShiftOverviews() {
-        taskService.dayShift();
+    @PostMapping("/day-shift/{connectionId}")
+    public ResponseEntity<?> createDayShiftOverviews(@PathVariable Long connectionId) {
+        taskService.dayShift(connectionId);
         return new ResponseEntity<Message>(new Message("Day shift overviews have been generated."), HttpStatus.CREATED);
     }
 
     // Generate two monts overviews
-    @PostMapping("/two-months")
-    public ResponseEntity<?> createTwoMonthsOverviews() {
-        taskService.everyTwoMonths();
+    @PostMapping("/two-months/{connectionId}")
+    public ResponseEntity<?> createTwoMonthsOverviews(@PathVariable Long connectionId) {
+        taskService.everyTwoMonths(connectionId);
         return new ResponseEntity<Message>(new Message("Two months overviews have been generated."),
                 HttpStatus.CREATED);
     }
 
     // Generate yearly overviews
-    @PostMapping("/yearly")
-    public ResponseEntity<?> createYearltOverviews() {
-        taskService.yearly();
+    @PostMapping("/yearly/{connectionId}")
+    public ResponseEntity<?> createYearltOverviews(@PathVariable Long connectionId) {
+        taskService.yearly(connectionId);
         return new ResponseEntity<Message>(new Message("Yearly overviews have been generated."), HttpStatus.CREATED);
     }
 
