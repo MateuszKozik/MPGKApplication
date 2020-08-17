@@ -59,7 +59,7 @@ public class OverviewService {
             element.setEndTime(overview.getEndTime());
             element.setParameter(overview.getParameter());
             element.setComment(overview.getComment());
-            element.setDatetime(overview.getDatetime());
+            element.setDatetime(LocalDateTime.now().toString());
             element.setActivity(overview.getActivity());
             element.setPerson(overview.getPerson());
             element.setSupervisor(overview.getSupervisor());
