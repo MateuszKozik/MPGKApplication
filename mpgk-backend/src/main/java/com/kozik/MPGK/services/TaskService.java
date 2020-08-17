@@ -1,6 +1,7 @@
 package com.kozik.MPGK.services;
 
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import com.kozik.MPGK.exceptions.EmptyListException;
 import com.kozik.MPGK.repositories.ActivityGroupRepository;
 import com.kozik.MPGK.repositories.ConnectionRepository;
 import com.kozik.MPGK.repositories.OverviewRepository;
+import com.kozik.MPGK.utilities.OverviewMonths;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -44,7 +46,8 @@ public class TaskService {
     // @Scheduled(cron = "0 */15 * ? * *")
     public void check() {
 
-        System.out.println("Sprawdzono " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")));
+        System.out
+                .println("\nSprawdzono " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")));
 
         // check daily overviews
         for (Connection connection : connectionRepository.findByOverviewTypeName("Codziennie")) {
@@ -82,6 +85,27 @@ public class TaskService {
                 }
             } else {
                 weekly(connection.getConnectionId());
+            }
+        }
+
+        // check every two months overviews
+        for (Connection connection : connectionRepository.findByOverviewTypeName("Raz na dwa miesiące")) {
+
+            Overview overview = overviewRepository
+                    .findFirstByActivityActivityGroupConnectionOrderByEndTimeDesc(connection);
+            if (overview != null) {
+
+                if (LocalDateTime.now()
+                        .isAfter(LocalDateTime.parse(overview.getEndTime(), DateTimeFormatter.ISO_LOCAL_DATE_TIME))) {
+                    System.out.println("Wygenerowano " + connection.getName());
+
+                    everyTwoMonths(connection.getConnectionId());
+
+                } else {
+                    System.out.println(connection.getName() + " jest aktualny");
+                }
+            } else {
+                everyTwoMonths(connection.getConnectionId());
             }
         }
 
@@ -131,6 +155,7 @@ public class TaskService {
         // Change status of overdue weekly overviews
         setOverdue(connectionId);
 
+        // Generate weekly overviews
         List<ActivityGroup> groupList = activityGroupRepository
                 .findByConnectionConnectionIdAndConnectionDeviceStatus(connectionId, true);
 
@@ -169,24 +194,46 @@ public class TaskService {
 
     // Overview every two months
     public void everyTwoMonths(Long connectionId) {
-        List<ActivityGroup> groupList = activityGroupRepository
-                .findByConnectionOverviewTypeNameAndConnectionDeviceStatus("Raz na dwa miesiące", true);
-        if (groupList.isEmpty()) {
-            throw new EmptyListException("Activity group");
-        }
 
-        for (ActivityGroup activityGroup : groupList) {
-            List<Activity> activities = activityGroup.getActivities();
+        // Change status of overdue weekly overviews
+        setOverdue(connectionId);
 
-            for (Activity activity : activities) {
-                Overview overview = new Overview();
-                overview.setStatus("Nowy");
-                overview.setStartTime(LocalDateTime.now().toString());
-                overview.setEndTime(LocalDateTime.now().plusMonths(2).toString());
-                overview.setActivity(activity);
-                overviewService.save(overview);
+        // Generate every two months overviews
+        List<Month> months = new OverviewMonths().getMonths();
+
+        LocalDateTime now = LocalDateTime.now();
+        for (Month month : months) {
+            if (now.getMonth().equals(month)) {
+
+                List<ActivityGroup> groupList = activityGroupRepository
+                        .findByConnectionConnectionIdAndConnectionDeviceStatus(connectionId, true);
+                for (ActivityGroup activityGroup : groupList) {
+                    List<Activity> activities = activityGroup.getActivities();
+
+                    for (Activity activity : activities) {
+                        Overview overview = new Overview();
+
+                        LocalDateTime startTime;
+                        if (now.getMonth().getValue() < 10) {
+                            startTime = LocalDateTime
+                                    .parse(now.getYear() + "-0" + now.getMonth().getValue() + "-01T00:01");
+                        } else {
+                            startTime = LocalDateTime
+                                    .parse(now.getYear() + "-" + now.getMonth().getValue() + "-01T00:01");
+                        }
+                        LocalDateTime endTime = startTime.plusMonths(1).minusMinutes(2);
+
+                        overview.setStatus("Nowy");
+                        overview.setStartTime(startTime.toString());
+                        overview.setEndTime(endTime.toString());
+                        overview.setActivity(activity);
+                        overviewService.save(overview);
+                    }
+                }
+
             }
         }
+
     }
 
     // Yearly overview
