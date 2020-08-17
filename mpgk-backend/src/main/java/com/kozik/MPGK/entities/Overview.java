@@ -70,8 +70,21 @@ public class Overview {
     }
 
     public void setStartTime(String startTime) {
-        LocalDateTime dataTime = LocalDateTime.parse(startTime, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-        this.startTime = dataTime;
+        LocalDateTime dateTime = LocalDateTime.parse(startTime, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+        this.startTime = dateTime;
+    }
+
+    public String getDatetime() {
+        if (datetime != null) {
+            return datetime.toString();
+        } else {
+            return "";
+        }
+    }
+
+    public void setDatetime(String datetime) {
+        LocalDateTime time = LocalDateTime.parse(datetime, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+        this.datetime = time;
     }
 
     public String getEndTime() {
@@ -83,7 +96,7 @@ public class Overview {
     }
 
     public void setEndTime(String endTime) {
-        LocalDateTime dataTime = LocalDateTime.parse(endTime, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-        this.endTime = dataTime;
+        LocalDateTime dateTime = LocalDateTime.parse(endTime, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+        this.endTime = dateTime;
     }
 }
