@@ -16,4 +16,9 @@ public interface OverviewRepository extends JpaRepository<Overview, Long> {
     List<Overview> findByActivityNameAndParameter(String name, String parameter);
 
     Integer countByActivityActivityGroupConnectionAndStatus(Connection connection, String status);
+
+    Overview findFirstByActivityActivityGroupConnectionOrderByEndTimeDesc(Connection connection);
+
+    List<Overview> findByActivityActivityGroupAndEndTimeLessThanAndStatus(ActivityGroup activityGroup,
+            LocalDateTime endTime, String status);
 }
