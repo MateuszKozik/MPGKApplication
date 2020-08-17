@@ -9,4 +9,6 @@ public interface ConnectionRepository extends JpaRepository<Connection, Long> {
     List<Connection> findByOverviewTypeNameNotLikeAndDeviceStatus(String overviewType, Boolean status);
 
     List<Connection> findByOverviewTypeNameAndDeviceStatus(String overviewType, Boolean status);
+
+    List<Connection> findByOverviewTypeName(String overviewType);
 }
