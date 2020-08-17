@@ -11,6 +11,8 @@ public interface ActivityGroupRepository extends JpaRepository<ActivityGroup, Lo
 
     List<ActivityGroup> findByConnectionOverviewTypeNameAndConnectionDeviceStatus(String name, Boolean status);
 
+    List<ActivityGroup> findByConnectionOverviewTypeName(String name);
+
     List<ActivityGroup> findByConnectionOverviewTypeNameAndConnectionDeviceStatusAndConnection(String name,
             Boolean status, Connection connection);
 
