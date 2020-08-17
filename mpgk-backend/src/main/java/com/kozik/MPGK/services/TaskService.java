@@ -16,6 +16,9 @@ import com.kozik.MPGK.repositories.OverviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import static java.time.temporal.TemporalAdjusters.previous;
+
+import java.time.DayOfWeek;
 
 @Service
 public class TaskService {
@@ -44,8 +47,7 @@ public class TaskService {
         System.out.println("Sprawdzono " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")));
 
         // check daily overviews
-        List<Connection> connections = connectionRepository.findByOverviewTypeName("Codziennie");
-        for (Connection connection : connections) {
+        for (Connection connection : connectionRepository.findByOverviewTypeName("Codziennie")) {
             Overview overview = overviewRepository
                     .findFirstByActivityActivityGroupConnectionOrderByEndTimeDesc(connection);
 
@@ -53,20 +55,41 @@ public class TaskService {
                 if (LocalDateTime.now()
                         .isAfter(LocalDateTime.parse(overview.getEndTime(), DateTimeFormatter.ISO_LOCAL_DATE_TIME))) {
                     System.out.println("Wygenerowano " + connection.getName());
-                    daily();
+                    daily(connection.getConnectionId());
                 } else {
                     System.out.println(connection.getName() + " jest aktualny");
                 }
             } else {
-                daily();
+                daily(connection.getConnectionId());
+            }
+        }
+
+        // check weekly overviews
+        for (Connection connection : connectionRepository.findByOverviewTypeName("Raz w tygodniu")) {
+
+            Overview overview = overviewRepository
+                    .findFirstByActivityActivityGroupConnectionOrderByEndTimeDesc(connection);
+            if (overview != null) {
+
+                if (LocalDateTime.now()
+                        .isAfter(LocalDateTime.parse(overview.getEndTime(), DateTimeFormatter.ISO_LOCAL_DATE_TIME))) {
+                    System.out.println("Wygenerowano " + connection.getName());
+
+                    weekly(connection.getConnectionId());
+
+                } else {
+                    System.out.println(connection.getName() + " jest aktualny");
+                }
+            } else {
+                weekly(connection.getConnectionId());
             }
         }
 
     }
 
     // Set overview status to overdue after the end time
-    public void setOverdue(String overviewTypeName) {
-        List<ActivityGroup> groupList = activityGroupRepository.findByConnectionOverviewTypeName(overviewTypeName);
+    public void setOverdue(Long connectionId) {
+        List<ActivityGroup> groupList = activityGroupRepository.findByConnectionConnectionId(connectionId);
         for (ActivityGroup activityGroup : groupList) {
             List<Overview> overviews = overviewRepository
                     .findByActivityActivityGroupAndEndTimeLessThanAndStatus(activityGroup, LocalDateTime.now(), "Nowy");
@@ -78,14 +101,14 @@ public class TaskService {
     }
 
     // Daily overviews
-    public void daily() {
+    public void daily(Long connectionId) {
 
         // Change status of overdue daily overviews
-        setOverdue("Codziennie");
+        setOverdue(connectionId);
 
         // Generate daily overviews
         List<ActivityGroup> groupList = activityGroupRepository
-                .findByConnectionOverviewTypeNameAndConnectionDeviceStatus("Codziennie", true);
+                .findByConnectionConnectionIdAndConnectionDeviceStatus(connectionId, true);
 
         for (ActivityGroup activityGroup : groupList) {
             List<Activity> activities = activityGroup.getActivities();
@@ -103,21 +126,36 @@ public class TaskService {
     }
 
     // Weekly overviews
-    public void weekly() {
+    public void weekly(Long connectionId) {
+
+        // Change status of overdue weekly overviews
+        setOverdue(connectionId);
+
         List<ActivityGroup> groupList = activityGroupRepository
-                .findByConnectionOverviewTypeNameAndConnectionDeviceStatus("Raz w tygodniu", true);
-        if (groupList.isEmpty()) {
-            throw new EmptyListException("Activity group");
-        }
+                .findByConnectionConnectionIdAndConnectionDeviceStatus(connectionId, true);
 
         for (ActivityGroup activityGroup : groupList) {
             List<Activity> activities = activityGroup.getActivities();
 
             for (Activity activity : activities) {
                 Overview overview = new Overview();
+
+                LocalDateTime now = LocalDateTime.now();
+                if (now.getDayOfWeek().equals(DayOfWeek.MONDAY)) {
+                    LocalDateTime startTime = LocalDateTime.parse(now.toLocalDate().toString() + "T00:01");
+                    overview.setStartTime(startTime.toString());
+                    LocalDateTime endTime = startTime.plusWeeks(1).minusMinutes(2);
+                    overview.setEndTime(endTime.toString());
+
+                } else {
+                    now = now.with(previous(DayOfWeek.MONDAY));
+                    LocalDateTime startTime = LocalDateTime.parse(now.toLocalDate().toString() + "T00:01");
+                    overview.setStartTime(startTime.toString());
+                    LocalDateTime endTime = startTime.plusWeeks(1).minusMinutes(2);
+                    overview.setEndTime(endTime.toString());
+                }
+
                 overview.setStatus("Nowy");
-                overview.setStartTime(LocalDateTime.now().toString());
-                overview.setEndTime(LocalDateTime.now().plusWeeks(1).toString());
                 overview.setActivity(activity);
                 overviewService.save(overview);
             }
@@ -125,12 +163,12 @@ public class TaskService {
     }
 
     // Overview every day on the day shift
-    public void dayShift() {
+    public void dayShift(Long connectionId) {
         // ?
     }
 
     // Overview every two months
-    public void everyTwoMonths() {
+    public void everyTwoMonths(Long connectionId) {
         List<ActivityGroup> groupList = activityGroupRepository
                 .findByConnectionOverviewTypeNameAndConnectionDeviceStatus("Raz na dwa miesiące", true);
         if (groupList.isEmpty()) {
@@ -152,7 +190,7 @@ public class TaskService {
     }
 
     // Yearly overview
-    public void yearly() {
+    public void yearly(Long connectionId) {
         List<ActivityGroup> groupList = activityGroupRepository
                 .findByConnectionOverviewTypeNameAndConnectionDeviceStatus("Raz w roku", true);
         if (groupList.isEmpty()) {
