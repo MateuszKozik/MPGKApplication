@@ -1,6 +1,7 @@
 package com.kozik.MPGK.services;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import com.kozik.MPGK.entities.Activity;
@@ -9,8 +10,11 @@ import com.kozik.MPGK.entities.Connection;
 import com.kozik.MPGK.entities.Overview;
 import com.kozik.MPGK.exceptions.EmptyListException;
 import com.kozik.MPGK.repositories.ActivityGroupRepository;
+import com.kozik.MPGK.repositories.ConnectionRepository;
+import com.kozik.MPGK.repositories.OverviewRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -25,22 +29,73 @@ public class TaskService {
     @Autowired
     private ConnectionService connectionService;
 
+    @Autowired
+    private OverviewRepository overviewRepository;
+
+    @Autowired
+    private ConnectionRepository connectionRepository;
+
+    // Every minute
+    @Scheduled(cron = "0 * * ? * *")
+    // Every 15 minutes
+    // @Scheduled(cron = "0 */15 * ? * *")
+    public void check() {
+
+        System.out.println("Sprawdzono " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")));
+
+        // check daily overviews
+        List<Connection> connections = connectionRepository.findByOverviewTypeName("Codziennie");
+        for (Connection connection : connections) {
+            Overview overview = overviewRepository
+                    .findFirstByActivityActivityGroupConnectionOrderByEndTimeDesc(connection);
+
+            if (overview != null) {
+                if (LocalDateTime.now()
+                        .isAfter(LocalDateTime.parse(overview.getEndTime(), DateTimeFormatter.ISO_LOCAL_DATE_TIME))) {
+                    System.out.println("Wygenerowano " + connection.getName());
+                    daily();
+                } else {
+                    System.out.println(connection.getName() + " jest aktualny");
+                }
+            } else {
+                daily();
+            }
+        }
+
+    }
+
+    // Set overview status to overdue after the end time
+    public void setOverdue(String overviewTypeName) {
+        List<ActivityGroup> groupList = activityGroupRepository.findByConnectionOverviewTypeName(overviewTypeName);
+        for (ActivityGroup activityGroup : groupList) {
+            List<Overview> overviews = overviewRepository
+                    .findByActivityActivityGroupAndEndTimeLessThanAndStatus(activityGroup, LocalDateTime.now(), "Nowy");
+            for (Overview overview : overviews) {
+                overview.setStatus("Zaległy");
+                overviewService.update(overview.getOverviewId(), overview);
+            }
+        }
+    }
+
     // Daily overviews
     public void daily() {
+
+        // Change status of overdue daily overviews
+        setOverdue("Codziennie");
+
+        // Generate daily overviews
         List<ActivityGroup> groupList = activityGroupRepository
                 .findByConnectionOverviewTypeNameAndConnectionDeviceStatus("Codziennie", true);
-        if (groupList.isEmpty()) {
-            throw new EmptyListException("Activity group");
-        }
 
         for (ActivityGroup activityGroup : groupList) {
             List<Activity> activities = activityGroup.getActivities();
 
             for (Activity activity : activities) {
+                LocalDateTime start = LocalDateTime.parse(LocalDateTime.now().toLocalDate().toString() + "T00:01");
                 Overview overview = new Overview();
                 overview.setStatus("Nowy");
-                overview.setStartTime(LocalDateTime.now().toString());
-                overview.setEndTime(LocalDateTime.now().plusDays(1).toString());
+                overview.setStartTime(start.toString());
+                overview.setEndTime(start.plusDays(1).minusMinutes(2).toString());
                 overview.setActivity(activity);
                 overviewService.save(overview);
             }
