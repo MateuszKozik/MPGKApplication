@@ -60,6 +60,9 @@ public class OverviewService {
             element.setParameter(overview.getParameter());
             element.setComment(overview.getComment());
             element.setDatetime(overview.getDatetime());
+            element.setActivity(overview.getActivity());
+            element.setPerson(overview.getPerson());
+            element.setSupervisor(overview.getSupervisor());
             return overviewRepository.save(element);
         }).orElseThrow(() -> new OverviewNotFoundException(overviewId));
 
