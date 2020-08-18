@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getActionsByName,clearOverviewsListState } from "../../actions/overviewActions";
 import PropTypes from "prop-types";
-
+import FormatDate from "../Common/FormatDate";
 
 
 class NitrogenList extends Component {
@@ -38,7 +38,7 @@ class NitrogenList extends Component {
                                 
                                     <tr key={overview.overviewId}>
                                         <td>Wymiana butli</td>
-                                        <td>{overview.endTime}</td>
+                                        <td><FormatDate date={overview.endTime} datetime={overview.endTime} /></td>
                                         <td>{overview.person ? overview.person.name+ " "+ overview.person.surname : null }</td>
                                     </tr>
                                 
@@ -46,6 +46,7 @@ class NitrogenList extends Component {
 							))}
 						</tbody>
 					</table>
+					
 				</div>
 			</div>
 		);
