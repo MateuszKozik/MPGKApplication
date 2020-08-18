@@ -1,7 +1,9 @@
 package com.kozik.MPGK.services;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.Month;
+
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -87,7 +89,7 @@ public class TaskService {
             }
         }
 
-        // check every two months overviews
+        // Check every two months overviews
         for (Connection connection : connectionRepository.findByOverviewTypeName("Raz na dwa miesiące")) {
 
             Overview overview = overviewRepository
@@ -96,7 +98,6 @@ public class TaskService {
 
                 if (LocalDateTime.now()
                         .isAfter(LocalDateTime.parse(overview.getEndTime(), DateTimeFormatter.ISO_LOCAL_DATE_TIME))) {
-                    System.out.println("Wygenerowano " + connection.getName());
 
                     everyTwoMonths(connection.getConnectionId());
 
@@ -117,7 +118,6 @@ public class TaskService {
 
                 if (LocalDateTime.now()
                         .isAfter(LocalDateTime.parse(overview.getEndTime(), DateTimeFormatter.ISO_LOCAL_DATE_TIME))) {
-                    System.out.println("Wygenerowano " + connection.getName());
 
                     yearly(connection.getConnectionId());
 
@@ -141,6 +141,26 @@ public class TaskService {
                 } else {
                     System.out.println(connection.getName() + " jest aktualny");
                 }
+            }
+        }
+
+        // Check the day shift overviews
+        for (Connection connection : connectionRepository.findByOverviewTypeName("Codziennie na dziennej zmianie")) {
+
+            Overview overview = overviewRepository
+                    .findFirstByActivityActivityGroupConnectionOrderByEndTimeDesc(connection);
+            if (overview != null) {
+
+                if (LocalDateTime.now()
+                        .isAfter(LocalDateTime.parse(overview.getEndTime(), DateTimeFormatter.ISO_LOCAL_DATE_TIME))) {
+
+                    dayShift(connection.getConnectionId());
+
+                } else {
+                    System.out.println(connection.getName() + " jest aktualny");
+                }
+            } else {
+                dayShift(connection.getConnectionId());
             }
         }
 
@@ -224,7 +244,34 @@ public class TaskService {
 
     // Overview every day on the day shift
     public void dayShift(Long connectionId) {
-        // ?
+
+        // Change status of overdue the day shift overviews
+        setOverdue(connectionId);
+
+        // Generate day shift overviews
+        if (LocalTime.now().isAfter(LocalTime.of(6, 0)) && LocalTime.now().isBefore(LocalTime.of(18, 0))) {
+            if (connectionService.get(connectionId).getDevice().getStatus()) {
+                System.out.println("Wygenerowano " + connectionService.get(connectionId).getName());
+            }
+
+            List<ActivityGroup> groupList = activityGroupRepository
+                    .findByConnectionConnectionIdAndConnectionDeviceStatus(connectionId, true);
+
+            for (ActivityGroup activityGroup : groupList) {
+                List<Activity> activities = activityGroup.getActivities();
+
+                for (Activity activity : activities) {
+                    LocalDateTime start = LocalDateTime.parse(LocalDateTime.now().toLocalDate().toString() + "T06:00");
+                    Overview overview = new Overview();
+                    overview.setStatus("Nowy");
+                    overview.setStartTime(start.toString());
+                    overview.setEndTime(start.plusHours(12).toString());
+                    overview.setActivity(activity);
+                    overviewService.save(overview);
+                }
+            }
+        }
+
     }
 
     // Overview every two months
@@ -239,6 +286,9 @@ public class TaskService {
         LocalDateTime now = LocalDateTime.now();
         for (Month month : months) {
             if (now.getMonth().equals(month)) {
+                if (connectionService.get(connectionId).getDevice().getStatus()) {
+                    System.out.println("Wygenerowano " + connectionService.get(connectionId).getName());
+                }
 
                 List<ActivityGroup> groupList = activityGroupRepository
                         .findByConnectionConnectionIdAndConnectionDeviceStatus(connectionId, true);
@@ -289,6 +339,9 @@ public class TaskService {
 
         // Generate next overview
         if (LocalDateTime.now().isAfter(next)) {
+            if (connectionService.get(connectionId).getDevice().getStatus()) {
+                System.out.println("Wygenerowano " + connectionService.get(connectionId).getName());
+            }
             List<ActivityGroup> groupList = activityGroupRepository
                     .findByConnectionConnectionIdAndConnectionDeviceStatus(connectionId, true);
 
