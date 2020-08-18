@@ -109,6 +109,25 @@ public class TaskService {
             }
         }
 
+        // check yearly overviews
+        for (Connection connection : connectionRepository.findByOverviewTypeName("Raz w roku")) {
+
+            Overview overview = overviewRepository
+                    .findFirstByActivityActivityGroupConnectionOrderByEndTimeDesc(connection);
+            if (overview != null) {
+
+                if (LocalDateTime.now()
+                        .isAfter(LocalDateTime.parse(overview.getEndTime(), DateTimeFormatter.ISO_LOCAL_DATE_TIME))) {
+                    System.out.println("Wygenerowano " + connection.getName());
+
+                    yearly(connection.getConnectionId());
+
+                } else {
+                    System.out.println(connection.getName() + " jest aktualny");
+                }
+            }
+        }
+
     }
 
     // Set overview status to overdue after the end time
@@ -238,22 +257,37 @@ public class TaskService {
 
     // Yearly overview
     public void yearly(Long connectionId) {
-        List<ActivityGroup> groupList = activityGroupRepository
-                .findByConnectionOverviewTypeNameAndConnectionDeviceStatus("Raz w roku", true);
-        if (groupList.isEmpty()) {
-            throw new EmptyListException("Activity group");
+
+        // Change status of overdue yearly overviews
+        setOverdue(connectionId);
+
+        // Calculate date of next overview
+        Overview testOverview = overviewRepository
+                .findFirstByActivityActivityGroupConnectionOrderByEndTimeDesc(connectionService.get(connectionId));
+        LocalDateTime next;
+        if (testOverview != null) {
+            next = LocalDateTime.parse(testOverview.getEndTime(), DateTimeFormatter.ISO_LOCAL_DATE_TIME).plusMonths(9);
+        } else {
+            next = LocalDateTime.now().minusMinutes(1);
         }
 
-        for (ActivityGroup activityGroup : groupList) {
-            List<Activity> activities = activityGroup.getActivities();
+        // Generate next overview
+        if (LocalDateTime.now().isAfter(next)) {
+            List<ActivityGroup> groupList = activityGroupRepository
+                    .findByConnectionConnectionIdAndConnectionDeviceStatus(connectionId, true);
 
-            for (Activity activity : activities) {
-                Overview overview = new Overview();
-                overview.setStatus("Nowy");
-                overview.setStartTime(LocalDateTime.now().toString());
-                overview.setEndTime(LocalDateTime.now().plusYears(1).toString());
-                overview.setActivity(activity);
-                overviewService.save(overview);
+            for (ActivityGroup activityGroup : groupList) {
+                List<Activity> activities = activityGroup.getActivities();
+
+                for (Activity activity : activities) {
+                    LocalDateTime start = LocalDateTime.parse(LocalDateTime.now().toLocalDate().toString() + "T00:01");
+                    Overview overview = new Overview();
+                    overview.setStatus("Nowy");
+                    overview.setStartTime(start.toString());
+                    overview.setEndTime(start.plusMonths(3).minusMinutes(2).toString());
+                    overview.setActivity(activity);
+                    overviewService.save(overview);
+                }
             }
         }
     }
