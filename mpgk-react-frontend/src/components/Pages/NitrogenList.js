@@ -1,14 +1,18 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getActionsByName } from "../../actions/overviewActions";
+import { getActionsByName,clearOverviewsListState } from "../../actions/overviewActions";
 import PropTypes from "prop-types";
 
 
 
 class NitrogenList extends Component {
 	componentDidMount() {
-        this.props.getActionsByName();
+        this.props.getActionsByName(this.props.history);
         
+	}
+
+	componentWillUnmount() {
+		this.props.clearOverviewsListState();
 	}
 
 
@@ -35,7 +39,7 @@ class NitrogenList extends Component {
                                     <tr key={overview.overviewId}>
                                         <td>Wymiana butli</td>
                                         <td>{overview.endTime}</td>
-                                        <td>{overview.person.name +" "+ overview.person.surname}</td>
+                                        <td>{overview.person ? overview.person.name+ " "+ overview.person.surname : null }</td>
                                     </tr>
                                 
                                 
@@ -50,13 +54,15 @@ class NitrogenList extends Component {
 
 NitrogenList.propTypes = {
 	overview: PropTypes.object.isRequired,
-    getActionsByName: PropTypes.func.isRequired
+	getActionsByName: PropTypes.func.isRequired,
+	clearOverviewsListState: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
     overview: state.overview
 });
 
-export default connect(mapStateToProps, { getActionsByName})(
-	NitrogenList
-);
+export default connect(mapStateToProps, { 
+	getActionsByName, 
+	clearOverviewsListState
+})(NitrogenList);
