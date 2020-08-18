@@ -4,11 +4,13 @@ import { GET_PERIODIC_CONNECTION, GET_ON_DEMAND_CONNECTION } from "./types";
 export const createOnDemandOverviews = (connectionId, history) => async (
 	dispatch
 ) => {
-	try {
-		await axios.post(`/api/tasks/on-demand/${connectionId}`);
-		history.push("/");
-	} catch (error) {
-		history.push("/");
+	if (window.confirm("Czy na pewno chcesz wygenerować przegląd?")) {
+		try {
+			await axios.post(`/api/tasks/on-demand/${connectionId}`);
+			history.push("/");
+		} catch (error) {
+			history.push("/");
+		}
 	}
 };
 
