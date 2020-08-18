@@ -9,7 +9,6 @@ import com.kozik.MPGK.entities.Activity;
 import com.kozik.MPGK.entities.ActivityGroup;
 import com.kozik.MPGK.entities.Connection;
 import com.kozik.MPGK.entities.Overview;
-import com.kozik.MPGK.exceptions.EmptyListException;
 import com.kozik.MPGK.repositories.ActivityGroupRepository;
 import com.kozik.MPGK.repositories.ConnectionRepository;
 import com.kozik.MPGK.repositories.OverviewRepository;
@@ -122,6 +121,23 @@ public class TaskService {
 
                     yearly(connection.getConnectionId());
 
+                } else {
+                    System.out.println(connection.getName() + " jest aktualny");
+                }
+            }
+        }
+
+        // Check on demand overviews
+        for (Connection connection : connectionRepository.findByOverviewTypeName("Na żądanie")) {
+
+            Overview overview = overviewRepository
+                    .findFirstByActivityActivityGroupConnectionOrderByEndTimeDesc(connection);
+            if (overview != null) {
+
+                if (LocalDateTime.now()
+                        .isAfter(LocalDateTime.parse(overview.getEndTime(), DateTimeFormatter.ISO_LOCAL_DATE_TIME))) {
+
+                    setOverdue(connection.getConnectionId());
                 } else {
                     System.out.println(connection.getName() + " jest aktualny");
                 }
@@ -294,21 +310,19 @@ public class TaskService {
 
     // Overview on demand
     public void onDemand(Long connectionId) {
-        Connection connection = connectionService.get(connectionId);
+
         List<ActivityGroup> groupList = activityGroupRepository
-                .findByConnectionOverviewTypeNameAndConnectionDeviceStatusAndConnection("Na żądanie", true, connection);
-        if (groupList.isEmpty()) {
-            throw new EmptyListException("Activity group");
-        }
+                .findByConnectionConnectionIdAndConnectionDeviceStatus(connectionId, true);
 
         for (ActivityGroup activityGroup : groupList) {
             List<Activity> activities = activityGroup.getActivities();
 
             for (Activity activity : activities) {
+                LocalDateTime start = LocalDateTime.parse(LocalDateTime.now().toLocalDate().toString() + "T00:01");
                 Overview overview = new Overview();
                 overview.setStatus("Nowy");
-                overview.setStartTime(LocalDateTime.now().toString());
-                overview.setEndTime(LocalDateTime.now().plusMonths(2).toString());
+                overview.setStartTime(start.toString());
+                overview.setEndTime(start.plusMonths(2).minusMinutes(2).toString());
                 overview.setActivity(activity);
                 overviewService.save(overview);
             }
