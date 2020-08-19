@@ -14,6 +14,7 @@ class UpdateConnection extends Component {
 		this.state = {
 			id: "",
 			name: "",
+			status: "",
 			errors: {}
 		};
 
@@ -32,10 +33,19 @@ class UpdateConnection extends Component {
 
 	componentDidUpdate(props, state, snapshot) {
 		if (this.props.connection !== props.connection) {
-			const { connectionId, name } = this.props.connection;
+			const { connectionId, name, status } = this.props.connection;
+			let editStatus;
+
+			if (status === true) {
+				editStatus = "true";
+			} else {
+				editStatus = "false";
+			}
+
 			this.setState({
 				id: connectionId,
-				name: name
+				name: name,
+				status: editStatus
 			});
 		}
 	}
@@ -45,7 +55,8 @@ class UpdateConnection extends Component {
 
 		const updatedConnection = {
 			id: this.state.id,
-			name: this.state.name
+			name: this.state.name,
+			status: this.state.status
 		};
 
 		this.props.updateConnection(
@@ -85,6 +96,39 @@ class UpdateConnection extends Component {
 								{errors.name && (
 									<div className="invalid-feedback">{errors.name}</div>
 								)}
+							</div>
+							<div className="form-group ">
+								<label>Status powiązania</label>
+								<br />
+								<div className="form-check">
+									<input
+										className={classnames("form-check-input", {
+											"is-invalid": errors.status
+										})}
+										type="radio"
+										name="status"
+										value="true"
+										checked={this.state.status === "true"}
+										onChange={this.onChange}
+									/>
+									<label className="form-check-label">Aktywne</label>
+								</div>
+								<div className="form-check">
+									<input
+										className={classnames("form-check-input", {
+											"is-invalid": errors.status
+										})}
+										type="radio"
+										name="status"
+										value="false"
+										checked={this.state.status === "false"}
+										onChange={this.onChange}
+									/>
+									<label className="form-check-label">Nieaktywne</label>
+									{errors.status && (
+										<div className="invalid-feedback">{errors.status}</div>
+									)}
+								</div>
 							</div>
 						</div>
 					</div>
