@@ -36,6 +36,7 @@ class ActivityList extends Component {
 								<th>Typ pola</th>
 								<th>EMSR</th>
 								<th>Nastawa</th>
+								<th>Elementy listy</th>
 								<th>Akcje</th>
 							</tr>
 						</thead>
@@ -46,6 +47,7 @@ class ActivityList extends Component {
 									<td>{activity.type}</td>
 									<td>{activity.emsr}</td>
 									<td>{activity.setting}</td>
+									<td>{activity.listItems}</td>
 									<td>
 										<Link
 											to={`/activities/update/${activity.activityId}`}

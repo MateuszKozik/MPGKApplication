@@ -14,6 +14,7 @@ class AddActivity extends Component {
 			type: "",
 			emsr: "",
 			setting: "",
+			listItems: "",
 			groupId: "",
 			errors: {}
 		};
@@ -32,7 +33,8 @@ class AddActivity extends Component {
 			name: this.state.name,
 			type: this.state.type,
 			emsr: this.state.emsr,
-			setting: this.state.setting
+			setting: this.state.setting,
+			listItems: this.state.listItems
 		};
 
 		if (this.state.groupId !== "") {
@@ -94,10 +96,27 @@ class AddActivity extends Component {
 									<option value="Zaznaczenie">Zaznaczenie</option>
 									<option value="Zakres liczb">Zakres liczb</option>
 									<option value="Pole wyboru">Pole wyboru</option>
+									<option value="Lista">Lista</option>
 								</select>
 
 								{errors.type && (
 									<div className="invalid-feedback">{errors.type}</div>
+								)}
+							</div>
+							<div className="form-group">
+								<label>Elementy listy</label>
+								<input
+									className={classNames("form-control", {
+										"is-invalid": errors.listItems
+									})}
+									name="listItems"
+									type="text"
+									placeholder="Wprowadź elementy listy oddzielone spacją"
+									onChange={this.onChange}
+									value={this.state.listItems}
+								/>
+								{errors.listItems && (
+									<div className="invalid-feedback">{errors.listItems}</div>
 								)}
 							</div>
 							<div className="form-group">
