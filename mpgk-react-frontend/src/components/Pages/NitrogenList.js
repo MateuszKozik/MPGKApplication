@@ -38,7 +38,7 @@ class NitrogenList extends Component {
                                 
                                     <tr key={overview.overviewId}>
                                         <td>Wymiana butli</td>
-                                        <td><FormatDate date={overview.endTime} datetime={overview.endTime} /></td>
+                                        <td><FormatDate date={overview.endTime} datetime={true} /></td>
                                         <td>{overview.person ? overview.person.name+ " "+ overview.person.surname : null }</td>
                                     </tr>
                                 
