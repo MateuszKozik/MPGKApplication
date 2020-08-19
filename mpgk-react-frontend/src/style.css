@@ -1,3 +1,7 @@
 .overviewComplete {
 	background-color: #3bc5433b;
 }
+
+.overviewOverdue {
+	background-color: #ff333338;
+}
