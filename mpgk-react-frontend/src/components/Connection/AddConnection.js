@@ -12,6 +12,7 @@ class AddConnection extends Component {
 
 		this.state = {
 			name: "",
+			status: "",
 			typeId: "",
 			deviceId: "",
 			errors: {}
@@ -32,7 +33,7 @@ class AddConnection extends Component {
 
 	onSubmit(e) {
 		e.preventDefault();
-		let newConnection = { name: this.state.name };
+		let newConnection = { name: this.state.name, status: this.state.status };
 		if (this.state.deviceId !== "") {
 			newConnection = {
 				...newConnection,
@@ -67,6 +68,7 @@ class AddConnection extends Component {
 					<div className="row">
 						<div className="col-md-4 offset-md-4 text-center">
 							<div className="form-group">
+								<label>Nazwa powiązania</label>
 								<input
 									className={classnames("form-control", {
 										"is-invalid": errors.name
@@ -113,6 +115,39 @@ class AddConnection extends Component {
 										</option>
 									))}
 								</select>
+							</div>
+							<div className="form-group ">
+								<label>Status powiązania</label>
+								<br />
+								<div className="form-check">
+									<input
+										className={classnames("form-check-input", {
+											"is-invalid": errors.status
+										})}
+										type="radio"
+										name="status"
+										value="true"
+										checked={this.state.status === "true"}
+										onChange={this.onChange}
+									/>
+									<label className="form-check-label">Aktywne</label>
+								</div>
+								<div className="form-check">
+									<input
+										className={classnames("form-check-input", {
+											"is-invalid": errors.status
+										})}
+										type="radio"
+										name="status"
+										value="false"
+										checked={this.state.status === "false"}
+										onChange={this.onChange}
+									/>
+									<label className="form-check-label">Nieaktywne</label>
+									{errors.status && (
+										<div className="invalid-feedback">{errors.status}</div>
+									)}
+								</div>
 							</div>
 						</div>
 					</div>
