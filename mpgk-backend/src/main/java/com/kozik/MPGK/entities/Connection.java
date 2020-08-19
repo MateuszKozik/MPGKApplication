@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -34,6 +35,10 @@ public class Connection {
     @NotBlank(message = "Nazwa powiązania jest wymagana")
     @Column(name = "name", nullable = false, length = 70)
     private String name;
+
+    @NotNull(message = "Status połączenia jest wymagany")
+    @Column(name = "status", nullable = false)
+    private Boolean status;
 
     @ManyToOne
     @JoinColumn(name = "device_id", nullable = true)
