@@ -9,7 +9,8 @@ class OverviewItem extends Component {
 		this.state = {
 			parameter: "",
 			comment: "",
-			status: ""
+			status: "",
+			listItems: ""
 		};
 
 		this.onChange = this.onChange.bind(this);
@@ -20,7 +21,8 @@ class OverviewItem extends Component {
 		this.setState({
 			parameter: this.props.parameter,
 			comment: this.props.comment,
-			status: this.props.status
+			status: this.props.status,
+			listItems: this.props.activity.listItems
 		});
 	}
 
@@ -47,7 +49,8 @@ class OverviewItem extends Component {
 			endTime: this.props.endTime,
 			parameter: this.state.parameter,
 			activity: this.props.activity,
-			comment: this.state.comment
+			comment: this.state.comment,
+			listItems: this.state.listItems
 		};
 
 		this.props.performOverview(
@@ -174,6 +177,22 @@ class OverviewItem extends Component {
 						</div>
 					);
 				}
+			case "Lista":
+				const listOfItems = this.state.listItems.split(",");
+				return (
+					<select
+						name="parameter"
+						onChange={this.onChange}
+						className="form-control"
+					>
+						<option value="">Wybierz sekcję</option>
+						{listOfItems.map((item, i) => (
+							<option key={i} value={item}>
+								{item}
+							</option>
+						))}
+					</select>
+				);
 
 			default:
 				return (
@@ -298,7 +317,7 @@ class OverviewItem extends Component {
 								className="form-control"
 								value={this.state.comment || ""}
 								name="comment"
-								placeholder="Komentarz"
+								placeholder="Uwagi"
 								onChange={this.onChange}
 							/>
 						</div>
@@ -312,16 +331,17 @@ class OverviewItem extends Component {
 					<div className="row my-1">
 						<div className="col-md-5">{name}</div>
 						<div className="col-md-2">{this.displayValue(type)}</div>
-						<div className="col-md-2 my-1">
-							<input
-								type="text"
-								className="form-control"
-								value={this.state.comment || ""}
-								name="comment"
-								placeholder="Komentarz"
-								readOnly
-							/>
-						</div>
+						{this.state.comment && (
+							<div className="col-md-2 my-1">
+								<input
+									type="text"
+									className="form-control"
+									value={this.state.comment || ""}
+									name="comment"
+									readOnly
+								/>
+							</div>
+						)}
 					</div>
 				)}
 			</div>
