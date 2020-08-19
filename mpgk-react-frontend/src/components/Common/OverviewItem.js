@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import classNames from "classnames";
+import FormatDate from "./FormatDate";
 import { connect } from "react-redux";
 import { performOverview } from "../../actions/overviewActions";
 
@@ -300,18 +301,22 @@ class OverviewItem extends Component {
 
 	render() {
 		const { name, type } = this.props.activity;
+		const { datetime, person, supervisor } = this.props;
 		return (
 			<div
 				className={classNames("container p-2 my-2 border-bottom", {
-					overviewComplete: this.state.status === "Wykonany"
+					overviewComplete: this.state.status === "Wykonany",
+					overviewOverdue: this.state.status === "Zaległy"
 				})}
 			>
 				{this.state.status === "Nowy" || this.state.status === "Zaległy" ? (
-					<form className="row my-1 " onSubmit={this.onSubmit}>
-						<div className="col-md-5">{name}</div>
+					<form className="row my-1" onSubmit={this.onSubmit}>
+						<div className="col-md-4 my-1 text-justify">{name}</div>
 
-						<div className="col-md-2">{this.selectInput(type)}</div>
-						<div className="col-md-2 my-1">
+						<div className="col-md-2 my-1 text-center">
+							{this.selectInput(type)}
+						</div>
+						<div className="col-md-2 my-1 text-center">
 							<input
 								type="text"
 								className="form-control"
@@ -329,10 +334,12 @@ class OverviewItem extends Component {
 					</form>
 				) : (
 					<div className="row my-1">
-						<div className="col-md-5">{name}</div>
-						<div className="col-md-2">{this.displayValue(type)}</div>
-						{this.state.comment && (
-							<div className="col-md-2 my-1">
+						<div className="col-md-4 my-1 text-justify">{name}</div>
+						<div className="col-md-2  my-1 text-center">
+							{this.displayValue(type)}
+						</div>
+						<div className="col-md-2 my-1 text-center">
+							{this.state.comment && (
 								<input
 									type="text"
 									className="form-control"
@@ -340,8 +347,19 @@ class OverviewItem extends Component {
 									name="comment"
 									readOnly
 								/>
-							</div>
-						)}
+							)}
+						</div>
+						<div className="col-md-2 my-1 text-center">
+							<b>
+								<FormatDate date={datetime} datetime={true} />
+							</b>
+						</div>
+						<div className="col-md-2 my-1 text-center">
+							{person && <b> {person.name + " " + person.surname} </b>}
+							{supervisor && (
+								<b> {supervisor.name + " " + supervisor.surname} </b>
+							)}
+						</div>
 					</div>
 				)}
 			</div>
@@ -349,6 +367,4 @@ class OverviewItem extends Component {
 	}
 }
 
-const mapStateToProps = (state) => ({});
-
-export default connect(mapStateToProps, { performOverview })(OverviewItem);
+export default connect(null, { performOverview })(OverviewItem);
