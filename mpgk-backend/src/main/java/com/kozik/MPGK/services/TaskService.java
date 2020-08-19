@@ -42,10 +42,8 @@ public class TaskService {
     @Autowired
     private ConnectionRepository connectionRepository;
 
-    // Every minute
-    @Scheduled(cron = "0 * * ? * *")
-    // Every 15 minutes
-    // @Scheduled(cron = "0 */15 * ? * *")
+    // The method will be called every 15 minutes
+    @Scheduled(cron = "0 */15 * ? * *")
     public void check() {
 
         System.out
