@@ -214,10 +214,10 @@ public class TaskService {
             // Assign generated parameters to the overviews
             overviewService.setOverviewParameter(
                     "Informacja dla bieżącej zmiany: numery sekcji kotła oczyszczone na poprzedniej zmianie.",
-                    overviewParameters.getYesterdayValue());
+                    overviewParameters.getYesterdayValue(), "Wygenerowane");
             overviewService.setOverviewParameter(
                     "Informacja dla bieżącej zmiany: numery sekcji kotła, które należy oczyścić na bieżącej zmianie.",
-                    overviewParameters.getTodayValue());
+                    overviewParameters.getTodayValue(), "Wygenerowane");
         }
 
     }

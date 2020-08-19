@@ -99,10 +99,11 @@ public class OverviewService {
         overviewRepository.deleteAll();
     }
 
-    public void setOverviewParameter(String activityName, String parameter) {
-        Overview setOverviews = overviewRepository.findFirstByActivityNameOrderByEndTimeDesc(activityName);
-        setOverviews.setParameter(parameter);
-        setOverviews.setStatus("Wykonany");
-        update(setOverviews.getOverviewId(), setOverviews);
+    public void setOverviewParameter(String activityName, String parameter, String comment) {
+        Overview overview = overviewRepository.findFirstByActivityNameOrderByEndTimeDesc(activityName);
+        overview.setParameter(parameter);
+        overview.setComment(comment);
+        overview.setStatus("Wykonany");
+        update(overview.getOverviewId(), overview);
     }
 }
