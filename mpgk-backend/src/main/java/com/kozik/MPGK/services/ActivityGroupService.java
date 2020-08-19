@@ -41,6 +41,7 @@ public class ActivityGroupService {
     public ActivityGroup update(Long groupId, ActivityGroup activityGroup) {
         ActivityGroup newActivityGroup = activityGroupRepository.findById(groupId).map(element -> {
             element.setName(activityGroup.getName());
+            element.setConnection(activityGroup.getConnection());
             return activityGroupRepository.save(element);
         }).orElseThrow(() -> new ActivityGroupNotFoundException(groupId));
 
