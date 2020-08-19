@@ -15,6 +15,8 @@ import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import org.hibernate.validator.constraints.Length;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -42,6 +44,11 @@ public class Activity {
 
     @Column(name = "setting", nullable = true, length = 100)
     private String setting;
+
+    // If the type field value is list, then this field stores the list items
+    @Length(max = 255, message = "Możesz wprowadzić maksymalnie 255 znaków")
+    @Column(name = "list_items", nullable = true)
+    private String listItems;
 
     @OneToMany(mappedBy = "activity")
     @JsonIgnore
