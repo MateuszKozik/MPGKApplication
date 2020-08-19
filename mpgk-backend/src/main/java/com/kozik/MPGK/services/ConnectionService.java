@@ -42,6 +42,7 @@ public class ConnectionService {
     public Connection update(Long connectionId, Connection connection) {
         Connection newConnection = connectionRepository.findById(connectionId).map(element -> {
             element.setName(connection.getName());
+            element.setStatus(connection.getStatus());
             element.setOverviewType(connection.getOverviewType());
             element.setDevice(connection.getDevice());
             return connectionRepository.save(element);
