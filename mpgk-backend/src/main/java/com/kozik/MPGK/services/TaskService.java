@@ -14,6 +14,7 @@ import com.kozik.MPGK.entities.Overview;
 import com.kozik.MPGK.repositories.ActivityGroupRepository;
 import com.kozik.MPGK.repositories.ConnectionRepository;
 import com.kozik.MPGK.repositories.OverviewRepository;
+import com.kozik.MPGK.utilities.GenerateOverviewValue;
 import com.kozik.MPGK.utilities.OverviewMonths;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -188,20 +189,37 @@ public class TaskService {
         // Generate daily overviews
         List<ActivityGroup> groupList = activityGroupRepository
                 .findByConnectionConnectionIdAndConnectionDeviceStatus(connectionId, true);
+        if (!groupList.isEmpty()) {
 
-        for (ActivityGroup activityGroup : groupList) {
-            List<Activity> activities = activityGroup.getActivities();
+            // This class takes values from yesterday's overview and generates the
+            // parameters for today's review based on the given activity
+            GenerateOverviewValue overviewParameters = new GenerateOverviewValue(
+                    overviewRepository.findFirstByActivityNameOrderByEndTimeDesc(
+                            "Wpisać numery sekcji wężownicy kotła (z pokrywy górnej kotła), które zostały oczyszczone podczas bieżącej zmiany."));
 
-            for (Activity activity : activities) {
-                LocalDateTime start = LocalDateTime.parse(LocalDateTime.now().toLocalDate().toString() + "T00:01");
-                Overview overview = new Overview();
-                overview.setStatus("Nowy");
-                overview.setStartTime(start.toString());
-                overview.setEndTime(start.plusDays(1).minusMinutes(2).toString());
-                overview.setActivity(activity);
-                overviewService.save(overview);
+            for (ActivityGroup activityGroup : groupList) {
+                List<Activity> activities = activityGroup.getActivities();
+
+                for (Activity activity : activities) {
+                    LocalDateTime start = LocalDateTime.parse(LocalDateTime.now().toLocalDate().toString() + "T00:01");
+                    Overview overview = new Overview();
+                    overview.setStatus("Nowy");
+                    overview.setStartTime(start.toString());
+                    overview.setEndTime(start.plusDays(1).minusMinutes(2).toString());
+                    overview.setActivity(activity);
+                    overviewService.save(overview);
+                }
             }
+
+            // Assign generated parameters to the overviews
+            overviewService.setOverviewParameter(
+                    "Informacja dla bieżącej zmiany: numery sekcji kotła oczyszczone na poprzedniej zmianie.",
+                    overviewParameters.getYesterdayValue());
+            overviewService.setOverviewParameter(
+                    "Informacja dla bieżącej zmiany: numery sekcji kotła, które należy oczyścić na bieżącej zmianie.",
+                    overviewParameters.getTodayValue());
         }
+
     }
 
     // Weekly overviews
