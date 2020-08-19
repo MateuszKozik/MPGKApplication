@@ -98,4 +98,11 @@ public class OverviewService {
     public void deleteAll() {
         overviewRepository.deleteAll();
     }
+
+    public void setOverviewParameter(String activityName, String parameter) {
+        Overview setOverviews = overviewRepository.findFirstByActivityNameOrderByEndTimeDesc(activityName);
+        setOverviews.setParameter(parameter);
+        setOverviews.setStatus("Wykonany");
+        update(setOverviews.getOverviewId(), setOverviews);
+    }
 }
