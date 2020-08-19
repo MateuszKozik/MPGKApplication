@@ -46,6 +46,9 @@ public class FluidRegistryService {
         FluidRegistry newFluidRegistry = fluidRegistryRepository.findById(registryId).map(element -> {
             element.setQuantity(fluidRegistry.getQuantity());
             element.setDatetime(fluidRegistry.getDatetime());
+            element.setPerson(fluidRegistry.getPerson());
+            element.setFluid(fluidRegistry.getFluid());
+            element.setFluidPlace(fluidRegistry.getFluidPlace());
             return fluidRegistryRepository.save(element);
         }).orElseThrow(() -> new FluidRegistryNotFoundException(registryId));
 
