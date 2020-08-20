@@ -39,4 +39,9 @@ public class GenerateOverviewValue {
             this.todayValue = "1 1";
         }
     }
+
+    public GenerateOverviewValue() {
+        todayValue = "";
+        yesterdayValue = "";
+    }
 }
