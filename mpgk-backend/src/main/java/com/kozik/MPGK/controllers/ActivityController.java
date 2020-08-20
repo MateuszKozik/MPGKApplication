@@ -14,7 +14,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.kozik.MPGK.services.MapValidationErrorService;
+
+import java.util.ArrayList;
+
 import javax.validation.Valid;
+
+import com.kozik.MPGK.utilities.ActivityObject;
 import com.kozik.MPGK.utilities.Message;
 import org.springframework.validation.BindingResult;
 
@@ -66,6 +71,13 @@ public class ActivityController {
     public ResponseEntity<?> deleteActivity(@PathVariable Long activityId) {
         activityService.delete(activityId);
         return new ResponseEntity<Message>(new Message("Activity with id: " + activityId + " has been removed."),
+                HttpStatus.OK);
+    }
+
+    // Get activities by connection
+    @GetMapping("/list/{connectionId}")
+    public ResponseEntity<?> getOverviewsByConnection(@PathVariable Long connectionId) {
+        return new ResponseEntity<ArrayList<ActivityObject>>(activityService.getActivitiesByConnection(connectionId),
                 HttpStatus.OK);
     }
 }

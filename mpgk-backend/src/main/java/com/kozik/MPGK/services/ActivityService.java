@@ -1,7 +1,14 @@
 package com.kozik.MPGK.services;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.kozik.MPGK.entities.Activity;
+import com.kozik.MPGK.entities.ActivityGroup;
+import com.kozik.MPGK.entities.Connection;
+import com.kozik.MPGK.repositories.ActivityGroupRepository;
 import com.kozik.MPGK.repositories.ActivityRepository;
+import com.kozik.MPGK.utilities.ActivityObject;
 import com.kozik.MPGK.exceptions.activityExceptions.ActivityAlreadyExistException;
 import com.kozik.MPGK.exceptions.activityExceptions.ActivityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +18,12 @@ import org.springframework.stereotype.Service;
 public class ActivityService {
     @Autowired
     private ActivityRepository activityRepository;
+
+    @Autowired
+    private ConnectionService connectionService;
+
+    @Autowired
+    private ActivityGroupRepository activityGroupRepository;
 
     public Iterable<Activity> listAll() {
         return activityRepository.findAll();
@@ -49,5 +62,21 @@ public class ActivityService {
         }).orElseThrow(() -> new ActivityNotFoundException(activityId));
 
         return newActivity;
+    }
+
+    public ArrayList<ActivityObject> getActivitiesByConnection(Long connectionId) {
+        Connection connection = connectionService.get(connectionId);
+        List<ActivityGroup> groups = activityGroupRepository.findByConnection(connection);
+
+        ArrayList<ActivityObject> activityObjects = new ArrayList<>();
+        for (ActivityGroup group : groups) {
+            List<Activity> activities = activityRepository.findByActivityGroup(group);
+
+            ActivityObject activityObject = new ActivityObject();
+            activityObject.setActivities(activities);
+            activityObject.setActivityGroup(group);
+            activityObjects.add(activityObject);
+        }
+        return activityObjects;
     }
 }
