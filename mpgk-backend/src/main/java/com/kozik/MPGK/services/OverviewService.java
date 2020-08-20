@@ -2,15 +2,15 @@ package com.kozik.MPGK.services;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
 import com.kozik.MPGK.entities.ActivityGroup;
 import com.kozik.MPGK.entities.Connection;
 import com.kozik.MPGK.entities.Overview;
 import com.kozik.MPGK.repositories.ActivityGroupRepository;
 import com.kozik.MPGK.repositories.OverviewRepository;
+import com.kozik.MPGK.utilities.ConnectionObject;
 import com.kozik.MPGK.utilities.OverviewObject;
 
 import com.kozik.MPGK.exceptions.overviewExceptions.OverviewAlreadyExistException;
@@ -71,7 +71,7 @@ public class OverviewService {
         return newOverview;
     }
 
-    public ArrayList<OverviewObject> getOverviewsByConnection(Long connectionId) {
+    public ArrayList<OverviewObject> getOverviewByConnection(Long connectionId) {
         Connection connection = connectionService.get(connectionId);
         List<ActivityGroup> groups = activityGroupRepository.findByConnection(connection);
 
@@ -109,8 +109,27 @@ public class OverviewService {
         update(overview.getOverviewId(), overview);
     }
 
-    public Map<String, OverviewObject> getOverdueOverviewsByConnection(Long connectionId) {
+    public ArrayList<ConnectionObject> getOverviewsListByConnection(Long connectionId) {
+        ArrayList<ConnectionObject> connectionObjects = new ArrayList<>();
+
         Connection connection = connectionService.get(connectionId);
+        Overview actualOverview = overviewRepository
+                .findFirstByActivityActivityGroupConnectionAndEndTimeGreaterThan(connection, LocalDateTime.now());
+        if (actualOverview != null) {
+            ConnectionObject connectionObject = new ConnectionObject();
+            Integer count = overviewRepository.countByActivityActivityGroupConnectionAndStatus(connection, "Nowy");
+            if (count == 0) {
+                connectionObject.setOverviewStatus("Wykonany");
+            } else {
+                connectionObject.setOverviewStatus("W trakcie");
+            }
+
+            connectionObject.setConnection(connection);
+            connectionObject.setEndTime(actualOverview.getEndTime());
+            connectionObject.setOverdue(false);
+            connectionObjects.add(connectionObject);
+        }
+
         List<Overview> overdueOverviews = overviewRepository.findByActivityActivityGroupConnectionAndStatus(connection,
                 "Zaległy");
 
@@ -122,19 +141,33 @@ public class OverviewService {
             }
         }
 
-        List<ActivityGroup> groups = activityGroupRepository.findByConnection(connection);
-        Map<String, OverviewObject> overviewList = new TreeMap<>();
-
+        // Sort array of date
+        times.sort(Comparator.naturalOrder());
         for (String time : times) {
-            for (ActivityGroup activityGroup : groups) {
-                List<Overview> overviews = overviewRepository.findByActivityActivityGroupAndEndTime(activityGroup,
-                        LocalDateTime.parse(time));
+            ConnectionObject connectionObject = new ConnectionObject();
+            connectionObject.setConnection(connection);
+            connectionObject.setEndTime(time);
+            connectionObject.setOverdue(true);
+            connectionObjects.add(connectionObject);
+        }
 
-                OverviewObject overviewObject = new OverviewObject();
-                overviewObject.setActivityGroup(activityGroup);
-                overviewObject.setOverviews(overviews);
-                overviewList.put(time, overviewObject);
-            }
+        return connectionObjects;
+    }
+
+    public ArrayList<OverviewObject> getOverdueOverviewByConnection(Long connectionId, String endTime) {
+        Connection connection = connectionService.get(connectionId);
+        List<ActivityGroup> groups = activityGroupRepository.findByConnection(connection);
+
+        ArrayList<OverviewObject> overviewList = new ArrayList<>();
+
+        for (ActivityGroup activityGroup : groups) {
+            List<Overview> overviews = overviewRepository.findByActivityActivityGroupAndEndTime(activityGroup,
+                    LocalDateTime.parse(endTime));
+
+            OverviewObject overviewObject = new OverviewObject();
+            overviewObject.setActivityGroup(activityGroup);
+            overviewObject.setOverviews(overviews);
+            overviewList.add(overviewObject);
         }
 
         return overviewList;

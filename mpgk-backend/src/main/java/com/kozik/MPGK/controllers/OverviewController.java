@@ -19,9 +19,10 @@ import org.springframework.validation.BindingResult;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.validation.Valid;
+
+import com.kozik.MPGK.utilities.ConnectionObject;
 import com.kozik.MPGK.utilities.Message;
 import com.kozik.MPGK.utilities.OverviewObject;
 
@@ -83,13 +84,6 @@ public class OverviewController {
         return new ResponseEntity<Message>(new Message("All reviews have been deleted."), HttpStatus.OK);
     }
 
-    // Get overviews by connection
-    @GetMapping("/list/{connectionId}")
-    public ResponseEntity<?> getOverviewsByConnecion(@PathVariable Long connectionId) {
-        ArrayList<OverviewObject> overviews = overviewService.getOverviewsByConnection(connectionId);
-        return new ResponseEntity<ArrayList<OverviewObject>>(overviews, HttpStatus.OK);
-    }
-
     @GetMapping("/nitrogen")
     public ResponseEntity<?> getActionsByName() {
         List<Overview> overviews = overviewService
@@ -97,10 +91,23 @@ public class OverviewController {
         return new ResponseEntity<List<Overview>>(overviews, HttpStatus.OK);
     }
 
-    // Get overdue overviews by connection
-    @GetMapping("/overdue/{connectionId}")
-    public Map<String, OverviewObject> getOverdueOverviewsByConnection(@PathVariable Long connectionId) {
-        return overviewService.getOverdueOverviewsByConnection(connectionId);
+    // Get all overviews by connection
+    @GetMapping("/list/{connectionId}")
+    public ResponseEntity<?> getOverviewsListByConnection(@PathVariable Long connectionId) {
+        return new ResponseEntity<ArrayList<ConnectionObject>>(
+                overviewService.getOverviewsListByConnection(connectionId), HttpStatus.OK);
     }
 
+    // Get overviews by connection
+    @GetMapping("/list/{connectionId}/execute")
+    public ResponseEntity<?> getOverviewByConnection(@PathVariable Long connectionId) {
+        return new ResponseEntity<ArrayList<OverviewObject>>(overviewService.getOverviewByConnection(connectionId),
+                HttpStatus.OK);
+    }
+
+    @GetMapping("/list/{connectionId}/overdue/{endTime}")
+    public ResponseEntity<?> getOverdueOverviewByConnection(@PathVariable Long connectionId, String endTime) {
+        return new ResponseEntity<ArrayList<OverviewObject>>(
+                overviewService.getOverdueOverviewByConnection(connectionId, endTime), HttpStatus.OK);
+    }
 }
