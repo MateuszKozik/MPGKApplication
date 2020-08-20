@@ -3,6 +3,8 @@ package com.kozik.MPGK.services;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import com.kozik.MPGK.entities.ActivityGroup;
 import com.kozik.MPGK.entities.Connection;
@@ -105,5 +107,36 @@ public class OverviewService {
         overview.setComment(comment);
         overview.setStatus("Wykonany");
         update(overview.getOverviewId(), overview);
+    }
+
+    public Map<String, OverviewObject> getOverdueOverviewsByConnection(Long connectionId) {
+        Connection connection = connectionService.get(connectionId);
+        List<Overview> overdueOverviews = overviewRepository.findByActivityActivityGroupConnectionAndStatus(connection,
+                "Zaległy");
+
+        List<String> times = new ArrayList<>();
+
+        for (Overview overview : overdueOverviews) {
+            if (!times.contains(overview.getEndTime())) {
+                times.add(overview.getEndTime());
+            }
+        }
+
+        List<ActivityGroup> groups = activityGroupRepository.findByConnection(connection);
+        Map<String, OverviewObject> overviewList = new TreeMap<>();
+
+        for (String time : times) {
+            for (ActivityGroup activityGroup : groups) {
+                List<Overview> overviews = overviewRepository.findByActivityActivityGroupAndEndTime(activityGroup,
+                        LocalDateTime.parse(time));
+
+                OverviewObject overviewObject = new OverviewObject();
+                overviewObject.setActivityGroup(activityGroup);
+                overviewObject.setOverviews(overviews);
+                overviewList.put(time, overviewObject);
+            }
+        }
+
+        return overviewList;
     }
 }

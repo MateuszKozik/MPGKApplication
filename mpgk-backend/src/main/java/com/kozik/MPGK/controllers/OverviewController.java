@@ -13,11 +13,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.kozik.MPGK.services.MapValidationErrorService;
 import org.springframework.validation.BindingResult;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 import com.kozik.MPGK.utilities.Message;
@@ -93,6 +95,12 @@ public class OverviewController {
         List<Overview> overviews = overviewService
                 .getActionsByName("Czy na bieżącej zmianie wymieniona została butla z azotem?", "TAK");
         return new ResponseEntity<List<Overview>>(overviews, HttpStatus.OK);
+    }
+
+    // Get overdue overviews by connection
+    @GetMapping("/overdue/{connectionId}")
+    public Map<String, OverviewObject> getOverdueOverviewsByConnection(@PathVariable Long connectionId) {
+        return overviewService.getOverdueOverviewsByConnection(connectionId);
     }
 
 }
