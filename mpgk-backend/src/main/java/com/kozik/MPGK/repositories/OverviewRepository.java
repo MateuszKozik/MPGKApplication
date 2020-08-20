@@ -13,6 +13,9 @@ public interface OverviewRepository extends JpaRepository<Overview, Long> {
 
     List<Overview> findByActivityActivityGroupAndEndTimeGreaterThan(ActivityGroup activityGroup, LocalDateTime endTime);
 
+    Overview findFirstByActivityActivityGroupConnectionAndEndTimeGreaterThan(Connection connection,
+            LocalDateTime endTime);
+
     List<Overview> findByActivityNameAndParameter(String name, String parameter);
 
     Integer countByActivityActivityGroupConnectionAndStatus(Connection connection, String status);
