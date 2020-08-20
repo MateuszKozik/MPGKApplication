@@ -3,6 +3,7 @@ import {
 	GET_ERRORS,
 	GET_CONNECTIONS,
 	GET_CONNECTION,
+	GET_HOMEPAGE_CONNECTIONS,
 	DELETE_CONNECTION
 } from "./types";
 
@@ -70,4 +71,12 @@ export const deleteConnection = (connectionId) => async (dispach) => {
 			payload: connectionId
 		});
 	}
+};
+
+export const getHomePageConnections = () => async (dispatch) => {
+	const res = await axios.get("/api/home/connections");
+	dispatch({
+		type: GET_HOMEPAGE_CONNECTIONS,
+		payload: res.data
+	});
 };
