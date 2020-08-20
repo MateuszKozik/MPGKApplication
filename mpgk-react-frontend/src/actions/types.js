@@ -28,6 +28,7 @@ export const DELETE_GROUP = "DELETE_GROUP";
 //activity
 export const GET_ACTIVITIES = "GET_ACTIVITIES";
 export const GET_ACTIVITY = "GET_ACTIVITY";
+export const GET_ACTIVITIES_BY_CONNECTION = "GET_ACTIVITIES_BY_CONNECTION";
 export const DELETE_ACTIVITY = "DELETE_ACTIVITY";
 
 //overview

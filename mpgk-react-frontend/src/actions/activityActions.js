@@ -3,7 +3,8 @@ import {
 	GET_ERRORS,
 	GET_ACTIVITIES,
 	GET_ACTIVITY,
-	DELETE_ACTIVITY
+	DELETE_ACTIVITY,
+	GET_ACTIVITIES_BY_CONNECTION
 } from "./types";
 
 export const addActivity = (activity, history) => async (dispatch) => {
@@ -67,5 +68,19 @@ export const deleteActivity = (activityId) => async (dispatch) => {
 			type: DELETE_ACTIVITY,
 			payload: activityId
 		});
+	}
+};
+
+export const getActivitiesByConnection = (connectionId, history) => async (
+	dispach
+) => {
+	try {
+		const res = await axios.get(`/api/activities/list/${connectionId}`);
+		dispach({
+			type: GET_ACTIVITIES_BY_CONNECTION,
+			payload: res.data
+		});
+	} catch (error) {
+		history.push("/");
 	}
 };
