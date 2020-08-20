@@ -21,10 +21,8 @@ class OverviewActivities extends Component {
 						</div>
 
 						{activitiesList.activities.map((activity, j) => (
-							<div key={j} className="row p-2 my-2 border-bottom ">
-								<div className="col-md-12 my-2 text-justify">
-									{activity.name}
-								</div>
+							<div className="col-md-12 my-4 text-justify border-bottom">
+								<p>{activity.name}</p>
 							</div>
 						))}
 					</div>
