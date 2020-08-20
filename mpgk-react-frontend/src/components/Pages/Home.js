@@ -47,7 +47,7 @@ class Home extends Component {
 												</Link>
 											</td>
 											<td>
-												{periodic.status === "Wykonany" ? (
+												{periodic.overviewStatus === "Wykonany" ? (
 													<p>Wykonany</p>
 												) : (
 													<p>W trakcie</p>
@@ -102,7 +102,7 @@ class Home extends Component {
 											<td>
 												{onDemand.active === true ? (
 													<>
-														{onDemand.status === "Wykonany" ? (
+														{onDemand.overviewStatus === "Wykonany" ? (
 															<p>Wykonany</p>
 														) : (
 															<p>W trakcie</p>
