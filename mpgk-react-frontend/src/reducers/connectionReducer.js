@@ -2,14 +2,12 @@ import {
 	GET_CONNECTIONS,
 	GET_CONNECTION,
 	DELETE_CONNECTION,
-	GET_PERIODIC_CONNECTION,
-	GET_ON_DEMAND_CONNECTION
+	GET_HOMEPAGE_CONNECTIONS
 } from "../actions/types";
 
 const initialState = {
 	connections: [],
-	periodicConnections: [],
-	onDemandConnections: [],
+	homePageConnections: [],
 	connection: {}
 };
 
@@ -27,16 +25,10 @@ export default function (state = initialState, action) {
 				connection: action.payload
 			};
 
-		case GET_PERIODIC_CONNECTION:
+		case GET_HOMEPAGE_CONNECTIONS:
 			return {
 				...state,
-				periodicConnections: action.payload
-			};
-
-		case GET_ON_DEMAND_CONNECTION:
-			return {
-				...state,
-				onDemandConnections: action.payload
+				homePageConnections: action.payload
 			};
 
 		case DELETE_CONNECTION:
