@@ -14,5 +14,6 @@ public class ConnectionObject {
     private Integer overdueCount;
     private String startTime;
     private String endTime;
+    private Boolean overdue;
     private Boolean active = false;
 }
