@@ -1,23 +1,24 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import {
-	createOnDemandOverviews,
-	getPeriodicConnections,
-	getOnDemandConnections
-} from "../../actions/taskActions";
+import { createOnDemandOverviews } from "../../actions/taskActions";
+import { getHomePageConnections } from "../../actions/connectionActions";
 import Timer from "../Common/Timer";
 import FormatDate from "../Common/FormatDate";
 
 class Home extends Component {
 	componentDidMount() {
-		this.props.getPeriodicConnections();
-		this.props.getOnDemandConnections();
+		this.props.getHomePageConnections();
 	}
 
 	render() {
-		const { periodicConnections } = this.props.connection;
-		const { onDemandConnections } = this.props.connection;
+		const { homePageConnections } = this.props.connection;
+		const onDemandConnections = homePageConnections.filter(
+			(onDemand) => onDemand.connection.overviewType.name === "Na żądanie"
+		);
+		const periodicConnections = homePageConnections.filter(
+			(periodic) => periodic.connection.overviewType.name !== "Na żądanie"
+		);
 		return (
 			<div className="container mt-3">
 				<div className="table-responsive mt-2">
@@ -36,33 +37,37 @@ class Home extends Component {
 						<tbody>
 							{periodicConnections.map((periodic, i) => (
 								<tr key={i}>
-									<td>
-										<Link
-											to={`/overviews/list/${periodic.connection.connectionId}`}
-										>
-											{periodic.connection.name}
-										</Link>
-									</td>
-									<td>
-										{periodic.status === "Wykonany" ? (
-											<p>Wykonany</p>
-										) : (
-											<p>W trakcie</p>
-										)}
-									</td>
+									{periodic.active || periodic.overdueCount > 0 ? (
+										<>
+											<td>
+												<Link
+													to={`/overviews/list/${periodic.connection.connectionId}`}
+												>
+													{periodic.connection.name}
+												</Link>
+											</td>
+											<td>
+												{periodic.status === "Wykonany" ? (
+													<p>Wykonany</p>
+												) : (
+													<p>W trakcie</p>
+												)}
+											</td>
 
-									<td>
-										{periodic.overdudeCount > 0 ? (
-											<p>Zaległych: {periodic.overdudeCount}</p>
-										) : null}
-									</td>
-									<td>
-										Od <FormatDate date={periodic.startTime} /> Do
-										<FormatDate date={periodic.endTime} />
-									</td>
-									<td>
-										<Timer date={periodic.endTime} />
-									</td>
+											<td>
+												{periodic.overdueCount > 0 ? (
+													<p>Zaległych: {periodic.overdueCount}</p>
+												) : null}
+											</td>
+											<td>
+												Od <FormatDate date={periodic.startTime} /> Do
+												<FormatDate date={periodic.endTime} />
+											</td>
+											<td>
+												<Timer date={periodic.endTime} />
+											</td>
+										</>
+									) : null}
 								</tr>
 							))}
 						</tbody>
@@ -82,48 +87,65 @@ class Home extends Component {
 						<tbody>
 							{onDemandConnections.map((onDemand, i) => (
 								<tr key={i}>
-									<td>
-										<Link
-											to={`/overviews/list/${onDemand.connection.connectionId}`}
-										>
-											{onDemand.connection.name}
-										</Link>
-									</td>
-									<td>
-										{onDemand.status === "Wykonany" ? (
-											<p>Wykonany</p>
-										) : (
-											<p>W trakcie</p>
-										)}
-									</td>
+									{(onDemand.connection.device.status === true &&
+										onDemand.connection.status === true) ||
+									onDemand.overdueCount > 0 ||
+									onDemand.active === true ? (
+										<>
+											<td>
+												<Link
+													to={`/overviews/list/${onDemand.connection.connectionId}`}
+												>
+													{onDemand.connection.name}
+												</Link>
+											</td>
+											<td>
+												{onDemand.active === true ? (
+													<>
+														{onDemand.status === "Wykonany" ? (
+															<p>Wykonany</p>
+														) : (
+															<p>W trakcie</p>
+														)}
+													</>
+												) : (
+													<p>Nierozpoczęty</p>
+												)}
+											</td>
 
-									<td>
-										{onDemand.overdudeCount > 0 ? (
-											<p>Zaległych: {onDemand.overdudeCount}</p>
-										) : null}
-									</td>
-									<td>
-										Od <FormatDate date={onDemand.startTime} /> Do
-										<FormatDate date={onDemand.endTime} />
-									</td>
-									<td>
-										{onDemand.button ? (
-											<button
-												onClick={() => {
-													this.props.createOnDemandOverviews(
-														onDemand.connection.connectionId,
-														this.props.history
-													);
-													window.location.reload(false);
-												}}
-												className="btn btn-primary"
-											>
-												Rozpocznij
-											</button>
-										) : (
-											<Timer date={onDemand.endTime} />
-										)}
-									</td>
+											<td>
+												{onDemand.overdueCount > 0 ? (
+													<p>Zaległych: {onDemand.overdueCount}</p>
+												) : null}
+											</td>
+											<td>
+												{onDemand.active === true && (
+													<>
+														Od <FormatDate date={onDemand.startTime} /> Do
+														<FormatDate date={onDemand.endTime} />
+													</>
+												)}
+											</td>
+											<td>
+												{onDemand.active === false ? (
+													<button
+														onClick={() => {
+															this.props.createOnDemandOverviews(
+																onDemand.connection.connectionId,
+																this.props.history
+															);
+															window.location.reload(false);
+														}}
+														className="btn btn-primary"
+													>
+														Rozpocznij
+													</button>
+												) : (
+													<Timer date={onDemand.endTime} />
+												)}
+											</td>
+										</>
+									) : null}
 								</tr>
 							))}
 						</tbody>
@@ -178,18 +200,14 @@ const mapDispatchToProps = (dispatch) => ({
 	createOnDemandOverviews: (connectionId, history) => {
 		dispatch(createOnDemandOverviews(connectionId, history));
 	},
-	getPeriodicConnections: () => {
-		dispatch(getPeriodicConnections());
-	},
-	getOnDemandConnections: () => {
-		dispatch(getOnDemandConnections());
+	getHomePageConnections: () => {
+		dispatch(getHomePageConnections());
 	}
 });
 
 const mapStateToProps = (state) => ({
 	connection: state.connection,
-	periodicConnections: state.connection,
-	onDemandConnections: state.connection
+	homePageConnections: state.connection
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
