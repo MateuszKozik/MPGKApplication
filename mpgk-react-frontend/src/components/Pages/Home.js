@@ -41,7 +41,7 @@ class Home extends Component {
 										<>
 											<td>
 												<Link
-													to={`/overviews/list/${periodic.connection.connectionId}`}
+													to={`/overviews/execute/${periodic.connection.connectionId}`}
 												>
 													{periodic.connection.name}
 												</Link>
@@ -93,11 +93,19 @@ class Home extends Component {
 									onDemand.active === true ? (
 										<>
 											<td>
-												<Link
-													to={`/overviews/list/${onDemand.connection.connectionId}`}
-												>
-													{onDemand.connection.name}
-												</Link>
+												{onDemand.active === true ? (
+													<Link
+														to={`/overviews/execute/${onDemand.connection.connectionId}`}
+													>
+														{onDemand.connection.name}
+													</Link>
+												) : (
+													<Link
+														to={`/overviews/list/${onDemand.connection.connectionId}`}
+													>
+														{onDemand.connection.name}
+													</Link>
+												)}
 											</td>
 											<td>
 												{onDemand.active === true ? (
