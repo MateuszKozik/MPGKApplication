@@ -1,9 +1,16 @@
 package com.kozik.MPGK.services;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+
 import com.kozik.MPGK.entities.Connection;
+import com.kozik.MPGK.entities.Overview;
 import com.kozik.MPGK.exceptions.connectionExceptions.ConnectionAlreadyExistException;
 import com.kozik.MPGK.exceptions.connectionExceptions.ConnectionNotFoundException;
 import com.kozik.MPGK.repositories.ConnectionRepository;
+import com.kozik.MPGK.repositories.OverviewRepository;
+import com.kozik.MPGK.utilities.ConnectionObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +20,9 @@ public class ConnectionService {
 
     @Autowired
     private ConnectionRepository connectionRepository;
+
+    @Autowired
+    private OverviewRepository overviewRepository;
 
     public Iterable<Connection> listAll() {
         return connectionRepository.findAll();
@@ -48,5 +58,38 @@ public class ConnectionService {
             return connectionRepository.save(element);
         }).orElseThrow(() -> new ConnectionNotFoundException(connectionId));
         return newConnection;
+    }
+
+    public ArrayList<ConnectionObject> getHomePageConnections() {
+        Iterable<Connection> connections = listAll();
+
+        ArrayList<ConnectionObject> connectionObjects = new ArrayList<>();
+
+        for (Connection connection : connections) {
+            ConnectionObject object = new ConnectionObject();
+            object.setConnection(connection);
+            Integer count = overviewRepository.countByActivityActivityGroupConnectionAndStatus(connection, "Nowy");
+            if (count == 0) {
+                object.setOverviewStatus("Wykonany");
+            } else {
+                object.setOverviewStatus("W trakcie");
+            }
+            object.setOverdueCount(
+                    overviewRepository.countByActivityActivityGroupConnectionAndStatus(connection, "Zaległy"));
+
+            Overview overview = overviewRepository
+                    .findFirstByActivityActivityGroupConnectionAndEndTimeGreaterThan(connection, LocalDateTime.now());
+            if (overview != null) {
+                object.setStartTime(overview.getStartTime());
+                object.setEndTime(overview.getEndTime());
+                LocalDateTime dateTime = LocalDateTime.parse(overview.getEndTime(),
+                        DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+                if (dateTime.isAfter(LocalDateTime.now())) {
+                    object.setActive(true);
+                }
+            }
+            connectionObjects.add(object);
+        }
+        return connectionObjects;
     }
 }
