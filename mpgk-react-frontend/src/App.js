@@ -42,6 +42,7 @@ import PerformersList from "./components/Pages/PerformersList";
 import Overview from "./components/Pages/Overview";
 import AddWorkingFluid from "./components/Pages/AddWorkingFluid";
 import NitrogenList from "./components/Pages/NitrogenList";
+import OverviewActivities from "./components/Pages/OverviewActivities";
 
 function App() {
 	return (
@@ -130,6 +131,11 @@ function App() {
 						exact
 						path="/overviews/execute/:connectionId"
 						component={Overview}
+					/>
+					<Route
+						exact
+						path="/overviews/list/:connectionId"
+						component={OverviewActivities}
 					/>
 				</div>
 			</Router>
