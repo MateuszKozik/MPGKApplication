@@ -2,9 +2,8 @@ package com.kozik.MPGK.controllers;
 
 import java.util.ArrayList;
 
-import com.kozik.MPGK.services.HomePageService;
-import com.kozik.MPGK.utilities.OnDemandConnectionObject;
-import com.kozik.MPGK.utilities.PeriodicConnectionObject;
+import com.kozik.MPGK.services.ConnectionService;
+import com.kozik.MPGK.utilities.ConnectionObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,15 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class HomePageController {
 
     @Autowired
-    private HomePageService homePageService;
+    private ConnectionService connectionService;
 
-    @GetMapping("/periodic")
-    public ArrayList<PeriodicConnectionObject> getPeriodic() {
-        return homePageService.getPeriodic();
-    }
-
-    @GetMapping("/on-demand")
-    public ArrayList<OnDemandConnectionObject> getOnDemand() {
-        return homePageService.getOnDemand();
+    @GetMapping("/connections")
+    public ArrayList<ConnectionObject> getConnections() {
+        return connectionService.getHomePageConnections();
     }
 }
