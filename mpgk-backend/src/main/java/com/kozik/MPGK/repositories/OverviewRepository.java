@@ -11,19 +11,24 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface OverviewRepository extends JpaRepository<Overview, Long> {
 
-    List<Overview> findByActivityActivityGroupAndEndTimeGreaterThan(ActivityGroup activityGroup, LocalDateTime endTime);
+        List<Overview> findByActivityActivityGroupAndEndTimeGreaterThan(ActivityGroup activityGroup,
+                        LocalDateTime endTime);
 
-    Overview findFirstByActivityActivityGroupConnectionAndEndTimeGreaterThan(Connection connection,
-            LocalDateTime endTime);
+        Overview findFirstByActivityActivityGroupConnectionAndEndTimeGreaterThan(Connection connection,
+                        LocalDateTime endTime);
 
-    List<Overview> findByActivityNameAndParameter(String name, String parameter);
+        List<Overview> findByActivityNameAndParameter(String name, String parameter);
 
-    Integer countByActivityActivityGroupConnectionAndStatus(Connection connection, String status);
+        Integer countByActivityActivityGroupConnectionAndStatus(Connection connection, String status);
 
-    Overview findFirstByActivityActivityGroupConnectionOrderByEndTimeDesc(Connection connection);
+        Overview findFirstByActivityActivityGroupConnectionOrderByEndTimeDesc(Connection connection);
 
-    List<Overview> findByActivityActivityGroupAndEndTimeLessThanAndStatus(ActivityGroup activityGroup,
-            LocalDateTime endTime, String status);
+        List<Overview> findByActivityActivityGroupAndEndTimeLessThanAndStatus(ActivityGroup activityGroup,
+                        LocalDateTime endTime, String status);
 
-    Overview findFirstByActivityNameOrderByEndTimeDesc(String name);
+        Overview findFirstByActivityNameOrderByEndTimeDesc(String name);
+
+        List<Overview> findByActivityActivityGroupConnectionAndStatus(Connection connection, String status);
+
+        List<Overview> findByActivityActivityGroupAndEndTime(ActivityGroup activityGroup, LocalDateTime endTime);
 }
