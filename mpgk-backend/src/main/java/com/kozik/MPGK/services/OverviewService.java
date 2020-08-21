@@ -99,6 +99,23 @@ public class OverviewService {
                     .findByActivityActivityGroupAndEndTimeGreaterThan(activityGroup, now);
 
             OverviewObject overviewObject = new OverviewObject();
+            Integer countEmsr = 0;
+            Integer countSetting = 0;
+            for (Overview overview : overviews) {
+                if (!overview.getActivity().getEmsr().isEmpty()) {
+                    countEmsr++;
+                }
+                if (!overview.getActivity().getSetting().isEmpty()) {
+                    countSetting++;
+                }
+            }
+            if (countEmsr > 0) {
+                overviewObject.setShowEmsr(true);
+            }
+            if (countSetting > 0) {
+                overviewObject.setShowSetting(true);
+            }
+
             overviewObject.setActivityGroup(activityGroup);
             overviewObject.setOverviews(overviews);
             overviewList.add(overviewObject);
