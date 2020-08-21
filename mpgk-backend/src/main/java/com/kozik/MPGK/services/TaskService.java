@@ -157,7 +157,7 @@ public class TaskService {
                     .findByActivityActivityGroupAndEndTimeLessThanAndStatus(activityGroup, LocalDateTime.now(), "Nowy");
             for (Overview overview : overviews) {
                 overview.setStatus("Zaległy");
-                overviewService.update(overview.getOverviewId(), overview);
+                overviewService.updateOverdue(overview.getOverviewId(), overview);
             }
         }
     }
