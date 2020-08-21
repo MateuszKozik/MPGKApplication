@@ -43,6 +43,8 @@ import Overview from "./components/Pages/Overview";
 import AddWorkingFluid from "./components/Pages/AddWorkingFluid";
 import NitrogenList from "./components/Pages/NitrogenList";
 import OverviewActivities from "./components/Pages/OverviewActivities";
+import OverviewPage from "./components/Pages/OverviewPage";
+import OverdueOverview from "./components/Pages/OverdueOverview";
 
 function App() {
 	return (
@@ -127,15 +129,26 @@ function App() {
 					/>
 					<Route exact path="/performers-list" component={PerformersList} />
 					<Route exact path="/nitrogen-list" component={NitrogenList} />
+
 					<Route
 						exact
-						path="/overviews/execute/:connectionId"
+						path="/overviews/list/:connectionId"
+						component={OverviewPage}
+					/>
+					<Route
+						exact
+						path="/overviews/list/:connectionId/execute"
 						component={Overview}
 					/>
 					<Route
 						exact
-						path="/overviews/list/:connectionId"
+						path="/overviews/list/:connectionId/activity"
 						component={OverviewActivities}
+					/>
+					<Route
+						exact
+						path="/overviews/list/:connectionId/overdue/:endtime"
+						component={OverdueOverview}
 					/>
 				</div>
 			</Router>

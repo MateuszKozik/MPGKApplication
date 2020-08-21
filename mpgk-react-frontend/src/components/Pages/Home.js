@@ -40,11 +40,19 @@ class Home extends Component {
 									{periodic.active || periodic.overdueCount > 0 ? (
 										<>
 											<td>
-												<Link
-													to={`/overviews/execute/${periodic.connection.connectionId}`}
-												>
-													{periodic.connection.name}
-												</Link>
+												{periodic.active || periodic.overdueCount > 0 ? (
+													<Link
+														to={`/overviews/list/${periodic.connection.connectionId}`}
+													>
+														{periodic.connection.name}
+													</Link>
+												) : (
+													<Link
+														to={`/overviews/list/${periodic.connection.connectionId}/activity`}
+													>
+														{periodic.connection.name}
+													</Link>
+												)}
 											</td>
 											<td>
 												{periodic.overviewStatus === "Wykonany" ? (
@@ -60,8 +68,12 @@ class Home extends Component {
 												) : null}
 											</td>
 											<td>
-												Od <FormatDate date={periodic.startTime} /> Do
-												<FormatDate date={periodic.endTime} />
+												{periodic.active && (
+													<>
+														Od <FormatDate date={periodic.startTime} /> Do
+														<FormatDate date={periodic.endTime} />
+													</>
+												)}
 											</td>
 											<td>
 												<Timer date={periodic.endTime} />
@@ -93,15 +105,16 @@ class Home extends Component {
 									onDemand.active === true ? (
 										<>
 											<td>
-												{onDemand.active === true ? (
+												{onDemand.active === true ||
+												onDemand.overdueCount > 0 ? (
 													<Link
-														to={`/overviews/execute/${onDemand.connection.connectionId}`}
+														to={`/overviews/list/${onDemand.connection.connectionId}`}
 													>
 														{onDemand.connection.name}
 													</Link>
 												) : (
 													<Link
-														to={`/overviews/list/${onDemand.connection.connectionId}`}
+														to={`/overviews/list/${onDemand.connection.connectionId}/activity`}
 													>
 														{onDemand.connection.name}
 													</Link>
