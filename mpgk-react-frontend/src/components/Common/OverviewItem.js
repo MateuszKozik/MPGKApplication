@@ -300,8 +300,8 @@ class OverviewItem extends Component {
 	}
 
 	render() {
-		const { name, type } = this.props.activity;
-		const { datetime, person, supervisor } = this.props;
+		const { name, type, emsr, setting } = this.props.activity;
+		const { datetime, person, supervisor, showEmsr, showSetting } = this.props;
 		return (
 			<div
 				className={classNames("container p-2 my-2 border-bottom", {
@@ -316,6 +316,7 @@ class OverviewItem extends Component {
 						<div className="col-md-2 my-1 text-center">
 							{this.selectInput(type)}
 						</div>
+
 						<div className="col-md-2 my-1 text-center">
 							<input
 								type="text"
@@ -326,6 +327,12 @@ class OverviewItem extends Component {
 								onChange={this.onChange}
 							/>
 						</div>
+						{showEmsr && (
+							<div className="col-md-1 my-1 text-center">{emsr}</div>
+						)}
+						{showSetting && (
+							<div className="col-md-1 my-1 text-center">{setting}</div>
+						)}
 						<div className="col-md-2 my-1 text-center">
 							<button type="submit" className="btn btn-primary">
 								Zapisz
@@ -349,16 +356,24 @@ class OverviewItem extends Component {
 								/>
 							)}
 						</div>
+						{showEmsr && (
+							<div className="col-md-1 my-1 text-center">{emsr}</div>
+						)}
+						{showSetting && (
+							<div className="col-md-1 my-1 text-center">{setting}</div>
+						)}
 						<div className="col-md-2 my-1 text-center">
-							<b>
-								<FormatDate date={datetime} datetime={true} />
-							</b>
-						</div>
-						<div className="col-md-2 my-1 text-center">
-							{person && <b> {person.name + " " + person.surname} </b>}
-							{supervisor && (
-								<b> {supervisor.name + " " + supervisor.surname} </b>
-							)}
+							<div className="row my-1">
+								<div className="col-md-12 my-1 text-center">
+									<FormatDate date={datetime} datetime={true} />
+								</div>
+								<div className="col-md-12 my-1 text-center">
+									{person && <p> {person.name + " " + person.surname} </p>}
+									{supervisor && (
+										<b> {supervisor.name + " " + supervisor.surname} </b>
+									)}
+								</div>
+							</div>
 						</div>
 					</div>
 				)}

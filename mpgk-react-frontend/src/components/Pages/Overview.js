@@ -31,6 +31,8 @@ class Overview extends Component {
 							<OverviewItem
 								key={i}
 								{...overview}
+								showEmsr={overviewList.showEmsr}
+								showSetting={overviewList.showSetting}
 								connectionId={this.props.match.params.connectionId}
 							/>
 						))}
