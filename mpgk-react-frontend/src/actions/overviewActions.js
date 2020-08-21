@@ -4,9 +4,11 @@ import {
 	GET_OVERVIEWS,
 	GET_OVERVIEW,
 	DELETE_OVERVIEW,
-	GET_OVERVIEWS_BY_CONNECTION,
 	CLEAR_OVERVIEWS_LIST_STATE,
-	GET_OVERVIEWS_BY_NAME_ACTIONS
+	GET_OVERVIEWS_BY_NAME_ACTIONS,
+	GET_OVERVIEW_BY_CONNECTION,
+	GET_OVERVIEWS_BY_CONNECTION,
+	GET_OVERDUE_BY_CONNECTION
 } from "./types";
 
 export const addOverview = (overview, history) => async (dispatch) => {
@@ -84,6 +86,38 @@ export const deleteOverview = (overviewId) => async (dispatch) => {
 	}
 };
 
+export const getOverviewByConnection = (connectionId, history) => async (
+	dispatch
+) => {
+	try {
+		const res = await axios.get(`/api/overviews/list/${connectionId}/execute`);
+		dispatch({
+			type: GET_OVERVIEW_BY_CONNECTION,
+			payload: res.data
+		});
+	} catch (error) {
+		history.push("/");
+	}
+};
+
+export const getOverdueByConnection = (
+	connectionId,
+	endTime,
+	history
+) => async (dispatch) => {
+	try {
+		const res = await axios.get(
+			`/api/overviews/list/${connectionId}/overdue/${endTime}`
+		);
+		dispatch({
+			type: GET_OVERDUE_BY_CONNECTION,
+			payload: res.data
+		});
+	} catch (error) {
+		history.push("/");
+	}
+};
+
 export const getOverviewsByConnection = (connectionId, history) => async (
 	dispatch
 ) => {
@@ -98,9 +132,7 @@ export const getOverviewsByConnection = (connectionId, history) => async (
 	}
 };
 
-export const getActionsByName = (history) => async (
-	dispatch
-) => {
+export const getActionsByName = (history) => async (dispatch) => {
 	try {
 		const res = await axios.get(`/api/overviews/nitrogen`);
 		dispatch({
