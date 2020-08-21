@@ -14,4 +14,6 @@ public class OverviewObject {
 
     private ActivityGroup activityGroup;
     private List<Overview> overviews;
+    private Boolean showEmsr = false;
+    private Boolean showSetting = false;
 }
