@@ -71,6 +71,22 @@ public class OverviewService {
         return newOverview;
     }
 
+    public Overview updateOverdue(Long overviewId, Overview overview) {
+        Overview newOverview = overviewRepository.findById(overviewId).map(element -> {
+            element.setStatus(overview.getStatus());
+            element.setStartTime(overview.getStartTime());
+            element.setEndTime(overview.getEndTime());
+            element.setParameter(overview.getParameter());
+            element.setComment(overview.getComment());
+            element.setActivity(overview.getActivity());
+            element.setPerson(overview.getPerson());
+            element.setSupervisor(overview.getSupervisor());
+            return overviewRepository.save(element);
+        }).orElseThrow(() -> new OverviewNotFoundException(overviewId));
+
+        return newOverview;
+    }
+
     public ArrayList<OverviewObject> getOverviewByConnection(Long connectionId) {
         Connection connection = connectionService.get(connectionId);
         List<ActivityGroup> groups = activityGroupRepository.findByConnection(connection);
