@@ -3,6 +3,7 @@ package com.kozik.MPGK.services;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.kozik.MPGK.entities.Connection;
 import com.kozik.MPGK.entities.Overview;
@@ -74,8 +75,17 @@ public class ConnectionService {
             } else {
                 object.setOverviewStatus("W trakcie");
             }
-            object.setOverdueCount(
-                    overviewRepository.countByActivityActivityGroupConnectionAndStatus(connection, "Zaległy"));
+
+            List<Overview> overdueOverviews = overviewRepository
+                    .findByActivityActivityGroupConnectionAndStatus(connection, "Zaległy");
+            List<String> times = new ArrayList<>();
+
+            for (Overview overview : overdueOverviews) {
+                if (!times.contains(overview.getEndTime())) {
+                    times.add(overview.getEndTime());
+                }
+            }
+            object.setOverdueCount(times.size());
 
             Overview overview = overviewRepository
                     .findFirstByActivityActivityGroupConnectionAndEndTimeGreaterThan(connection, LocalDateTime.now());
