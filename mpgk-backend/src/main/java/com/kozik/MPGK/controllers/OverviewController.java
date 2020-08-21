@@ -106,7 +106,8 @@ public class OverviewController {
     }
 
     @GetMapping("/list/{connectionId}/overdue/{endTime}")
-    public ResponseEntity<?> getOverdueOverviewByConnection(@PathVariable Long connectionId, String endTime) {
+    public ResponseEntity<?> getOverdueOverviewByConnection(@PathVariable Long connectionId,
+            @PathVariable String endTime) {
         return new ResponseEntity<ArrayList<OverviewObject>>(
                 overviewService.getOverdueOverviewByConnection(connectionId, endTime), HttpStatus.OK);
     }
