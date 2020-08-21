@@ -20,6 +20,8 @@ import com.kozik.MPGK.utilities.OverviewMonths;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import static java.time.temporal.TemporalAdjusters.previous;
 
 import java.time.DayOfWeek;
@@ -44,6 +46,7 @@ public class TaskService {
 
     // The method will be called every 15 minutes
     @Scheduled(cron = "0 */15 * ? * *")
+    @Transactional
     public void check() {
 
         System.out
