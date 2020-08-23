@@ -47,11 +47,11 @@ public class Person {
 
     @OneToMany(mappedBy = "person")
     @JsonIgnore
-    private List<Overview> overviews;
+    private List<Inspection> inspections;
 
     @OneToMany(mappedBy = "supervisor")
     @JsonIgnore
-    private List<Overview> overviewSupervisors;
+    private List<Inspection> inspectionSupervisors;
 
     @OneToMany(mappedBy = "person")
     @JsonIgnore

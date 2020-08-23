@@ -10,12 +10,12 @@ import java.util.List;
 import com.kozik.MPGK.entities.Activity;
 import com.kozik.MPGK.entities.ActivityGroup;
 import com.kozik.MPGK.entities.Connection;
-import com.kozik.MPGK.entities.Overview;
+import com.kozik.MPGK.entities.Inspection;
 import com.kozik.MPGK.repositories.ActivityGroupRepository;
 import com.kozik.MPGK.repositories.ConnectionRepository;
-import com.kozik.MPGK.repositories.OverviewRepository;
-import com.kozik.MPGK.utilities.GenerateOverviewValue;
-import com.kozik.MPGK.utilities.OverviewMonths;
+import com.kozik.MPGK.repositories.InspectionRepository;
+import com.kozik.MPGK.utilities.GenerateInspectionValue;
+import com.kozik.MPGK.utilities.InspectionMonths;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -33,13 +33,13 @@ public class TaskService {
     private ActivityGroupRepository activityGroupRepository;
 
     @Autowired
-    private OverviewService overviewService;
+    private InspectionService inspectionService;
 
     @Autowired
     private ConnectionService connectionService;
 
     @Autowired
-    private OverviewRepository overviewRepository;
+    private InspectionRepository inspectionRepository;
 
     @Autowired
     private ConnectionRepository connectionRepository;
@@ -52,14 +52,14 @@ public class TaskService {
         System.out
                 .println("\nSprawdzono " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")));
 
-        // check daily overviews
-        for (Connection connection : connectionRepository.findByOverviewTypeName("Codziennie")) {
-            Overview overview = overviewRepository
+        // check daily inspections
+        for (Connection connection : connectionRepository.findByInspectionTypeName("Codziennie")) {
+            Inspection inspection = inspectionRepository
                     .findFirstByActivityActivityGroupConnectionOrderByEndTimeDesc(connection);
 
-            if (overview != null) {
+            if (inspection != null) {
                 if (LocalDateTime.now()
-                        .isAfter(LocalDateTime.parse(overview.getEndTime(), DateTimeFormatter.ISO_LOCAL_DATE_TIME))) {
+                        .isAfter(LocalDateTime.parse(inspection.getEndTime(), DateTimeFormatter.ISO_LOCAL_DATE_TIME))) {
                     daily(connection.getConnectionId());
                 } else {
                     System.out.println(connection.getName() + " jest aktualny");
@@ -69,14 +69,14 @@ public class TaskService {
             }
         }
 
-        // check weekly overviews
-        for (Connection connection : connectionRepository.findByOverviewTypeName("Raz w tygodniu")) {
+        // check weekly inspections
+        for (Connection connection : connectionRepository.findByInspectionTypeName("Raz w tygodniu")) {
 
-            Overview overview = overviewRepository
+            Inspection inspection = inspectionRepository
                     .findFirstByActivityActivityGroupConnectionOrderByEndTimeDesc(connection);
-            if (overview != null) {
+            if (inspection != null) {
                 if (LocalDateTime.now()
-                        .isAfter(LocalDateTime.parse(overview.getEndTime(), DateTimeFormatter.ISO_LOCAL_DATE_TIME))) {
+                        .isAfter(LocalDateTime.parse(inspection.getEndTime(), DateTimeFormatter.ISO_LOCAL_DATE_TIME))) {
                     weekly(connection.getConnectionId());
                 } else {
                     System.out.println(connection.getName() + " jest aktualny");
@@ -86,14 +86,14 @@ public class TaskService {
             }
         }
 
-        // Check every two months overviews
-        for (Connection connection : connectionRepository.findByOverviewTypeName("Raz na dwa miesiące")) {
+        // Check every two months inspections
+        for (Connection connection : connectionRepository.findByInspectionTypeName("Raz na dwa miesiące")) {
 
-            Overview overview = overviewRepository
+            Inspection inspection = inspectionRepository
                     .findFirstByActivityActivityGroupConnectionOrderByEndTimeDesc(connection);
-            if (overview != null) {
+            if (inspection != null) {
                 if (LocalDateTime.now()
-                        .isAfter(LocalDateTime.parse(overview.getEndTime(), DateTimeFormatter.ISO_LOCAL_DATE_TIME))) {
+                        .isAfter(LocalDateTime.parse(inspection.getEndTime(), DateTimeFormatter.ISO_LOCAL_DATE_TIME))) {
                     everyTwoMonths(connection.getConnectionId());
                 } else {
                     System.out.println(connection.getName() + " jest aktualny");
@@ -103,14 +103,14 @@ public class TaskService {
             }
         }
 
-        // check yearly overviews
-        for (Connection connection : connectionRepository.findByOverviewTypeName("Raz w roku")) {
+        // Check yearly inspections
+        for (Connection connection : connectionRepository.findByInspectionTypeName("Raz w roku")) {
 
-            Overview overview = overviewRepository
+            Inspection inspection = inspectionRepository
                     .findFirstByActivityActivityGroupConnectionOrderByEndTimeDesc(connection);
-            if (overview != null) {
+            if (inspection != null) {
                 if (LocalDateTime.now()
-                        .isAfter(LocalDateTime.parse(overview.getEndTime(), DateTimeFormatter.ISO_LOCAL_DATE_TIME))) {
+                        .isAfter(LocalDateTime.parse(inspection.getEndTime(), DateTimeFormatter.ISO_LOCAL_DATE_TIME))) {
                     yearly(connection.getConnectionId());
                 } else {
                     System.out.println(connection.getName() + " jest aktualny");
@@ -118,14 +118,14 @@ public class TaskService {
             }
         }
 
-        // Check on demand overviews
-        for (Connection connection : connectionRepository.findByOverviewTypeName("Na żądanie")) {
+        // Check on demand inspections
+        for (Connection connection : connectionRepository.findByInspectionTypeName("Na żądanie")) {
 
-            Overview overview = overviewRepository
+            Inspection inspection = inspectionRepository
                     .findFirstByActivityActivityGroupConnectionOrderByEndTimeDesc(connection);
-            if (overview != null) {
+            if (inspection != null) {
                 if (LocalDateTime.now()
-                        .isAfter(LocalDateTime.parse(overview.getEndTime(), DateTimeFormatter.ISO_LOCAL_DATE_TIME))) {
+                        .isAfter(LocalDateTime.parse(inspection.getEndTime(), DateTimeFormatter.ISO_LOCAL_DATE_TIME))) {
                     setOverdue(connection.getConnectionId());
                 } else {
                     System.out.println(connection.getName() + " jest aktualny");
@@ -133,14 +133,14 @@ public class TaskService {
             }
         }
 
-        // Check the day shift overviews
-        for (Connection connection : connectionRepository.findByOverviewTypeName("Codziennie na dziennej zmianie")) {
+        // Check the day shift inspections
+        for (Connection connection : connectionRepository.findByInspectionTypeName("Codziennie na dziennej zmianie")) {
 
-            Overview overview = overviewRepository
+            Inspection inspection = inspectionRepository
                     .findFirstByActivityActivityGroupConnectionOrderByEndTimeDesc(connection);
-            if (overview != null) {
+            if (inspection != null) {
                 if (LocalDateTime.now()
-                        .isAfter(LocalDateTime.parse(overview.getEndTime(), DateTimeFormatter.ISO_LOCAL_DATE_TIME))) {
+                        .isAfter(LocalDateTime.parse(inspection.getEndTime(), DateTimeFormatter.ISO_LOCAL_DATE_TIME))) {
                     dayShift(connection.getConnectionId());
                 } else {
                     System.out.println(connection.getName() + " jest aktualny");
@@ -152,23 +152,23 @@ public class TaskService {
 
     }
 
-    // Set overview status to overdue after the end time
+    // Set inspection status to overdue after the end time
     public void setOverdue(Long connectionId) {
         List<ActivityGroup> groupList = activityGroupRepository.findByConnectionConnectionId(connectionId);
         for (ActivityGroup activityGroup : groupList) {
-            List<Overview> overviews = overviewRepository
+            List<Inspection> inspections = inspectionRepository
                     .findByActivityActivityGroupAndEndTimeLessThanAndStatus(activityGroup, LocalDateTime.now(), "Nowy");
-            for (Overview overview : overviews) {
-                overview.setStatus("Zaległy");
-                overviewService.updateOverdue(overview.getOverviewId(), overview);
+            for (Inspection inspection : inspections) {
+                inspection.setStatus("Zaległy");
+                inspectionService.updateOverdue(inspection.getInspectionId(), inspection);
             }
         }
     }
 
-    // Daily overviews
+    // Daily inspections
     public void daily(Long connectionId) {
 
-        // Change status of overdue daily overviews
+        // Change status of overdue daily inspections
         setOverdue(connectionId);
 
         // Check if the device is working
@@ -179,16 +179,16 @@ public class TaskService {
 
             if (!groupList.isEmpty()) {
 
-                // This class takes values from yesterday's overview and generates the
+                // This class takes values from yesterday's inspection and generates the
                 // parameters for today's review based on the given activity
-                GenerateOverviewValue overviewParameters = new GenerateOverviewValue();
+                GenerateInspectionValue inspectionParameters = new GenerateInspectionValue();
                 if (connectionService.get(connectionId).getName().equals("Przegląd codzienny ORC")) {
-                    overviewParameters = new GenerateOverviewValue(
-                            overviewRepository.findFirstByActivityNameOrderByEndTimeDesc(
+                    inspectionParameters = new GenerateInspectionValue(
+                            inspectionRepository.findFirstByActivityNameOrderByEndTimeDesc(
                                     "Wpisać numery sekcji wężownicy kotła (z pokrywy górnej kotła), które zostały oczyszczone podczas bieżącej zmiany."));
                 }
 
-                // Generate daily overviews
+                // Generate daily inspections
                 System.out.println("Wygenerowano " + connectionService.get(connectionId).getName());
                 for (ActivityGroup activityGroup : groupList) {
                     List<Activity> activities = activityGroup.getActivities();
@@ -196,39 +196,39 @@ public class TaskService {
                     for (Activity activity : activities) {
                         LocalDateTime start = LocalDateTime
                                 .parse(LocalDateTime.now().toLocalDate().toString() + "T00:01");
-                        Overview overview = new Overview();
-                        overview.setStatus("Nowy");
-                        overview.setStartTime(start.toString());
-                        overview.setEndTime(start.plusDays(1).minusMinutes(2).toString());
-                        overview.setActivity(activity);
-                        overviewService.save(overview);
+                        Inspection inspection = new Inspection();
+                        inspection.setStatus("Nowy");
+                        inspection.setStartTime(start.toString());
+                        inspection.setEndTime(start.plusDays(1).minusMinutes(2).toString());
+                        inspection.setActivity(activity);
+                        inspectionService.save(inspection);
                     }
                 }
 
-                // Assign generated parameters to the overviews
+                // Assign generated parameters to the inspections
                 if (connectionService.get(connectionId).getName().equals("Przegląd codzienny ORC")) {
-                    overviewService.setOverviewParameter(
+                    inspectionService.setInspectionParameter(
                             "Informacja dla bieżącej zmiany: numery sekcji kotła oczyszczone na poprzedniej zmianie.",
-                            overviewParameters.getYesterdayValue(), "Wygenerowane");
-                    overviewService.setOverviewParameter(
+                            inspectionParameters.getYesterdayValue(), "Wygenerowane");
+                    inspectionService.setInspectionParameter(
                             "Informacja dla bieżącej zmiany: numery sekcji kotła, które należy oczyścić na bieżącej zmianie.",
-                            overviewParameters.getTodayValue(), "Wygenerowane");
+                            inspectionParameters.getTodayValue(), "Wygenerowane");
                 }
 
             }
         }
     }
 
-    // Weekly overviews
+    // Weekly inspections
     public void weekly(Long connectionId) {
 
-        // Change status of overdue weekly overviews
+        // Change status of overdue weekly inspections
         setOverdue(connectionId);
 
         // Check if the device is working
         if ((connectionService.get(connectionId).getDevice().getStatus())) {
 
-            // Generate weekly overviews
+            // Generate weekly inspections
             List<ActivityGroup> groupList = activityGroupRepository
                     .findByConnectionConnectionIdAndConnectionStatus(connectionId, true);
 
@@ -238,26 +238,26 @@ public class TaskService {
                     List<Activity> activities = activityGroup.getActivities();
 
                     for (Activity activity : activities) {
-                        Overview overview = new Overview();
+                        Inspection inspection = new Inspection();
 
                         LocalDateTime now = LocalDateTime.now();
                         if (now.getDayOfWeek().equals(DayOfWeek.MONDAY)) {
                             LocalDateTime startTime = LocalDateTime.parse(now.toLocalDate().toString() + "T00:01");
-                            overview.setStartTime(startTime.toString());
+                            inspection.setStartTime(startTime.toString());
                             LocalDateTime endTime = startTime.plusWeeks(1).minusMinutes(2);
-                            overview.setEndTime(endTime.toString());
+                            inspection.setEndTime(endTime.toString());
 
                         } else {
                             now = now.with(previous(DayOfWeek.MONDAY));
                             LocalDateTime startTime = LocalDateTime.parse(now.toLocalDate().toString() + "T00:01");
-                            overview.setStartTime(startTime.toString());
+                            inspection.setStartTime(startTime.toString());
                             LocalDateTime endTime = startTime.plusWeeks(1).minusMinutes(2);
-                            overview.setEndTime(endTime.toString());
+                            inspection.setEndTime(endTime.toString());
                         }
 
-                        overview.setStatus("Nowy");
-                        overview.setActivity(activity);
-                        overviewService.save(overview);
+                        inspection.setStatus("Nowy");
+                        inspection.setActivity(activity);
+                        inspectionService.save(inspection);
                     }
                 }
             }
@@ -265,10 +265,10 @@ public class TaskService {
         }
     }
 
-    // Overview every day on the day shift
+    // Inspection every day on the day shift
     public void dayShift(Long connectionId) {
 
-        // Change status of overdue the day shift overviews
+        // Change status of overdue the day shift inspections
         setOverdue(connectionId);
 
         if (LocalTime.now().isAfter(LocalTime.of(6, 0)) && LocalTime.now().isBefore(LocalTime.of(18, 0))) {
@@ -276,7 +276,7 @@ public class TaskService {
             // Check if the device is working
             if ((connectionService.get(connectionId).getDevice().getStatus())) {
 
-                // Generate day shift overviews
+                // Generate day shift inspections
                 List<ActivityGroup> groupList = activityGroupRepository
                         .findByConnectionConnectionIdAndConnectionStatus(connectionId, true);
 
@@ -289,12 +289,12 @@ public class TaskService {
                         for (Activity activity : activities) {
                             LocalDateTime start = LocalDateTime
                                     .parse(LocalDateTime.now().toLocalDate().toString() + "T06:00");
-                            Overview overview = new Overview();
-                            overview.setStatus("Nowy");
-                            overview.setStartTime(start.toString());
-                            overview.setEndTime(start.plusHours(12).toString());
-                            overview.setActivity(activity);
-                            overviewService.save(overview);
+                            Inspection inspection = new Inspection();
+                            inspection.setStatus("Nowy");
+                            inspection.setStartTime(start.toString());
+                            inspection.setEndTime(start.plusHours(12).toString());
+                            inspection.setActivity(activity);
+                            inspectionService.save(inspection);
                         }
                     }
                 }
@@ -303,13 +303,13 @@ public class TaskService {
 
     }
 
-    // Overview every two months
+    // Inspection every two months
     public void everyTwoMonths(Long connectionId) {
 
-        // Change status of overdue weekly overviews
+        // Change status of overdue weekly inspections
         setOverdue(connectionId);
 
-        List<Month> months = new OverviewMonths().getMonths();
+        List<Month> months = new InspectionMonths().getMonths();
         LocalDateTime now = LocalDateTime.now();
         for (Month month : months) {
             if (LocalDateTime.now().getMonth().equals(month)) {
@@ -317,7 +317,7 @@ public class TaskService {
                 // Check if the device is working
                 if ((connectionService.get(connectionId).getDevice().getStatus())) {
 
-                    // Generate every two months overviews
+                    // Generate every two months inspections
                     List<ActivityGroup> groupList = activityGroupRepository
                             .findByConnectionConnectionIdAndConnectionStatus(connectionId, true);
 
@@ -327,7 +327,7 @@ public class TaskService {
                             List<Activity> activities = activityGroup.getActivities();
 
                             for (Activity activity : activities) {
-                                Overview overview = new Overview();
+                                Inspection inspection = new Inspection();
 
                                 LocalDateTime startTime;
                                 if (now.getMonth().getValue() < 10) {
@@ -339,11 +339,11 @@ public class TaskService {
                                 }
                                 LocalDateTime endTime = startTime.plusMonths(1).minusMinutes(2);
 
-                                overview.setStatus("Nowy");
-                                overview.setStartTime(startTime.toString());
-                                overview.setEndTime(endTime.toString());
-                                overview.setActivity(activity);
-                                overviewService.save(overview);
+                                inspection.setStatus("Nowy");
+                                inspection.setStartTime(startTime.toString());
+                                inspection.setEndTime(endTime.toString());
+                                inspection.setActivity(activity);
+                                inspectionService.save(inspection);
                             }
                         }
                     }
@@ -355,18 +355,19 @@ public class TaskService {
 
     }
 
-    // Yearly overview
+    // Yearly inspection
     public void yearly(Long connectionId) {
 
-        // Change status of overdue yearly overviews
+        // Change status of overdue yearly inspections
         setOverdue(connectionId);
 
-        // Calculate date of next overview
-        Overview testOverview = overviewRepository
+        // Calculate date of next inspection
+        Inspection testInspection = inspectionRepository
                 .findFirstByActivityActivityGroupConnectionOrderByEndTimeDesc(connectionService.get(connectionId));
         LocalDateTime next;
-        if (testOverview != null) {
-            next = LocalDateTime.parse(testOverview.getEndTime(), DateTimeFormatter.ISO_LOCAL_DATE_TIME).plusMonths(9);
+        if (testInspection != null) {
+            next = LocalDateTime.parse(testInspection.getEndTime(), DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+                    .plusMonths(9);
         } else {
             next = LocalDateTime.now().minusMinutes(1);
         }
@@ -376,7 +377,7 @@ public class TaskService {
             // Check if the device is working
             if ((connectionService.get(connectionId).getDevice().getStatus())) {
 
-                // Generate yearly overview
+                // Generate yearly inspection
                 List<ActivityGroup> groupList = activityGroupRepository
                         .findByConnectionConnectionIdAndConnectionStatus(connectionId, true);
 
@@ -388,12 +389,12 @@ public class TaskService {
                         for (Activity activity : activities) {
                             LocalDateTime start = LocalDateTime
                                     .parse(LocalDateTime.now().toLocalDate().toString() + "T00:01");
-                            Overview overview = new Overview();
-                            overview.setStatus("Nowy");
-                            overview.setStartTime(start.toString());
-                            overview.setEndTime(start.plusMonths(3).minusMinutes(2).toString());
-                            overview.setActivity(activity);
-                            overviewService.save(overview);
+                            Inspection inspection = new Inspection();
+                            inspection.setStatus("Nowy");
+                            inspection.setStartTime(start.toString());
+                            inspection.setEndTime(start.plusMonths(3).minusMinutes(2).toString());
+                            inspection.setActivity(activity);
+                            inspectionService.save(inspection);
                         }
                     }
                 }
@@ -402,13 +403,13 @@ public class TaskService {
         }
     }
 
-    // Overview on demand
+    // Inspection on demand
     public void onDemand(Long connectionId) {
 
         // Check if the device is working
         if ((connectionService.get(connectionId).getDevice().getStatus())) {
 
-            // Generate on demand overview
+            // Generate on demand inspection
             List<ActivityGroup> groupList = activityGroupRepository
                     .findByConnectionConnectionIdAndConnectionStatus(connectionId, true);
 
@@ -420,12 +421,12 @@ public class TaskService {
                     for (Activity activity : activities) {
                         LocalDateTime start = LocalDateTime
                                 .parse(LocalDateTime.now().toLocalDate().toString() + "T00:01");
-                        Overview overview = new Overview();
-                        overview.setStatus("Nowy");
-                        overview.setStartTime(start.toString());
-                        overview.setEndTime(start.plusMonths(2).minusMinutes(2).toString());
-                        overview.setActivity(activity);
-                        overviewService.save(overview);
+                        Inspection inspection = new Inspection();
+                        inspection.setStatus("Nowy");
+                        inspection.setStartTime(start.toString());
+                        inspection.setEndTime(start.plusMonths(2).minusMinutes(2).toString());
+                        inspection.setActivity(activity);
+                        inspectionService.save(inspection);
                     }
                 }
             }

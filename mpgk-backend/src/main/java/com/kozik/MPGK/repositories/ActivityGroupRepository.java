@@ -9,11 +9,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ActivityGroupRepository extends JpaRepository<ActivityGroup, Long> {
 
-    List<ActivityGroup> findByConnectionOverviewTypeNameAndConnectionDeviceStatus(String name, Boolean status);
+    List<ActivityGroup> findByConnectionInspectionTypeNameAndConnectionDeviceStatus(String name, Boolean status);
 
     List<ActivityGroup> findByConnectionConnectionId(Long connectionId);
 
-    List<ActivityGroup> findByConnectionOverviewTypeNameAndConnectionDeviceStatusAndConnection(String name,
+    List<ActivityGroup> findByConnectionInspectionTypeNameAndConnectionDeviceStatusAndConnection(String name,
             Boolean status, Connection connection);
 
     List<ActivityGroup> findByConnection(Connection connection);

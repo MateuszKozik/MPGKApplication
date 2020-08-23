@@ -6,11 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.kozik.MPGK.entities.Connection;
-import com.kozik.MPGK.entities.Overview;
+import com.kozik.MPGK.entities.Inspection;
 import com.kozik.MPGK.exceptions.connectionExceptions.ConnectionAlreadyExistException;
 import com.kozik.MPGK.exceptions.connectionExceptions.ConnectionNotFoundException;
 import com.kozik.MPGK.repositories.ConnectionRepository;
-import com.kozik.MPGK.repositories.OverviewRepository;
+import com.kozik.MPGK.repositories.InspectionRepository;
 import com.kozik.MPGK.utilities.ConnectionObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class ConnectionService {
     private ConnectionRepository connectionRepository;
 
     @Autowired
-    private OverviewRepository overviewRepository;
+    private InspectionRepository inspectionRepository;
 
     public Iterable<Connection> listAll() {
         return connectionRepository.findAll();
@@ -54,7 +54,7 @@ public class ConnectionService {
         Connection newConnection = connectionRepository.findById(connectionId).map(element -> {
             element.setName(connection.getName());
             element.setStatus(connection.getStatus());
-            element.setOverviewType(connection.getOverviewType());
+            element.setInspectionType(connection.getInspectionType());
             element.setDevice(connection.getDevice());
             return connectionRepository.save(element);
         }).orElseThrow(() -> new ConnectionNotFoundException(connectionId));
@@ -69,30 +69,30 @@ public class ConnectionService {
         for (Connection connection : connections) {
             ConnectionObject object = new ConnectionObject();
             object.setConnection(connection);
-            Integer count = overviewRepository.countByActivityActivityGroupConnectionAndStatus(connection, "Nowy");
+            Integer count = inspectionRepository.countByActivityActivityGroupConnectionAndStatus(connection, "Nowy");
             if (count == 0) {
-                object.setOverviewStatus("Wykonany");
+                object.setInspectionStatus("Wykonany");
             } else {
-                object.setOverviewStatus("W trakcie");
+                object.setInspectionStatus("W trakcie");
             }
 
-            List<Overview> overdueOverviews = overviewRepository
+            List<Inspection> overdueInspections = inspectionRepository
                     .findByActivityActivityGroupConnectionAndStatus(connection, "Zaległy");
             List<String> times = new ArrayList<>();
 
-            for (Overview overview : overdueOverviews) {
-                if (!times.contains(overview.getEndTime())) {
-                    times.add(overview.getEndTime());
+            for (Inspection inspection : overdueInspections) {
+                if (!times.contains(inspection.getEndTime())) {
+                    times.add(inspection.getEndTime());
                 }
             }
             object.setOverdueCount(times.size());
 
-            Overview overview = overviewRepository
+            Inspection inspection = inspectionRepository
                     .findFirstByActivityActivityGroupConnectionAndEndTimeGreaterThan(connection, LocalDateTime.now());
-            if (overview != null) {
-                object.setStartTime(overview.getStartTime());
-                object.setEndTime(overview.getEndTime());
-                LocalDateTime dateTime = LocalDateTime.parse(overview.getEndTime(),
+            if (inspection != null) {
+                object.setStartTime(inspection.getStartTime());
+                object.setEndTime(inspection.getEndTime());
+                LocalDateTime dateTime = LocalDateTime.parse(inspection.getEndTime(),
                         DateTimeFormatter.ISO_LOCAL_DATE_TIME);
                 if (dateTime.isAfter(LocalDateTime.now())) {
                     object.setActive(true);

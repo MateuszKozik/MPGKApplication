@@ -76,7 +76,7 @@ public class ActivityController {
 
     // Get activities by connection
     @GetMapping("/list/{connectionId}")
-    public ResponseEntity<?> getOverviewsByConnection(@PathVariable Long connectionId) {
+    public ResponseEntity<?> getInspectionsByConnection(@PathVariable Long connectionId) {
         return new ResponseEntity<ArrayList<ActivityObject>>(activityService.getActivitiesByConnection(connectionId),
                 HttpStatus.OK);
     }

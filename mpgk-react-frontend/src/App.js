@@ -10,9 +10,9 @@ import UpdateDevice from "./components/Device/UpdateDevice";
 import FluidList from "./components/Fluid/FluidList";
 import AddFluid from "./components/Fluid/AddFluid";
 import UpdateFluid from "./components/Fluid/UpdateFluid";
-import OverviewTypeList from "./components/OverviewType/OverviewTypeList";
-import AddOverviewType from "./components/OverviewType/AddOverviewType";
-import UpdateOverviewType from "./components/OverviewType/UpdateOverviewType";
+import InspectionTypeList from "./components/InspectionType/InspectionTypeList";
+import AddInspectionType from "./components/InspectionType/AddInspectionType";
+import UpdateInspectionType from "./components/InspectionType/UpdateInspectionType";
 import PersonList from "./components/Person/PersonList";
 import AddPerson from "./components/Person/AddPerson";
 import UpdatePerson from "./components/Person/UpdatePerson";
@@ -22,9 +22,9 @@ import UpdateActivityGroup from "./components/ActivityGroup/UpdateActivityGroup"
 import ActivityList from "./components/Activity/ActivityList";
 import AddActivity from "./components/Activity/AddActivity";
 import UpdateActivity from "./components/Activity/UpdateActivity";
-import OverviewList from "./components/Overview/OverviewList";
-import AddOverview from "./components/Overview/AddOverview";
-import UpdateOverview from "./components/Overview/UpdateOverview";
+import InspectionList from "./components/Inspection/InspectionList";
+import AddInspection from "./components/Inspection/AddInspection";
+import UpdateInspection from "./components/Inspection/UpdateInspection";
 import ConnectionList from "./components/Connection/ConnectionList";
 import AddConnection from "./components/Connection/AddConnection";
 import UpdateConnection from "./components/Connection/UpdateConnection";
@@ -39,12 +39,12 @@ import UpdateFluidPlace from "./components/FluidPlace/UpdateFluidPlace";
 import Home from "./components/Pages/Home";
 import FluidRegistry from "./components/Pages/FluidRegistry";
 import PerformersList from "./components/Pages/PerformersList";
-import Overview from "./components/Pages/Overview";
+import Inspection from "./components/Pages/Inspection";
 import AddWorkingFluid from "./components/Pages/AddWorkingFluid";
 import NitrogenList from "./components/Pages/NitrogenList";
-import OverviewActivities from "./components/Pages/OverviewActivities";
-import OverviewPage from "./components/Pages/OverviewPage";
-import OverdueOverview from "./components/Pages/OverdueOverview";
+import InspectionActivities from "./components/Pages/InspectionActivities";
+import InspectionPage from "./components/Pages/InspectionPage";
+import OverdueInspection from "./components/Pages/OverdueInspection";
 
 function App() {
 	return (
@@ -59,12 +59,20 @@ function App() {
 					<Route exact path="/fluids" component={FluidList} />
 					<Route exact path="/fluids/add" component={AddFluid} />
 					<Route exact path="/fluids/update/:fluidId" component={UpdateFluid} />
-					<Route exact path="/overview-types" component={OverviewTypeList} />
-					<Route exact path="/overview-types/add" component={AddOverviewType} />
 					<Route
 						exact
-						path="/overview-types/update/:typeId"
-						component={UpdateOverviewType}
+						path="/inspection-types"
+						component={InspectionTypeList}
+					/>
+					<Route
+						exact
+						path="/inspection-types/add"
+						component={AddInspectionType}
+					/>
+					<Route
+						exact
+						path="/inspection-types/update/:typeId"
+						component={UpdateInspectionType}
 					/>
 					<Route exact path="/persons" component={PersonList} />
 					<Route exact path="/persons/add" component={AddPerson} />
@@ -87,12 +95,12 @@ function App() {
 						path="/activities/update/:activityId"
 						component={UpdateActivity}
 					/>
-					<Route exact path="/overviews" component={OverviewList} />
-					<Route exact path="/overviews/add" component={AddOverview} />
+					<Route exact path="/inspections" component={InspectionList} />
+					<Route exact path="/inspections/add" component={AddInspection} />
 					<Route
 						exact
-						path="/overviews/update/:overviewId"
-						component={UpdateOverview}
+						path="/inspections/update/:inspectionId"
+						component={UpdateInspection}
 					/>
 					<Route exact path="/connections" component={ConnectionList} />
 					<Route exact path="/connections/add" component={AddConnection} />
@@ -132,23 +140,23 @@ function App() {
 
 					<Route
 						exact
-						path="/overviews/list/:connectionId"
-						component={OverviewPage}
+						path="/inspections/list/:connectionId"
+						component={InspectionPage}
 					/>
 					<Route
 						exact
-						path="/overviews/list/:connectionId/execute"
-						component={Overview}
+						path="/inspections/list/:connectionId/execute"
+						component={Inspection}
 					/>
 					<Route
 						exact
-						path="/overviews/list/:connectionId/activity"
-						component={OverviewActivities}
+						path="/inspections/list/:connectionId/activity"
+						component={InspectionActivities}
 					/>
 					<Route
 						exact
-						path="/overviews/list/:connectionId/overdue/:endtime"
-						component={OverdueOverview}
+						path="/inspections/list/:connectionId/overdue/:endtime"
+						component={OverdueInspection}
 					/>
 				</div>
 			</Router>

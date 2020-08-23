@@ -5,12 +5,12 @@ import com.kozik.MPGK.exceptions.deviceExceptions.*;
 import com.kozik.MPGK.exceptions.fluidExceptions.*;
 import com.kozik.MPGK.exceptions.fluidPlaceExceptions.*;
 import com.kozik.MPGK.exceptions.fluidRegistryExceptions.*;
-import com.kozik.MPGK.exceptions.overviewTypeExceptions.*;
+import com.kozik.MPGK.exceptions.inspectionExceptions.*;
+import com.kozik.MPGK.exceptions.inspectionTypeExceptions.*;
 import com.kozik.MPGK.exceptions.roleExceptions.*;
 import com.kozik.MPGK.exceptions.personExceptions.*;
 import com.kozik.MPGK.exceptions.activityExceptions.*;
 import com.kozik.MPGK.exceptions.activityGroupExceptions.*;
-import com.kozik.MPGK.exceptions.overviewExceptions.*;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -51,17 +51,17 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
     }
 
     @ExceptionHandler
-    public final ResponseEntity<Object> handleOverviewTypeNotFoundException(OverviewTypeNotFoundException ex,
+    public final ResponseEntity<Object> handleInspectionTypeNotFoundException(InspectionTypeNotFoundException ex,
             WebRequest request) {
-        OverviewTypeNotFoundExceptionResonse exceptionResonse = new OverviewTypeNotFoundExceptionResonse(
+        InspectionTypeNotFoundExceptionResonse exceptionResonse = new InspectionTypeNotFoundExceptionResonse(
                 ex.getMessage());
         return new ResponseEntity<Object>(exceptionResonse, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler
-    public final ResponseEntity<Object> handleOverviewTypeAlreadyExistException(OverviewTypeAlreadyExistException ex,
-            WebRequest request) {
-        OverviewTypeAlreadyExistResponse existResponse = new OverviewTypeAlreadyExistResponse(ex.getMessage());
+    public final ResponseEntity<Object> handleInspectionTypeAlreadyExistException(
+            InspectionTypeAlreadyExistException ex, WebRequest request) {
+        InspectionTypeAlreadyExistResponse existResponse = new InspectionTypeAlreadyExistResponse(ex.getMessage());
         return new ResponseEntity<Object>(existResponse, HttpStatus.CONFLICT);
     }
 
@@ -166,16 +166,17 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
     }
 
     @ExceptionHandler
-    public final ResponseEntity<Object> handleOverviewNotFoundException(OverviewNotFoundException ex,
+    public final ResponseEntity<Object> handleInsepctionNotFoundException(InspectionNotFoundException ex,
             WebRequest request) {
-        OverviewNotFoundExceptionResponse exceptionResponse = new OverviewNotFoundExceptionResponse(ex.getMessage());
+        InspectionNotFoundExceptionResponse exceptionResponse = new InspectionNotFoundExceptionResponse(
+                ex.getMessage());
         return new ResponseEntity<Object>(exceptionResponse, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler
-    public final ResponseEntity<Object> handleOverviewAlreadyExistException(OverviewAlreadyExistException ex,
+    public final ResponseEntity<Object> handleInspectionAlreadyExistException(InspectionAlreadyExistException ex,
             WebRequest request) {
-        OverviewAlreadyExistResponse existResponse = new OverviewAlreadyExistResponse(ex.getMessage());
+        InspectionAlreadyExistResponse existResponse = new InspectionAlreadyExistResponse(ex.getMessage());
         return new ResponseEntity<Object>(existResponse, HttpStatus.CONFLICT);
     }
 

@@ -18,46 +18,48 @@ public class TaskController {
     @Autowired
     private TaskService taskService;
 
-    // Generate daily overviews
+    // Generate daily inspections
     @PostMapping("/daily/{connectionId}")
-    public ResponseEntity<?> crateDailyOverviews(@PathVariable Long connectionId) {
+    public ResponseEntity<?> crateDailyInspections(@PathVariable Long connectionId) {
         taskService.daily(connectionId);
-        return new ResponseEntity<Message>(new Message("Daily overviews have been generated."), HttpStatus.CREATED);
+        return new ResponseEntity<Message>(new Message("Daily inspections have been generated."), HttpStatus.CREATED);
     }
 
-    // Generate weekly overviews
+    // Generate weekly inspections
     @PostMapping("/weekly/{connectionId}")
-    public ResponseEntity<?> createWeeklyOverviews(@PathVariable Long connectionId) {
+    public ResponseEntity<?> createWeeklyInspections(@PathVariable Long connectionId) {
         taskService.weekly(connectionId);
-        return new ResponseEntity<Message>(new Message("Weekly overviews have been generated."), HttpStatus.CREATED);
+        return new ResponseEntity<Message>(new Message("Weekly inspections have been generated."), HttpStatus.CREATED);
     }
 
-    // Generate day shift overviews
+    // Generate day shift inspections
     @PostMapping("/day-shift/{connectionId}")
-    public ResponseEntity<?> createDayShiftOverviews(@PathVariable Long connectionId) {
+    public ResponseEntity<?> createDayShiftInspections(@PathVariable Long connectionId) {
         taskService.dayShift(connectionId);
-        return new ResponseEntity<Message>(new Message("Day shift overviews have been generated."), HttpStatus.CREATED);
-    }
-
-    // Generate two monts overviews
-    @PostMapping("/two-months/{connectionId}")
-    public ResponseEntity<?> createTwoMonthsOverviews(@PathVariable Long connectionId) {
-        taskService.everyTwoMonths(connectionId);
-        return new ResponseEntity<Message>(new Message("Two months overviews have been generated."),
+        return new ResponseEntity<Message>(new Message("Day shift inspections have been generated."),
                 HttpStatus.CREATED);
     }
 
-    // Generate yearly overviews
-    @PostMapping("/yearly/{connectionId}")
-    public ResponseEntity<?> createYearltOverviews(@PathVariable Long connectionId) {
-        taskService.yearly(connectionId);
-        return new ResponseEntity<Message>(new Message("Yearly overviews have been generated."), HttpStatus.CREATED);
+    // Generate two monts inspections
+    @PostMapping("/two-months/{connectionId}")
+    public ResponseEntity<?> createTwoMonthsInspections(@PathVariable Long connectionId) {
+        taskService.everyTwoMonths(connectionId);
+        return new ResponseEntity<Message>(new Message("Two months inspections have been generated."),
+                HttpStatus.CREATED);
     }
 
-    // Generate on demand overviews
+    // Generate yearly inspections
+    @PostMapping("/yearly/{connectionId}")
+    public ResponseEntity<?> createYearltInspections(@PathVariable Long connectionId) {
+        taskService.yearly(connectionId);
+        return new ResponseEntity<Message>(new Message("Yearly inspections have been generated."), HttpStatus.CREATED);
+    }
+
+    // Generate on demand inspections
     @PostMapping("/on-demand/{connectionId}")
-    public ResponseEntity<?> createOnDemandOverviews(@PathVariable Long connectionId) {
+    public ResponseEntity<?> createOnDemandInspections(@PathVariable Long connectionId) {
         taskService.onDemand(connectionId);
-        return new ResponseEntity<Message>(new Message("On demand overviews have been generated."), HttpStatus.CREATED);
+        return new ResponseEntity<Message>(new Message("On demand inspections have been generated."),
+                HttpStatus.CREATED);
     }
 }

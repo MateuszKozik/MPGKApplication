@@ -52,7 +52,7 @@ public class Activity {
 
     @OneToMany(mappedBy = "activity")
     @JsonIgnore
-    private List<Overview> overviews;
+    private List<Inspection> inspections;
 
     @ManyToOne
     @JoinColumn(name = "groupId", nullable = true)

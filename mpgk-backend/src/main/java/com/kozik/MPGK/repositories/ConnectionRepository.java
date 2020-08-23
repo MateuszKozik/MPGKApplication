@@ -6,9 +6,9 @@ import com.kozik.MPGK.entities.Connection;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ConnectionRepository extends JpaRepository<Connection, Long> {
-    List<Connection> findByOverviewTypeNameNotLikeAndDeviceStatus(String overviewType, Boolean status);
+    List<Connection> findByInspectionTypeNameNotLikeAndDeviceStatus(String inspectionType, Boolean status);
 
-    List<Connection> findByOverviewTypeNameAndDeviceStatus(String overviewType, Boolean status);
+    List<Connection> findByInspectionTypeNameAndDeviceStatus(String inspectionType, Boolean status);
 
-    List<Connection> findByOverviewTypeName(String overviewType);
+    List<Connection> findByInspectionTypeName(String inspectionType);
 }

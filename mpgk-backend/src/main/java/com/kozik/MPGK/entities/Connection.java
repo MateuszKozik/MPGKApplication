@@ -46,7 +46,7 @@ public class Connection {
 
     @ManyToOne
     @JoinColumn(name = "type_id", nullable = true)
-    private OverviewType overviewType;
+    private InspectionType inspectionType;
 
     @OneToMany(mappedBy = "connection")
     @JsonIgnore

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { addConnection } from "../../actions/connectionActions";
 import classnames from "classnames";
-import { getOverviewTypes } from "../../actions/overviewTypeActions";
+import { getInspectionTypes } from "../../actions/inspectionTypeActions";
 import { getDevices } from "../../actions/deviceActions";
 
 class AddConnection extends Component {
@@ -23,7 +23,7 @@ class AddConnection extends Component {
 	}
 
 	componentDidMount() {
-		this.props.getOverviewTypes();
+		this.props.getInspectionTypes();
 		this.props.getDevices();
 	}
 
@@ -43,7 +43,7 @@ class AddConnection extends Component {
 		if (this.state.typeId !== "") {
 			newConnection = {
 				...newConnection,
-				overviewType: { typeId: this.state.typeId }
+				inspectionType: { typeId: this.state.typeId }
 			};
 		}
 		this.props.addConnection(newConnection, this.props.history);
@@ -59,7 +59,7 @@ class AddConnection extends Component {
 
 	render() {
 		const { errors } = this.state;
-		const { overviewTypes } = this.props.overviewType;
+		const { inspectionTypes } = this.props.inspectionType;
 		const { devices } = this.props.device;
 		return (
 			<div className="container mt-4">
@@ -91,12 +91,12 @@ class AddConnection extends Component {
 									className="form-control"
 								>
 									<option value="">Wybierz rodzaj przeglądu </option>
-									{overviewTypes.map((overviewType) => (
+									{inspectionTypes.map((inspectionType) => (
 										<option
-											key={overviewType.typeId}
-											value={overviewType.typeId}
+											key={inspectionType.typeId}
+											value={inspectionType.typeId}
 										>
-											{overviewType.name}
+											{inspectionType.name}
 										</option>
 									))}
 								</select>
@@ -167,21 +167,21 @@ class AddConnection extends Component {
 
 AddConnection.propTypes = {
 	addConnection: PropTypes.func.isRequired,
-	overviewType: PropTypes.object.isRequired,
+	inspectionType: PropTypes.object.isRequired,
 	device: PropTypes.object.isRequired,
-	getOverviewTypes: PropTypes.func.isRequired,
+	getInspectionTypes: PropTypes.func.isRequired,
 	getDevices: PropTypes.func.isRequired,
 	errors: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
-	overviewType: state.overviewType,
+	inspectionType: state.inspectionType,
 	device: state.device,
 	errors: state.errors
 });
 
 export default connect(mapStateToProps, {
 	addConnection,
-	getOverviewTypes,
+	getInspectionTypes,
 	getDevices
 })(AddConnection);

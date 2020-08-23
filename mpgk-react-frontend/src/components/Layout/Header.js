@@ -34,7 +34,7 @@ class Header extends Component {
 							</Link>
 						</li>
 						<li className="navbar-nav mr-auto">
-							<Link className="nav-link" to="/overview-types">
+							<Link className="nav-link" to="/inspection-types">
 								Rodzaje przeglądów
 							</Link>
 						</li>
@@ -54,7 +54,7 @@ class Header extends Component {
 							</Link>
 						</li>
 						<li className="navbar-nav mr-auto">
-							<Link className="nav-link" to="/overviews">
+							<Link className="nav-link" to="/inspections">
 								Przeglądy
 							</Link>
 						</li>

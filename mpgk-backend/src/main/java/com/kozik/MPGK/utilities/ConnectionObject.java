@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class ConnectionObject {
 
     private Connection connection;
-    private String overviewStatus;
+    private String inspectionStatus;
     private Integer overdueCount;
     private String startTime;
     private String endTime;

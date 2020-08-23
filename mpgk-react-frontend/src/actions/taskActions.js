@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const createOnDemandOverviews = (connectionId, history) => async (
+export const createOnDemandInspections = (connectionId, history) => async (
 	dispatch
 ) => {
 	if (window.confirm("Czy na pewno chcesz wygenerować przegląd?")) {

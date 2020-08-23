@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { createOnDemandOverviews } from "../../actions/taskActions";
+import { createOnDemandInspections } from "../../actions/taskActions";
 import { getHomePageConnections } from "../../actions/connectionActions";
 import Timer from "../Common/Timer";
 import FormatDate from "../Common/FormatDate";
@@ -14,10 +14,10 @@ class Home extends Component {
 	render() {
 		const { homePageConnections } = this.props.connection;
 		const onDemandConnections = homePageConnections.filter(
-			(onDemand) => onDemand.connection.overviewType.name === "Na żądanie"
+			(onDemand) => onDemand.connection.inspectionType.name === "Na żądanie"
 		);
 		const periodicConnections = homePageConnections.filter(
-			(periodic) => periodic.connection.overviewType.name !== "Na żądanie"
+			(periodic) => periodic.connection.inspectionType.name !== "Na żądanie"
 		);
 		return (
 			<div className="container mt-3">
@@ -42,20 +42,20 @@ class Home extends Component {
 											<td>
 												{periodic.active || periodic.overdueCount > 0 ? (
 													<Link
-														to={`/overviews/list/${periodic.connection.connectionId}`}
+														to={`/inspections/list/${periodic.connection.connectionId}`}
 													>
 														{periodic.connection.name}
 													</Link>
 												) : (
 													<Link
-														to={`/overviews/list/${periodic.connection.connectionId}/activity`}
+														to={`/inspections/list/${periodic.connection.connectionId}/activity`}
 													>
 														{periodic.connection.name}
 													</Link>
 												)}
 											</td>
 											<td>
-												{periodic.overviewStatus === "Wykonany" ? (
+												{periodic.inspectionStatus === "Wykonany" ? (
 													<p>Wykonany</p>
 												) : (
 													<p>W trakcie</p>
@@ -108,13 +108,13 @@ class Home extends Component {
 												{onDemand.active === true ||
 												onDemand.overdueCount > 0 ? (
 													<Link
-														to={`/overviews/list/${onDemand.connection.connectionId}`}
+														to={`/inspections/list/${onDemand.connection.connectionId}`}
 													>
 														{onDemand.connection.name}
 													</Link>
 												) : (
 													<Link
-														to={`/overviews/list/${onDemand.connection.connectionId}/activity`}
+														to={`/inspections/list/${onDemand.connection.connectionId}/activity`}
 													>
 														{onDemand.connection.name}
 													</Link>
@@ -123,7 +123,7 @@ class Home extends Component {
 											<td>
 												{onDemand.active === true ? (
 													<>
-														{onDemand.overviewStatus === "Wykonany" ? (
+														{onDemand.inspectionStatus === "Wykonany" ? (
 															<p>Wykonany</p>
 														) : (
 															<p>W trakcie</p>
@@ -151,7 +151,7 @@ class Home extends Component {
 												{onDemand.active === false ? (
 													<button
 														onClick={() => {
-															this.props.createOnDemandOverviews(
+															this.props.createOnDemandInspections(
 																onDemand.connection.connectionId,
 																this.props.history
 															);
@@ -218,8 +218,8 @@ class Home extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-	createOnDemandOverviews: (connectionId, history) => {
-		dispatch(createOnDemandOverviews(connectionId, history));
+	createOnDemandInspections: (connectionId, history) => {
+		dispatch(createOnDemandInspections(connectionId, history));
 	},
 	getHomePageConnections: () => {
 		dispatch(getHomePageConnections());
