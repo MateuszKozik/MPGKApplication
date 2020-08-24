@@ -6,6 +6,7 @@ import {
 	deleteFluidRegistry
 } from "../../actions/fluidRegistryActions";
 import AddButton from "../Common/AddButton";
+import FormatDate from "../Common/FormatDate";
 
 class FluidRegistryList extends Component {
 	componentDidMount() {
@@ -43,7 +44,7 @@ class FluidRegistryList extends Component {
 							{fluidRegistries.map((fluidRegistry) => (
 								<tr key={fluidRegistry.registryId}>
 									<td>{fluidRegistry.quantity}</td>
-									<td>{fluidRegistry.datetime}</td>
+									<td><FormatDate date={fluidRegistry.datetime} datetime={true} /></td>
 									<td>
 										<Link
 											to={`/fluid-registries/update/${fluidRegistry.registryId}`}
