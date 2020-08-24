@@ -7,6 +7,7 @@ import {
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import AddButton from "../Common/AddButton";
+import FormatDate from "../Common/FormatDate";
 
 class InspectionList extends Component {
 	componentDidMount() {
@@ -48,9 +49,9 @@ class InspectionList extends Component {
 							{inspections.map((inspection) => (
 								<tr key={inspection.inspectionId}>
 									<td>{inspection.status}</td>
-									<td>{inspection.startTime}</td>
-									<td>{inspection.datetime}</td>
-									<td>{inspection.endTime}</td>
+									<td><FormatDate date={inspection.startTime} datetime={true} /></td>
+									<td><FormatDate date={inspection.datetime} datetime={true} /></td>
+									<td><FormatDate date={inspection.endTime} datetime={true} /></td>
 									<td>{inspection.parameter}</td>
 									<td>{inspection.comment}</td>
 									<td>
