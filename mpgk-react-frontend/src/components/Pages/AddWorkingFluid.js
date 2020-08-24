@@ -81,7 +81,7 @@ class AddWorkingFluid extends Component {
 					<div className="row">
 						<div className="col-md-4 offset-md-4 text-center">
 							<div className="form-group">
-								<label>Ilość</label>
+								<label>Ilość [litry]</label>
 								<input
 									className={classNames("form-control", {
 										"is-invalid": errors.quantity
