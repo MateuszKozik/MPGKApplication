@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getFluidRegistries } from "../../actions/fluidRegistryActions";
 import AddButton from "../Common/AddButton";
+import FormatDate from "../Common/FormatDate";
 
 class FluidRegistry extends Component {
 	componentDidMount() {
@@ -45,7 +46,7 @@ class FluidRegistry extends Component {
 										{fluidRegistry.fluid ? fluidRegistry.fluid.name : null}
 									</td>
 									<td>{fluidRegistry.quantity}</td>
-									<td>{fluidRegistry.datetime}</td>
+									<td><FormatDate date={fluidRegistry.datetime} datetime={true} /></td>
 									<td>
 										{fluidRegistry.person
 											? fluidRegistry.person.name +
