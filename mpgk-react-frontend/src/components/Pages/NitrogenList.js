@@ -38,7 +38,7 @@ class NitrogenList extends Component {
 								<tr key={inspection.inspectionId}>
 									<td>Wymiana butli</td>
 									<td>
-										<FormatDate date={inspection.endTime} datetime={true} />
+										<FormatDate date={inspection.datetime} datetime={true} />
 									</td>
 									<td>
 										{inspection.person
