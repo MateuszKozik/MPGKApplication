@@ -1,7 +1,9 @@
 import {
 	GET_FLUID_PLACES,
 	GET_FLUID_PLACE,
-	DELETE_FLUID_PLACE
+	DELETE_FLUID_PLACE,
+	ADD_FLUID_PLACE,
+	UPDATE_FLUID_PLACE
 } from "../actions/types";
 
 const initialState = {
@@ -22,6 +24,29 @@ export default function (state = initialState, action) {
 				...state,
 				fluidPlace: action.payload
 			};
+
+		case ADD_FLUID_PLACE: {
+			return {
+				...state,
+				fluidPlaces: [action.payload, ...state.fluidPlaces]
+			};
+		}
+
+		case UPDATE_FLUID_PLACE: {
+			return {
+				...state,
+				fluidPlaces: state.fluidPlaces.map((fluidPlace) => {
+					if (fluidPlace.placeId === action.payload.placeId) {
+						return {
+							...fluidPlace,
+							...action.payload
+						};
+					} else {
+						return fluidPlace;
+					}
+				})
+			};
+		}
 
 		case DELETE_FLUID_PLACE:
 			return {

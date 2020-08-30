@@ -64,6 +64,8 @@ export const DELETE_FLUID_REGISTRY = "DELETE_FLUID_REGISTRY";
 //fluid place
 export const GET_FLUID_PLACES = "GET_FLUID_PLACES";
 export const GET_FLUID_PLACE = "GET_FLUID_PLACE";
+export const ADD_FLUID_PLACE = "ADD_FLUID_PLACE";
+export const UPDATE_FLUID_PLACE = "UPDATE_FLUID_PLACE";
 export const DELETE_FLUID_PLACE = "DELETE_FLUID_PLACE";
 
 //snackbar

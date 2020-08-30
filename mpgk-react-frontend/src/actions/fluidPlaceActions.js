@@ -3,17 +3,23 @@ import {
 	GET_ERRORS,
 	GET_FLUID_PLACES,
 	GET_FLUID_PLACE,
-	DELETE_FLUID_PLACE
+	DELETE_FLUID_PLACE,
+	ADD_FLUID_PLACE,
+	UPDATE_FLUID_PLACE
 } from "./types";
 
-export const addFluidPlace = (fludidPlace, history) => async (dispatch) => {
+export const addFluidPlace = (fludidPlace) => async (dispatch) => {
 	try {
-		await axios.post("/api/fluid-places", fludidPlace);
-		history.push("/fluid-places");
+		const res = await axios.post("/api/fluid-places", fludidPlace);
+		dispatch({
+			type: ADD_FLUID_PLACE,
+			payload: res.data
+		});
 		dispatch({
 			type: GET_ERRORS,
 			payload: {}
 		});
+		return res;
 	} catch (error) {
 		dispatch({
 			type: GET_ERRORS,
@@ -42,16 +48,23 @@ export const getFluidPlace = (placeId, history) => async (dispatch) => {
 	}
 };
 
-export const updateFluidPlace = (placeId, updateFluidPlace, history) => async (
+export const updateFluidPlace = (placeId, updatedFluidPlace) => async (
 	dispatch
 ) => {
 	try {
-		await axios.put(`/api/fluid-places/${placeId}`, updateFluidPlace);
-		history.push("/fluid-places");
+		const res = await axios.put(
+			`/api/fluid-places/${placeId}`,
+			updatedFluidPlace
+		);
+		dispatch({
+			type: UPDATE_FLUID_PLACE,
+			payload: res.data
+		});
 		dispatch({
 			type: GET_ERRORS,
 			payload: {}
 		});
+		return res;
 	} catch (error) {
 		dispatch({
 			type: GET_ERRORS,
@@ -72,4 +85,11 @@ export const deleteFluidPlace = (placeId) => async (dispatch) => {
 			payload: placeId
 		});
 	}
+};
+
+export const clearFluidPlaceState = () => (dispatch) => {
+	dispatch({
+		type: GET_FLUID_PLACES,
+		payload: []
+	});
 };
