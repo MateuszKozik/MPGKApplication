@@ -5,7 +5,8 @@ import {
 	GET_FLUID,
 	DELETE_FLUID,
 	ADD_FLUID,
-	UPDATE_FLUID
+	UPDATE_FLUID,
+	CLEAR_FLUID_STATE
 } from "./types";
 
 export const addFluid = (fluid) => async (dispatch) => {
@@ -13,7 +14,7 @@ export const addFluid = (fluid) => async (dispatch) => {
 		const res = await axios.post("/api/fluids", fluid);
 		dispatch({
 			type: ADD_FLUID,
-			payload: res.date
+			payload: res.data
 		});
 		dispatch({
 			type: GET_ERRORS,
@@ -48,9 +49,9 @@ export const getFluid = (fluidId, history) => async (dispatch) => {
 	}
 };
 
-export const updateFluid = (fluidId, updateFluid) => async (dispatch) => {
+export const updateFluid = (fluidId, updatedFluid) => async (dispatch) => {
 	try {
-		const res = await axios.put(`/api/fluids/${fluidId}`, updateFluid);
+		const res = await axios.put(`/api/fluids/${fluidId}`, updatedFluid);
 		dispatch({
 			type: UPDATE_FLUID,
 			payload: res.data
@@ -59,7 +60,7 @@ export const updateFluid = (fluidId, updateFluid) => async (dispatch) => {
 			type: GET_ERRORS,
 			payload: {}
 		});
-		return res;
+		return true;
 	} catch (error) {
 		dispatch({
 			type: GET_ERRORS,
@@ -76,4 +77,11 @@ export const deleteFluid = (fluidId) => async (dispatch) => {
 			payload: fluidId
 		});
 	}
+};
+
+export const clearFluidState = () => (dispatch) => {
+	dispatch({
+		type: CLEAR_FLUID_STATE,
+		payload: []
+	});
 };

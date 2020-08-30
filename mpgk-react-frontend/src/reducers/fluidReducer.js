@@ -3,7 +3,8 @@ import {
 	GET_FLUIDS,
 	DELETE_FLUID,
 	UPDATE_FLUID,
-	ADD_FLUID
+	ADD_FLUID,
+	CLEAR_FLUID_STATE
 } from "../actions/types";
 
 const initialState = {
@@ -50,6 +51,12 @@ export default function (state = initialState, action) {
 			return {
 				...state,
 				fluids: state.fluids.filter((fluid) => fluid.fluidId !== action.payload)
+			};
+
+		case CLEAR_FLUID_STATE:
+			return {
+				...state,
+				fluids: []
 			};
 
 		default:
