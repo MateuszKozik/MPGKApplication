@@ -3,10 +3,8 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Header from "./components/Layout/Header";
 import DeviceList from "./components/Device/DeviceList";
-import AddDevice from "./components/Device/AddDevice";
 import { Provider } from "react-redux";
 import store from "./store";
-import UpdateDevice from "./components/Device/UpdateDevice";
 import FluidList from "./components/Fluid/FluidList";
 import InspectionTypeList from "./components/InspectionType/InspectionTypeList";
 import AddInspectionType from "./components/InspectionType/AddInspectionType";
@@ -52,8 +50,6 @@ function App() {
 					<Header />
 					<Route exact path="/" component={Home} />
 					<Route exact path="/devices" component={DeviceList} />
-					<Route exact path="/devices/add" component={AddDevice} />
-					<Route exact path="/devices/update/:id" component={UpdateDevice} />
 					<Route exact path="/fluids" component={FluidList} />
 					<Route
 						exact
