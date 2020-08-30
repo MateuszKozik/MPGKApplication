@@ -1,8 +1,10 @@
 export const GET_ERRORS = "GET_ERRORS";
 
 //devices
+export const ADD_DEVICE = "ADD_DEVICE";
 export const GET_DEVICES = "GET_DEVICES";
 export const GET_DEVICE = "GET_DEVICE";
+export const UPDATE_DEVICE = "UPDATE_DEVICE";
 export const DELETE_DEVICE = "DELETE_DEVICE";
 
 //fluids
