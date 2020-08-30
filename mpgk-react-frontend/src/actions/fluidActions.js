@@ -5,8 +5,7 @@ import {
 	GET_FLUID,
 	DELETE_FLUID,
 	ADD_FLUID,
-	UPDATE_FLUID,
-	CLEAR_FLUID_STATE
+	UPDATE_FLUID
 } from "./types";
 
 export const addFluid = (fluid) => async (dispatch) => {
@@ -81,7 +80,7 @@ export const deleteFluid = (fluidId) => async (dispatch) => {
 
 export const clearFluidState = () => (dispatch) => {
 	dispatch({
-		type: CLEAR_FLUID_STATE,
+		type: GET_FLUIDS,
 		payload: []
 	});
 };

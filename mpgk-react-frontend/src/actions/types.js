@@ -11,7 +11,6 @@ export const GET_FLUIDS = "GET_FLUIDS";
 export const GET_FLUID = "GET_FLUID";
 export const UPDATE_FLUID = "UPDATE_FLUID";
 export const DELETE_FLUID = "DELETE_FLUID";
-export const CLEAR_FLUID_STATE = "CLEAR_FLUID_STATE";
 
 //inspection types
 export const GET_INSPECTION_TYPES = "GET_INSPECTION_TYPES";
