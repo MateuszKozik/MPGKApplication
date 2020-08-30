@@ -1,93 +1,308 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-
 import {
 	getFluidPlaces,
-	deleteFluidPlace
+	deleteFluidPlace,
+	addFluidPlace,
+	updateFluidPlace,
+	clearFluidPlaceState
 } from "../../actions/fluidPlaceActions";
-import AddButton from "../Common/AddButton";
+import { withStyles } from "@material-ui/core";
+import { tableStyles } from "../../consts/themeConsts";
+import {
+	Grid,
+	Typography,
+	IconButton,
+	Fab,
+	Button,
+	Table,
+	TableBody,
+	TableCell,
+	TableContainer,
+	TableHead,
+	TableRow,
+	Dialog,
+	LinearProgress,
+	TextField,
+	InputAdornment,
+	Tooltip
+} from "@material-ui/core";
+import AddIcon from "@material-ui/icons/Add";
+import EditIcon from "@material-ui/icons/Edit";
+import SearchIcon from "@material-ui/icons/Search";
+import DeleteIcon from "@material-ui/icons/Delete";
+import { FormikTextField } from "formik-material-fields";
+import { Formik, Form } from "formik";
+import * as Yup from "yup";
+import { setSnackbar } from "../../reducers/snackbarReducer";
+
+const validationSchema = Yup.object().shape({
+	name: Yup.string()
+		.required("Nazwa miejsca jest wymagana")
+		.max(250, "Wprowadź któtszą nazwę")
+});
 
 class FluidPlaceList extends Component {
+	state = {
+		dialogOpen: false,
+		placeId: "",
+		name: "",
+		actionType: "",
+		search: "",
+		errors: {}
+	};
+
 	componentDidMount() {
 		this.props.getFluidPlaces();
 	}
-
-	onDeleteClick = (placeId) => {
-		this.props.deleteFluidPlace(placeId);
+	updateSearch = (event) => {
+		this.setState({ search: event.target.value });
 	};
 
+	onChange = (e) => {
+		this.setState({ [e.target.name]: e.target.value });
+	};
+
+	componentWillUnmount() {
+		this.props.clearFluidPlaceState();
+	}
+
+	handleOpen = (placeId, name, actionType = "add") => {
+		this.setState({
+			dialogOpen: true,
+			actionType: actionType
+		});
+		if (actionType === "edit") {
+			this.setState({
+				name: name,
+				placeId: placeId
+			});
+		}
+	};
+
+	handleClose = () => {
+		this.setState({
+			dialogOpen: false,
+			name: "",
+			placeId: "",
+			actionType: ""
+		});
+	};
+
+	onSubmit = (values, { setSubmitting }) => {
+		setTimeout(() => {
+			setSubmitting(false);
+			if (this.state.actionType === "add") {
+				const newFluidPlace = { name: values.name };
+
+				this.props.addFluidPlace(newFluidPlace).then((res) => {
+					if (res) {
+						this.props.setSnackbar(true, "Dodano nowe miejsce!");
+						this.handleClose();
+					} else {
+						this.props.setSnackbar(true, "Wystąpił błąd!");
+					}
+				});
+			} else {
+				const updatedFluidPlace = {
+					placeId: this.state.placeId,
+					name: values.name
+				};
+
+				this.props
+					.updateFluidPlace(this.state.placeId, updatedFluidPlace)
+					.then((res) => {
+						if (res) {
+							this.props.setSnackbar(true, "Dane miejsca zaktualizowane!");
+							this.handleClose();
+						} else {
+							this.props.setSnackbar(true, "Wystąpił błąd!");
+						}
+					});
+			}
+		}, 500);
+	};
+
+	static getDerivedStateFromProps(nextProps, prevState) {
+		if (nextProps.errors !== prevState.errors) {
+			return { errors: nextProps.errors };
+		} else {
+			return null;
+		}
+	}
+
 	render() {
+		const { classes } = this.props;
 		const { fluidPlaces } = this.props.fluidPlace;
+		const { errors } = this.props;
+		const filtered = fluidPlaces.filter((fluidPlace) => {
+			return fluidPlace.name
+				.toLowerCase()
+				.includes(this.state.search.toLowerCase());
+		});
+
 		return (
-			<div className="container mt-2">
-				<h1 className="display-4 text-center mt-2">Miejsca dodania płynów</h1>
-				<div className="row">
-					<div className="col-md-4 my-1">
-						<AddButton
-							link="/fluid-places/add"
-							className="btn btn-info"
-							message="Dodaj miejsce dodania czynnika"
+			<>
+				<Grid container className={classes.container}>
+					<Grid item xs={12}>
+						<Typography variant="h2" className={classes.title}>
+							Miejsca dodania czynników
+						</Typography>
+					</Grid>
+					<Grid item xs={false} md={2} />
+					<Grid item xs={12} md={8} className={classes.search}>
+						<TextField
+							InputProps={{
+								startAdornment: (
+									<InputAdornment position="start">
+										<SearchIcon />
+									</InputAdornment>
+								)
+							}}
+							type="search"
+							placeholder="Szukaj..."
+							onChange={(e) => this.updateSearch(e)}
 						/>
-					</div>
-				</div>
-				<div className="table-responsive mt-2">
-					<table className="table ">
-						<thead>
-							<tr>
-								<th>Nazwa</th>
-								<th>Akcje</th>
-							</tr>
-						</thead>
-						<tbody>
-							{fluidPlaces.map((fluidPlace) => (
-								<tr key={fluidPlace.placeId}>
-									<td>{fluidPlace.name}</td>
-									<td>
-										<Link
-											to={`/fluid-places/update/${fluidPlace.placeId}`}
-											className="btn btn-primary my-1"
+					</Grid>
+					<Grid item xs={false} md={2} />
+					<Grid item xs={false} md={2} />
+					<Grid item xs={12} md={8}>
+						<TableContainer>
+							<Table>
+								<TableHead>
+									<TableRow>
+										<TableCell className={classes.head}>
+											<Typography>Nazwa miejsca</Typography>
+										</TableCell>
+										<TableCell className={classes.head}>
+											<Typography>Akcje</Typography>
+										</TableCell>
+									</TableRow>
+								</TableHead>
+								<TableBody>
+									{filtered.map((fluidPlace) => (
+										<TableRow key={fluidPlace.placeId}>
+											<TableCell>
+												<Typography>{fluidPlace.name}</Typography>
+											</TableCell>
+											<TableCell>
+												<Tooltip title="Edytuj">
+													<IconButton
+														color="primary"
+														onClick={() =>
+															this.handleOpen(
+																fluidPlace.placeId,
+																fluidPlace.name,
+																"edit"
+															)
+														}
+													>
+														<EditIcon />
+													</IconButton>
+												</Tooltip>
+												<Tooltip title="Usuń">
+													<IconButton
+														onClick={() =>
+															this.props.deleteFluidPlace(fluidPlace.placeId)
+														}
+													>
+														<DeleteIcon />
+													</IconButton>
+												</Tooltip>
+											</TableCell>
+										</TableRow>
+									))}
+								</TableBody>
+							</Table>
+						</TableContainer>
+					</Grid>
+					<Grid item xs={false} md={2} />
+				</Grid>
+
+				<Dialog open={this.state.dialogOpen} onClose={this.handleClose}>
+					<Formik
+						initialValues={{
+							name: this.state.name
+						}}
+						validationSchema={validationSchema}
+						onSubmit={(values, { setSubmitting }) =>
+							this.onSubmit(values, { setSubmitting })
+						}
+					>
+						{({ isSubmitting }) => (
+							<Form className={classes.form}>
+								<Grid container spacing={2} justify="center">
+									<Grid item xs={12}>
+										<FormikTextField
+											error={errors.name}
+											id="name"
+											name="name"
+											label="Nazwa"
+											variant="outlined"
+											required
+											helperText={errors.name}
+											onChange={this.onChange}
+										/>
+									</Grid>
+									<Grid item xs={3} />
+									<Grid item xs={3}>
+										<Button onClick={this.handleClose} color="primary">
+											Anuluj
+										</Button>
+									</Grid>
+									<Grid item xs={3}>
+										<Button
+											type="submit"
+											color="primary"
+											disabled={isSubmitting}
 										>
-											Edytuj
-										</Link>
-										<button
-											onClick={this.onDeleteClick.bind(
-												this,
-												fluidPlace.placeId
-											)}
-											className="btn btn-danger ml-2 my-1"
-										>
-											Usuń
-										</button>
-									</td>
-								</tr>
-							))}
-						</tbody>
-					</table>
-				</div>
-			</div>
+											Zapisz
+										</Button>
+									</Grid>
+									<Grid item xs={3} />
+									<Grid item xs={12}>
+										{isSubmitting && <LinearProgress />}
+									</Grid>
+								</Grid>
+							</Form>
+						)}
+					</Formik>
+				</Dialog>
+				<Tooltip title="Dodaj">
+					<Fab
+						className={classes.fab}
+						color="secondary"
+						onClick={this.handleOpen}
+					>
+						<AddIcon fontSize="large" />
+					</Fab>
+				</Tooltip>
+			</>
 		);
 	}
 }
 
 FluidPlaceList.propTypes = {
 	fluidPlace: PropTypes.object.isRequired,
+	errors: PropTypes.object.isRequired,
 	getFluidPlaces: PropTypes.func.isRequired,
-	deleteFluidPlace: PropTypes.func.isRequired
+	deleteFluidPlace: PropTypes.func.isRequired,
+	addFluidPlace: PropTypes.func.isRequired,
+	updateFluidPlace: PropTypes.func.isRequired,
+	setSnackbar: PropTypes.func.isRequired
 };
 
-const mapDispatchToProps = (dispatch) => ({
-	getFluidPlaces: () => {
-		dispatch(getFluidPlaces());
-	},
-	deleteFluidPlace: (placeId) => {
-		dispatch(deleteFluidPlace(placeId));
-	}
-});
-
 const mapStateToProps = (state) => ({
-	fluidPlace: state.fluidPlace
+	fluidPlace: state.fluidPlace,
+	errors: state.errors
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(FluidPlaceList);
+export default connect(mapStateToProps, {
+	getFluidPlaces,
+	deleteFluidPlace,
+	addFluidPlace,
+	updateFluidPlace,
+	clearFluidPlaceState,
+	setSnackbar
+})(withStyles(tableStyles)(FluidPlaceList));
