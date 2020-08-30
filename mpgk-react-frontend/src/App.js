@@ -45,12 +45,14 @@ import NitrogenList from "./components/Pages/NitrogenList";
 import InspectionActivities from "./components/Pages/InspectionActivities";
 import InspectionPage from "./components/Pages/InspectionPage";
 import OverdueInspection from "./components/Pages/OverdueInspection";
+import Snackbar from "./components/Common/Snackbar";
 
 function App() {
 	return (
 		<Provider store={store}>
 			<Router>
 				<div className="App">
+					<Snackbar />
 					<Header />
 					<Route exact path="/" component={Home} />
 					<Route exact path="/devices" component={DeviceList} />

@@ -11,6 +11,7 @@ export const GET_FLUIDS = "GET_FLUIDS";
 export const GET_FLUID = "GET_FLUID";
 export const UPDATE_FLUID = "UPDATE_FLUID";
 export const DELETE_FLUID = "DELETE_FLUID";
+export const CLEAR_FLUID_STATE = "CLEAR_FLUID_STATE";
 
 //inspection types
 export const GET_INSPECTION_TYPES = "GET_INSPECTION_TYPES";
@@ -64,3 +65,6 @@ export const DELETE_FLUID_REGISTRY = "DELETE_FLUID_REGISTRY";
 export const GET_FLUID_PLACES = "GET_FLUID_PLACES";
 export const GET_FLUID_PLACE = "GET_FLUID_PLACE";
 export const DELETE_FLUID_PLACE = "DELETE_FLUID_PLACE";
+
+//snackbar
+export const SET_SNACKBAR = "SET_SNACKBAR";

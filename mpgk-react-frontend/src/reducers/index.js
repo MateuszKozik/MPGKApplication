@@ -11,6 +11,7 @@ import connectionReducer from "./connectionReducer";
 import roleReducer from "./roleReducer";
 import fluidRegistryReducer from "./fluidRegistryReducer";
 import fluidPlaceReducer from "./fluidPlaceReducer";
+import snackbarReducer from "./snackbarReducer";
 
 export default combineReducers({
 	errors: errorReducer,
@@ -24,5 +25,6 @@ export default combineReducers({
 	connection: connectionReducer,
 	role: roleReducer,
 	fluidRegistry: fluidRegistryReducer,
-	fluidPlace: fluidPlaceReducer
+	fluidPlace: fluidPlaceReducer,
+	snackbar: snackbarReducer
 });
