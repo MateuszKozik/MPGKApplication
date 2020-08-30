@@ -32,8 +32,6 @@ import FluidRegistryList from "./components/FluidRegistry/FluidRegistryList";
 import AddFluidRegistry from "./components/FluidRegistry/AddFluidRegistry";
 import UpdateFluidRegistry from "./components/FluidRegistry/UpdateFluidRegistry";
 import FluidPlaceList from "./components/FluidPlace/FluidPlaceList";
-import AddFluidPlace from "./components/FluidPlace/AddFluidPlace";
-import UpdateFluidPlace from "./components/FluidPlace/UpdateFluidPlace";
 import Home from "./components/Pages/Home";
 import FluidRegistry from "./components/Pages/FluidRegistry";
 import PerformersList from "./components/Pages/PerformersList";
@@ -121,12 +119,6 @@ function App() {
 						component={UpdateFluidRegistry}
 					/>
 					<Route exact path="/fluid-places" component={FluidPlaceList} />
-					<Route exact path="/fluid-places/add" component={AddFluidPlace} />
-					<Route
-						exact
-						path="/fluid-places/update/:placeId"
-						component={UpdateFluidPlace}
-					/>
 					<Route exact path="/new-fluid-registry" component={FluidRegistry} />
 					<Route
 						exact
