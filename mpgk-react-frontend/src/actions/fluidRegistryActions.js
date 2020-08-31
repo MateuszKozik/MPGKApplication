@@ -92,7 +92,7 @@ export const updateFluidRegistry = (registryId, updatedfluidRegistry) => async (
 };
 
 export const deleteFluidRegistry = (registryId) => async (dispatch) => {
-	if (window.confirm("Czy jesteś pewny? Spowoduje to usunięcie rejestru?")) {
+	if (window.confirm("Czy jesteś pewny? Spowoduje to usunięcie wpisu.")) {
 		await axios.delete(`/api/fluid-registries/${registryId}`);
 		dispatch({
 			type: DELETE_FLUID_REGISTRY,
