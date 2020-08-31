@@ -10,8 +10,6 @@ import InspectionTypeList from "./components/InspectionType/InspectionTypeList";
 import AddInspectionType from "./components/InspectionType/AddInspectionType";
 import UpdateInspectionType from "./components/InspectionType/UpdateInspectionType";
 import PersonList from "./components/Person/PersonList";
-import AddPerson from "./components/Person/AddPerson";
-import UpdatePerson from "./components/Person/UpdatePerson";
 import ActivityGroupList from "./components/ActivityGroup/ActivityGroupList";
 import AddActivityGroup from "./components/ActivityGroup/AddActivityGroup";
 import UpdateActivityGroup from "./components/ActivityGroup/UpdateActivityGroup";
@@ -67,12 +65,7 @@ function App() {
 						component={UpdateInspectionType}
 					/>
 					<Route exact path="/persons" component={PersonList} />
-					<Route exact path="/persons/add" component={AddPerson} />
-					<Route
-						exact
-						path="/persons/update/:personId"
-						component={UpdatePerson}
-					/>
+					
 					<Route exact path="/groups" component={ActivityGroupList} />
 					<Route exact path="/groups/add" component={AddActivityGroup} />
 					<Route
