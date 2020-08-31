@@ -29,14 +29,14 @@ export default function (state = initialState, action) {
 		case UPDATE_ACTIVITY:
 			return {
 				...state,
-				activities: state.activities.map((activitie) => {
-					if (activitie.activitieId === action.payload.activitieId) {
+				activities: state.activities.map((activity) => {
+					if (activity.activityId === action.payload.activityId) {
 						return {
-							...activitie,
+							...activity,
 							...action.payload
 						};
 					} else {
-						return activitie;
+						return activity;
 					}
 				})
 			};
