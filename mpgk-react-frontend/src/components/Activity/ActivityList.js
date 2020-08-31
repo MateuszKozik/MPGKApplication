@@ -5,7 +5,6 @@ import {
 	updateActivity,
 	clearActivityState
 } from "../../actions/activityActions";
-import PropTypes from "prop-types";
 import {
 	Grid,
 	Typography,
@@ -49,11 +48,15 @@ class ActivityList extends Component {
         name: "",
         emsr: "",
         setting: "",
-        type: "",
-        groupId: "",
-		actionType: "",
+		type: "",
+		listItems: "",
+        activityGroup: {},
 		search: "",
 		errors: {}
+	};
+
+	componentDidMount() {
+		this.props.getActivities();
 	};
 
 	updateSearch = (event) => {
@@ -64,55 +67,61 @@ class ActivityList extends Component {
 		this.setState({ [e.target.name]: e.target.value });
     };
     
-    
-
+ 
 	componentWillUnmount() {
 		this.props.clearActivityState();
 	}
 
-	handleOpen = (activityId, name, emsr, setting, type, groupId, listItems, actionType = "edit") => {
+	handleOpen = (activity) => {
+		const {activityId, name, emsr, setting, type, listItems} = activity;
+		const {activityGroup} = activity;
 		this.setState({
 			dialogOpen: true,
-            actionType: actionType,
+            activityId: activityId,
             name: name,
             emsr: emsr,
             setting: setting,
             type: type,
             listItems: listItems,
-            groupId: groupId,
-            activityId: activityId
+            activityGroup: activityGroup && {...activityGroup}
+            
 		});
 	};
 
 	handleClose = () => {
 		this.setState({
 			dialogOpen: false,
+			activityId: "",
             name: "",
             emsr: "",
             setting: "",
             type: "",
             listItems: "",
-            groupId: "",
-			activityId: "",
-			actionType: ""
+            activityGroup: {}
+			
+			
 		});
 	};
 
 	onSubmit = (values, { setSubmitting }) => {
 		setTimeout(() => {
 			setSubmitting(false);
-			if (this.state.actionType === "edit") {
-				const updatedActivity = {
+				let updatedActivity = {
 					activityId: this.state.activityId,
                     name: values.name,
                     emsr: values.emsr,
                     setting: values.setting,
                     type: this.state.type,
-                    listItems:this.state.listItems,
-                    activityGroup: { groupId: this.state.groupId }
-                };
+                    listItems:this.state.listItems
+				};
+				
+				if(this.state.activityGroup !== null){
+					updatedActivity = {
+						...updatedActivity,
+						activityGroup: this.state.activityGroup
+					}
+				}
                 
-
 				this.props.updateActivity(this.state.activityId, updatedActivity).then((res) => {
 					if (res) {
 						this.props.setSnackbar(true, "Dane czynności zaktualizowane!");
@@ -121,7 +130,7 @@ class ActivityList extends Component {
 						this.props.setSnackbar(true, "Wystąpił błąd!");
 					}
 				});
-			} 
+			
 		}, 500);
 	};
 
@@ -133,16 +142,14 @@ class ActivityList extends Component {
 		}
 	}
 
-	componentDidMount() {
-		this.props.getActivities();
-	}
+	
 
 	render() {
 		const { classes } = this.props;
 		const { activities } = this.props.activity;
 		const { errors } = this.props;
 		const filtered = activities.filter((activity) => {
-			return activity.name.toLowerCase().includes(this.state.search.toLowerCase());
+			return activity.name.toLowerCase().includes(this.state.search.toLowerCase());	
 		});
 
 		return (
@@ -211,11 +218,7 @@ class ActivityList extends Component {
 												<Tooltip title="Edytuj">
 													<IconButton
 														color="primary"
-														onClick={() =>
-                                                            this.handleOpen(activity.activityId, activity.name, activity.emsr, activity.setting, activity.type,activity.activityGroup.groupId,activity.listItems, "edit")
-                                                            
-                                                        }
-                                                       
+														onClick={() => this.handleOpen(activity)}
 													>
 														<EditIcon />
 													</IconButton>
@@ -310,13 +313,7 @@ class ActivityList extends Component {
 	}
 }
 
-ActivityList.propTypes = {
-	activity: PropTypes.object.isRequired,
-	getActivities: PropTypes.func.isRequired,
-	updateActivity: PropTypes.func.isRequired,
-	clearActivityState: PropTypes.func.isRequired,
-	setSnackbar: PropTypes.func.isRequired
-};
+
 
 const mapStateToProps = (state) => {
 	return {
