@@ -1,14 +1,25 @@
 import axios from "axios";
-import { GET_ERRORS, GET_GROUPS, GET_GROUP, DELETE_GROUP } from "./types";
+import { 
+     ADD_GROUP,
+     GET_ERRORS,
+     GET_GROUPS, 
+     GET_GROUP, 
+     DELETE_GROUP,
+     UPDATE_GROUP 
+} from "./types";
 
-export const addGroup = (group, history) => async (dispatch) => {
+export const addGroup = (group) => async (dispatch) => {
     try {
-        await axios.post("/api/groups", group);
-        history.push("/groups");
+        const res = await axios.post("/api/groups", group);
+        dispatch({
+			type: ADD_GROUP,
+			payload: res.data
+		});
         dispatch({
             type: GET_ERRORS,
             payload: {}
         });
+        return res;
     } catch (error) {
         dispatch({
             type: GET_ERRORS,
@@ -37,16 +48,20 @@ export const getGroup = (groupId, history) => async (dispatch) => {
     }
 };
 
-export const updateGroup = (groupId, updateGroup, history) => async (
+export const updateGroup = (groupId, updateGroup) => async (
     dispatch
 ) => {
     try {
-        await axios.put(`/api/groups/${groupId}`, updateGroup);
-        history.push("/groups");
+        const res = await axios.put(`/api/groups/${groupId}`, updateGroup);
+        dispatch({
+			type: UPDATE_GROUP,
+			payload: res.data
+		});
         dispatch({
             type: GET_ERRORS,
             payload: {}
         });
+        return res;
     } catch (error) {
         dispatch({
             type: GET_ERRORS,
@@ -63,4 +78,11 @@ export const deleteGroup = (groupId) => async (dispatch) => {
             payload: groupId
         });
     }
+};
+
+export const clearGroupState = () => (dispatch) => {
+	dispatch({
+		type: GET_GROUPS,
+		payload: []
+	});
 };
