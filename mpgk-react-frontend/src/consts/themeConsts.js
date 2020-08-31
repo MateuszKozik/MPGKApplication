@@ -4,7 +4,7 @@ export const tableStyles = (theme) => ({
 		color: "#fff"
 	},
 	form: {
-		padding: "40px 10px 10px 10px",
+		padding: "40px 20px 10px 20px",
 		textAlign: "center"
 	},
 	fab: {
