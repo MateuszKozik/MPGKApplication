@@ -333,16 +333,38 @@ DeviceList.propTypes = {
 	setSnackbar: PropTypes.func.isRequired
 };
 
-const mapStateToProps = (state) => ({
-	device: state.device,
-	errors: state.errors
-});
+const mapDispatchToProps = (dispatch) => {
+	return {
+		getDevices: () => {
+			dispatch(getDevices());
+		},
+		deleteDevice: (deviceId) => {
+			dispatch(deleteDevice(deviceId));
+		},
+		clearDeviceState: () => {
+			dispatch(clearDeviceState());
+		},
+		setSnackbar: (snackbarOpen, snackbarMessage, snackbarTime) => {
+			dispatch(setSnackbar(snackbarOpen, snackbarMessage, snackbarTime));
+		},
+		updateDevice(deviceId, updatedDevice) {
+			return dispatch(updateDevice(deviceId, updatedDevice)).then((res) => {
+				if (res && res.status === 200) return res;
+			});
+		},
+		addDevice(device) {
+			return dispatch(addDevice(device)).then((res) => {
+				if (res && res.status === 201) return res;
+			});
+		}
+	};
+};
 
-export default connect(mapStateToProps, {
-	getDevices,
-	deleteDevice,
-	addDevice,
-	updateDevice,
-	clearDeviceState,
-	setSnackbar
-})(withStyles(tableStyles)(DeviceList));
+const mapStateToProps = (state) => {
+	return { device: state.device, errors: state.errors };
+};
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(withStyles(tableStyles)(DeviceList));

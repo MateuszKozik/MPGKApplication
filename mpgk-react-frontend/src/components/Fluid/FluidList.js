@@ -286,16 +286,41 @@ FluidList.propTypes = {
 	setSnackbar: PropTypes.func.isRequired
 };
 
-const mapStateToProps = (state) => ({
-	fluid: state.fluid,
-	errors: state.errors
-});
+const mapStateToProps = (state) => {
+	return {
+		fluid: state.fluid,
+		errors: state.errors
+	};
+};
 
-export default connect(mapStateToProps, {
-	getFluids,
-	updateFluid,
-	addFluid,
-	setSnackbar,
-	deleteFluid,
-	clearFluidState
-})(withStyles(tableStyles)(FluidList));
+const mapDispatchToProps = (dispatch) => {
+	return {
+		getFluids: () => {
+			dispatch(getFluids());
+		},
+		deleteFluid: (fluidId) => {
+			dispatch(deleteFluid(fluidId));
+		},
+		clearFluidState: () => {
+			dispatch(clearFluidState());
+		},
+		setSnackbar: (snackbarOpen, snackbarMessage, snackbarTime) => {
+			dispatch(setSnackbar(snackbarOpen, snackbarMessage, snackbarTime));
+		},
+		updateFluid(fluidId, updatedFluid) {
+			return dispatch(updateFluid(fluidId, updatedFluid)).then((res) => {
+				if (res && res.status === 200) return res;
+			});
+		},
+		addFluid(fluid) {
+			return dispatch(addFluid(fluid)).then((res) => {
+				if (res && res.status === 201) return res;
+			});
+		}
+	};
+};
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(withStyles(tableStyles)(FluidList));

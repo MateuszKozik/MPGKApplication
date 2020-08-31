@@ -293,16 +293,43 @@ FluidPlaceList.propTypes = {
 	setSnackbar: PropTypes.func.isRequired
 };
 
-const mapStateToProps = (state) => ({
-	fluidPlace: state.fluidPlace,
-	errors: state.errors
-});
+const mapStateToProps = (state) => {
+	return {
+		fluidPlace: state.fluidPlace,
+		errors: state.errors
+	};
+};
 
-export default connect(mapStateToProps, {
-	getFluidPlaces,
-	deleteFluidPlace,
-	addFluidPlace,
-	updateFluidPlace,
-	clearFluidPlaceState,
-	setSnackbar
-})(withStyles(tableStyles)(FluidPlaceList));
+const mapDispatchToProps = (dispatch) => {
+	return {
+		getFluidPlaces: () => {
+			dispatch(getFluidPlaces());
+		},
+		deleteFluidPlace: (placeId) => {
+			dispatch(deleteFluidPlace(placeId));
+		},
+		clearFluidPlaceState: () => {
+			dispatch(clearFluidPlaceState());
+		},
+		setSnackbar: (snackbarOpen, snackbarMessage, snackbarTime) => {
+			dispatch(setSnackbar(snackbarOpen, snackbarMessage, snackbarTime));
+		},
+		updateFluidPlace(placeId, updatedFluidPlace) {
+			return dispatch(updateFluidPlace(placeId, updatedFluidPlace)).then(
+				(res) => {
+					if (res && res.status === 200) return res;
+				}
+			);
+		},
+		addFluidPlace(fluidPlace) {
+			return dispatch(addFluidPlace(fluidPlace)).then((res) => {
+				if (res && res.status === 201) return res;
+			});
+		}
+	};
+};
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(withStyles(tableStyles)(FluidPlaceList));

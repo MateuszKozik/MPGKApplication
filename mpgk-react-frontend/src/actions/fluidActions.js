@@ -59,7 +59,7 @@ export const updateFluid = (fluidId, updatedFluid) => async (dispatch) => {
 			type: GET_ERRORS,
 			payload: {}
 		});
-		return true;
+		return res;
 	} catch (error) {
 		dispatch({
 			type: GET_ERRORS,
