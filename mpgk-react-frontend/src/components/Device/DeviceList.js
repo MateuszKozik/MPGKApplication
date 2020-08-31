@@ -26,15 +26,13 @@ import {
 	LinearProgress,
 	TextField,
 	InputAdornment,
-	Tooltip,
-	FormControlLabel,
-	Switch
+	Tooltip
 } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import EditIcon from "@material-ui/icons/Edit";
 import SearchIcon from "@material-ui/icons/Search";
 import DeleteIcon from "@material-ui/icons/Delete";
-import { FormikTextField } from "formik-material-fields";
+import { FormikTextField, FormikSwitchField } from "formik-material-fields";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { setSnackbar } from "../../reducers/snackbarReducer";
@@ -50,7 +48,7 @@ class DeviceList extends Component {
 		dialogOpen: false,
 		deviceId: "",
 		name: "",
-		status: false,
+		status: "",
 		actionType: "",
 		search: "",
 		errors: {}
@@ -99,7 +97,7 @@ class DeviceList extends Component {
 			dialogOpen: false,
 			deviceId: "",
 			name: "",
-			status: false,
+			status: "",
 			actionType: ""
 		});
 	};
@@ -108,7 +106,7 @@ class DeviceList extends Component {
 		setTimeout(() => {
 			setSubmitting(false);
 			if (this.state.actionType === "add") {
-				const newDevice = { name: values.name, status: this.state.status };
+				const newDevice = { name: values.name, status: values.status };
 
 				this.props.addDevice(newDevice).then((res) => {
 					if (res) {
@@ -122,7 +120,7 @@ class DeviceList extends Component {
 				const updatedDevice = {
 					deviceId: this.state.deviceId,
 					name: values.name,
-					status: this.state.status
+					status: values.status
 				};
 
 				this.props
@@ -250,14 +248,14 @@ class DeviceList extends Component {
 					<Formik
 						initialValues={{
 							name: this.state.name,
-							status: this.state.status
+							status: this.state.status === "" ? false : this.state.status
 						}}
 						validationSchema={validationSchema}
 						onSubmit={(values, { setSubmitting }) =>
 							this.onSubmit(values, { setSubmitting })
 						}
 					>
-						{({ isSubmitting }) => (
+						{({ isSubmitting, values }) => (
 							<Form className={classes.form}>
 								<Grid container spacing={2} justify="center">
 									<Grid item xs={12}>
@@ -273,17 +271,18 @@ class DeviceList extends Component {
 										/>
 									</Grid>
 									<Grid item xs={12}>
-										<FormControlLabel
-											labelPlacement="top"
-											control={
-												<Switch
-													id="status"
-													name="status"
-													checked={this.state.status}
-													onChange={this.onChange}
-												/>
-											}
+										<FormikSwitchField
 											label="Status urządzenia"
+											id="status"
+											name="status"
+											onChange={(value) => this.setState({ status: value })}
+											trueValue={true}
+											falseValue={false}
+											controlLabel={
+												values.status === true
+													? "Włączone"
+													: values.status === false && "Wyłączone"
+											}
 										/>
 									</Grid>
 									<Grid item xs={3} />
