@@ -1,14 +1,25 @@
 import axios from "axios";
-import { GET_ERRORS, GET_PERSONS, GET_PERSON, DELETE_PERSON } from "./types";
+import { 
+    GET_ERRORS, 
+    GET_PERSONS, 
+    GET_PERSON, 
+    DELETE_PERSON,
+    ADD_PERSON,
+    UPDATE_PERSON
+} from "./types";
 
-export const addPerson = (person, history) => async (dispatch) => {
+export const addPerson = (person) => async (dispatch) => {
     try {
-        await axios.post("/api/persons", person);
-        history.push("/persons");
+        const res = await axios.post("/api/persons", person);
+        dispatch({
+			type: ADD_PERSON,
+			payload: res.data
+		});
         dispatch({
             type: GET_ERRORS,
             payload: {}
         });
+        return res;
     } catch (error) {
         dispatch({
             type: GET_ERRORS,
@@ -37,16 +48,20 @@ export const getPerson = (personId, history) => async (dispatch) => {
     }
 };
 
-export const updatePerson = (personId, updatePerson, history) => async (
+export const updatePerson = (personId, updatePerson) => async (
     dispatch
 ) => {
     try {
-        await axios.put(`/api/persons/${personId}`, updatePerson);
-        history.push("/persons");
+        const res = await axios.put(`/api/persons/${personId}`, updatePerson);
+        dispatch({
+			type: UPDATE_PERSON,
+			payload: res.data
+		});
         dispatch({
             type: GET_ERRORS,
             payload: {}
         });
+        return res;
     } catch (error) {
         dispatch({
             type: GET_ERRORS,
@@ -63,4 +78,11 @@ export const deletePerson = (personId) => async (dispatch) => {
             payload: personId
         });
     }
+};
+
+export const clearPersonState = () => (dispatch) => {
+	dispatch({
+		type: GET_PERSONS,
+		payload: []
+	});
 };
