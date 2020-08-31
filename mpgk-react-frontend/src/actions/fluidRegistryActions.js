@@ -3,19 +3,23 @@ import {
 	GET_ERRORS,
 	GET_FLUID_REGISTRIES,
 	GET_FLUID_REGISTRY,
-	DELETE_FLUID_REGISTRY
+	DELETE_FLUID_REGISTRY,
+	ADD_FLUID_REGISTRY,
+	UPDATE_FLUID_REGISTRY
 } from "./types";
 
-export const addFluidRegistry = (fluidRegistry, history) => async (
-	dispatch
-) => {
+export const addFluidRegistry = (fluidRegistry) => async (dispatch) => {
 	try {
-		await axios.post("/api/fluid-registries", fluidRegistry);
-		history.push("/fluid-registries");
+		const res = await axios.post("/api/fluid-registries", fluidRegistry);
+		dispatch({
+			type: ADD_FLUID_REGISTRY,
+			payload: res.data
+		});
 		dispatch({
 			type: GET_ERRORS,
 			payload: {}
 		});
+		return res;
 	} catch (error) {
 		dispatch({
 			type: GET_ERRORS,
@@ -62,18 +66,23 @@ export const getFluidRegistry = (registryId, history) => async (dispatch) => {
 	}
 };
 
-export const updateFluidRegistry = (
-	registryId,
-	fluidRegistry,
-	history
-) => async (dispatch) => {
+export const updateFluidRegistry = (registryId, updatedfluidRegistry) => async (
+	dispatch
+) => {
 	try {
-		await axios.put(`/api/fluid-registries/${registryId}`, fluidRegistry);
-		history.push("/fluid-registries");
+		const res = await axios.put(
+			`/api/fluid-registries/${registryId}`,
+			updatedfluidRegistry
+		);
+		dispatch({
+			type: UPDATE_FLUID_REGISTRY,
+			payload: res.data
+		});
 		dispatch({
 			type: GET_ERRORS,
 			payload: {}
 		});
+		return res;
 	} catch (error) {
 		dispatch({
 			type: GET_ERRORS,
@@ -90,4 +99,11 @@ export const deleteFluidRegistry = (registryId) => async (dispatch) => {
 			payload: registryId
 		});
 	}
+};
+
+export const clearFluidRegistryState = () => (dispatch) => {
+	dispatch({
+		type: GET_FLUID_REGISTRIES,
+		payload: []
+	});
 };

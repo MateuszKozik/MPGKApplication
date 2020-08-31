@@ -4,17 +4,23 @@ import {
 	GET_CONNECTIONS,
 	GET_CONNECTION,
 	GET_HOMEPAGE_CONNECTIONS,
-	DELETE_CONNECTION
+	DELETE_CONNECTION,
+	ADD_CONNECTION,
+	UPDATE_CONNECTION
 } from "./types";
 
-export const addConnection = (connection, history) => async (dispatch) => {
+export const addConnection = (connection) => async (dispatch) => {
 	try {
-		await axios.post("/api/connections", connection);
-		history.push("/connections");
+		const res = await axios.post("/api/connections", connection);
+		dispatch({
+			type: ADD_CONNECTION,
+			payload: res.data
+		});
 		dispatch({
 			type: GET_ERRORS,
 			payload: {}
 		});
+		return res;
 	} catch (error) {
 		dispatch({
 			type: GET_ERRORS,
@@ -43,18 +49,23 @@ export const getConnection = (connectionId, history) => async (dispach) => {
 	}
 };
 
-export const updateConnection = (
-	connectionId,
-	updateConnection,
-	history
-) => async (dispatch) => {
+export const updateConnection = (connectionId, updatedConnection) => async (
+	dispatch
+) => {
 	try {
-		await axios.put(`/api/connections/${connectionId}`, updateConnection);
-		history.push("/connections");
+		const res = await axios.put(
+			`/api/connections/${connectionId}`,
+			updatedConnection
+		);
+		dispatch({
+			type: UPDATE_CONNECTION,
+			payload: res.data
+		});
 		dispatch({
 			type: GET_ERRORS,
 			payload: {}
 		});
+		return res;
 	} catch (error) {
 		dispatch({
 			type: GET_ERRORS,
@@ -78,5 +89,12 @@ export const getHomePageConnections = () => async (dispatch) => {
 	dispatch({
 		type: GET_HOMEPAGE_CONNECTIONS,
 		payload: res.data
+	});
+};
+
+export const clearConnectionState = () => (dispach) => {
+	dispach({
+		type: GET_CONNECTIONS,
+		payload: []
 	});
 };
