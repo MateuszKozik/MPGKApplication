@@ -1,6 +1,7 @@
 package com.kozik.MPGK.services;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import com.kozik.MPGK.entities.FluidRegistry;
 import com.kozik.MPGK.exceptions.fluidRegistryExceptions.FluidRegistryAlreadyExistException;
@@ -24,7 +25,8 @@ public class FluidRegistryService {
         if (fluidRegistry.getRegistryId() != null) {
             throw new FluidRegistryAlreadyExistException(fluidRegistry.getRegistryId());
         }
-         fluidRegistry.setDatetime(LocalDateTime.now().toString());
+        fluidRegistry.setDatetime(LocalDateTime.now().toLocalDate().toString() + "T"
+                + LocalDateTime.now().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm")));
         return fluidRegistryRepository.save(fluidRegistry);
     }
 

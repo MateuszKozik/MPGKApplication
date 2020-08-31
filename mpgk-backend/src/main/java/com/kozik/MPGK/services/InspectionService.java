@@ -1,6 +1,7 @@
 package com.kozik.MPGK.services;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -61,7 +62,8 @@ public class InspectionService {
             element.setEndTime(inspection.getEndTime());
             element.setParameter(inspection.getParameter());
             element.setComment(inspection.getComment());
-            element.setDatetime(LocalDateTime.now().toString());
+            element.setDatetime(LocalDateTime.now().toLocalDate().toString() + "T"
+                    + LocalDateTime.now().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm")));
             element.setActivity(inspection.getActivity());
             element.setPerson(inspection.getPerson());
             element.setSupervisor(inspection.getSupervisor());
