@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import {
 	getGroups,
 	updateGroup,
-	deleteGroup,
 	clearGroupState
 } from "../../actions/activityGroupActions";
 import PropTypes from "prop-types";
@@ -27,7 +26,6 @@ import {
 import { withStyles } from "@material-ui/core/styles";
 import EditIcon from "@material-ui/icons/Edit";
 import SearchIcon from "@material-ui/icons/Search";
-import DeleteIcon from "@material-ui/icons/Delete";
 import { FormikTextField } from "formik-material-fields";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
@@ -179,16 +177,7 @@ class ActivityGroupList extends Component {
 													>
 														<EditIcon />
 													</IconButton>
-												</Tooltip>
-												<Tooltip title="Usuń">
-													<IconButton
-														onClick={() =>
-															this.props.deleteGroup(group.groupId)
-														}
-													>
-														<DeleteIcon />
-													</IconButton>
-												</Tooltip>
+												</Tooltip>												
 											</TableCell>
 										</TableRow>
 									))}
@@ -258,7 +247,6 @@ ActivityGroupList.propTypes = {
 	group: PropTypes.object.isRequired,
 	getGroups: PropTypes.func.isRequired,
 	updateGroup: PropTypes.func.isRequired,
-	deleteGroup: PropTypes.func.isRequired,
 	clearGroupState: PropTypes.func.isRequired,
 	setSnackbar: PropTypes.func.isRequired
 };
@@ -274,9 +262,6 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		getGroups: () => {
 			dispatch(getGroups());
-		},
-		deleteGroup: (groupId) => {
-			dispatch(deleteGroup(groupId));
 		},
 		clearGroupState: () => {
 			dispatch(clearGroupState());
