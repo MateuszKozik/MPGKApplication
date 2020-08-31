@@ -5,7 +5,6 @@ import {
 	updateGroup,
 	clearGroupState
 } from "../../actions/activityGroupActions";
-import PropTypes from "prop-types";
 import {
 	Grid,
 	Typography,
@@ -43,10 +42,13 @@ class ActivityGroupList extends Component {
 		dialogOpen: false,
 		groupId: "",
 		name: "",
-		connectionId: "",
-		actionType: "",
+		connection: {},
 		search: "",
 		errors: {}
+	};
+
+	componentDidMount() {
+		this.props.getGroups();
 	};
 
 	updateSearch = (event) => {
@@ -61,35 +63,44 @@ class ActivityGroupList extends Component {
 		this.props.clearGroupState();
 	}
 
-	handleOpen = (groupId, name, connectionId, actionType = "edit") => {
+	handleOpen = (activityGroup) => {
+		const {groupId, name} = activityGroup;
+		const {connection} = activityGroup;
 		this.setState({
 			dialogOpen: true,
-            actionType: actionType,
+			groupId: groupId,
 			name: name,
-			connectionId: connectionId,
-            groupId: groupId
+			connection: connection && {...connection}
+            
 		});
 	};
 
 	handleClose = () => {
 		this.setState({
 			dialogOpen: false,
-			name: "",
-			connectionId: "",
 			groupId: "",
-			actionType: ""
+			name: "",
+			connectionId: {}
 		});
 	};
+	
+	
 
 	onSubmit = (values, { setSubmitting }) => {
 		setTimeout(() => {
 			setSubmitting(false);
-			if (this.state.actionType === "edit") {
-				const updatedGroup = {
+			
+				let updatedGroup = {
 					groupId: this.state.groupId,
-					name: values.name,
-					connection: { connectionId: this.state.connectionId }
+					name: values.name
 				};
+				
+				if(this.state.connection !== null){
+					updatedGroup = {
+						...updatedGroup,
+						connection: this.state.connection
+					}
+				}
 
 				this.props.updateGroup(this.state.groupId, updatedGroup).then((res) => {
 					if (res) {
@@ -99,7 +110,7 @@ class ActivityGroupList extends Component {
 						this.props.setSnackbar(true, "Wystąpił błąd!");
 					}
 				});
-			} 
+			 
 		}, 500);
 	};
 
@@ -111,9 +122,7 @@ class ActivityGroupList extends Component {
 		}
 	}
 
-	componentDidMount() {
-		this.props.getGroups();
-	}
+	
 
 	render() {
 		const { classes } = this.props;
@@ -162,17 +171,17 @@ class ActivityGroupList extends Component {
 									</TableRow>
 								</TableHead>
 								<TableBody>
-									{filtered.map((group) => (
-										<TableRow key={group.groupId}>
+									{filtered.map((activityGroup,index) => (
+										<TableRow key={index}>
 											<TableCell>
-												<Typography>{group.name}</Typography>
+												<Typography>{activityGroup.name}</Typography>
 											</TableCell>
 											<TableCell>
 												<Tooltip title="Edytuj">
 													<IconButton
 														color="primary"
 														onClick={() =>
-															this.handleOpen(group.groupId, group.name,group.connection.connectionId, "edit")
+															this.handleOpen(activityGroup)
 														}
 													>
 														<EditIcon />
@@ -243,13 +252,7 @@ class ActivityGroupList extends Component {
 	}
 }
 
-ActivityGroupList.propTypes = {
-	group: PropTypes.object.isRequired,
-	getGroups: PropTypes.func.isRequired,
-	updateGroup: PropTypes.func.isRequired,
-	clearGroupState: PropTypes.func.isRequired,
-	setSnackbar: PropTypes.func.isRequired
-};
+
 
 const mapStateToProps = (state) => {
 	return {
