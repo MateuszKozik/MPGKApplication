@@ -7,7 +7,6 @@ import {
     updatePerson,
 	clearPersonState
 } from "../../actions/personActions";
-import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core";
 import { tableStyles } from "../../consts/themeConsts";
 import {
@@ -149,9 +148,8 @@ class PersonList extends Component {
 		const { classes } = this.props;
 		const { errors } = this.props;
 		const filtered = persons.filter((person) => {
-			return person.name
-				.toLowerCase()
-				.includes(this.state.search.toLowerCase());
+			return person.name.toLowerCase().includes(this.state.search.toLowerCase()) ||
+				person.surname.toLowerCase().includes(this.state.search.toLowerCase());
 		});
 
 		return (
@@ -317,15 +315,7 @@ class PersonList extends Component {
 	}
 }
 
-PersonList.propTypes = {
-	person: PropTypes.object.isRequired,
-	getPersons: PropTypes.func.isRequired,
-	deletePerson: PropTypes.func.isRequired,
-	addPerson: PropTypes.func.isRequired,
-	updatePerson: PropTypes.func.isRequired,
-	clearPersonState: PropTypes.func.isRequired,
-	setSnackbar: PropTypes.func.isRequired
-};
+
 
 const mapStateToProps = (state) => ({
 	person: state.person,
