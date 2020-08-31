@@ -1,4 +1,10 @@
-import { GET_PERSONS, GET_PERSON, DELETE_PERSON } from "../actions/types";
+import { 
+    GET_PERSONS, 
+    GET_PERSON, 
+    DELETE_PERSON,
+    ADD_PERSON,
+    UPDATE_PERSON
+} from "../actions/types";
 
 const initialState = {
     persons: [],
@@ -17,6 +23,26 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 person: action.payload
+            };
+        
+        case UPDATE_PERSON:
+            return {
+                ...state,
+                persons: state.persons.map((person) => {
+                    if (person.personId === action.payload.personId) {
+                        return {
+                             ...person,
+                            ...action.payload
+                        };
+                    } else {
+                        return person;
+                    }
+                })
+            };
+        case ADD_PERSON:
+            return {
+                ...state,
+                persons: [action.payload, ...state.persons]
             };
 
         case DELETE_PERSON:
