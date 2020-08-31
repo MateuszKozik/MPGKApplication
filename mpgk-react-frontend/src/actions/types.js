@@ -20,9 +20,12 @@ export const GET_INSPECTION_TYPE = "GET_INSPECTION_TYPE";
 export const DELETE_INSPECTION_TYPE = "DELETE_INSPECTION_TYPE";
 
 //persons
+export const ADD_PERSON = "ADD_PERSON";
 export const GET_PERSONS = "GET_PERSONS";
 export const GET_PERSON = "GET_PERSON";
 export const DELETE_PERSON = "DELETE_PERSON";
+export const UPDATE_PERSON = "UPDATE_PERSON";
+
 
 //activity group
 export const GET_GROUPS = "GET_GROUPS";
