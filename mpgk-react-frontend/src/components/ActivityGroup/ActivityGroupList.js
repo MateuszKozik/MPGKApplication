@@ -37,7 +37,7 @@ import { tableStyles } from "./../../consts/themeConsts";
 const validationSchema = Yup.object().shape({
 	name: Yup.string()
 		.required("Nazwa grupy jest wymagana")
-		.max(50, "Wprowadź któtszą nazwę")
+		.max(100, "Wprowadź któtszą nazwę")
 });
 
 class ActivityGroupList extends Component {
