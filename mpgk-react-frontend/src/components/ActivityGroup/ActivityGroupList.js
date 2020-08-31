@@ -45,6 +45,7 @@ class ActivityGroupList extends Component {
 		dialogOpen: false,
 		groupId: "",
 		name: "",
+		connectionId: "",
 		actionType: "",
 		search: "",
 		errors: {}
@@ -62,11 +63,12 @@ class ActivityGroupList extends Component {
 		this.props.clearGroupState();
 	}
 
-	handleOpen = (groupId, name, actionType = "edit") => {
+	handleOpen = (groupId, name, connectionId, actionType = "edit") => {
 		this.setState({
 			dialogOpen: true,
             actionType: actionType,
-            name: name,
+			name: name,
+			connectionId: connectionId,
             groupId: groupId
 		});
 	};
@@ -75,6 +77,7 @@ class ActivityGroupList extends Component {
 		this.setState({
 			dialogOpen: false,
 			name: "",
+			connectionId: "",
 			groupId: "",
 			actionType: ""
 		});
@@ -86,7 +89,8 @@ class ActivityGroupList extends Component {
 			if (this.state.actionType === "edit") {
 				const updatedGroup = {
 					groupId: this.state.groupId,
-					name: values.name
+					name: values.name,
+					connection: { connectionId: this.state.connectionId }
 				};
 
 				this.props.updateGroup(this.state.groupId, updatedGroup).then((res) => {
@@ -170,7 +174,7 @@ class ActivityGroupList extends Component {
 													<IconButton
 														color="primary"
 														onClick={() =>
-															this.handleOpen(group.groupId, group.name, "edit")
+															this.handleOpen(group.groupId, group.name,group.connection.connectionId, "edit")
 														}
 													>
 														<EditIcon />
