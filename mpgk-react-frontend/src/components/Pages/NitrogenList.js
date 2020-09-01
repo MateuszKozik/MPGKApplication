@@ -7,6 +7,7 @@ import {
 import { withStyles } from "@material-ui/core";
 import { tableStyles } from "../../consts/themeConsts";
 import FormatDate from "../Common/FormatDate";
+import PropTypes from "prop-types";
 import {
 	Grid,
 	Typography,
@@ -140,7 +141,11 @@ class NitrogenList extends Component {
 	}
 }
 
-
+NitrogenList.propTypes = {
+	inspection: PropTypes.object.isRequired,
+	getActionsByName: PropTypes.func.isRequired,
+	clearInspectionsListState: PropTypes.func.isRequired
+};
 
 const mapStateToProps = (state) => ({
 	inspection: state.inspection,
