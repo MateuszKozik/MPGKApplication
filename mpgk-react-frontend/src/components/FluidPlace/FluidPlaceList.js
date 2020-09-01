@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import {
 	getFluidPlaces,
-	deleteFluidPlace,
 	addFluidPlace,
 	updateFluidPlace,
 	clearFluidPlaceState
@@ -31,7 +30,6 @@ import {
 import AddIcon from "@material-ui/icons/Add";
 import EditIcon from "@material-ui/icons/Edit";
 import SearchIcon from "@material-ui/icons/Search";
-import DeleteIcon from "@material-ui/icons/Delete";
 import { FormikTextField } from "formik-material-fields";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
@@ -201,15 +199,6 @@ class FluidPlaceList extends Component {
 														<EditIcon />
 													</IconButton>
 												</Tooltip>
-												<Tooltip title="Usuń">
-													<IconButton
-														onClick={() =>
-															this.props.deleteFluidPlace(fluidPlace.placeId)
-														}
-													>
-														<DeleteIcon />
-													</IconButton>
-												</Tooltip>
 											</TableCell>
 										</TableRow>
 									))}
@@ -287,7 +276,6 @@ FluidPlaceList.propTypes = {
 	fluidPlace: PropTypes.object.isRequired,
 	errors: PropTypes.object.isRequired,
 	getFluidPlaces: PropTypes.func.isRequired,
-	deleteFluidPlace: PropTypes.func.isRequired,
 	addFluidPlace: PropTypes.func.isRequired,
 	updateFluidPlace: PropTypes.func.isRequired,
 	setSnackbar: PropTypes.func.isRequired
@@ -304,9 +292,6 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		getFluidPlaces: () => {
 			dispatch(getFluidPlaces());
-		},
-		deleteFluidPlace: (placeId) => {
-			dispatch(deleteFluidPlace(placeId));
 		},
 		clearFluidPlaceState: () => {
 			dispatch(clearFluidPlaceState());
