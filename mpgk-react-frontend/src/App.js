@@ -14,8 +14,6 @@ import AddInspection from "./components/Inspection/AddInspection";
 import UpdateInspection from "./components/Inspection/UpdateInspection";
 import ConnectionList from "./components/Connection/ConnectionList";
 import FluidRegistryList from "./components/FluidRegistry/FluidRegistryList";
-import AddFluidRegistry from "./components/FluidRegistry/AddFluidRegistry";
-import UpdateFluidRegistry from "./components/FluidRegistry/UpdateFluidRegistry";
 import FluidPlaceList from "./components/FluidPlace/FluidPlaceList";
 import Home from "./components/Pages/Home";
 import FluidRegistry from "./components/Pages/FluidRegistry";
@@ -50,16 +48,6 @@ function App() {
 					/>
 					<Route exact path="/connections" component={ConnectionList} />
 					<Route exact path="/fluid-registries" component={FluidRegistryList} />
-					<Route
-						exact
-						path="/fluid-registries/add"
-						component={AddFluidRegistry}
-					/>
-					<Route
-						exact
-						path="/fluid-registries/update/:registryId"
-						component={UpdateFluidRegistry}
-					/>
 					<Route exact path="/fluid-places" component={FluidPlaceList} />
 					<Route exact path="/new-fluid-registry" component={FluidRegistry} />
 					<Route
