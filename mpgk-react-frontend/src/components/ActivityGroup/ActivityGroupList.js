@@ -137,7 +137,7 @@ class ActivityGroupList extends Component {
 				<Grid container className={classes.container}>
 					<Grid item xs={12}>
 						<Typography variant="h2" className={classes.title}>
-							Grupy czynności
+							Kategorie czynności
 						</Typography>
 					</Grid>
 					<Grid item xs={false} md={2} />
