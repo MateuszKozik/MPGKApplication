@@ -4,7 +4,6 @@ import {
 	getFluids,
 	updateFluid,
 	addFluid,
-	deleteFluid,
 	clearFluidState
 } from "../../actions/fluidActions";
 import PropTypes from "prop-types";
@@ -30,7 +29,6 @@ import { withStyles } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
 import EditIcon from "@material-ui/icons/Edit";
 import SearchIcon from "@material-ui/icons/Search";
-import DeleteIcon from "@material-ui/icons/Delete";
 import { FormikTextField } from "formik-material-fields";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
@@ -194,15 +192,6 @@ class FluidList extends Component {
 														<EditIcon />
 													</IconButton>
 												</Tooltip>
-												<Tooltip title="Usuń">
-													<IconButton
-														onClick={() =>
-															this.props.deleteFluid(fluid.fluidId)
-														}
-													>
-														<DeleteIcon />
-													</IconButton>
-												</Tooltip>
 											</TableCell>
 										</TableRow>
 									))}
@@ -281,7 +270,6 @@ FluidList.propTypes = {
 	getFluids: PropTypes.func.isRequired,
 	updateFluid: PropTypes.func.isRequired,
 	addFluid: PropTypes.func.isRequired,
-	deleteFluid: PropTypes.func.isRequired,
 	clearFluidState: PropTypes.func.isRequired,
 	setSnackbar: PropTypes.func.isRequired
 };
@@ -297,9 +285,6 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		getFluids: () => {
 			dispatch(getFluids());
-		},
-		deleteFluid: (fluidId) => {
-			dispatch(deleteFluid(fluidId));
 		},
 		clearFluidState: () => {
 			dispatch(clearFluidState());

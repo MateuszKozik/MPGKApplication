@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import {
 	getDevices,
-	deleteDevice,
 	addDevice,
 	updateDevice,
 	clearDeviceState
@@ -31,7 +30,6 @@ import {
 import AddIcon from "@material-ui/icons/Add";
 import EditIcon from "@material-ui/icons/Edit";
 import SearchIcon from "@material-ui/icons/Search";
-import DeleteIcon from "@material-ui/icons/Delete";
 import { FormikTextField, FormikSwitchField } from "formik-material-fields";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
@@ -224,15 +222,6 @@ class DeviceList extends Component {
 															<EditIcon />
 														</IconButton>
 													</Tooltip>
-													<Tooltip title="Usuń">
-														<IconButton
-															onClick={() =>
-																this.props.deleteDevice(device.deviceId)
-															}
-														>
-															<DeleteIcon />
-														</IconButton>
-													</Tooltip>
 												</TableCell>
 											</TableRow>
 										);
@@ -326,7 +315,6 @@ class DeviceList extends Component {
 DeviceList.propTypes = {
 	device: PropTypes.object.isRequired,
 	getDevices: PropTypes.func.isRequired,
-	deleteDevice: PropTypes.func.isRequired,
 	addDevice: PropTypes.func.isRequired,
 	updateDevice: PropTypes.func.isRequired,
 	clearDeviceState: PropTypes.func.isRequired,
@@ -337,9 +325,6 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		getDevices: () => {
 			dispatch(getDevices());
-		},
-		deleteDevice: (deviceId) => {
-			dispatch(deleteDevice(deviceId));
 		},
 		clearDeviceState: () => {
 			dispatch(clearDeviceState());
