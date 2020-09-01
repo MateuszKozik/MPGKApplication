@@ -5,6 +5,7 @@ import {
 	updateGroup,
 	clearGroupState
 } from "../../actions/activityGroupActions";
+import PropTypes from "prop-types";
 import {
 	Grid,
 	Typography,
@@ -252,7 +253,13 @@ class ActivityGroupList extends Component {
 	}
 }
 
-
+ActivityGroupList.propTypes = {
+	group: PropTypes.object.isRequired,
+	getGroups: PropTypes.func.isRequired,
+	updateGroup: PropTypes.func.isRequired,
+	clearGroupState: PropTypes.func.isRequired,
+	setSnackbar: PropTypes.func.isRequired
+};
 
 const mapStateToProps = (state) => {
 	return {
