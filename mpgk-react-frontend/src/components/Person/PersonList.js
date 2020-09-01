@@ -39,10 +39,10 @@ import { setSnackbar } from "../../reducers/snackbarReducer";
 const validationSchema = Yup.object().shape({
 	name: Yup.string()
 		.required("Imię jest wymagane")
-        .max(35, "Wprowadź któtszą nazwę"),
+        .max(35, "Wprowadź któtsze imię"),
     surname: Yup.string()
 		.required("Nazwisko jest wymagane")
-		.max(35, "Wprowadź któtszą nazwę")
+		.max(35, "Wprowadź któtsze nazwisko")
 });
 
 class PersonList extends Component {
