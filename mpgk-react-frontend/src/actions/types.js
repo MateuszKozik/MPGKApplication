@@ -14,11 +14,6 @@ export const GET_FLUID = "GET_FLUID";
 export const UPDATE_FLUID = "UPDATE_FLUID";
 export const DELETE_FLUID = "DELETE_FLUID";
 
-//inspection types
-export const GET_INSPECTION_TYPES = "GET_INSPECTION_TYPES";
-export const GET_INSPECTION_TYPE = "GET_INSPECTION_TYPE";
-export const DELETE_INSPECTION_TYPE = "DELETE_INSPECTION_TYPE";
-
 //persons
 export const ADD_PERSON = "ADD_PERSON";
 export const GET_PERSONS = "GET_PERSONS";
@@ -59,11 +54,6 @@ export const ADD_CONNECTION = "ADD_CONNECTION";
 export const UPDATE_CONNECTION = "UPDATE_CONNECTION";
 export const GET_HOMEPAGE_CONNECTIONS = "GET_HOMEPAGE_CONNECTIONS";
 export const DELETE_CONNECTION = "DELETE_CONNECTION";
-
-//role
-export const GET_ROLES = "GET_ROLES";
-export const GET_ROLE = "GET_ROLE";
-export const DELETE_ROLE = "DELETE_ROLE";
 
 //fluid registry
 export const GET_FLUID_REGISTRIES = "GET_FLUID_REGISTRIES";

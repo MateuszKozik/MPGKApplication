@@ -30,22 +30,18 @@ class Header extends Component {
 						</li>
 						<li className="navbar-nav mr-auto">
 							<Link className="nav-link" to="/fluids">
-								Płyny
+								Czynniki
 							</Link>
 						</li>
-						<li className="navbar-nav mr-auto">
-							<Link className="nav-link" to="/inspection-types">
-								Rodzaje przeglądów
-							</Link>
-						</li>
+
 						<li className="navbar-nav mr-auto">
 							<Link className="nav-link" to="/persons">
-								Osoby
+								Pracownicy
 							</Link>
 						</li>
 						<li className="navbar-nav mr-auto">
 							<Link className="nav-link" to="/groups">
-								Grupy czynności
+								Kategorie czynności
 							</Link>
 						</li>
 						<li className="navbar-nav mr-auto">
@@ -55,27 +51,22 @@ class Header extends Component {
 						</li>
 						<li className="navbar-nav mr-auto">
 							<Link className="nav-link" to="/inspections">
-								Przeglądy
+								Rejestr przeglądów
 							</Link>
 						</li>
 						<li className="navbar-nav mr-auto">
 							<Link className="nav-link" to="/connections">
-								Powiązania
-							</Link>
-						</li>
-						<li className="navbar-nav mr-auto">
-							<Link className="nav-link" to="/roles">
-								Uprawnienia
+								Przeglądy
 							</Link>
 						</li>
 						<li className="navbar-nav mr-auto">
 							<Link className="nav-link" to="/fluid-registries">
-								Rejestry płynów
+								Rejestr płynów
 							</Link>
 						</li>
 						<li className="navbar-nav mr-auto">
 							<Link className="nav-link" to="/fluid-places">
-								Miejsca dodania płynów
+								Miejsca dodania czynników
 							</Link>
 						</li>
 					</ul>

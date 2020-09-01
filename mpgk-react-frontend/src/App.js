@@ -6,9 +6,6 @@ import DeviceList from "./components/Device/DeviceList";
 import { Provider } from "react-redux";
 import store from "./store";
 import FluidList from "./components/Fluid/FluidList";
-import InspectionTypeList from "./components/InspectionType/InspectionTypeList";
-import AddInspectionType from "./components/InspectionType/AddInspectionType";
-import UpdateInspectionType from "./components/InspectionType/UpdateInspectionType";
 import PersonList from "./components/Person/PersonList";
 import ActivityGroupList from "./components/ActivityGroup/ActivityGroupList";
 import ActivityList from "./components/Activity/ActivityList";
@@ -16,10 +13,6 @@ import InspectionList from "./components/Inspection/InspectionList";
 import AddInspection from "./components/Inspection/AddInspection";
 import UpdateInspection from "./components/Inspection/UpdateInspection";
 import ConnectionList from "./components/Connection/ConnectionList";
-import AddConnection from "./components/Connection/AddConnection";
-import UpdateConnection from "./components/Connection/UpdateConnection";
-import RoleList from "./components/Role/RoleList";
-import AddRole from "./components/Role/AddRole";
 import FluidRegistryList from "./components/FluidRegistry/FluidRegistryList";
 import AddFluidRegistry from "./components/FluidRegistry/AddFluidRegistry";
 import UpdateFluidRegistry from "./components/FluidRegistry/UpdateFluidRegistry";
@@ -45,27 +38,9 @@ function App() {
 					<Route exact path="/" component={Home} />
 					<Route exact path="/devices" component={DeviceList} />
 					<Route exact path="/fluids" component={FluidList} />
-					<Route
-						exact
-						path="/inspection-types"
-						component={InspectionTypeList}
-					/>
-					<Route
-						exact
-						path="/inspection-types/add"
-						component={AddInspectionType}
-					/>
-					<Route
-						exact
-						path="/inspection-types/update/:typeId"
-						component={UpdateInspectionType}
-					/>
 					<Route exact path="/persons" component={PersonList} />
-					
 					<Route exact path="/groups" component={ActivityGroupList} />
-					
 					<Route exact path="/activities" component={ActivityList} />
-					
 					<Route exact path="/inspections" component={InspectionList} />
 					<Route exact path="/inspections/add" component={AddInspection} />
 					<Route
@@ -74,14 +49,6 @@ function App() {
 						component={UpdateInspection}
 					/>
 					<Route exact path="/connections" component={ConnectionList} />
-					<Route exact path="/connections/add" component={AddConnection} />
-					<Route
-						exact
-						path="/connections/update/:connectionId"
-						component={UpdateConnection}
-					/>
-					<Route exact path="/roles" component={RoleList} />
-					<Route exact path="/roles/add" component={AddRole} />
 					<Route exact path="/fluid-registries" component={FluidRegistryList} />
 					<Route
 						exact
