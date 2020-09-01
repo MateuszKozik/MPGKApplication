@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
 import {
 	getFluidRegistries,
 	deleteFluidRegistry,
@@ -357,6 +358,15 @@ class FluidRegistryList extends Component {
 		);
 	}
 }
+
+FluidRegistryList.propTypes = {
+	fluidRegistry: PropTypes.object.isRequired,
+	errors: PropTypes.object.isRequired,
+	getFluidRegistries: PropTypes.func.isRequired,
+	deleteFluidRegistry: PropTypes.func.isRequired,
+	updateFluidRegistry: PropTypes.func.isRequired,
+	setSnackbar: PropTypes.func.isRequired
+};
 
 const mapDispatchToProps = (dispatch) => {
 	return {
