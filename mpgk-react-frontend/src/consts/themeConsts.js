@@ -27,5 +27,8 @@ export const tableStyles = (theme) => ({
 			textAlign: "center"
 		},
 		padding: "10px"
+	},
+	formControl: {
+		width: "340px"
 	}
 });
