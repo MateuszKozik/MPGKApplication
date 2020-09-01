@@ -4,7 +4,7 @@ import {
 	DELETE_CONNECTION,
 	GET_HOMEPAGE_CONNECTIONS,
 	ADD_FLUID_REGISTRY,
-	UPDATE_FLUID_REGISTRY
+	UPDATE_CONNECTION
 } from "../actions/types";
 
 const initialState = {
@@ -47,7 +47,7 @@ export default function (state = initialState, action) {
 				connections: [action.payload, ...state.connections]
 			};
 
-		case UPDATE_FLUID_REGISTRY:
+		case UPDATE_CONNECTION:
 			return {
 				...state,
 				connections: state.connections.map((connection) => {
