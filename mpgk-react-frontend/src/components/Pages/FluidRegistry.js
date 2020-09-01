@@ -1,77 +1,415 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getFluidRegistries } from "../../actions/fluidRegistryActions";
-import AddButton from "../Common/AddButton";
+import PropTypes from "prop-types";
+import {
+	getFluidRegistries,
+	clearFluidRegistryState,
+	addFluidRegistry
+} from "../../actions/fluidRegistryActions";
+import { getFluidPlaces } from "../../actions/fluidPlaceActions";
+import { getFluids } from "../../actions/fluidActions";
 import FormatDate from "../Common/FormatDate";
+import {
+	withStyles,
+	FormControl,
+	InputLabel,
+	MenuItem,
+	Select
+} from "@material-ui/core";
+import { tableStyles } from "../../consts/themeConsts";
+import {
+	Grid,
+	Typography,
+	Button,
+	Table,
+	TableBody,
+	TableCell,
+	TableContainer,
+	TableHead,
+	TableRow,
+	Dialog,
+	LinearProgress,
+	TextField,
+	InputAdornment,
+	Tooltip,
+	Fab
+} from "@material-ui/core";
+import SearchIcon from "@material-ui/icons/Search";
+import AddIcon from "@material-ui/icons/Add";
+import { FormikTextField } from "formik-material-fields";
+import { Formik, Form } from "formik";
+import * as Yup from "yup";
+import { setSnackbar } from "../../reducers/snackbarReducer";
+
+const validationSchema = Yup.object().shape({
+	quantity: Yup.number()
+		.moreThan(0, "Wprowadź liczbę większą od zera")
+		.required("Ilość czynnika jest wymagana")
+});
 
 class FluidRegistry extends Component {
+	state = {
+		dialogOpen: false,
+		quantity: "",
+		fluid: "",
+		fluidPlace: "",
+		errors: {},
+		search: ""
+	};
+
 	componentDidMount() {
 		this.props.getFluidRegistries();
+		this.props.getFluids();
+		this.props.getFluidPlaces();
+	}
+
+	updateSearch = (event) => {
+		this.setState({ search: event.target.value });
+	};
+
+	onChange = (e) => {
+		this.setState({ [e.target.name]: e.target.value });
+	};
+
+	componentWillUnmount() {
+		this.props.clearFluidRegistryState();
+	}
+
+	handleClose = () => {
+		this.setState({
+			dialogOpen: false,
+			quantity: "",
+			fluid: "",
+			fluidPlace: ""
+		});
+	};
+
+	onSubmit = (values, { setSubmitting }) => {
+		setTimeout(() => {
+			setSubmitting(false);
+
+			const newFluidRegistry = {
+				quantity: values.quantity,
+				fluid: this.state.fluid,
+				fluidPlace: this.state.fluidPlace
+			};
+
+			this.props.addFluidRegistry(newFluidRegistry).then((res) => {
+				if (res) {
+					this.props.setSnackbar(true, "Dodano nowy wpis!");
+					this.handleClose();
+				} else {
+					this.props.setSnackbar(true, "Wystąpił błąd!");
+				}
+			});
+		}, 500);
+	};
+
+	static getDerivedStateFromProps(nextProps, prevState) {
+		if (nextProps.errors !== prevState.errors) {
+			return { errors: nextProps.errors };
+		} else {
+			return null;
+		}
 	}
 
 	render() {
+		const { classes } = this.props;
 		const { fluidRegistries } = this.props.fluidRegistry;
+		const { fluidPlaces } = this.props.fluidPlace;
+		const { fluids } = this.props.fluid;
+		const { errors } = this.props;
+		const filtered = fluidRegistries.filter((fluidRegistry) => {
+			const { fluidPlace, fluid, person } = fluidRegistry;
+			if (!fluidPlace && !fluid && !person) {
+				return fluidRegistry.datetime.includes(this.state.search.toLowerCase());
+			}
+			if (!fluid) {
+				return (
+					fluidRegistry.datetime.includes(this.state.search.toLowerCase()) ||
+					fluidPlace.name
+						.toLowerCase()
+						.includes(this.state.search.toLowerCase())
+				);
+			}
+			if (!fluidPlace) {
+				return (
+					fluidRegistry.datetime.includes(this.state.search.toLowerCase()) ||
+					fluid.name.toLowerCase().includes(this.state.search.toLowerCase())
+				);
+			}
+			if (!person) {
+				return (
+					fluid.name.toLowerCase().includes(this.state.search.toLowerCase()) ||
+					fluidPlace.name
+						.toLowerCase()
+						.includes(this.state.search.toLowerCase()) ||
+					fluidRegistry.datetime.includes(this.state.search.toLowerCase())
+				);
+			}
+			if (fluidPlace && fluid && person) {
+				return (
+					fluid.name.toLowerCase().includes(this.state.search.toLowerCase()) ||
+					fluidPlace.name
+						.toLowerCase()
+						.includes(this.state.search.toLowerCase()) ||
+					fluidRegistry.datetime.includes(this.state.search.toLowerCase()) ||
+					person.name.toLowerCase().includes(this.state.search.toLowerCase()) ||
+					person.surname.toLowerCase().includes(this.state.search.toLowerCase())
+				);
+			} else {
+				return fluidRegistry.datetime.includes(this.state.search.toLowerCase());
+			}
+		});
+
 		return (
-			<div className="container mt-2">
-				<h1 className="display-4 text-center mt-2">Rejestry płynów</h1>
-				<div className="row">
-					<div className="col-md-4 my-1">
-						<AddButton
-								link="/new-fluid-registry/add"
-								className="btn btn-info"
-								message="Dodaj płyn roboczy"
-							/>
-						</div>
-				</div>
-				<div className="table-responsive mt-2">
-					<table className="table ">
-						<thead>
-							<tr>
-								<th>Miejsce dodania</th>
-								<th>Rodzaj czynnika</th>
-								<th>Ilość [litry]</th>
-								<th>Data i godzina</th>
-								<th>Imię i nazwisko</th>
-							</tr>
-						</thead>
-						<tbody>
-							{fluidRegistries.map((fluidRegistry) => (
-								<tr key={fluidRegistry.registryId}>
-									<td>
-										{fluidRegistry.fluidPlace
-											? fluidRegistry.fluidPlace.name
-											: null}
-									</td>
-									<td>
-										{fluidRegistry.fluid ? fluidRegistry.fluid.name : null}
-									</td>
-									<td>{fluidRegistry.quantity}</td>
-									<td><FormatDate date={fluidRegistry.datetime} datetime={true} /></td>
-									<td>
-										{fluidRegistry.person
-											? fluidRegistry.person.name +
-											  " " +
-											  fluidRegistry.person.surname
-											: null}
-									</td>
-								</tr>
-							))}
-						</tbody>
-					</table>
-				</div>
-			</div>
+			<>
+				<Grid container className={classes.container}>
+					<Grid item xs={12}>
+						<Typography variant="h2" className={classes.title}>
+							Rejestr płynów roboczych ORC
+						</Typography>
+					</Grid>
+					<Grid item xs={false} md={2} />
+					<Grid item xs={12} md={8} className={classes.search}>
+						<TextField
+							InputProps={{
+								startAdornment: (
+									<InputAdornment position="start">
+										<SearchIcon />
+									</InputAdornment>
+								)
+							}}
+							type="search"
+							placeholder="Szukaj..."
+							onChange={(e) => this.updateSearch(e)}
+						/>
+					</Grid>
+					<Grid item xs={false} md={2} />
+					<Grid item xs={false} md={2} />
+					<Grid item xs={12} md={8}>
+						<TableContainer>
+							<Table>
+								<TableHead>
+									<TableRow>
+										<TableCell className={classes.head}>
+											<Typography>Miejsce dodania</Typography>
+										</TableCell>
+										<TableCell className={classes.head}>
+											<Typography>Rodzaj czynnika</Typography>
+										</TableCell>
+										<TableCell className={classes.head}>
+											<Typography>Ilość [litry]</Typography>
+										</TableCell>
+										<TableCell className={classes.head}>
+											<Typography>Data</Typography>
+										</TableCell>
+										<TableCell className={classes.head}>
+											<Typography>Imię i nazwisko</Typography>
+										</TableCell>
+									</TableRow>
+								</TableHead>
+								<TableBody>
+									{filtered.map((fluidRegistry, index) => {
+										const { fluidPlace, person, fluid } = fluidRegistry;
+										return (
+											<TableRow key={index}>
+												<TableCell>
+													<Typography>
+														{fluidPlace && fluidPlace.name}
+													</Typography>
+												</TableCell>
+												<TableCell>
+													<Typography>{fluid && fluid.name}</Typography>
+												</TableCell>
+												<TableCell>
+													<Typography>{fluidRegistry.quantity}</Typography>
+												</TableCell>
+												<TableCell>
+													<FormatDate date={fluidRegistry.datetime} datetime />
+												</TableCell>
+												<TableCell>
+													<Typography>
+														{person && person.name + " " + person.surname}
+													</Typography>
+												</TableCell>
+											</TableRow>
+										);
+									})}
+								</TableBody>
+							</Table>
+						</TableContainer>
+					</Grid>
+					<Grid item xs={false} md={2} />
+				</Grid>
+
+				<Dialog open={this.state.dialogOpen} onClose={this.handleClose}>
+					<Formik
+						initialValues={{
+							quantity: "",
+							fluidId: "",
+							placeId: ""
+						}}
+						validationSchema={validationSchema}
+						onSubmit={(values, { setSubmitting }) =>
+							this.onSubmit(values, { setSubmitting })
+						}
+					>
+						{({ isSubmitting }) => (
+							<Form className={classes.form}>
+								<Grid container spacing={2} justify="center">
+									<Grid item xs={12}>
+										<FormikTextField
+											className={classes.formControl}
+											error={errors.quantity}
+											id="quantity"
+											name="quantity"
+											label="Ilość [litry]"
+											variant="outlined"
+											type="number"
+											required
+											helperText={errors.quantity}
+											onChange={this.onChange}
+										/>
+									</Grid>
+
+									<Grid item xs={12}>
+										<FormControl
+											required
+											variant="outlined"
+											className={classes.formControl}
+										>
+											<InputLabel id="fluid-places-label">
+												Miejsce dodania
+											</InputLabel>
+											<Select
+												labelId="fluid-places-label"
+												id="fluidPlace"
+												name="fluidPlace"
+												value={this.state.fluidPlace}
+												onChange={this.onChange}
+												label="Miejsce dodania"
+											>
+												<MenuItem value="">
+													<em>Wybierz miejsce</em>
+												</MenuItem>
+												{fluidPlaces.map((fluidPlace) => (
+													<MenuItem key={fluidPlace.placeId} value={fluidPlace}>
+														{fluidPlace.name}
+													</MenuItem>
+												))}
+											</Select>
+										</FormControl>
+									</Grid>
+									<Grid item xs={12}>
+										<FormControl
+											required
+											variant="outlined"
+											className={classes.formControl}
+										>
+											<InputLabel id="fluids-label">Rodzaj czynnika</InputLabel>
+											<Select
+												labelId="fluids-label"
+												id="fluid"
+												name="fluid"
+												value={this.state.fluid}
+												onChange={this.onChange}
+												label="Rodzaj czynnika"
+											>
+												<MenuItem value="">
+													<em>Wybierz czynnik</em>
+												</MenuItem>
+												{fluids.map((fluid) => (
+													<MenuItem key={fluid.fluidId} value={fluid}>
+														{fluid.name}
+													</MenuItem>
+												))}
+											</Select>
+										</FormControl>
+									</Grid>
+									<Grid item xs={3} />
+									<Grid item xs={3}>
+										<Button onClick={this.handleClose} color="primary">
+											Anuluj
+										</Button>
+									</Grid>
+									<Grid item xs={3}>
+										<Button
+											type="submit"
+											color="primary"
+											disabled={isSubmitting}
+										>
+											Zapisz
+										</Button>
+									</Grid>
+									<Grid item xs={3} />
+									<Grid item xs={12}>
+										{isSubmitting && <LinearProgress />}
+									</Grid>
+								</Grid>
+							</Form>
+						)}
+					</Formik>
+				</Dialog>
+				<Tooltip title="Dodaj">
+					<Fab
+						className={classes.fab}
+						color="secondary"
+						onClick={() => {
+							this.setState({ dialogOpen: true });
+						}}
+					>
+						<AddIcon fontSize="large" />
+					</Fab>
+				</Tooltip>
+			</>
 		);
 	}
 }
 
+FluidRegistry.propTypes = {
+	fluidRegistry: PropTypes.object.isRequired,
+	fluidPlace: PropTypes.object.isRequired,
+	fluid: PropTypes.object.isRequired,
+	errors: PropTypes.object.isRequired,
+	getFluidRegistries: PropTypes.func.isRequired,
+	addFluidRegistry: PropTypes.func.isRequired,
+	setSnackbar: PropTypes.func.isRequired,
+	getFluidPlaces: PropTypes.func.isRequired,
+	getFluids: PropTypes.func.isRequired
+};
+
 const mapStateToProps = (state) => ({
-	fluidRegistry: state.fluidRegistry
+	fluidRegistry: state.fluidRegistry,
+	fluidPlace: state.fluidPlace,
+	fluid: state.fluid,
+	errors: state.errors
 });
 
 const mapDispatchToProps = (dispatch) => ({
 	getFluidRegistries: () => {
 		dispatch(getFluidRegistries());
+	},
+	getFluids: () => {
+		dispatch(getFluids());
+	},
+	getFluidPlaces: () => {
+		dispatch(getFluidPlaces());
+	},
+	clearFluidRegistryState: () => {
+		dispatch(clearFluidRegistryState());
+	},
+	setSnackbar: () => {
+		dispatch(setSnackbar());
+	},
+	addFluidRegistry(fluidRegistry) {
+		return dispatch(addFluidRegistry(fluidRegistry)).then((res) => {
+			if (res && res.status === 201) return res;
+		});
 	}
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(FluidRegistry);
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(withStyles(tableStyles)(FluidRegistry));
