@@ -149,7 +149,14 @@ class ActivityList extends Component {
 		const { activities } = this.props.activity;
 		const { errors } = this.props;
 		const filtered = activities.filter((activity) => {
-			return activity.name.toLowerCase().includes(this.state.search.toLowerCase());	
+			const {activityGroup} = activity;
+			if(!activityGroup){
+				return activity.name.toLowerCase().includes(this.state.search.toLowerCase());
+			}else{
+				return activity.name.toLowerCase().includes(this.state.search.toLowerCase()) ||
+				activityGroup.name.toLowerCase().includes(this.state.search.toLowerCase());
+			}
+				
 		});
 
 		return (
@@ -185,14 +192,14 @@ class ActivityList extends Component {
 										<TableCell className={classes.head}>
 											<Typography>Nazwa</Typography>
 										</TableCell>
+										<TableCell className={classes.head}>
+											<Typography>Kategoria czynności</Typography>
+										</TableCell>
                                         <TableCell className={classes.head}>
 											<Typography>EMSR</Typography>
 										</TableCell>
                                         <TableCell className={classes.head}>
 											<Typography>Nastawa</Typography>
-										</TableCell>
-                                        <TableCell className={classes.head}>
-											<Typography>Elementy listy</Typography>
 										</TableCell>
 										<TableCell className={classes.head}>
 											<Typography>Akcje</Typography>
@@ -200,33 +207,36 @@ class ActivityList extends Component {
 									</TableRow>
 								</TableHead>
 								<TableBody>
-									{filtered.map((activity,index) => (
-										<TableRow key={index}>
-											<TableCell>
-												<Typography>{activity.name}</Typography>
-											</TableCell>
-                                            <TableCell>
-												<Typography>{activity.emsr}</Typography>
-											</TableCell>
-                                            <TableCell>
-												<Typography>{activity.setting}</Typography>
-											</TableCell>
-                                            <TableCell>
-                                                 <Typography>{activity.listItems}</Typography>
-											</TableCell>
-											<TableCell>
-												<Tooltip title="Edytuj">
-													<IconButton
-														color="primary"
-														onClick={() => this.handleOpen(activity)}
-													>
-														<EditIcon />
-													</IconButton>
-												</Tooltip>
-											
-											</TableCell>
-										</TableRow>
-									))}
+									{filtered.map((activity,index) => {
+										const {activityGroup} = activity;
+										return(
+											<TableRow key={index}>
+												<TableCell>
+													<Typography>{activity.name}</Typography>
+												</TableCell>
+												<TableCell>
+													<Typography>{activityGroup && activityGroup.name}</Typography>
+												</TableCell>
+												<TableCell>
+													<Typography>{activity.emsr}</Typography>
+												</TableCell>
+												<TableCell>
+													<Typography>{activity.setting}</Typography>
+												</TableCell>
+												<TableCell>
+													<Tooltip title="Edytuj">
+														<IconButton
+															color="primary"
+															onClick={() => this.handleOpen(activity)}
+														>
+															<EditIcon />
+														</IconButton>
+													</Tooltip>
+												
+												</TableCell>
+											</TableRow>
+										);
+									})}
 								</TableBody>
 							</Table>
 						</TableContainer>
