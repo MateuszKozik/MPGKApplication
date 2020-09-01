@@ -9,6 +9,7 @@ import {
 } from "../../actions/personActions";
 import { withStyles } from "@material-ui/core";
 import { tableStyles } from "../../consts/themeConsts";
+import PropTypes from "prop-types";
 import {
 	Grid,
 	Typography,
@@ -315,7 +316,14 @@ class PersonList extends Component {
 	}
 }
 
-
+PersonList.propTypes = {
+	person: PropTypes.object.isRequired,
+	getPersons: PropTypes.func.isRequired,
+	updatePerson: PropTypes.func.isRequired,
+	addPerson: PropTypes.func.isRequired,
+	clearPersonState: PropTypes.func.isRequired,
+	setSnackbar: PropTypes.func.isRequired
+};
 
 const mapStateToProps = (state) => ({
 	person: state.person,
