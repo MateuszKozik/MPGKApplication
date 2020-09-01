@@ -130,7 +130,6 @@ class FluidRegistryList extends Component {
 				};
 			}
 
-			console.log(updatedFluidRegistry);
 			this.props
 				.updateFluidRegistry(this.state.registryId, updatedFluidRegistry)
 				.then((res) => {
