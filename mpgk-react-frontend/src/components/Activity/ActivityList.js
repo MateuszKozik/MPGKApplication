@@ -5,6 +5,7 @@ import {
 	updateActivity,
 	clearActivityState
 } from "../../actions/activityActions";
+import PropTypes from "prop-types";
 import {
 	Grid,
 	Typography,
@@ -323,7 +324,13 @@ class ActivityList extends Component {
 	}
 }
 
-
+ActivityList.propTypes = {
+	activity: PropTypes.object.isRequired,
+	getActivities: PropTypes.func.isRequired,
+	updateActivity: PropTypes.func.isRequired,
+	clearActivityState: PropTypes.func.isRequired,
+	setSnackbar: PropTypes.func.isRequired
+};
 
 const mapStateToProps = (state) => {
 	return {
