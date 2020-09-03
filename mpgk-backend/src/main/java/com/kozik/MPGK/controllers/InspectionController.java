@@ -113,7 +113,7 @@ public class InspectionController {
     }
 
     @GetMapping("/list/{connectionId}/from/{startTime}/to/{endTime}")
-    public ResponseEntity<?> getConnectionNameAndStartTimeBetween(@PathVariable Long connectionId,
+    public ResponseEntity<?> getConnectionAndStartTimeBetween(@PathVariable Long connectionId,
     @PathVariable String startTime, @PathVariable String endTime) {
         return new ResponseEntity<ArrayList<ConnectionObject>>(
                 inspectionService.getConnectionAndStartTimeBetween(connectionId,startTime,endTime), HttpStatus.OK);
