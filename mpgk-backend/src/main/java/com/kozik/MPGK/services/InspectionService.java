@@ -208,7 +208,7 @@ public class InspectionService {
         return inspectionList;
     }
 
-    public ArrayList<ConnectionObject> getConnectionNameAndStartTimeBetween(Long connectionId, String startTime,String endTime) {
+    public ArrayList<ConnectionObject> getConnectionAndStartTimeBetween(Long connectionId, String startTime,String endTime) {
         ArrayList<ConnectionObject> connectionObjects = new ArrayList<>();
         Connection connection = connectionService.get(connectionId);
         List<Inspection> inspectionsAll = inspectionRepository.findByActivityActivityGroupConnectionAndStartTimeBetween(connection, LocalDateTime.parse(startTime), LocalDateTime.parse(endTime));
