@@ -207,4 +207,48 @@ public class InspectionService {
 
         return inspectionList;
     }
+
+    public ArrayList<ConnectionObject> getConnectionNameAndStartTimeBetween(Long connectionId, String startTime,String endTime) {
+        ArrayList<ConnectionObject> connectionObjects = new ArrayList<>();
+        Connection connection = connectionService.get(connectionId);
+        List<Inspection> inspectionsAll = inspectionRepository.findByActivityActivityGroupConnectionAndStartTimeBetween(connection, LocalDateTime.parse(startTime), LocalDateTime.parse(endTime));
+       
+        List<String> times = new ArrayList<>();
+
+        for (Inspection inspection : inspectionsAll) {
+            if (!times.contains(inspection.getStartTime())) {
+                times.add(inspection.getStartTime());
+
+            }
+            
+        }
+
+        //Sort array of date
+        times.sort(Comparator.naturalOrder());
+        for (String time : times) {
+            
+            Integer overdue = 0;
+            List<Inspection> inspections = inspectionRepository.findByActivityActivityGroupConnectionAndStartTime(connection, LocalDateTime.parse(time, DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+            ConnectionObject connectionObject = new ConnectionObject();
+            for(Inspection inspection : inspections){
+                
+                if(inspection.getStatus().equals("Zaległy") ){
+                    overdue++;
+                }
+                connectionObject.setEndTime(inspection.getEndTime());
+            }
+           
+            
+            connectionObject.setConnection(connection);
+            connectionObject.setStartTime(time);
+            
+            if(overdue > 0)
+                connectionObject.setOverdue(true);
+            else
+                connectionObject.setOverdue(false);
+                connectionObjects.add(connectionObject);
+            
+        }
+        return connectionObjects;
+    }
 }
