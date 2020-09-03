@@ -111,4 +111,14 @@ public class InspectionController {
         return new ResponseEntity<ArrayList<InspectionObject>>(
                 inspectionService.getOverdueInspectionByConnection(connectionId, endTime), HttpStatus.OK);
     }
+
+    @GetMapping("/list/{connectionId}/from/{startTime}/to/{endTime}")
+    public ResponseEntity<?> getConnectionNameAndStartTimeBetween(@PathVariable Long connectionId,
+    @PathVariable String startTime, @PathVariable String endTime) {
+        //List<Inspection> inspections = inspectionService
+        //        .getConnectionNameAndStartTimeBetween(connectionId,start,end);
+       // return new ResponseEntity<List<Inspection>>(inspections, HttpStatus.OK);
+        return new ResponseEntity<ArrayList<ConnectionObject>>(
+                inspectionService.getConnectionAndStartTimeBetween(connectionId,startTime,endTime), HttpStatus.OK);
+    }
 }
