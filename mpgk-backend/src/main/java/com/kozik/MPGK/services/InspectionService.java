@@ -258,4 +258,23 @@ public class InspectionService {
         }
         return connectionObjects;
     }
+
+    public ArrayList<InspectionObject> getInspectionByConnectionAndStartTimeAndEndTime(Long connectionId, String startTime, String endTime) {
+        Connection connection = connectionService.get(connectionId);
+        List<ActivityGroup> groups = activityGroupRepository.findByConnection(connection);
+
+        ArrayList<InspectionObject> inspectionList = new ArrayList<>();
+
+        for (ActivityGroup activityGroup : groups) {
+            List<Inspection> inspections = inspectionRepository.findByActivityActivityGroupAndStartTimeAndEndTime(activityGroup,
+                LocalDateTime.parse(startTime),LocalDateTime.parse(endTime));
+
+            InspectionObject inspectionObject = new InspectionObject();
+            inspectionObject.setActivityGroup(activityGroup);
+            inspectionObject.setInspections(inspections);
+            inspectionList.add(inspectionObject);
+        }
+
+        return inspectionList;
+    }
 }
