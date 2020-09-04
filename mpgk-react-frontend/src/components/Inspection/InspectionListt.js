@@ -43,9 +43,9 @@ import {
             //this.props.getInspections();
 
             const { connectionId } = this.props.match.params;
-            const { starttime } = this.props.match.params;
-            const { endtime } = this.props.match.params;
-            this.props.getInspectionByConnectionAndStartTimeAndEndTime(1,"2020-08-11T00:01","2020-08-11T23:59",this.props.history);
+            const { startTime } = this.props.match.params;
+            const { endTime } = this.props.match.params;
+            this.props.getInspectionByConnectionAndStartTimeAndEndTime(connectionId,startTime,endTime,this.props.history);
         }
 
         state = {
@@ -75,7 +75,6 @@ import {
 
                                 ))}
                                 </TableBody>
-                                  
                             </Table>
                         </TableContainer>
                     </Grid>
