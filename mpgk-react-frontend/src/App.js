@@ -10,6 +10,8 @@ import PersonList from "./components/Person/PersonList";
 import ActivityGroupList from "./components/ActivityGroup/ActivityGroupList";
 import ActivityList from "./components/Activity/ActivityList";
 import InspectionList from "./components/Inspection/InspectionList";
+import InspectionListt from "./components/Inspection/InspectionListt";
+import InspectionBetween from "./components/Inspection/InspectionBetween";
 import AddInspection from "./components/Inspection/AddInspection";
 import UpdateInspection from "./components/Inspection/UpdateInspection";
 import ConnectionList from "./components/Connection/ConnectionList";
@@ -39,7 +41,7 @@ function App() {
 					<Route exact path="/persons" component={PersonList} />
 					<Route exact path="/groups" component={ActivityGroupList} />
 					<Route exact path="/activities" component={ActivityList} />
-					<Route exact path="/inspections" component={InspectionList} />
+					<Route exact path="/inspections" component={InspectionBetween} />
 					<Route exact path="/inspections/add" component={AddInspection} />
 					<Route
 						exact
@@ -77,6 +79,11 @@ function App() {
 						exact
 						path="/inspections/list/:connectionId/overdue/:endtime"
 						component={OverdueInspection}
+					/>
+					<Route
+						exact
+						path="/inspections/list/:connectionId/connection/:startTime/to/:endTime"
+						component={InspectionListt}
 					/>
 				</div>
 			</Router>
