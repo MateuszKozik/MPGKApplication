@@ -118,4 +118,11 @@ public class InspectionController {
         return new ResponseEntity<ArrayList<ConnectionObject>>(
                 inspectionService.getConnectionAndStartTimeBetween(connectionId,startTime,endTime), HttpStatus.OK);
     }
+
+    @GetMapping("/list/{connectionId}/connection/{startTime}/to/{endTime}")
+    public ResponseEntity<?> getInspectionByConnectionAndStartTimeAndEndTime(@PathVariable Long connectionId,
+        @PathVariable String startTime, @PathVariable String endTime) {
+        return new ResponseEntity<ArrayList<InspectionObject>>(
+                inspectionService.getInspectionByConnectionAndStartTimeAndEndTime(connectionId, startTime, endTime), HttpStatus.OK);
+    }
 }
