@@ -228,6 +228,7 @@ public class InspectionService {
         for (String time : times) {
             
             Integer overdue = 0;
+            Integer actually = 0;
             List<Inspection> inspections = inspectionRepository.findByActivityActivityGroupConnectionAndStartTime(connection, LocalDateTime.parse(time, DateTimeFormatter.ISO_LOCAL_DATE_TIME));
             ConnectionObject connectionObject = new ConnectionObject();
             for(Inspection inspection : inspections){
@@ -235,17 +236,23 @@ public class InspectionService {
                 if(inspection.getStatus().equals("Zaległy") ){
                     overdue++;
                 }
+                if(inspection.getStatus().equals("Nowy") ){
+                    actually++;
+                }
                 connectionObject.setEndTime(inspection.getEndTime());
+                
             }
            
             
             connectionObject.setConnection(connection);
             connectionObject.setStartTime(time);
-            
-            if(overdue > 0)
-                connectionObject.setOverdue(true);
+
+            if(actually == 0 && overdue == 0){
+                connectionObject.setInspectionStatus("Wykonany");
+            }else if(overdue > 0)
+                connectionObject.setInspectionStatus("Zaległy");
             else
-                connectionObject.setOverdue(false);
+                connectionObject.setInspectionStatus("W trakcie");
                 connectionObjects.add(connectionObject);
             
         }
