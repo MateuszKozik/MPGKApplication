@@ -6,7 +6,9 @@ import {
 	GET_INSPECTIONS_BY_NAME_ACTIONS,
 	GET_INSPECTION_BY_CONNECTION,
 	GET_INSPECTIONS_BY_CONNECTION,
-	GET_OVERDUE_BY_CONNECTION
+	GET_OVERDUE_BY_CONNECTION,
+	GET_CONNECTION_START_TIME_BETWEEN,
+	GET_INSPECTION_BY_CONNECTION_STARTTIME_ENDTIME
 } from "../actions/types";
 
 const initialState = {
@@ -55,6 +57,17 @@ export default function (state = initialState, action) {
 				inspections: state.inspections.filter(
 					(inspection) => inspection.inspectionId !== action.payload
 				)
+			};
+		case GET_CONNECTION_START_TIME_BETWEEN:
+			return {
+				...state,
+				inspectionsList: action.payload
+			};
+
+		case GET_INSPECTION_BY_CONNECTION_STARTTIME_ENDTIME:
+			return {
+				...state,
+				inspections: action.payload
 			};
 
 		case CLEAR_INSPECTIONS_LIST_STATE:
