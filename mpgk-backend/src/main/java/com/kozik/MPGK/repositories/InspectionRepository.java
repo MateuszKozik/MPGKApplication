@@ -36,5 +36,7 @@ public interface InspectionRepository extends JpaRepository<Inspection, Long> {
 
         List<Inspection> findByActivityActivityGroupConnectionAndStartTime(Connection connection, LocalDateTime time);
 
+        List<Inspection> findByActivityActivityGroupAndStartTimeAndEndTime(ActivityGroup activityGroup, LocalDateTime startTime, LocalDateTime endTime);
+
         
 }
