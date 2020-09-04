@@ -8,7 +8,9 @@ import {
 	GET_INSPECTIONS_BY_NAME_ACTIONS,
 	GET_INSPECTION_BY_CONNECTION,
 	GET_INSPECTIONS_BY_CONNECTION,
-	GET_OVERDUE_BY_CONNECTION
+	GET_OVERDUE_BY_CONNECTION,
+	GET_CONNECTION_START_TIME_BETWEEN,
+	GET_INSPECTION_BY_CONNECTION_STARTTIME_ENDTIME
 } from "./types";
 
 export const addInspection = (inspection, history) => async (dispatch) => {
@@ -141,6 +143,39 @@ export const getActionsByName = (history) => async (dispatch) => {
 		const res = await axios.get(`/api/inspections/nitrogen`);
 		dispatch({
 			type: GET_INSPECTIONS_BY_NAME_ACTIONS,
+			payload: res.data
+		});
+	} catch (error) {
+		history.push("/");
+	}
+};
+
+export const getConnectionAndStartTimeBetween = (connectionId,startTime ,endTime, history) => async (
+	dispatch
+) => {
+	try {
+		const res = await axios.get(`/api/inspections/list/${connectionId}/from/${startTime}/to/${endTime}`);
+		dispatch({
+			type: GET_CONNECTION_START_TIME_BETWEEN,
+			payload: res.data
+		});
+	} catch (error) {
+		history.push("/");
+	}
+};
+
+export const getInspectionByConnectionAndStartTimeAndEndTime = (
+	connectionId,
+	startTime,
+	endTime,
+	history
+) => async (dispatch) => {
+	try {
+		const res = await axios.get(
+			`/api/inspections/list/${connectionId}/connection/${startTime}/to/${endTime}`
+		);
+		dispatch({
+			type: GET_INSPECTION_BY_CONNECTION_STARTTIME_ENDTIME,
 			payload: res.data
 		});
 	} catch (error) {
