@@ -5,7 +5,9 @@ import java.util.List;
 
 import com.kozik.MPGK.entities.ActivityGroup;
 import com.kozik.MPGK.entities.Connection;
+import com.kozik.MPGK.entities.Device;
 import com.kozik.MPGK.entities.Inspection;
+import com.kozik.MPGK.entities.Person;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -37,6 +39,16 @@ public interface InspectionRepository extends JpaRepository<Inspection, Long> {
         List<Inspection> findByActivityActivityGroupConnectionAndStartTime(Connection connection, LocalDateTime time);
 
         List<Inspection> findByActivityActivityGroupAndStartTimeAndEndTime(ActivityGroup activityGroup, LocalDateTime startTime, LocalDateTime endTime);
+
+        List<Inspection> findByActivityActivityGroupConnectionDeviceAndStartTimeBetween(Device device, LocalDateTime startTime, LocalDateTime endTime);
+
+        List<Inspection> findByActivityActivityGroupConnectionDeviceAndStartTime(Device device, LocalDateTime time);
+
+        List<Inspection> findByPersonAndStartTimeBetween(Person person, LocalDateTime startTime, LocalDateTime endTime);
+
+        List<Inspection> findByPersonAndStartTime(Person person, LocalDateTime time);
+
+        
 
         
 }
