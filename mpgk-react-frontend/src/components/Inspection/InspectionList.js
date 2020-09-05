@@ -1,96 +1,106 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
+import Row from "./Row";
+
+
+import { withStyles } from "@material-ui/core/styles";
+import { tableStyles } from "./../../consts/themeConsts";
 import { connect } from "react-redux";
 import {
-	getInspections,
-	deleteInspection
+   
+    getInspectionByConnectionAndStartTimeAndEndTime,
+    clearInspectionsListState
 } from "../../actions/inspectionActions";
-import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
-import AddButton from "../Common/AddButton";
-import FormatDate from "../Common/FormatDate";
+import {
+    Grid,
+    Typography,
+    Table,
+    TableBody,
+    TableContainer
+} from "@material-ui/core";
 
-class InspectionList extends Component {
-	componentDidMount() {
-		this.props.getInspections();
-	}
 
-	onDeleteClick = (inspectionId) => {
-		this.props.deleteInspection(inspectionId);
-	};
 
-	render() {
-		const { inspections } = this.props.inspection;
-		return (
-			<div className="container mt-2">
-				<h1 className="display-4 text-center mt-2">Przeglądy</h1>
-				<div className="row">
-					<div className="col-md-4 my-1">
-						<AddButton
-							link="/inspections/add"
-							className="btn btn-info"
-							message="Dodaj przegląd"
-						/>
-					</div>
-				</div>
-				<div className="table-responsive mt-2">
-					<table className="table ">
-						<thead>
-							<tr>
-								<th>Status</th>
-								<th>Czas rozpoczęcia</th>
-								<th>Czas wykonania</th>
-								<th>Czas zakończenia</th>
-								<th>Parametry</th>
-								<th>Uwagi</th>
-								<th>Akcje</th>
-							</tr>
-						</thead>
-						<tbody>
-							{inspections.map((inspection) => (
-								<tr key={inspection.inspectionId}>
-									<td>{inspection.status}</td>
-									<td><FormatDate date={inspection.startTime} datetime={true} /></td>
-									<td><FormatDate date={inspection.datetime} datetime={true} /></td>
-									<td><FormatDate date={inspection.endTime} datetime={true} /></td>
-									<td>{inspection.parameter}</td>
-									<td>{inspection.comment}</td>
-									<td>
-										<Link
-											to={`/inspections/update/${inspection.inspectionId}`}
-											className="btn btn-primary my-1"
-										>
-											Edytuj
-										</Link>
-										<button
-											onClick={this.onDeleteClick.bind(
-												this,
-												inspection.inspectionId
-											)}
-											className="btn btn-danger ml-2 my-1"
-										>
-											Usuń
-										</button>
-									</td>
-								</tr>
-							))}
-						</tbody>
-					</table>
-				</div>
-			</div>
-		);
-	}
+
+    class InspectionList extends Component{
+        componentDidMount() {
+            //this.props.getInspections();
+
+            const { connectionId } = this.props.match.params;
+            const { startTime } = this.props.match.params;
+            const { endTime } = this.props.match.params;
+            this.props.getInspectionByConnectionAndStartTimeAndEndTime(connectionId,startTime,endTime,this.props.history);
+        }
+
+        state = {
+            open: false
+        }
+        
+    render(){
+        const {inspections} = this.props.inspection;
+        const {classes} = this.props;
+        
+       
+  return (
+    <>
+<Grid container className={classes.container}>
+                    <Grid item xs={12}>
+                    
+                        <Typography variant="h3" className={classes.title}>
+                        {inspections[0] && inspections[0].activityGroup.connection.name}
+                            
+                        </Typography>
+                        
+                    </Grid>
+                    <Grid item xs={false} md={2} />
+                    <Grid item xs={12} md={8}>
+                        <TableContainer>
+                            <Table aria-label="collapsible table">
+                                <TableBody>
+                                {inspections.map((inspection,i) => (
+                                    <Row key={i} row={inspection} />
+
+                                ))}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                    </Grid>
+                    <Grid item xs={false} md={2} />
+                </Grid>
+
+                
+            </>
+  );
+}
+    
 }
 
 InspectionList.propTypes = {
 	inspection: PropTypes.object.isRequired,
-	getInspections: PropTypes.func.isRequired,
-	deleteInspection: PropTypes.func.isRequired
+	getInspectionByConnectionAndStartTimeAndEndTime: PropTypes.func.isRequired,
+	clearInspectionsListState: PropTypes.func.isRequired
 };
 
-const mapStateToProps = (state) => ({
-	inspection: state.inspection
-});
+const mapStateToProps = (state) => {
+    return {
+        inspection: state.inspection
+    };
+};
 
-export default connect(mapStateToProps, { getInspections, deleteInspection })(
-	InspectionList
-);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getInspectionByConnectionAndStartTimeAndEndTime: (connectionId,starttime,endtime) => {
+            dispatch(getInspectionByConnectionAndStartTimeAndEndTime(connectionId,starttime,endtime));
+        },
+        clearInspectionsListState: () => {
+            dispatch(clearInspectionsListState());
+        },
+        
+    };
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(withStyles(tableStyles)(InspectionList));
