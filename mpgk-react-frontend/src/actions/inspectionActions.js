@@ -150,11 +150,11 @@ export const getActionsByName = (history) => async (dispatch) => {
 	}
 };
 
-export const getConnectionAndStartTimeBetween = (connectionId,startTime ,endTime, history) => async (
+export const getConnectionAndStartTimeBetween = (id,startTime ,endTime, typeName, history) => async (
 	dispatch
 ) => {
 	try {
-		const res = await axios.get(`/api/inspections/list/${connectionId}/from/${startTime}/to/${endTime}`);
+		const res = await axios.get(`/api/inspections/list/${id}/from/${startTime}/to/${endTime}?type=${typeName}`);
 		dispatch({
 			type: GET_CONNECTION_START_TIME_BETWEEN,
 			payload: res.data
@@ -172,7 +172,7 @@ export const getInspectionByConnectionAndStartTimeAndEndTime = (
 ) => async (dispatch) => {
 	try {
 		const res = await axios.get(
-			`/api/inspections/list/${connectionId}/connection/${startTime}/to/${endTime}`
+			`/api/inspections/list/${connectionId}/${startTime}/to/${endTime}/show`
 		);
 		dispatch({
 			type: GET_INSPECTION_BY_CONNECTION_STARTTIME_ENDTIME,
