@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kozik.MPGK.services.MapValidationErrorService;
@@ -112,14 +113,14 @@ public class InspectionController {
                 inspectionService.getOverdueInspectionByConnection(connectionId, endTime), HttpStatus.OK);
     }
 
-    @GetMapping("/list/{connectionId}/from/{startTime}/to/{endTime}")
-    public ResponseEntity<?> getConnectionAndStartTimeBetween(@PathVariable Long connectionId,
-    @PathVariable String startTime, @PathVariable String endTime) {
+    @GetMapping("/list/{id}/from/{startTime}/to/{endTime}")
+    public ResponseEntity<?> getConnectionAndStartTimeBetween(@PathVariable Long id,
+    @PathVariable String startTime, @PathVariable String endTime, @RequestParam String type) {
         return new ResponseEntity<ArrayList<ConnectionObject>>(
-                inspectionService.getConnectionAndStartTimeBetween(connectionId,startTime,endTime), HttpStatus.OK);
+                inspectionService.getConnectionAndStartTimeBetween(id,startTime,endTime,type), HttpStatus.OK);
     }
 
-    @GetMapping("/list/{connectionId}/connection/{startTime}/to/{endTime}")
+    @GetMapping("/list/{connectionId}/{startTime}/to/{endTime}/show")
     public ResponseEntity<?> getInspectionByConnectionAndStartTimeAndEndTime(@PathVariable Long connectionId,
         @PathVariable String startTime, @PathVariable String endTime) {
         return new ResponseEntity<ArrayList<InspectionObject>>(
