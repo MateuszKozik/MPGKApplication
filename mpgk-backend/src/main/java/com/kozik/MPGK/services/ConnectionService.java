@@ -5,6 +5,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.kozik.MPGK.entities.Activity;
+import com.kozik.MPGK.entities.ActivityGroup;
 import com.kozik.MPGK.entities.Connection;
 import com.kozik.MPGK.entities.Inspection;
 import com.kozik.MPGK.exceptions.connectionExceptions.ConnectionAlreadyExistException;
@@ -33,6 +35,16 @@ public class ConnectionService {
         if (connection.getConnectionId() != null) {
             throw new ConnectionAlreadyExistException(connection.getConnectionId());
         }
+        connection.setActivitiesGroups(connection.getActivitiesGroups());
+        List<ActivityGroup> groups = connection.getActivitiesGroups();
+        for (ActivityGroup activityGroup : groups) {
+            activityGroup.setConnection(connection);
+            List<Activity> activities = activityGroup.getActivities();
+            for (Activity activity : activities) {
+                activity.setActivityGroup(activityGroup);
+            }
+        }
+
         return connectionRepository.save(connection);
     }
 
