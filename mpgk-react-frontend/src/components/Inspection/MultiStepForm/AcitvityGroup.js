@@ -279,6 +279,20 @@ class ActivityGroup extends Component {
 	}
 }
 
-export default connect(null, { addConnection, setSnackbar })(
-	withStyles(tableStyles)(ActivityGroup)
-);
+const mapDispatchToProps = (dispatch) => {
+	return {
+		setSnackbar: (snackbarOpen, snackbarMessage, snackbarTime) => {
+			dispatch(setSnackbar(snackbarOpen, snackbarMessage, snackbarTime));
+		},
+		addConnection(connection) {
+			return dispatch(addConnection(connection)).then((res) => {
+				if (res && res.status === 201) return res;
+			});
+		}
+	};
+};
+
+export default connect(
+	null,
+	mapDispatchToProps
+)(withStyles(tableStyles)(ActivityGroup));

@@ -102,12 +102,21 @@ class Employees extends Component {
 	}
 }
 
+const mapDispatchToProps = (dispatch) => {
+	return {
+		getPersons: () => {
+			dispatch(getPersons());
+		}
+	};
+};
+
 const mapStateToProps = (state) => {
 	return {
 		person: state.person
 	};
 };
 
-export default connect(mapStateToProps, { getPersons })(
-	withStyles(tableStyles)(Employees)
-);
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(withStyles(tableStyles)(Employees));

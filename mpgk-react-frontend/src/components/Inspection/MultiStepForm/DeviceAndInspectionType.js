@@ -201,6 +201,17 @@ class DeviceAndInpectionType extends Component {
 	}
 }
 
+const mapDispatchToProps = (dispatch) => {
+	return {
+		getDevices: () => {
+			dispatch(getDevices());
+		},
+		getInspectionTypes: () => {
+			dispatch(getInspectionTypes());
+		}
+	};
+};
+
 const mapStateToProps = (state) => {
 	return {
 		device: state.device,
@@ -208,6 +219,7 @@ const mapStateToProps = (state) => {
 	};
 };
 
-export default connect(mapStateToProps, { getDevices, getInspectionTypes })(
-	withStyles(tableStyles)(DeviceAndInpectionType)
-);
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(withStyles(tableStyles)(DeviceAndInpectionType));
