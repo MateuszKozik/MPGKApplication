@@ -138,6 +138,11 @@ class FormInspectionWrapper extends Component {
 		});
 	};
 
+	// Handle histroy push
+	handleHistoryPush = () => {
+		this.props.history.push("/inspections");
+	};
+
 	render() {
 		const { step } = this.state;
 
@@ -236,6 +241,7 @@ class FormInspectionWrapper extends Component {
 							handleRemoveActivityClick={this.handleRemoveActivityClick}
 							handleAddActivityGroupClick={this.handleAddActivityGroupClick}
 							handleAddActivityClick={this.handleAddActivityClick}
+							handleHistoryPush={this.handleHistoryPush}
 							values={values}
 						/>
 					</>

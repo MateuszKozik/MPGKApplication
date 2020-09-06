@@ -19,6 +19,7 @@ import { tableStyles } from "../../../consts/themeConsts";
 import InfoIcon from "@material-ui/icons/Info";
 import { Form, Formik } from "formik";
 import { addConnection } from "../../../actions/connectionActions";
+import { setSnackbar } from "../../../reducers/snackbarReducer";
 
 class ActivityGroup extends Component {
 	state = {
@@ -36,9 +37,14 @@ class ActivityGroup extends Component {
 			activitiesGroups: values.activitiesGroups
 		};
 
-		console.log(values.activitiesGroups);
-
-		this.props.addConnection(newInspection, this.props.history);
+		this.props.addConnection(newInspection).then((res) => {
+			if (res) {
+				this.props.setSnackbar(true, "Przegląd dodany!");
+				this.props.handleHistoryPush();
+			} else {
+				this.props.setSnackbar(true, "Wystąpił błąd!");
+			}
+		});
 	};
 
 	back = (e) => {
@@ -273,6 +279,6 @@ class ActivityGroup extends Component {
 	}
 }
 
-export default connect(null, { addConnection })(
+export default connect(null, { addConnection, setSnackbar })(
 	withStyles(tableStyles)(ActivityGroup)
 );
