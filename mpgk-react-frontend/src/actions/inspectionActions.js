@@ -197,3 +197,10 @@ export const clearInspectionsListState = () => (dispatch) => {
 		payload: []
 	});
 };
+
+export const clearInspectionState = () => (dispatch) => {
+	dispatch({
+		type: GET_INSPECTIONS,
+		payload: []
+	});
+};
