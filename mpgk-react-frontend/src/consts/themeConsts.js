@@ -30,5 +30,11 @@ export const tableStyles = (theme) => ({
 	},
 	formControl: {
 		width: "340px"
+	},
+	chip: {
+		margin: 2
+	},
+	popover: {
+		padding: theme.spacing(2)
 	}
 });
