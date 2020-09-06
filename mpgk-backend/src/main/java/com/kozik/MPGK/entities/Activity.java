@@ -39,9 +39,11 @@ public class Activity {
     @Column(name = "type", nullable = false, length = 100)
     private String type;
 
+    @Length(max = 100, message = "Możesz wprowadzić maksymalnie 100 znaków")
     @Column(name = "emsr", nullable = true, length = 100)
     private String emsr;
 
+    @Length(max = 100, message = "Możesz wprowadzić maksymalnie 100 znaków")
     @Column(name = "setting", nullable = true, length = 100)
     private String setting;
 
