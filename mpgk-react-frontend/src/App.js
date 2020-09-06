@@ -24,6 +24,7 @@ import InspectionActivities from "./components/Pages/InspectionActivities";
 import InspectionPage from "./components/Pages/InspectionPage";
 import OverdueInspection from "./components/Pages/OverdueInspection";
 import Snackbar from "./components/Common/Snackbar";
+import FormInspectionWrapper from "./components/Inspection/MultiStepForm/FormInspectionWrapper";
 
 function App() {
 	return (
@@ -39,7 +40,7 @@ function App() {
 					<Route exact path="/groups" component={ActivityGroupList} />
 					<Route exact path="/activities" component={ActivityList} />
 					<Route exact path="/inspections" component={InspectionBetween} />
-					
+
 					<Route exact path="/connections" component={ConnectionList} />
 					<Route exact path="/fluid-registries" component={FluidRegistryList} />
 					<Route exact path="/fluid-places" component={FluidPlaceList} />
@@ -76,6 +77,11 @@ function App() {
 						exact
 						path="/inspections/list/:connectionId/:startTime/to/:endTime/show"
 						component={InspectionList}
+					/>
+					<Route
+						exact
+						path="/inspections/create"
+						component={FormInspectionWrapper}
 					/>
 				</div>
 			</Router>
