@@ -4,8 +4,8 @@ import {
 	getConnectionAndStartTimeBetween,
 	clearInspectionsListState
 } from "../../actions/inspectionActions";
-import {getConnections} from "../../actions/connectionActions";
-import {getDevices} from "../../actions/deviceActions";
+import { getConnections } from "../../actions/connectionActions";
+import { getDevices } from "../../actions/deviceActions";
 import { getPersons } from "../../actions/personActions";
 import PropTypes from "prop-types";
 import FormatDate from "../Common/FormatDate";
@@ -22,24 +22,21 @@ import {
 	Grid,
 	Radio,
 	RadioGroup,
-	FormControlLabel
+	FormControlLabel,
+	FormLabel
 } from "@material-ui/core";
-
-
-
+import { setSnackbar } from "../../reducers/snackbarReducer";
+import { Formik, Form } from "formik";
 
 class InspectionBetween extends Component {
-	
-	
 	state = {
 		connectionId: "",
-		Id: "",
 		deviceId: "",
+		personId: "",
 		startTime: "",
 		endTime: "",
-		show: false,
-		typeName: ""
-	}
+		typeName: "przeglad"
+	};
 
 	onChange = (e) => {
 		this.setState({ [e.target.name]: e.target.value });
@@ -53,228 +50,268 @@ class InspectionBetween extends Component {
 		this.props.getDevices();
 		this.props.getPersons();
 	}
-	static getDerivedStateFromProps(nextProps, prevState) {
-		if (nextProps.errors !== prevState.errors) {
-			return { errors: nextProps.errors };
-		} else {
-			return null;
-		}
-	}
 
-	
-	
-	handleClick = () => {
-		this.props.getConnectionAndStartTimeBetween(this.state.Id,this.state.startTime,this.state.endTime, this.state.typeName, this.props.history);
-		this.setState({show: true});
-	  };
-	
+	handleSubmit = () => {
+		const {
+			typeName,
+			connectionId,
+			deviceId,
+			personId,
+			startTime,
+			endTime
+		} = this.state;
+
+		let id;
+		switch (typeName) {
+			case "przeglad":
+				id = connectionId;
+				break;
+			case "urzadzenie":
+				id = deviceId;
+				break;
+			case "pracownik":
+				id = personId;
+				break;
+			default:
+				break;
+		}
+
+		this.props
+			.getConnectionAndStartTimeBetween(
+				id,
+				startTime,
+				endTime,
+				typeName,
+				this.props.history
+			)
+			.then((res) => {
+				if (res === 0) {
+					this.props.setSnackbar(true, "Nie znaleziono przeglądów!");
+				}
+			});
+	};
 
 	render() {
 		const { classes } = this.props;
 		const { inspectionsList } = this.props.inspection;
-		const{ connections} = this.props.connection;
+		const { connections } = this.props.connection;
 		const { devices } = this.props.device;
 		const { persons } = this.props.person;
 
-		
-
 		return (
-<>
-	<Grid container className={classes.container} >	
-		
-		<Grid item xs={false} md={2} />
-		<Grid item xs={12} md={8} >
-			
-		{this.state.typeName === "przeglad" ?	
-		<FormControl
-			required
-			variant="outlined"
-			className={classes.formControl}
-		>
-		
-			<InputLabel >
-				Rodzja przeglądu
-			</InputLabel>
-			<Select	
-				name="Id"
-				value={this.state.Id}
-				onChange={this.onChange}
-				label="Rodzja przeglądu"
-			>
-				<MenuItem value="">
-					<em>Wybierz przegląd</em>
-				</MenuItem>
-				{connections.map((connection,index) => (
-					<MenuItem key={index} value={connection.connectionId}>
-						{connection.name}
-					</MenuItem>
-				))}
-			</Select>
-		</FormControl>
-		:this.state.typeName === "urzadzenie" ?
-		<FormControl
-			required
-			variant="outlined"
-			className={classes.formControl}
-		>
-		
-			<InputLabel >
-				Urządzenie
-			</InputLabel>
-			<Select
-				name="Id"
-				value={this.state.Id}
-				onChange={this.onChange}
-				label="Rodzja urządzenia"
-			>
-				<MenuItem value="">
-					<em>Wybierz urządzenie</em>
-				</MenuItem>
-				{devices.map((device,index) => (
-					<MenuItem key={index} value={device.deviceId}>
-						{device.name}
-					</MenuItem>
-				))}
-			</Select>
-		</FormControl>
-		:this.state.typeName === "pracownik" ?
-		<FormControl
-			required
-			variant="outlined"
-			className={classes.formControl}
-		>
-		
-			<InputLabel >
-				Pracownik
-			</InputLabel>
-			<Select
-				name="Id"
-				value={this.state.Id}
-				onChange={this.onChange}
-				label="Pracownik"
-			>
-				<MenuItem value="">
-					<em>Wybierz pracownika</em>
-				</MenuItem>
-				{persons.map((person,index) => (
-					<MenuItem key={index} value={person.personId}>
-						{person.name+" "+ person.surname}
-					</MenuItem>
-				))}
-			</Select>
-		</FormControl>
-		:null}
-		<TextField
-			id="startTime"
-			label="Czas rozpoczęcia"
-			type="datetime-local"
-			variant="outlined"
-			name="startTime"
-			value={this.state.startTime}
-			onChange={this.onChange}
-			className={classes.textField}
-			InputLabelProps={{
-			shrink: true,
-			}}
-		/>
-		<TextField
-			id="endTime"
-			label="Czas rozpoczęcia"
-			type="datetime-local"
-			variant="outlined"
-			name="endTime"
-			value={this.state.endTime}
-			onChange={this.onChange}
-			className={classes.textField}
-			InputLabelProps={{
-			shrink: true,
-			}}
-		/>
-		<Button className="mt-2 ml-2"  onClick={this.handleClick} color="primary" variant="contained" >
-		Szukaj
-		</Button>
-					
-		</Grid>
-		<Grid item xs={false} md={3} />
-		<Grid item xs={false} md={1} />
-		<Grid item xs={12} md={8} >
-		<FormControl component="fieldset">
-     
-	 <RadioGroup row>
-	   <FormControlLabel
-		 value="przeglad"
-		 onChange={() => this.setState({ typeName: "przeglad" })}
-		 control={<Radio color="primary" />}
-		 label="Rodzja pzreglądu"
-		 labelPlacement="start"
-	   />
-	   <FormControlLabel
-		 value="urzadzenie"
-		 onChange={() => this.setState({ typeName: "urzadzenie" })}
-		 control={<Radio color="primary" />}
-		 label="Urządzenie"
-		 labelPlacement="start"
-	   />
-	   <FormControlLabel
-		 onChange={() => this.setState({ typeName: "pracownik" })}
-		 value="pracownik"
-		 control={<Radio color="primary" />}
-		 label="Pracownik"
-		 labelPlacement="start"
-	   />
-	   
-	 </RadioGroup>
-   </FormControl>
-		</Grid>
-		<Grid item xs={false} md={2} />
-		<Grid item xs={false} md={2} />
-		<Grid item xs={12} md={9} >
-		{inspectionsList[0] ? (
-			<div className="row mt-3">
-				<div className="col-md-4 ">
-					<p>
-						<b>Nazwa przegłądu</b>
-					</p>
-				</div>
-				<div className="col-md-4 ">
-					<p>
-						<b>Data</b>
-					</p>
-				</div>
-				<div className="col-md-4">
-					<p>
-						<b>Status</b>
-					</p>
-				</div>
-			</div>
-			):null}
-		</Grid>
-		
-		<Grid item xs={false} md={2} />
-		<Grid item xs={12} md={9}>
-			{inspectionsList.map((inspection,i) => (
-				<div key={i} className="row mt-3">				
-					<div className="col-md-4">
-					
-						<Link
-							to={`/inspections/list/${inspection.connection.connectionId}/${inspection.startTime}/to/${inspection.endTime}/show`}
-						>
-							{inspection.connection.name}
-						</Link>
-					</div>
-					<div className="col-md-4">
-						Od <FormatDate date={inspection.startTime} /> Do
-						<FormatDate date={inspection.endTime} />
-					</div>
-					<div className="col-md-4">
-						<p>{inspection.inspectionStatus} </p>
-					</div>
-				</div>			
-			))}
-		</Grid>
-		<Grid item xs={false} md={2} />
-	</Grid>
-</>		
+			<>
+				<Formik
+					initialValues={{
+						inspection: ""
+					}}
+					onSubmit={this.handleSubmit}
+				>
+					{({ values }) => (
+						<Form className={classes.form}>
+							<Grid container spacing={2}>
+								<Grid item xs={12}>
+									<FormControl component="fieldset" required>
+										<FormLabel component="legend">
+											Metoda wyszukiwania
+										</FormLabel>
+										<RadioGroup row>
+											<FormControlLabel
+												value="przeglad"
+												onChange={() => this.setState({ typeName: "przeglad" })}
+												control={<Radio color="primary" />}
+												label="Przegląd"
+												checked={this.state.typeName === "przeglad"}
+												labelPlacement="start"
+											/>
+
+											<FormControlLabel
+												value="urzadzenie"
+												onChange={() =>
+													this.setState({ typeName: "urzadzenie" })
+												}
+												control={<Radio color="primary" />}
+												label="Urządzenie"
+												checked={this.state.typeName === "urzadzenie"}
+												labelPlacement="start"
+											/>
+
+											<FormControlLabel
+												onChange={() =>
+													this.setState({ typeName: "pracownik" })
+												}
+												value="pracownik"
+												checked={this.state.typeName === "pracownik"}
+												control={<Radio color="primary" />}
+												label="Pracownik"
+												labelPlacement="start"
+											/>
+										</RadioGroup>
+									</FormControl>
+								</Grid>
+								<Grid item xs={12}>
+									{this.state.typeName === "przeglad" ? (
+										<FormControl
+											required
+											variant="outlined"
+											className={classes.formControl}
+										>
+											<InputLabel>Przegląd</InputLabel>
+											<Select
+												name="connectionId"
+												value={this.state.connectionId}
+												onChange={this.onChange}
+												label="Przegląd"
+											>
+												<MenuItem value="">
+													<em>Wybierz przegląd</em>
+												</MenuItem>
+												{connections.map((connection, index) => (
+													<MenuItem key={index} value={connection.connectionId}>
+														{connection.name}
+													</MenuItem>
+												))}
+											</Select>
+										</FormControl>
+									) : this.state.typeName === "urzadzenie" ? (
+										<FormControl
+											required
+											variant="outlined"
+											className={classes.formControl}
+										>
+											<InputLabel>Urządzenie</InputLabel>
+											<Select
+												name="deviceId"
+												value={this.state.deviceId}
+												onChange={this.onChange}
+												label="Urządzenie"
+											>
+												<MenuItem value="">
+													<em>Wybierz urządzenie</em>
+												</MenuItem>
+												{devices.map((device, index) => (
+													<MenuItem key={index} value={device.deviceId}>
+														{device.name}
+													</MenuItem>
+												))}
+											</Select>
+										</FormControl>
+									) : this.state.typeName === "pracownik" ? (
+										<FormControl
+											required
+											variant="outlined"
+											className={classes.formControl}
+										>
+											<InputLabel>Pracownik</InputLabel>
+											<Select
+												name="personId"
+												value={this.state.personId}
+												onChange={this.onChange}
+												label="Pracownik"
+											>
+												<MenuItem value="">
+													<em>Wybierz pracownika</em>
+												</MenuItem>
+												{persons.map((person, index) => (
+													<MenuItem key={index} value={person.personId}>
+														{person.name + " " + person.surname}
+													</MenuItem>
+												))}
+											</Select>
+										</FormControl>
+									) : null}
+								</Grid>
+								<Grid item xs={12}>
+									<TextField
+										className={classes.formControl}
+										required
+										id="startTime"
+										label="Początkowa data"
+										type="datetime-local"
+										variant="outlined"
+										name="startTime"
+										value={this.state.startTime}
+										onChange={this.onChange}
+										InputLabelProps={{
+											shrink: true
+										}}
+									/>
+								</Grid>
+								<Grid item xs={12}>
+									<TextField
+										className={classes.formControl}
+										required
+										id="endTime"
+										label="Końcowa data"
+										type="datetime-local"
+										variant="outlined"
+										name="endTime"
+										value={this.state.endTime}
+										onChange={this.onChange}
+										InputLabelProps={{
+											shrink: true
+										}}
+									/>
+								</Grid>
+								<Grid item xs={12}>
+									<Button
+										className="mt-2 ml-2"
+										type="submit"
+										color="primary"
+										variant="contained"
+									>
+										Szukaj
+									</Button>
+								</Grid>
+							</Grid>
+						</Form>
+					)}
+				</Formik>
+
+				<Grid container className={classes.form} spacing={2}>
+					<Grid item xs={12}>
+						{inspectionsList[0] ? (
+							<div className="row mt-3">
+								<div className="col-md-4 ">
+									<p>
+										<b>Nazwa przegłądu</b>
+									</p>
+								</div>
+								<div className="col-md-4 ">
+									<p>
+										<b>Data</b>
+									</p>
+								</div>
+								<div className="col-md-4">
+									<p>
+										<b>Status</b>
+									</p>
+								</div>
+							</div>
+						) : null}
+					</Grid>
+
+					<Grid item xs={12}>
+						{inspectionsList.map((inspection, i) => (
+							<div key={i} className="row mt-3">
+								<div className="col-md-4">
+									<Link
+										to={`/inspections/list/${inspection.connection.connectionId}/${inspection.startTime}/to/${inspection.endTime}/show`}
+									>
+										{inspection.connection.name}
+									</Link>
+								</div>
+								<div className="col-md-4">
+									Od <FormatDate date={inspection.startTime} /> Do
+									<FormatDate date={inspection.endTime} />
+								</div>
+								<div className="col-md-4">
+									<p>{inspection.inspectionStatus} </p>
+								</div>
+							</div>
+						))}
+					</Grid>
+				</Grid>
+			</>
 		);
 	}
 }
@@ -312,10 +349,28 @@ const mapDispatchToProps = (dispatch) => {
 		clearInspectionsListState: () => {
 			dispatch(clearInspectionsListState());
 		},
-		getConnectionAndStartTimeBetween: (connectionId,startTime,endTime,typeName,history) => {
-			dispatch(getConnectionAndStartTimeBetween(connectionId,startTime,endTime,typeName,history));
+		setSnackbar: (snackbarOpen, snackbarMessage, snackbarTime) => {
+			dispatch(setSnackbar(snackbarOpen, snackbarMessage, snackbarTime));
 		},
-		
+		getConnectionAndStartTimeBetween(
+			connectionId,
+			startTime,
+			endTime,
+			typeName,
+			history
+		) {
+			return dispatch(
+				getConnectionAndStartTimeBetween(
+					connectionId,
+					startTime,
+					endTime,
+					typeName,
+					history
+				)
+			).then((res) => {
+				if (res && res.status === 200) return res.data.length;
+			});
+		}
 	};
 };
 
@@ -323,4 +378,3 @@ export default connect(
 	mapStateToPros,
 	mapDispatchToProps
 )(withStyles(tableStyles)(InspectionBetween));
-
