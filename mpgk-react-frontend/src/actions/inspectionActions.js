@@ -150,15 +150,23 @@ export const getActionsByName = (history) => async (dispatch) => {
 	}
 };
 
-export const getConnectionAndStartTimeBetween = (id,startTime ,endTime, typeName, history) => async (
-	dispatch
-) => {
+export const getConnectionAndStartTimeBetween = (
+	id,
+	startTime,
+	endTime,
+	typeName,
+	history
+) => async (dispatch) => {
 	try {
-		const res = await axios.get(`/api/inspections/list/${id}/from/${startTime}/to/${endTime}?type=${typeName}`);
+		const res = await axios.get(
+			`/api/inspections/list/${id}/from/${startTime}/to/${endTime}?type=${typeName}`
+		);
 		dispatch({
 			type: GET_CONNECTION_START_TIME_BETWEEN,
 			payload: res.data
 		});
+
+		return res;
 	} catch (error) {
 		history.push("/");
 	}
