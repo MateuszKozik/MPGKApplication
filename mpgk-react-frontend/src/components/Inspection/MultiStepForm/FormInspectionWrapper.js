@@ -24,18 +24,16 @@ class FormInspectionWrapper extends Component {
 		persons: [],
 		activitiesGroups: [
 			{
-				activityGroup: {
-					name: "",
-					activities: [
-						{
-							name: "",
-							type: "",
-							emsr: "",
-							setting: "",
-							listItems: ""
-						}
-					]
-				}
+				name: "",
+				activities: [
+					{
+						name: "",
+						type: "",
+						emsr: "",
+						setting: "",
+						listItems: ""
+					}
+				]
 			}
 		]
 	};
@@ -66,7 +64,7 @@ class FormInspectionWrapper extends Component {
 	handleActivityGroupChange = (e, index) => {
 		const { name, value } = e.target;
 		const list = [...this.state.activitiesGroups];
-		list[index]["activityGroup"][name] = value;
+		list[index][name] = value;
 		this.setState({ activitiesGroups: list });
 	};
 
@@ -74,7 +72,7 @@ class FormInspectionWrapper extends Component {
 	handleActivityChange = (e, i, index) => {
 		const { name, value } = e.target;
 		const list = [...this.state.activitiesGroups];
-		list[i]["activityGroup"]["activities"][index][name] = value;
+		list[i]["activities"][index][name] = value;
 		this.setState({ activitiesGroups: list });
 	};
 
@@ -88,9 +86,9 @@ class FormInspectionWrapper extends Component {
 	// Handle click event of the remove activity button
 	handleRemoveActivityClick = (i, index) => {
 		const list = [...this.state.activitiesGroups];
-		const item = list[i]["activityGroup"]["activities"];
+		const item = list[i]["activities"];
 		item.splice(index, 1);
-		list[i]["activityGroup"]["activities"] = item;
+		list[i]["activities"] = item;
 
 		this.setState({ activitiesGroups: list });
 	};
@@ -101,18 +99,16 @@ class FormInspectionWrapper extends Component {
 			activitiesGroups: [
 				...this.state.activitiesGroups,
 				{
-					activityGroup: {
-						name: "",
-						activities: [
-							{
-								name: "",
-								type: "",
-								emsr: "",
-								setting: "",
-								listItems: ""
-							}
-						]
-					}
+					name: "",
+					activities: [
+						{
+							name: "",
+							type: "",
+							emsr: "",
+							setting: "",
+							listItems: ""
+						}
+					]
 				}
 			]
 		});
@@ -122,7 +118,7 @@ class FormInspectionWrapper extends Component {
 	handleAddActivityClick = (i, index) => {
 		const list = [...this.state.activitiesGroups];
 
-		list[i]["activityGroup"]["activities"][index + 1] = {
+		list[i]["activities"][index + 1] = {
 			name: "",
 			type: "",
 			emsr: "",

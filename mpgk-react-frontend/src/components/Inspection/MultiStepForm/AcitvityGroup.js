@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import {
 	Button,
 	Grid,
@@ -17,6 +18,7 @@ import {
 import { tableStyles } from "../../../consts/themeConsts";
 import InfoIcon from "@material-ui/icons/Info";
 import { Form, Formik } from "formik";
+import { addConnection } from "../../../actions/connectionActions";
 
 class ActivityGroup extends Component {
 	state = {
@@ -25,7 +27,18 @@ class ActivityGroup extends Component {
 
 	handleSaveInspection = () => {
 		const { values } = this.props;
-		console.log(values);
+		const newInspection = {
+			name: values.name,
+			status: values.status,
+			device: values.device,
+			inspectionType: values.inspectionType,
+			persons: values.persons,
+			activitiesGroups: values.activitiesGroups
+		};
+
+		console.log(values.activitiesGroups);
+
+		this.props.addConnection(newInspection, this.props.history);
 	};
 
 	back = (e) => {
@@ -73,12 +86,12 @@ class ActivityGroup extends Component {
 											name="name"
 											label="Nazwa kategorii"
 											variant="outlined"
-											value={x.activityGroup.name}
+											value={x.name}
 											required
 											onChange={(e) => handleActivityGroupChange(e, i)}
 										/>
 									</Grid>
-									{x.activityGroup.activities.map((y, index) => {
+									{x.activities.map((y, index) => {
 										return (
 											<Grid
 												container
@@ -180,7 +193,7 @@ class ActivityGroup extends Component {
 													>
 														Usuń
 													</Button>
-													{x.activityGroup.activities.length === index + 1 && (
+													{x.activities.length === index + 1 && (
 														<Button
 															onClick={() => handleAddActivityClick(i, index)}
 														>
@@ -260,4 +273,6 @@ class ActivityGroup extends Component {
 	}
 }
 
-export default withStyles(tableStyles)(ActivityGroup);
+export default connect(null, { addConnection })(
+	withStyles(tableStyles)(ActivityGroup)
+);
