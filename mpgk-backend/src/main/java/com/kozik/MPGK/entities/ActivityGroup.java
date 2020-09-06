@@ -2,6 +2,7 @@ package com.kozik.MPGK.entities;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,6 +16,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -34,8 +36,8 @@ public class ActivityGroup {
     @Column(name = "name", nullable = false, length = 100)
     private String name;
 
-    @OneToMany(mappedBy = "activityGroup", fetch = FetchType.EAGER)
-    @JsonIgnore
+    @OneToMany(mappedBy = "activityGroup", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JsonIgnoreProperties(value = "activityGroup", allowSetters = true)
     private List<Activity> activities;
 
     @ManyToOne

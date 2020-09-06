@@ -43,6 +43,7 @@ public class Person {
     private User user;
 
     @ManyToMany(mappedBy = "persons")
+    @JsonIgnore
     private List<Connection> connections;
 
     @OneToMany(mappedBy = "person")
