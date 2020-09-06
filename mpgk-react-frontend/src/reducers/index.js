@@ -10,6 +10,7 @@ import connectionReducer from "./connectionReducer";
 import fluidRegistryReducer from "./fluidRegistryReducer";
 import fluidPlaceReducer from "./fluidPlaceReducer";
 import snackbarReducer from "./snackbarReducer";
+import inspectionTypeReducer from "./inspectionTypeReducer";
 
 export default combineReducers({
 	errors: errorReducer,
@@ -22,5 +23,6 @@ export default combineReducers({
 	connection: connectionReducer,
 	fluidRegistry: fluidRegistryReducer,
 	fluidPlace: fluidPlaceReducer,
+	inspectionType: inspectionTypeReducer,
 	snackbar: snackbarReducer
 });
