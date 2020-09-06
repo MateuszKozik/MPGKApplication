@@ -3,8 +3,25 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { createOnDemandInspections } from "../../actions/taskActions";
 import { getHomePageConnections } from "../../actions/connectionActions";
+import { withStyles } from "@material-ui/core/styles";
+import { tableStyles } from "./../../consts/themeConsts";
 import Timer from "../Common/Timer";
 import FormatDate from "../Common/FormatDate";
+import CheckCircleIcon from "@material-ui/icons/CheckCircle";
+import CancelIcon from "@material-ui/icons/Cancel";
+import ErrorIcon from "@material-ui/icons/Error";
+import {
+	Grid,
+	Typography,
+	Table,
+	TableBody,
+	TableContainer,
+	TableCell,
+	Badge,
+	TableRow,
+	TableHead,
+	Button
+} from "@material-ui/core";
 
 class Home extends Component {
 	componentDidMount() {
@@ -12,6 +29,7 @@ class Home extends Component {
 	}
 
 	render() {
+		const { classes } = this.props;
 		const { homePageConnections } = this.props.connection;
 		const onDemandConnections = homePageConnections.filter(
 			(onDemand) => onDemand.connection.inspectionType.name === "Na żądanie"
@@ -20,199 +38,365 @@ class Home extends Component {
 			(periodic) => periodic.connection.inspectionType.name !== "Na żądanie"
 		);
 		return (
-			<div className="container mt-3">
-				<div className="table-responsive mt-2">
-					<table className="table ">
-						<thead>
-							<tr>
-								<th>
-									<b>OEC - Przeglądy okresowe</b>
-								</th>
-								<th>Status</th>
-								<th>Zaległe</th>
-								<th>Plan</th>
-								<th>Czas do końca</th>
-							</tr>
-						</thead>
-						<tbody>
-							{periodicConnections.map((periodic, i) => (
-								<tr key={i}>
-									{periodic.active || periodic.overdueCount > 0 ? (
-										<>
-											<td>
+			<>
+				<Grid container className={classes.container}>
+					<Grid item xs={false} md={1} />
+					<Grid item xs={12} md={10}>
+						<TableContainer>
+							<Table>
+								<TableHead>
+									<TableRow>
+										<TableCell>
+											<Typography>
+												<b>OEC - Przeglądy okresowe</b>
+											</Typography>
+										</TableCell>
+										<TableCell>
+											<Typography>
+												<b>Status</b>
+											</Typography>
+										</TableCell>
+										<TableCell>
+											<Typography align="center">
+												<b>Plan</b>
+											</Typography>
+										</TableCell>
+										<TableCell>
+											<Typography align="center">
+												<b>Pozostały czas</b>
+											</Typography>
+										</TableCell>
+									</TableRow>
+								</TableHead>
+								<TableBody>
+									{periodicConnections.map((periodic, i) => {
+										return (
+											<TableRow key={i}>
 												{periodic.active || periodic.overdueCount > 0 ? (
-													<Link
-														to={`/inspections/list/${periodic.connection.connectionId}`}
-													>
-														{periodic.connection.name}
-													</Link>
-												) : (
-													<Link
-														to={`/inspections/list/${periodic.connection.connectionId}/activity`}
-													>
-														{periodic.connection.name}
-													</Link>
-												)}
-											</td>
-											<td>
-												{periodic.inspectionStatus === "Wykonany" ? (
-													<p>Wykonany</p>
-												) : (
-													<p>W trakcie</p>
-												)}
-											</td>
+													<>
+														<TableCell>
+															<Typography>
+																{periodic.active ||
+																periodic.overdueCount > 0 ? (
+																	<Link
+																		style={{
+																			color: "#000",
+																			textDecoration: "none"
+																		}}
+																		to={`/inspections/list/${periodic.connection.connectionId}`}
+																	>
+																		{periodic.connection.name}
+																	</Link>
+																) : (
+																	<Link
+																		style={{
+																			color: "#000",
+																			textDecoration: "none"
+																		}}
+																		to={`/inspections/list/${periodic.connection.connectionId}/activity`}
+																	>
+																		{periodic.connection.name}
+																	</Link>
+																)}
+															</Typography>
+														</TableCell>
+														<TableCell>
+															<div
+																style={{
+																	display: "flex",
+																	alignItems: "center"
+																}}
+															>
+																{periodic.inspectionStatus === "Wykonany" &&
+																periodic.active ? (
+																	<CheckCircleIcon
+																		fontSize="large"
+																		color="primary"
+																	/>
+																) : (
+																	periodic.active && (
+																		<CancelIcon
+																			fontSize="large"
+																			color="primary"
+																		/>
+																	)
+																)}
 
-											<td>
-												{periodic.overdueCount > 0 ? (
-													<p>Zaległych: {periodic.overdueCount}</p>
+																{periodic.overdueCount > 0 ? (
+																	<Badge
+																		badgeContent={periodic.overdueCount}
+																		color="primary"
+																	>
+																		<ErrorIcon
+																			fontSize="large"
+																			color="secondary"
+																		/>
+																	</Badge>
+																) : null}
+															</div>
+														</TableCell>
+														<TableCell align="center">
+															<Typography component="div">
+																{periodic.active && (
+																	<>
+																		<FormatDate date={periodic.startTime} />
+																		do
+																		<FormatDate date={periodic.endTime} />
+																	</>
+																)}
+															</Typography>
+														</TableCell>
+														<TableCell align="center">
+															<Typography>
+																<Timer date={periodic.endTime} />
+															</Typography>
+														</TableCell>
+													</>
 												) : null}
-											</td>
-											<td>
-												{periodic.active && (
-													<>
-														Od <FormatDate date={periodic.startTime} /> Do
-														<FormatDate date={periodic.endTime} />
-													</>
-												)}
-											</td>
-											<td>
-												<Timer date={periodic.endTime} />
-											</td>
-										</>
-									) : null}
-								</tr>
-							))}
-						</tbody>
-					</table>
-					<table className="table ">
-						<thead>
-							<tr>
-								<th>
-									<b>OEC - Przeglądy okresowe na żądanie</b>
-								</th>
-								<th>Status</th>
-								<th>Zaległe</th>
-								<th>Plan</th>
-								<th>Czas do końca</th>
-							</tr>
-						</thead>
-						<tbody>
-							{onDemandConnections.map((onDemand, i) => (
-								<tr key={i}>
-									{(onDemand.connection.device.status === true &&
-										onDemand.connection.status === true) ||
-									onDemand.overdueCount > 0 ||
-									onDemand.active === true ? (
-										<>
-											<td>
-												{onDemand.active === true ||
-												onDemand.overdueCount > 0 ? (
-													<Link
-														to={`/inspections/list/${onDemand.connection.connectionId}`}
-													>
-														{onDemand.connection.name}
-													</Link>
-												) : (
-													<Link
-														to={`/inspections/list/${onDemand.connection.connectionId}/activity`}
-													>
-														{onDemand.connection.name}
-													</Link>
-												)}
-											</td>
-											<td>
-												{onDemand.active === true ? (
-													<>
-														{onDemand.inspectionStatus === "Wykonany" ? (
-															<p>Wykonany</p>
-														) : (
-															<p>W trakcie</p>
-														)}
-													</>
-												) : (
-													<p>Nierozpoczęty</p>
-												)}
-											</td>
+											</TableRow>
+										);
+									})}
+								</TableBody>
+							</Table>
+						</TableContainer>
+					</Grid>
+					<Grid item xs={false} md={1} />
+				</Grid>
 
-											<td>
-												{onDemand.overdueCount > 0 ? (
-													<p>Zaległych: {onDemand.overdueCount}</p>
-												) : null}
-											</td>
-											<td>
-												{onDemand.active === true && (
+				<Grid container className={classes.container} style={{ marginTop: 30 }}>
+					<Grid item xs={false} md={1} />
+					<Grid item xs={12} md={10}>
+						<TableContainer>
+							<Table>
+								<TableHead>
+									<TableRow>
+										<TableCell>
+											<Typography>
+												<b>OEC - Przeglądy okresowe na żądanie</b>
+											</Typography>
+										</TableCell>
+										<TableCell>
+											<Typography>
+												<b>Status</b>
+											</Typography>
+										</TableCell>
+										<TableCell>
+											<Typography align="center">
+												<b>Plan</b>
+											</Typography>
+										</TableCell>
+										<TableCell>
+											<Typography align="center">
+												<b>Pozostały czas</b>
+											</Typography>
+										</TableCell>
+									</TableRow>
+								</TableHead>
+								<TableBody>
+									{onDemandConnections.map((onDemand, i) => {
+										return (
+											<TableRow key={i}>
+												{(onDemand.connection.device.status === true &&
+													onDemand.connection.status === true) ||
+												onDemand.overdueCount > 0 ||
+												onDemand.active === true ? (
 													<>
-														Od <FormatDate date={onDemand.startTime} /> Do
-														<FormatDate date={onDemand.endTime} />
+														<TableCell>
+															<Typography>
+																{onDemand.active === true ||
+																onDemand.overdueCount > 0 ? (
+																	<Link
+																		style={{
+																			color: "#000",
+																			textDecoration: "none"
+																		}}
+																		to={`/inspections/list/${onDemand.connection.connectionId}`}
+																	>
+																		{onDemand.connection.name}
+																	</Link>
+																) : (
+																	<Link
+																		style={{
+																			color: "#000",
+																			textDecoration: "none"
+																		}}
+																		to={`/inspections/list/${onDemand.connection.connectionId}/activity`}
+																	>
+																		{onDemand.connection.name}
+																	</Link>
+																)}
+															</Typography>
+														</TableCell>
+														<TableCell>
+															<div
+																style={{
+																	display: "flex",
+																	alignItems: "center"
+																}}
+															>
+																{onDemand.inspectionStatus === "Wykonany" &&
+																onDemand.active ? (
+																	<CheckCircleIcon
+																		fontSize="large"
+																		color="primary"
+																	/>
+																) : (
+																	onDemand.active && (
+																		<CancelIcon
+																			fontSize="large"
+																			color="primary"
+																		/>
+																	)
+																)}
+
+																{onDemand.overdueCount > 0 ? (
+																	<Badge
+																		badgeContent={onDemand.overdueCount}
+																		color="primary"
+																	>
+																		<ErrorIcon
+																			fontSize="large"
+																			color="secondary"
+																		/>
+																	</Badge>
+																) : null}
+															</div>
+														</TableCell>
+														<TableCell align="center">
+															<Typography component="div">
+																{onDemand.active && (
+																	<>
+																		<FormatDate date={onDemand.startTime} />
+																		do
+																		<FormatDate date={onDemand.endTime} />
+																	</>
+																)}
+															</Typography>
+														</TableCell>
+														<TableCell align="center">
+															<Typography>
+																{onDemand.active === false ? (
+																	<Button
+																		onClick={() => {
+																			this.props.createOnDemandInspections(
+																				onDemand.connection.connectionId,
+																				this.props.history
+																			);
+																			window.location.reload(false);
+																		}}
+																		variant="contained"
+																		color="primary"
+																	>
+																		Rozpocznij
+																	</Button>
+																) : (
+																	<Timer date={onDemand.endTime} />
+																)}
+															</Typography>
+														</TableCell>
 													</>
-												)}
-											</td>
-											<td>
-												{onDemand.active === false ? (
-													<button
-														onClick={() => {
-															this.props.createOnDemandInspections(
-																onDemand.connection.connectionId,
-																this.props.history
-															);
-															window.location.reload(false);
-														}}
-														className="btn btn-primary"
-													>
-														Rozpocznij
-													</button>
-												) : (
-													<Timer date={onDemand.endTime} />
-												)}
-											</td>
-										</>
-									) : null}
-								</tr>
-							))}
-						</tbody>
-					</table>
-				</div>
-				<div className="row mt-4">
-					<div className="col-md-6">
-						<h4>Lista wykonawców</h4>
-					</div>
-					<div className="col-md-6">
-						<Link to="/performers-list" className="btn btn-block btn-primary">
-							Pokaż
-						</Link>
-					</div>
-				</div>
-				<div className="row mt-4">
-					<div className="col-md-6">
-						<h4>Wymiana butli z azotem</h4>
-					</div>
-					<div className="col-md-6">
-						<Link to="/nitrogen-list" className="btn btn-block btn-primary">
-							Pokaż
-						</Link>
-					</div>
-				</div>
-				<div className="row mt-4">
-					<div className="col-md-6">
-						<h4>Rejestr płynów roboczych ORC</h4>
-					</div>
-					<div className="col-md-6">
-						<Link
-							to="/new-fluid-registry"
-							className="btn btn-block btn-primary"
-						>
-							Otwórz
-						</Link>
-					</div>
-				</div>
-				<div className="row mt-4">
-					<div className="col-md-6 offset-md-6">
-						<button className="btn btn-block btn-primary">
-							Filtruj/Szukaj
-						</button>
-					</div>
-				</div>
-			</div>
+												) : null}
+											</TableRow>
+										);
+									})}
+								</TableBody>
+							</Table>
+						</TableContainer>
+					</Grid>
+					<Grid item xs={false} md={1} />
+				</Grid>
+
+				<Grid container style={{ marginTop: 30, textAlign: "center" }}>
+					<Grid item xs={2} />
+					<Grid item xs={8}>
+						<Grid container spacing={1}>
+							<Grid item xs={12} md={6}>
+								<Typography>
+									<b>Lista wykonawców</b>
+								</Typography>
+							</Grid>
+							<Grid item xs={12} md={6}>
+								<Button color="primary" variant="contained">
+									<Link
+										style={{ textDecoration: "none", color: "#fff" }}
+										to="/performers-list"
+									>
+										Wyświetl
+									</Link>
+								</Button>
+							</Grid>
+						</Grid>
+					</Grid>
+				</Grid>
+				<Grid container style={{ marginTop: 20, textAlign: "center" }}>
+					<Grid item xs={2} />
+					<Grid item xs={8}>
+						<Grid container spacing={1}>
+							<Grid item xs={12} md={6}>
+								<Typography>
+									<b>Wymiana butli z azotem</b>
+								</Typography>
+							</Grid>
+							<Grid item xs={12} md={6}>
+								<Button color="primary" variant="contained">
+									<Link
+										style={{ textDecoration: "none", color: "#fff" }}
+										to="/nitrogen-list"
+									>
+										Wyświetl
+									</Link>
+								</Button>
+							</Grid>
+						</Grid>
+					</Grid>
+					<Grid item xs={2} />
+				</Grid>
+
+				<Grid container style={{ marginTop: 20, textAlign: "center" }}>
+					<Grid item xs={2} />
+					<Grid item xs={8}>
+						<Grid container spacing={1}>
+							<Grid item xs={12} md={6}>
+								<Typography>
+									<b>Rejestr płynów roboczych ORC</b>
+								</Typography>
+							</Grid>
+							<Grid item xs={12} md={6}>
+								<Button color="primary" variant="contained">
+									<Link
+										style={{ textDecoration: "none", color: "#fff" }}
+										to="/new-fluid-registry"
+									>
+										Wyświetl
+									</Link>
+								</Button>
+							</Grid>
+						</Grid>
+					</Grid>
+					<Grid item xs={2} />
+				</Grid>
+				<Grid
+					container
+					style={{ marginTop: 20, textAlign: "center", marginBottom: 20 }}
+				>
+					<Grid item xs={2} />
+					<Grid item xs={8}>
+						<Grid container>
+							<Grid item xs={12}>
+								<Button color="primary" variant="contained">
+									<Link
+										style={{ textDecoration: "none", color: "#fff" }}
+										to="/inspections"
+									>
+										Wyszukiwarka przeglądów
+									</Link>
+								</Button>
+							</Grid>
+						</Grid>
+					</Grid>
+					<Grid item xs={2} />
+				</Grid>
+			</>
 		);
 	}
 }
@@ -231,4 +415,7 @@ const mapStateToProps = (state) => ({
 	homePageConnections: state.connection
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(withStyles(tableStyles)(Home));
