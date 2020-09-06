@@ -399,8 +399,8 @@ const mapDispatchToProps = (dispatch) => ({
 	clearFluidRegistryState: () => {
 		dispatch(clearFluidRegistryState());
 	},
-	setSnackbar: () => {
-		dispatch(setSnackbar());
+	setSnackbar: (snackbarOpen, snackbarMessage, snackbarTime) => {
+		dispatch(setSnackbar(snackbarOpen, snackbarMessage, snackbarTime));
 	},
 	addFluidRegistry(fluidRegistry) {
 		return dispatch(addFluidRegistry(fluidRegistry)).then((res) => {
