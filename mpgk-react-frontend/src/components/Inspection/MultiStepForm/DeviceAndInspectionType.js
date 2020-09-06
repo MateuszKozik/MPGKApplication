@@ -9,6 +9,7 @@ import {
 	Typography
 } from "@material-ui/core";
 import { tableStyles } from "../../../consts/themeConsts";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getDevices } from "../../../actions/deviceActions";
 import { getInspectionTypes } from "../../../actions/inspectionTypeActions";
@@ -200,6 +201,13 @@ class DeviceAndInpectionType extends Component {
 		);
 	}
 }
+
+DeviceAndInpectionType.propTypes = {
+	device: PropTypes.object.isRequired,
+	inspectionType: PropTypes.object.isRequired,
+	getDevices: PropTypes.func.isRequired,
+	getInspectionTypes: PropTypes.func.isRequired
+};
 
 const mapDispatchToProps = (dispatch) => {
 	return {

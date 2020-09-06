@@ -12,6 +12,7 @@ import {
 } from "@material-ui/core";
 import { tableStyles } from "../../../consts/themeConsts";
 import { getPersons } from "../../../actions/personActions";
+import PropTypes from "prop-types";
 import { Formik, Form } from "formik";
 
 class Employees extends Component {
@@ -101,6 +102,11 @@ class Employees extends Component {
 		);
 	}
 }
+
+Employees.propTypes = {
+	person: PropTypes.object.isRequired,
+	getPersons: PropTypes.func.isRequired
+};
 
 const mapDispatchToProps = (dispatch) => {
 	return {
