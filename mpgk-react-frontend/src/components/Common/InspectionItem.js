@@ -183,10 +183,11 @@ class InspectionItem extends Component {
 				return (
 					<select
 						name="parameter"
+						required
 						onChange={this.onChange}
 						className="form-control"
 					>
-						<option value="">Wybierz sekcję</option>
+						<option value="">Wybierz opcję</option>
 						{listOfItems.map((item, i) => (
 							<option key={i} value={item}>
 								{item}
