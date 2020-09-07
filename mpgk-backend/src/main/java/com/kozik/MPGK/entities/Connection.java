@@ -18,6 +18,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyDescription;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -50,7 +53,7 @@ public class Connection {
     private InspectionType inspectionType;
 
     @OneToMany(mappedBy = "connection", cascade = CascadeType.ALL)
-    @JsonIgnoreProperties(value = "connection", allowSetters = true)
+    @JsonProperty(access = Access.WRITE_ONLY)
     private List<ActivityGroup> activitiesGroups;
 
     @ManyToMany

@@ -15,7 +15,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnoreType;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -36,7 +41,7 @@ public class ActivityGroup {
     private String name;
 
     @OneToMany(mappedBy = "activityGroup", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JsonIgnoreProperties(value = "activityGroup", allowSetters = true)
+    @JsonProperty(access = Access.WRITE_ONLY)
     private List<Activity> activities;
 
     @ManyToOne
