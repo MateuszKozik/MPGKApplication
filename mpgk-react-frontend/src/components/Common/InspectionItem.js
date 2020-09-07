@@ -1,21 +1,46 @@
 import React, { Component } from "react";
-import classNames from "classnames";
 import FormatDate from "./FormatDate";
 import { connect } from "react-redux";
-import { performInspection } from "../../actions/inspectionActions";
+import PropTypes from "prop-types";
+import { updateInspection } from "../../actions/inspectionActions";
+import {
+	TextField,
+	Checkbox,
+	FormControl,
+	RadioGroup,
+	Radio,
+	FormControlLabel,
+	InputLabel,
+	MenuItem,
+	Select,
+	Grid,
+	Button,
+	Typography,
+	Divider,
+	LinearProgress
+} from "@material-ui/core";
+import CheckBoxIcon from "@material-ui/icons/CheckBox";
+import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
+import { withStyles } from "@material-ui/core/styles";
+import { tableStyles } from "./../../consts/themeConsts";
+import { Formik, Form } from "formik";
+import * as Yup from "yup";
+import { FormikTextField } from "formik-material-fields";
+
+const validationSchema = Yup.object().shape({
+	comment: Yup.string().max(100, "Wprowadź krótszy tekst")
+});
 
 class InspectionItem extends Component {
 	constructor() {
 		super();
 		this.state = {
+			cancelSubmit: false,
 			parameter: "",
 			comment: "",
 			status: "",
 			listItems: ""
 		};
-
-		this.onChange = this.onChange.bind(this);
-		this.onSubmit = this.onSubmit.bind(this);
 	}
 
 	componentDidMount() {
@@ -27,7 +52,7 @@ class InspectionItem extends Component {
 		});
 	}
 
-	onChange(e) {
+	handleChange = (e) => {
 		if (e.target.type === "checkbox") {
 			this.setState({ [e.target.name]: e.target.checked });
 		} else if (e.target.type === "radio") {
@@ -35,352 +60,291 @@ class InspectionItem extends Component {
 		} else {
 			this.setState({ [e.target.name]: e.target.value });
 		}
-	}
+	};
 
-	onSubmit(e) {
-		this.setState({
-			status: "Wykonany"
-		});
-		e.preventDefault();
+	handleSubmit = (values, { setSubmitting }) => {
+		setTimeout(() => {
+			setSubmitting(false);
+			if (this.state.cancelSubmit === false) {
+				const updatedInspection = {
+					inspectionId: this.props.inspectionId,
+					status: "Wykonany",
+					startTime: this.props.startTime,
+					endTime: this.props.endTime,
+					parameter: this.state.parameter,
+					activity: this.props.activity,
+					comment: this.state.comment,
+					listItems: this.state.listItems
+				};
 
-		const updatedInspection = {
-			inspectionId: this.props.inspectionId,
-			status: "Wykonany",
-			startTime: this.props.startTime,
-			endTime: this.props.endTime,
-			parameter: this.state.parameter,
-			activity: this.props.activity,
-			comment: this.state.comment,
-			listItems: this.state.listItems
-		};
+				this.setState({
+					status: "Wykonany"
+				});
 
-		this.props.performInspection(
-			this.props.inspectionId,
-			updatedInspection,
-			this.props.connectionId,
-			this.props.history
-		);
-	}
+				this.props.updateInspection(this.props.inspectionId, updatedInspection);
+			}
+			this.setState({ cancelSubmit: false });
+		}, 3000);
+	};
 
 	selectInput(type) {
 		switch (type) {
 			case "Pole tekstowe":
 				return (
-					<input
+					<TextField
 						type="text"
-						value={this.state.parameter || ""}
-						onChange={this.onChange}
-						className="form-control"
+						label="Tekst"
+						variant="outlined"
 						name="parameter"
+						value={this.state.parameter || ""}
+						onChange={this.handleChange}
+						disabled={this.state.status === "Wykonany" && true}
 						required
 					/>
 				);
+
 			case "Zaznaczenie":
-				if (this.props.parameter === "true") {
-					return (
-						<input
-							type="checkbox"
-							defaultChecked
-							onChange={this.onChange}
-							className="form-control"
-							name="parameter"
-							required
-						/>
-					);
-				} else {
-					return (
-						<input
-							type="checkbox"
-							onChange={this.onChange}
-							className="form-control"
-							name="parameter"
-							required
-						/>
-					);
-				}
+				return (
+					<Checkbox
+						icon={<CheckBoxOutlineBlankIcon fontSize="large" />}
+						checkedIcon={<CheckBoxIcon fontSize="large" />}
+						checked={Boolean(this.state.parameter) || false}
+						onChange={this.handleChange}
+						name="parameter"
+						color="primary"
+						disabled={this.state.status === "Wykonany" && true}
+						required
+					/>
+				);
 
 			case "Zakres liczb":
 				return (
-					<input
+					<TextField
 						type="number"
+						label="Liczba"
+						variant="outlined"
+						disabled={this.state.status === "Wykonany" && true}
 						value={this.state.parameter || ""}
-						className="form-control"
-						onChange={this.onChange}
+						onChange={this.handleChange}
 						name="parameter"
-						placeholder="Wartość liczbowa"
 						required
 					/>
 				);
 			case "Pole wyboru":
-				if (this.props.parameter === "TAK") {
-					return (
-						<div className="form-check">
-							<label>TAK</label>
-							<input
-								type="radio"
-								name={this.props.inspectionId + "parameter"}
-								onChange={this.onChange}
-								defaultChecked
+				return (
+					<FormControl required>
+						<RadioGroup
+							name="parameter"
+							value={this.state.parameter}
+							onChange={this.handleChange}
+							row
+						>
+							<FormControlLabel
 								value="TAK"
-								required
+								control={
+									<Radio
+										required
+										color="primary"
+										disabled={this.state.status === "Wykonany" && true}
+									/>
+								}
+								label="TAK"
 							/>
-							<label>NIE</label>
-							<input
-								type="radio"
-								name={this.props.inspectionId + "parameter"}
-								onChange={this.onChange}
+							<FormControlLabel
 								value="NIE"
 								required
+								control={
+									<Radio
+										required
+										color="primary"
+										disabled={this.state.status === "Wykonany" && true}
+									/>
+								}
+								label="NIE"
 							/>
-						</div>
-					);
-				} else if (this.props.parameter === "NIE") {
-					return (
-						<div className="form-check">
-							<label>TAK</label>
-							<input
-								type="radio"
-								name={this.props.inspectionId + "parameter"}
-								onChange={this.onChange}
-								value="TAK"
-								required
-							/>
-							<label>NIE</label>
-							<input
-								type="radio"
-								name={this.props.inspectionId + "parameter"}
-								defaultChecked
-								onChange={this.onChange}
-								value="NIE"
-								required
-							/>
-						</div>
-					);
-				} else {
-					return (
-						<div className="form-check">
-							<label>TAK</label>
-							<input
-								type="radio"
-								name={this.props.inspectionId + "parameter"}
-								onChange={this.onChange}
-								value="TAK"
-								required
-							/>
-							<label>NIE</label>
-							<input
-								type="radio"
-								name={this.props.inspectionId + "parameter"}
-								onChange={this.onChange}
-								value="NIE"
-								required
-							/>
-						</div>
-					);
-				}
+						</RadioGroup>
+					</FormControl>
+				);
+
 			case "Lista":
 				const listOfItems = this.state.listItems.split(",");
 				return (
-					<select
-						name="parameter"
-						required
-						onChange={this.onChange}
-						className="form-control"
-					>
-						<option value="">Wybierz opcję</option>
-						{listOfItems.map((item, i) => (
-							<option key={i} value={item}>
-								{item}
-							</option>
-						))}
-					</select>
+					<FormControl required variant="outlined" style={{ minWidth: 120 }}>
+						<InputLabel id="parameter-label">Wybierz</InputLabel>
+						<Select
+							labelId="parameter-label"
+							name="parameter"
+							value={this.state.parameter || ""}
+							onChange={this.handleChange}
+							label="Parametr"
+							disabled={this.state.status === "Wykonany" && true}
+						>
+							<MenuItem value="">
+								<em>Wybierz</em>
+							</MenuItem>
+							{listOfItems.map((item, i) => (
+								<MenuItem key={i} value={item}>
+									{item}
+								</MenuItem>
+							))}
+						</Select>
+					</FormControl>
 				);
 
 			default:
 				return (
-					<input
-						value={this.state.parameter || ""}
+					<TextField
 						type="text"
-						className="form-control"
-						onChange={this.onChange}
+						label="Parametr"
+						variant="outlined"
 						name="parameter"
+						disabled={this.state.status === "Wykonany" && true}
+						value={this.state.parameter || ""}
+						onChange={this.handleChange}
 						required
-					/>
-				);
-		}
-	}
-
-	displayValue(type) {
-		switch (type) {
-			case "Pole tekstowe":
-				return (
-					<input
-						type="text"
-						value={this.state.parameter || ""}
-						readOnly
-						className="form-control"
-						name="parameter"
-					/>
-				);
-			case "Zaznaczenie":
-				return (
-					<input
-						type="checkbox"
-						defaultChecked
-						disabled
-						className="form-control"
-						name="parameter"
-					/>
-				);
-			case "Zakres liczb":
-				return (
-					<input
-						type="number"
-						value={this.state.parameter || ""}
-						className="form-control"
-						disabled
-						name="parameter"
-					/>
-				);
-
-			case "Pole wyboru":
-				if (this.state.parameter === "TAK") {
-					return (
-						<div className="form-check">
-							<label>TAK</label>
-							<input
-								type="radio"
-								name={this.props.inspectionId + "parameter"}
-								disabled
-								defaultChecked
-								value="TAK"
-								required
-							/>
-							<label>NIE</label>
-							<input
-								type="radio"
-								name={this.props.inspectionId + "parameter"}
-								disabled
-								value="NIE"
-								required
-							/>
-						</div>
-					);
-				} else {
-					return (
-						<div className="form-check">
-							<label>TAK</label>
-							<input
-								type="radio"
-								name={this.props.inspectionId + "parameter"}
-								disabled
-								value="TAK"
-							/>
-							<label>NIE</label>
-							<input
-								type="radio"
-								name={this.props.inspectionId + "parameter"}
-								disabled
-								defaultChecked
-								value="NIE"
-							/>
-						</div>
-					);
-				}
-			default:
-				return (
-					<input
-						value={this.state.parameter || ""}
-						type="text"
-						className="form-control"
-						readOnly
-						name="parameter"
 					/>
 				);
 		}
 	}
 
 	render() {
+		const { classes } = this.props;
 		const { name, type, emsr, setting } = this.props.activity;
 		const { datetime, person, supervisor, showEmsr, showSetting } = this.props;
 		return (
-			<div
-				className={classNames("container p-2 my-2 border-bottom", {
-					inspectionComplete: this.state.status === "Wykonany",
-					inspectionOverdue: this.state.status === "Zaległy"
-				})}
-			>
+			<div className={classes.form}>
 				{this.state.status === "Nowy" || this.state.status === "Zaległy" ? (
-					<form className="row my-1" onSubmit={this.onSubmit}>
-						<div className="col-md-4 my-1 text-justify">{name}</div>
+					<Formik
+						initialValues={{
+							comment: this.state.comment || ""
+						}}
+						validationSchema={validationSchema}
+						onSubmit={(values, { setSubmitting }) =>
+							this.handleSubmit(values, { setSubmitting })
+						}
+					>
+						{({ isSubmitting, values }) => (
+							<Form>
+								<Grid container spacing={2}>
+									<Grid item xs={12} md={4}>
+										<Typography align="justify">{name}</Typography>
+									</Grid>
+									<Grid item xs={12} md={2}>
+										{this.selectInput(type)}
+									</Grid>
 
-						<div className="col-md-2 my-1 text-center">
-							{this.selectInput(type)}
-						</div>
+									<Grid item xs={12} md={2}>
+										<FormikTextField
+											type="text"
+											name="comment"
+											label="Uwagi"
+											variant="outlined"
+											onChange={this.handleChange}
+										/>
+									</Grid>
+									{showEmsr && (
+										<Grid item xs={12} md={1}>
+											{emsr}
+										</Grid>
+									)}
 
-						<div className="col-md-2 my-1 text-center">
-							<input
-								type="text"
-								className="form-control"
-								value={this.state.comment || ""}
-								name="comment"
-								placeholder="Uwagi"
-								onChange={this.onChange}
-							/>
-						</div>
-						{showEmsr && (
-							<div className="col-md-1 my-1 text-center">{emsr}</div>
+									{showSetting && (
+										<Grid item xs={12} md={1}>
+											{setting}
+										</Grid>
+									)}
+
+									<Grid item xs={12} md={2}>
+										{isSubmitting && (
+											<Button
+												colon="secondary"
+												onClick={() => this.setState({ cancelSubmit: true })}
+												disabled={this.state.cancelSubmit}
+											>
+												Anuluj
+											</Button>
+										)}
+										{!isSubmitting && (
+											<Button type="submit" color="primary">
+												Zapisz
+											</Button>
+										)}
+									</Grid>
+
+									<Grid item xs={12} style={{ marginTop: 10 }}>
+										{isSubmitting && <LinearProgress />}
+										<Divider />
+									</Grid>
+								</Grid>
+							</Form>
 						)}
-						{showSetting && (
-							<div className="col-md-1 my-1 text-center">{setting}</div>
-						)}
-						<div className="col-md-2 my-1 text-center">
-							<button type="submit" className="btn btn-primary">
-								Zapisz
-							</button>
-						</div>
-					</form>
+					</Formik>
 				) : (
-					<div className="row my-1">
-						<div className="col-md-4 my-1 text-justify">{name}</div>
-						<div className="col-md-2  my-1 text-center">
-							{this.displayValue(type)}
-						</div>
-						<div className="col-md-2 my-1 text-center">
-							{this.state.comment && (
-								<input
-									type="text"
-									className="form-control"
-									value={this.state.comment || ""}
-									name="comment"
-									readOnly
-								/>
-							)}
-						</div>
+					<Grid container spacing={2}>
+						<Grid item xs={12} md={4}>
+							<Typography align="justify">{name}</Typography>
+						</Grid>
+						<Grid item xs={12} md={2}>
+							{this.selectInput(type)}
+						</Grid>
+
+						<Grid item xs={12} md={2}>
+							<TextField
+								type="text"
+								name="comment"
+								label="Uwagi"
+								variant="outlined"
+								value={this.state.comment || ""}
+								disabled
+							/>
+						</Grid>
 						{showEmsr && (
-							<div className="col-md-1 my-1 text-center">{emsr}</div>
+							<Grid item xs={12} md={1}>
+								{emsr}
+							</Grid>
 						)}
+
 						{showSetting && (
-							<div className="col-md-1 my-1 text-center">{setting}</div>
+							<Grid item xs={12} md={1}>
+								{setting}
+							</Grid>
 						)}
-						<div className="col-md-2 my-1 text-center">
-							<div className="row my-1">
-								<div className="col-md-12 my-1 text-center">
+						<Grid item xs={12} md={2}>
+							<Grid container spacing={1}>
+								<Grid item xs={12}>
 									<FormatDate date={datetime} datetime={true} />
-								</div>
-								<div className="col-md-12 my-1 text-center">
+								</Grid>
+								<Grid item xs={12}>
 									{person && <p> {person.name + " " + person.surname} </p>}
 									{supervisor && (
 										<b> {supervisor.name + " " + supervisor.surname} </b>
 									)}
-								</div>
-							</div>
-						</div>
-					</div>
+								</Grid>
+							</Grid>
+						</Grid>
+						<Grid item xs={12} style={{ marginTop: 10 }}>
+							<Divider />
+						</Grid>
+					</Grid>
 				)}
 			</div>
 		);
 	}
 }
 
-export default connect(null, { performInspection })(InspectionItem);
+InspectionItem.propTypes = {
+	updateInspection: PropTypes.func.isRequired
+};
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		updateInspection: (inspectionId, updatedInspection) => {
+			dispatch(updateInspection(inspectionId, updatedInspection));
+		}
+	};
+};
+
+export default connect(
+	null,
+	mapDispatchToProps
+)(withStyles(tableStyles)(InspectionItem));
