@@ -8,6 +8,21 @@ import PropTypes from "prop-types";
 import Timer from "../Common/Timer";
 import FormatDate from "../Common/FormatDate";
 import { Link } from "react-router-dom";
+import { withStyles } from "@material-ui/core/styles";
+import { tableStyles } from "./../../consts/themeConsts";
+import {
+	Typography,
+	TableCell,
+	TableContainer,
+	TableHead,
+	TableRow,
+	Grid,
+	Table,
+	TableBody
+} from "@material-ui/core";
+import CheckCircleIcon from "@material-ui/icons/CheckCircle";
+import CancelIcon from "@material-ui/icons/Cancel";
+import ErrorIcon from "@material-ui/icons/Error";
 
 class InspectionPage extends Component {
 	componentDidMount() {
@@ -20,6 +35,7 @@ class InspectionPage extends Component {
 	}
 
 	render() {
+		const { classes } = this.props;
 		const { inspectionsList } = this.props.inspection;
 		const actualInspections = inspectionsList.filter(
 			(inspections) => inspections.overdue === false
@@ -29,84 +45,138 @@ class InspectionPage extends Component {
 		);
 
 		return (
-			<div className="container">
+			<>
 				{actualInspections.map((inspection, i) => (
-					<div key={i} className="row">
-						<div className="col-md-12 my-4">
-							<h4>Przegląd aktualny</h4>
-						</div>
-						<div className="col-md-4 ">
-							<p>
-								<b>Nazwa przegłądu</b>
-							</p>
-						</div>
-						<div className="col-md-4 ">
-							<p>
-								<b>Czas do końca</b>
-							</p>
-						</div>
-						<div className="col-md-4">
-							<p>
-								<b>Status</b>
-							</p>
-						</div>
-
-						<div className="col-md-4">
-							<Link
-								to={`/inspections/list/${inspection.connection.connectionId}/execute`}
-							>
-								{inspection.connection.name}
-							</Link>
-						</div>
-						<div className="col-md-4">
-							<Timer date={inspection.endTime} />
-						</div>
-						<div className="col-md-4">
-							<p>{inspection.inspectionStatus} </p>
-						</div>
-					</div>
+					<Grid key={i} container className={classes.form}>
+						<Grid item xs={12}>
+							<Typography variant="h5">Aktualny przegląd</Typography>
+						</Grid>
+						<Grid item xs={false} md={2} />
+						<Grid item xs={12} md={8}>
+							<TableContainer>
+								<Table>
+									<TableHead>
+										<TableRow>
+											<TableCell>
+												<Typography>
+													<b>Nazwa przeglądu</b>
+												</Typography>
+											</TableCell>
+											<TableCell>
+												<Typography>
+													<b>Pozostały czas</b>
+												</Typography>
+											</TableCell>
+											<TableCell>
+												<Typography>
+													<b>Status</b>
+												</Typography>
+											</TableCell>
+										</TableRow>
+									</TableHead>
+									<TableBody>
+										<TableRow>
+											<TableCell>
+												<Typography>
+													<Link
+														style={{
+															color: "#000",
+															textDecoration: "none"
+														}}
+														to={`/inspections/list/${inspection.connection.connectionId}/execute`}
+													>
+														{inspection.connection.name}
+													</Link>
+												</Typography>
+											</TableCell>
+											<TableCell>
+												<Typography>
+													<Timer date={inspection.endTime} />
+												</Typography>
+											</TableCell>
+											<TableCell>
+												<Typography>
+													{inspection.inspectionStatus === "Wykonany" ? (
+														<CheckCircleIcon fontSize="large" color="primary" />
+													) : (
+														<CancelIcon fontSize="large" color="primary" />
+													)}
+												</Typography>
+											</TableCell>
+										</TableRow>
+									</TableBody>
+								</Table>
+							</TableContainer>
+						</Grid>
+						<Grid item xs={false} md={2} />
+					</Grid>
 				))}
+
 				{overdueInspections.length > 0 && (
-					<div className="row">
-						<div className="col-md-12 my-4">
-							<h4>Przeglądy zaległy</h4>
-						</div>
-						<div className="col-md-4 ">
-							<p>
-								<b>Nazwa przegłądu</b>
-							</p>
-						</div>
-						<div className="col-md-4 ">
-							<p>
-								<b>Data zakończenia</b>
-							</p>
-						</div>
-						<div className="col-md-4">
-							<p>
-								<b>Status</b>
-							</p>
-						</div>
-					</div>
-				)}
+					<Grid container className={classes.form}>
+						<Grid item xs={12}>
+							<Typography variant="h5">Zaległe przeglądy</Typography>
+						</Grid>
+						<Grid item xs={false} md={2} />
+						<Grid item xs={12} md={8}>
+							<TableContainer>
+								<Table>
+									<TableHead>
+										<TableRow>
+											<TableCell>
+												<Typography>
+													<b>Nazwa przeglądu</b>
+												</Typography>
+											</TableCell>
+											<TableCell>
+												<Typography>
+													<b>Data zakończenia</b>
+												</Typography>
+											</TableCell>
+											<TableCell>
+												<Typography>
+													<b>Status</b>
+												</Typography>
+											</TableCell>
+										</TableRow>
+									</TableHead>
 
-				{overdueInspections.map((overdue, i) => (
-					<div key={i} className="row">
-						<div className="col-md-4">
-							<Link
-								to={`/inspections/list/${overdue.connection.connectionId}/overdue/${overdue.endTime}`}
-							>
-								{overdue.connection.name}
-							</Link>
-						</div>
-						<div className="col-md-4">
-							<FormatDate date={overdue.endTime} />
-						</div>
-						<div className="col-md-4">
-							<p>Zaległy </p>
-						</div>
-					</div>
-				))}
-			</div>
+									<TableBody>
+										{overdueInspections.map((overdue, i) => (
+											<TableRow key={i}>
+												<TableCell>
+													<Typography>
+														<Link
+															style={{
+																color: "#000",
+																textDecoration: "none"
+															}}
+															to={`/inspections/list/${overdue.connection.connectionId}/overdue/${overdue.endTime}`}
+														>
+															{overdue.connection.name}
+														</Link>
+													</Typography>
+												</TableCell>
+												<TableCell>
+													<Typography component="div">
+														<FormatDate date={overdue.endTime} />
+													</Typography>
+												</TableCell>
+												<TableCell>
+													<Typography>
+														<ErrorIcon fontSize="large" color="secondary" />
+													</Typography>
+												</TableCell>
+											</TableRow>
+										))}
+									</TableBody>
+								</Table>
+							</TableContainer>
+						</Grid>
+						<Grid item xs={false} md={2} />
+					</Grid>
+				)}
+			</>
 		);
 	}
 }
@@ -121,7 +191,18 @@ const mapStateToPros = (state) => ({
 	inspection: state.inspection
 });
 
-export default connect(mapStateToPros, {
-	getInspectionsByConnection,
-	clearInspectionsListState
-})(InspectionPage);
+const mapDispatchToProps = (dispatch) => {
+	return {
+		getInspectionsByConnection: (connectionId, history) => {
+			dispatch(getInspectionsByConnection(connectionId, history));
+		},
+		clearInspectionsListState: () => {
+			dispatch(clearInspectionsListState());
+		}
+	};
+};
+
+export default connect(
+	mapStateToPros,
+	mapDispatchToProps
+)(withStyles(tableStyles)(InspectionPage));
