@@ -18,7 +18,6 @@ import Home from "./components/Pages/Home";
 import FluidRegistry from "./components/Pages/FluidRegistry";
 import PerformersList from "./components/Pages/PerformersList";
 import Inspection from "./components/Pages/Inspection";
-import AddWorkingFluid from "./components/Pages/AddWorkingFluid";
 import NitrogenList from "./components/Pages/NitrogenList";
 import InspectionActivities from "./components/Pages/InspectionActivities";
 import InspectionPage from "./components/Pages/InspectionPage";
@@ -45,11 +44,6 @@ function App() {
 					<Route exact path="/fluid-registries" component={FluidRegistryList} />
 					<Route exact path="/fluid-places" component={FluidPlaceList} />
 					<Route exact path="/new-fluid-registry" component={FluidRegistry} />
-					<Route
-						exact
-						path="/new-fluid-registry/add"
-						component={AddWorkingFluid}
-					/>
 					<Route exact path="/performers-list" component={PerformersList} />
 					<Route exact path="/nitrogen-list" component={NitrogenList} />
 
