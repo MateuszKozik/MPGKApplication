@@ -31,7 +31,9 @@ function Row(inspection) {
           <TableCell component="th" scope="row">
             {row.status}
           </TableCell>
-          <TableCell align="center" style={{ fontSize: 18 }} >{row.activityGroup.name}</TableCell>
+          <TableCell align="left" style={{ fontSize: 18 }} >
+            {row.activityGroup.name}
+          </TableCell>
           
         </TableRow>
         <TableRow>
