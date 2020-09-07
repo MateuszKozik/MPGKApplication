@@ -57,11 +57,24 @@ Inspection.propTypes = {
 	clearInspectionsListState: PropTypes.func.isRequired
 };
 
-const mapStateToPros = (state) => ({
-	inspection: state.inspection
-});
+const mapDispatchToProps = (dispatch) => {
+	return {
+		getInspectionByConnection: (connectionId, history) => {
+			dispatch(getInspectionByConnection(connectionId, history));
+		},
+		clearInspectionsListState: () => {
+			dispatch(clearInspectionsListState());
+		}
+	};
+};
 
-export default connect(mapStateToPros, {
-	getInspectionByConnection,
-	clearInspectionsListState
-})(withStyles(tableStyles)(Inspection));
+const mapStateToPros = (state) => {
+	return {
+		inspection: state.inspection
+	};
+};
+
+export default connect(
+	mapStateToPros,
+	mapDispatchToProps
+)(withStyles(tableStyles)(Inspection));
