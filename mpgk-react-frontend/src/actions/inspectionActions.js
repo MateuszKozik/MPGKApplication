@@ -10,7 +10,8 @@ import {
 	GET_INSPECTIONS_BY_CONNECTION,
 	GET_OVERDUE_BY_CONNECTION,
 	GET_CONNECTION_START_TIME_BETWEEN,
-	GET_INSPECTION_BY_CONNECTION_STARTTIME_ENDTIME
+	GET_INSPECTION_BY_CONNECTION_STARTTIME_ENDTIME,
+	UPDATE_INSPECTION
 } from "./types";
 
 export const addInspection = (inspection, history) => async (dispatch) => {
@@ -49,35 +50,29 @@ export const getInspection = (inspectionId, history) => async (dispatch) => {
 	}
 };
 
-export const updateInspection = (
-	inspectionId,
-	updateInspection,
-	history
-) => async (dispatch) => {
+export const updateInspection = (inspectionId, updatedInspection) => async (
+	dispatch
+) => {
 	try {
-		await axios.put(`/api/inspections/${inspectionId}`, updateInspection);
-		history.push("/inspections");
+		const res = await axios.put(
+			`/api/inspections/${inspectionId}`,
+			updatedInspection
+		);
+		dispatch({
+			type: UPDATE_INSPECTION,
+			payload: res.data
+		});
 		dispatch({
 			type: GET_ERRORS,
 			payload: {}
 		});
+		return res;
 	} catch (error) {
 		dispatch({
 			type: GET_ERRORS,
 			payload: error.response.data
 		});
 	}
-};
-
-export const performInspection = (
-	inspectionId,
-	updateInspection,
-	connectionId,
-	history
-) => async (dispatch) => {
-	try {
-		await axios.put(`/api/inspections/${inspectionId}`, updateInspection);
-	} catch (error) {}
 };
 
 export const deleteInspection = (inspectionId) => async (dispatch) => {

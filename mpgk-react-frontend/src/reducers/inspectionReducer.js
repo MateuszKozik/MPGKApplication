@@ -8,7 +8,8 @@ import {
 	GET_INSPECTIONS_BY_CONNECTION,
 	GET_OVERDUE_BY_CONNECTION,
 	GET_CONNECTION_START_TIME_BETWEEN,
-	GET_INSPECTION_BY_CONNECTION_STARTTIME_ENDTIME
+	GET_INSPECTION_BY_CONNECTION_STARTTIME_ENDTIME,
+	UPDATE_INSPECTION
 } from "../actions/types";
 
 const initialState = {
@@ -31,6 +32,24 @@ export default function (state = initialState, action) {
 			return {
 				...state,
 				inspection: action.payload
+			};
+
+		case UPDATE_INSPECTION:
+			return {
+				...state,
+				actualInspection: state.actualInspection.map((inspection) => {
+					let edited = [];
+					inspection.inspections.map((item) => {
+						if (item.inspectionId === action.payload.inspectionId) {
+							edited = [...edited, action.payload];
+						} else {
+							edited = [...edited, item];
+						}
+						return item;
+					});
+					inspection.inspections = edited;
+					return inspection;
+				})
 			};
 
 		case GET_INSPECTION_BY_CONNECTION:
