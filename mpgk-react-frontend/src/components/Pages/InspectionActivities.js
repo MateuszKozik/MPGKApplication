@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { getActivitiesByConnection } from "../../actions/activityActions";
+import { Grid, Typography, Divider } from "@material-ui/core";
+import { withStyles } from "@material-ui/core/styles";
+import { tableStyles } from "./../../consts/themeConsts";
 
 class InspectionActivities extends Component {
 	componentDidMount() {
@@ -11,26 +14,40 @@ class InspectionActivities extends Component {
 
 	render() {
 		const { homePageActivities } = this.props.activity;
-
+		const { classes } = this.props;
 		return (
-			<div className="container mt-2">
+			<>
 				{homePageActivities.map((activitiesList, i) => (
-					<div className="row mt-3 " key={i}>
-						<div className="col-md-12 my-2">
-							<h4>{activitiesList.activityGroup.name}</h4>
-						</div>
+					<Grid key={i} container className={classes.form}>
+						<Grid item xs={12}>
+							<Typography variant="h5" align="center">
+								{activitiesList.activityGroup.name}
+							</Typography>
+						</Grid>
 
 						{activitiesList.activities.map((activity, j) => (
-							<div
-								key={j}
-								className="col-md-12 my-4 text-justify border-bottom"
-							>
-								<p>{activity.name}</p>
-							</div>
+							<Grid item xs={12} key={j}>
+								<Grid container spacing={2} className={classes.container}>
+									<Grid item xs={12} md={8}>
+										<Typography align="justify">{activity.name}</Typography>
+									</Grid>
+									<Grid item xs={12} md={2}>
+										{activity.emsr && <Typography>{activity.emsr}</Typography>}
+									</Grid>
+									<Grid item xs={12} md={2}>
+										{activity.setting && (
+											<Typography>{activity.setting}</Typography>
+										)}
+									</Grid>
+									<Grid item xs={12}>
+										<Divider />
+									</Grid>
+								</Grid>
+							</Grid>
 						))}
-					</div>
+					</Grid>
 				))}
-			</div>
+			</>
 		);
 	}
 }
@@ -40,10 +57,19 @@ InspectionActivities.propTypes = {
 	getActivitiesByConnection: PropTypes.func.isRequired
 };
 
+const mapDispatchToProps = (dispatch) => {
+	return {
+		getActivitiesByConnection: (connectionId, history) => {
+			dispatch(getActivitiesByConnection(connectionId, history));
+		}
+	};
+};
+
 const mapStateToPros = (state) => ({
 	activity: state.activity
 });
 
-export default connect(mapStateToPros, { getActivitiesByConnection })(
-	InspectionActivities
-);
+export default connect(
+	mapStateToPros,
+	mapDispatchToProps
+)(withStyles(tableStyles)(InspectionActivities));
