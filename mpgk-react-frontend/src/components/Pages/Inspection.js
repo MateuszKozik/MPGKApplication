@@ -6,6 +6,9 @@ import {
 	clearInspectionsListState
 } from "../../actions/inspectionActions";
 import InspectionItem from "../Common/InspectionItem";
+import { Grid, Typography } from "@material-ui/core";
+import { withStyles } from "@material-ui/core/styles";
+import { tableStyles } from "./../../consts/themeConsts";
 
 class Inspection extends Component {
 	componentDidMount() {
@@ -18,27 +21,32 @@ class Inspection extends Component {
 	}
 
 	render() {
+		const { classes } = this.props;
 		const { actualInspection } = this.props.inspection;
 		return (
-			<div className="container mt-2">
+			<>
 				{actualInspection.map((inspectionList, k) => (
-					<div className="row mt-3" key={k}>
-						<div className="col-md-12 my-2">
-							<h4>{inspectionList.activityGroup.name}</h4>
-						</div>
+					<Grid key={k} container className={classes.container}>
+						<Grid item xs={12}>
+							<Typography variant="h5" align="center">
+								{inspectionList.activityGroup.name}
+							</Typography>
+						</Grid>
 
-						{inspectionList.inspections.map((inspection, i) => (
-							<InspectionItem
-								key={i}
-								{...inspection}
-								showEmsr={inspectionList.showEmsr}
-								showSetting={inspectionList.showSetting}
-								connectionId={this.props.match.params.connectionId}
-							/>
-						))}
-					</div>
+						<Grid item xs={12}>
+							{inspectionList.inspections.map((inspection, i) => (
+								<InspectionItem
+									key={i}
+									{...inspection}
+									showEmsr={inspectionList.showEmsr}
+									showSetting={inspectionList.showSetting}
+									connectionId={this.props.match.params.connectionId}
+								/>
+							))}
+						</Grid>
+					</Grid>
 				))}
-			</div>
+			</>
 		);
 	}
 }
@@ -56,4 +64,4 @@ const mapStateToPros = (state) => ({
 export default connect(mapStateToPros, {
 	getInspectionByConnection,
 	clearInspectionsListState
-})(Inspection);
+})(withStyles(tableStyles)(Inspection));
