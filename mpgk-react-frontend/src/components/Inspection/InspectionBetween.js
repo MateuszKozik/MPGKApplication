@@ -23,8 +23,18 @@ import {
 	Radio,
 	RadioGroup,
 	FormControlLabel,
-	FormLabel
+	FormLabel,
+	Typography,
+	TableCell,
+	TableContainer,
+	TableHead,
+	TableRow,
+	Table,
+	TableBody
 } from "@material-ui/core";
+import CheckCircleIcon from "@material-ui/icons/CheckCircle";
+import CancelIcon from "@material-ui/icons/Cancel";
+import ErrorIcon from "@material-ui/icons/Error";
 import { setSnackbar } from "../../reducers/snackbarReducer";
 import { Formik, Form } from "formik";
 
@@ -266,51 +276,74 @@ class InspectionBetween extends Component {
 						</Form>
 					)}
 				</Formik>
-
-				<Grid container className={classes.form} spacing={2}>
-					<Grid item xs={12}>
-						{inspectionsList[0] ? (
-							<div className="row mt-3">
-								<div className="col-md-4 ">
-									<p>
-										<b>Nazwa przegłądu</b>
-									</p>
-								</div>
-								<div className="col-md-4 ">
-									<p>
-										<b>Data</b>
-									</p>
-								</div>
-								<div className="col-md-4">
-									<p>
-										<b>Status</b>
-									</p>
-								</div>
-							</div>
-						) : null}
+                <Grid  container className={classes.form}>				
+						<Grid item xs={false} md={2} />
+						<Grid item xs={12} md={8}>
+							<TableContainer>
+								<Table>
+									<TableHead>
+                                        {inspectionsList[0] ? (
+                                            <TableRow>
+                                                <TableCell>
+                                                    <Typography>
+                                                        <b>Nazwa przeglądu</b>
+                                                    </Typography>
+                                                </TableCell>
+                                                <TableCell>
+                                                    <Typography>
+                                                        <b>Plan</b>
+                                                    </Typography>
+                                                </TableCell>
+                                                <TableCell>
+                                                    <Typography>
+                                                        <b>Status</b>
+                                                    </Typography>
+                                                </TableCell>
+                                            </TableRow>
+                                        ) : null}
+									</TableHead>
+									<TableBody>
+                                    {inspectionsList.map((inspection, i) => (
+										<TableRow key={i}>
+											<TableCell>
+												<Typography>
+													<Link
+														style={{
+															color: "#000",
+															textDecoration: "none"
+														}}
+														to={`/inspections/list/${inspection.connection.connectionId}/${inspection.startTime}/to/${inspection.endTime}/show`}
+													>
+														{inspection.connection.name}
+													</Link>
+												</Typography>
+											</TableCell>
+											<TableCell>
+												<Typography>
+                                                    <FormatDate date={inspection.startTime} /> Do
+									                <FormatDate date={inspection.endTime} />
+												</Typography>
+											</TableCell>
+											<TableCell>
+												<Typography>
+													{inspection.inspectionStatus === "Wykonany" ? (
+														<CheckCircleIcon fontSize="large" color="primary" />
+													) : inspection.inspectionStatus === "W trakcie" ? (
+														<CancelIcon fontSize="large" color="primary" />
+													) : (
+                                                        <ErrorIcon fontSize="large" color="secondary" />
+                                                    )}
+												</Typography>
+											</TableCell>
+										</TableRow>
+                                        ))}
+									</TableBody>
+								</Table>
+							</TableContainer>
+						</Grid>
+						<Grid item xs={false} md={2} />
 					</Grid>
-
-					<Grid item xs={12}>
-						{inspectionsList.map((inspection, i) => (
-							<div key={i} className="row mt-3">
-								<div className="col-md-4">
-									<Link
-										to={`/inspections/list/${inspection.connection.connectionId}/${inspection.startTime}/to/${inspection.endTime}/show`}
-									>
-										{inspection.connection.name}
-									</Link>
-								</div>
-								<div className="col-md-4">
-									Od <FormatDate date={inspection.startTime} /> Do
-									<FormatDate date={inspection.endTime} />
-								</div>
-								<div className="col-md-4">
-									<p>{inspection.inspectionStatus} </p>
-								</div>
-							</div>
-						))}
-					</Grid>
-				</Grid>
+                    
 			</>
 		);
 	}
