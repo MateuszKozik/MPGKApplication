@@ -23,7 +23,7 @@ import InspectionActivities from "./components/Pages/InspectionActivities";
 import InspectionPage from "./components/Pages/InspectionPage";
 import OverdueInspection from "./components/Pages/OverdueInspection";
 import Snackbar from "./components/Common/Snackbar";
-import FormInspectionWrapper from "./components/Inspection/MultiStepForm/FormInspectionWrapper";
+import FormInspectionWrapper from "./components/Pages/Admin/InspectionForm/FormInspectionWrapper";
 
 function App() {
 	return (
