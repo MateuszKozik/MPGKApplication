@@ -1,7 +1,6 @@
 import {
 	ADD_ACTIVITY,
 	GET_ACTIVITIES,
-	GET_ACTIVITY,
 	DELETE_ACTIVITY,
 	UPDATE_ACTIVITY,
 	GET_ACTIVITIES_BY_CONNECTION
@@ -21,11 +20,6 @@ export default function (state = initialState, action) {
 				activities: action.payload
 			};
 
-		case GET_ACTIVITY:
-			return {
-				...state,
-				activity: action.payload
-			};
 		case UPDATE_ACTIVITY:
 			return {
 				...state,
