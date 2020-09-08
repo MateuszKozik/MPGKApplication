@@ -13,7 +13,7 @@ import InspectionList from "./components/Inspection/InspectionList";
 import InspectionBetween from "./components/Inspection/InspectionBetween";
 import ConnectionList from "./components/Pages/Admin/ConnectionList";
 import FluidRegistryList from "./components/FluidRegistry/FluidRegistryList";
-import FluidPlaceList from "./components/FluidPlace/FluidPlaceList";
+import FluidPlaceList from "./components/Pages/Admin/FluidPlaceList";
 import Home from "./components/Pages/Home";
 import FluidRegistry from "./components/Pages/FluidRegistry";
 import PerformersList from "./components/Pages/PerformersList";
