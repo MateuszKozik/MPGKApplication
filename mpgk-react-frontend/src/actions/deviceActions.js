@@ -2,7 +2,6 @@ import axios from "axios";
 import {
 	GET_ERRORS,
 	GET_DEVICES,
-	GET_DEVICE,
 	DELETE_DEVICE,
 	ADD_DEVICE,
 	UPDATE_DEVICE
@@ -34,18 +33,6 @@ export const getDevices = () => async (dispatch) => {
 		type: GET_DEVICES,
 		payload: res.data
 	});
-};
-
-export const getDevice = (deviceId, history) => async (dispatch) => {
-	try {
-		const res = await axios.get(`/api/devices/${deviceId}`);
-		dispatch({
-			type: GET_DEVICE,
-			payload: res.data
-		});
-	} catch (error) {
-		history.push("/devices");
-	}
 };
 
 export const updateDevice = (deviceId, updatedDevice) => async (dispatch) => {
