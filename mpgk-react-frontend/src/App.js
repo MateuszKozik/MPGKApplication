@@ -8,7 +8,7 @@ import store from "./store";
 import FluidList from "./components/Fluid/FluidList";
 import PersonList from "./components/Pages/Admin/PersonList";
 import ActivityGroupList from "./components/ActivityGroup/ActivityGroupList";
-import ActivityList from "./components/Activity/ActivityList";
+import ActivityList from "./components/Pages/Admin/ActivityList";
 import InspectionList from "./components/Inspection/InspectionList";
 import InspectionBetween from "./components/Inspection/InspectionBetween";
 import ConnectionList from "./components/Connection/ConnectionList";
