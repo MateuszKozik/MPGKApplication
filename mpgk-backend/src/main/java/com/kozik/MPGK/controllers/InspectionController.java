@@ -5,6 +5,7 @@ import com.kozik.MPGK.services.InspectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +29,7 @@ import com.kozik.MPGK.utilities.Message;
 import com.kozik.MPGK.utilities.InspectionObject;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/api/inspections")
 public class InspectionController {
 
@@ -114,16 +116,17 @@ public class InspectionController {
     }
 
     @GetMapping("/list/{id}/from/{startTime}/to/{endTime}")
-    public ResponseEntity<?> getConnectionAndStartTimeBetween(@PathVariable Long id,
-    @PathVariable String startTime, @PathVariable String endTime, @RequestParam String type) {
+    public ResponseEntity<?> getConnectionAndStartTimeBetween(@PathVariable Long id, @PathVariable String startTime,
+            @PathVariable String endTime, @RequestParam String type) {
         return new ResponseEntity<ArrayList<ConnectionObject>>(
-                inspectionService.getConnectionAndStartTimeBetween(id,startTime,endTime,type), HttpStatus.OK);
+                inspectionService.getConnectionAndStartTimeBetween(id, startTime, endTime, type), HttpStatus.OK);
     }
 
     @GetMapping("/list/{connectionId}/{startTime}/to/{endTime}/show")
     public ResponseEntity<?> getInspectionByConnectionAndStartTimeAndEndTime(@PathVariable Long connectionId,
-        @PathVariable String startTime, @PathVariable String endTime) {
+            @PathVariable String startTime, @PathVariable String endTime) {
         return new ResponseEntity<ArrayList<InspectionObject>>(
-                inspectionService.getInspectionByConnectionAndStartTimeAndEndTime(connectionId, startTime, endTime), HttpStatus.OK);
+                inspectionService.getInspectionByConnectionAndStartTimeAndEndTime(connectionId, startTime, endTime),
+                HttpStatus.OK);
     }
 }
