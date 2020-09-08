@@ -3,7 +3,7 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import Box from '@material-ui/core/Box';
 import Collapse from '@material-ui/core/Collapse';
-import FormatDate from "../Common/FormatDate";
+import FormatDate from "../../../Common/FormatDate";
 import {
     IconButton,
     Table,
