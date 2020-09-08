@@ -319,7 +319,7 @@ class InspectionBetween extends Component {
 												</Typography>
 											</TableCell>
 											<TableCell>
-												<Typography>
+												<Typography component="div">
                                                     <FormatDate date={inspection.startTime} /> Do
 									                <FormatDate date={inspection.endTime} />
 												</Typography>
