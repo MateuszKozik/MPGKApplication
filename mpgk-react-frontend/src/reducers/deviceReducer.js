@@ -1,6 +1,5 @@
 import {
 	GET_DEVICES,
-	GET_DEVICE,
 	DELETE_DEVICE,
 	ADD_DEVICE,
 	UPDATE_DEVICE
@@ -17,12 +16,6 @@ export default function (state = initialState, action) {
 			return {
 				...state,
 				devices: action.payload
-			};
-
-		case GET_DEVICE:
-			return {
-				...state,
-				device: action.payload
 			};
 
 		case UPDATE_DEVICE:
