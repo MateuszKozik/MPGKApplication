@@ -2,7 +2,6 @@ import axios from "axios";
 import { 
     GET_ERRORS, 
     GET_PERSONS, 
-    GET_PERSON, 
     DELETE_PERSON,
     ADD_PERSON,
     UPDATE_PERSON
@@ -34,18 +33,6 @@ export const getPersons = () => async (dispatch) => {
         type: GET_PERSONS,
         payload: res.data
     });
-};
-
-export const getPerson = (personId, history) => async (dispatch) => {
-    try {
-        const res = await axios.get(`/api/persons/${personId}`);
-        dispatch({
-            type: GET_PERSON,
-            payload: res.data
-        });
-    } catch (error) {
-        history.push("/persons");
-    }
 };
 
 export const updatePerson = (personId, updatePerson) => async (
