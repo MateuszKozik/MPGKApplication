@@ -11,7 +11,7 @@ import ActivityGroupList from "./components/Pages/Admin/ActivityGroupList";
 import ActivityList from "./components/Pages/Admin/ActivityList";
 import InspectionList from "./components/Inspection/InspectionList";
 import InspectionBetween from "./components/Inspection/InspectionBetween";
-import ConnectionList from "./components/Connection/ConnectionList";
+import ConnectionList from "./components/Pages/Admin/ConnectionList";
 import FluidRegistryList from "./components/FluidRegistry/FluidRegistryList";
 import FluidPlaceList from "./components/FluidPlace/FluidPlaceList";
 import Home from "./components/Pages/Home";
