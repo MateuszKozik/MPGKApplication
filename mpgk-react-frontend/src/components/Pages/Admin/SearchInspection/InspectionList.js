@@ -1,15 +1,15 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-import Row from "./Row";
+import Row from "../SearchInspection/Row";
 
 import { withStyles } from "@material-ui/core/styles";
-import { tableStyles } from "./../../consts/themeConsts";
+import { tableStyles } from "./../../../../consts/themeConsts";
 import { connect } from "react-redux";
 import {
 	getInspectionByConnectionAndStartTimeAndEndTime,
 	clearInspectionState
-} from "../../actions/inspectionActions";
+} from "../../../../actions/inspectionActions";
 import {
 	Grid,
 	Typography,
