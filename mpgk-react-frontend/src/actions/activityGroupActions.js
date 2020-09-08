@@ -2,8 +2,7 @@ import axios from "axios";
 import { 
      ADD_GROUP,
      GET_ERRORS,
-     GET_GROUPS, 
-     GET_GROUP, 
+     GET_GROUPS,  
      DELETE_GROUP,
      UPDATE_GROUP 
 } from "./types";
@@ -34,18 +33,6 @@ export const getGroups = () => async (dispatch) => {
         type: GET_GROUPS,
         payload: res.data
     });
-};
-
-export const getGroup = (groupId, history) => async (dispatch) => {
-    try {
-        const res = await axios.get(`/api/groups/${groupId}`);
-        dispatch({
-            type: GET_GROUP,
-            payload: res.data
-        });
-    } catch (error) {
-        history.push("/groups");
-    }
 };
 
 export const updateGroup = (groupId, updateGroup) => async (
