@@ -4,7 +4,7 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { FormikTextField, FormikSwitchField } from "formik-material-fields";
 import { withStyles } from "@material-ui/core";
-import { tableStyles } from "../../../consts/themeConsts";
+import { tableStyles } from "../../../../consts/themeConsts";
 
 const validationSchema = Yup.object().shape({
 	name: Yup.string()
