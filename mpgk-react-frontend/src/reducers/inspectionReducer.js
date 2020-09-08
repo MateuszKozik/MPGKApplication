@@ -1,6 +1,5 @@
 import {
 	GET_INSPECTIONS,
-	GET_INSPECTION,
 	DELETE_INSPECTION,
 	CLEAR_INSPECTIONS_LIST_STATE,
 	GET_INSPECTIONS_BY_NAME_ACTIONS,
@@ -26,12 +25,6 @@ export default function (state = initialState, action) {
 			return {
 				...state,
 				inspections: action.payload
-			};
-
-		case GET_INSPECTION:
-			return {
-				...state,
-				inspection: action.payload
 			};
 
 		case UPDATE_INSPECTION:
