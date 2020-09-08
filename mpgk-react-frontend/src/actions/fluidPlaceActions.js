@@ -2,7 +2,6 @@ import axios from "axios";
 import {
 	GET_ERRORS,
 	GET_FLUID_PLACES,
-	GET_FLUID_PLACE,
 	DELETE_FLUID_PLACE,
 	ADD_FLUID_PLACE,
 	UPDATE_FLUID_PLACE
@@ -34,18 +33,6 @@ export const getFluidPlaces = () => async (dispatch) => {
 		type: GET_FLUID_PLACES,
 		payload: res.data
 	});
-};
-
-export const getFluidPlace = (placeId, history) => async (dispatch) => {
-	try {
-		const res = await axios.get(`/api/fluid-places/${placeId}`);
-		dispatch({
-			type: GET_FLUID_PLACE,
-			payload: res.data
-		});
-	} catch (error) {
-		history.push("/fluid-places");
-	}
 };
 
 export const updateFluidPlace = (placeId, updatedFluidPlace) => async (
