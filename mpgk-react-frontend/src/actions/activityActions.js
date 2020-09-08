@@ -3,7 +3,6 @@ import {
 	ADD_ACTIVITY,
 	GET_ERRORS,
 	GET_ACTIVITIES,
-	GET_ACTIVITY,
 	DELETE_ACTIVITY,
 	UPDATE_ACTIVITY,
 	GET_ACTIVITIES_BY_CONNECTION
@@ -37,17 +36,6 @@ export const getActivities = () => async (dispatch) => {
 	});
 };
 
-export const getActivity = (activityId, history) => async (dispatch) => {
-	try {
-		const res = await axios.get(`/api/activities/${activityId}`);
-		dispatch({
-			type: GET_ACTIVITY,
-			payload: res.data
-		});
-	} catch (error) {
-		history.push("/activities");
-	}
-};
 
 export const updateActivity = (activityId, updateActivity) => async (
 	dispatch
