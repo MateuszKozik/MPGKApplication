@@ -3,14 +3,14 @@ import { connect } from "react-redux";
 import {
 	getConnectionAndStartTimeBetween,
 	clearInspectionsListState
-} from "../../actions/inspectionActions";
-import { getConnections } from "../../actions/connectionActions";
-import { getDevices } from "../../actions/deviceActions";
-import { getPersons } from "../../actions/personActions";
+} from "../../../../actions/inspectionActions";
+import { getConnections } from "../../../../actions/connectionActions";
+import { getDevices } from "../../../../actions/deviceActions";
+import { getPersons } from "../../../../actions/personActions";
 import PropTypes from "prop-types";
-import FormatDate from "../Common/FormatDate";
+import FormatDate from "../../../Common/FormatDate";
 import { Link } from "react-router-dom";
-import { tableStyles } from "../../consts/themeConsts";
+import { tableStyles } from "../../../../consts/themeConsts";
 import {
 	withStyles,
 	FormControl,
@@ -35,7 +35,7 @@ import {
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import CancelIcon from "@material-ui/icons/Cancel";
 import ErrorIcon from "@material-ui/icons/Error";
-import { setSnackbar } from "../../reducers/snackbarReducer";
+import { setSnackbar } from "../../../../reducers/snackbarReducer";
 import { Formik, Form } from "formik";
 
 class InspectionBetween extends Component {
