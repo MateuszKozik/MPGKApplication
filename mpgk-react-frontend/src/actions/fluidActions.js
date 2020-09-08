@@ -2,7 +2,6 @@ import axios from "axios";
 import {
 	GET_ERRORS,
 	GET_FLUIDS,
-	GET_FLUID,
 	DELETE_FLUID,
 	ADD_FLUID,
 	UPDATE_FLUID
@@ -34,18 +33,6 @@ export const getFluids = () => async (dispatch) => {
 		type: GET_FLUIDS,
 		payload: res.data
 	});
-};
-
-export const getFluid = (fluidId, history) => async (dispatch) => {
-	try {
-		const res = await axios.get(`/api/fluids/${fluidId}`);
-		dispatch({
-			type: GET_FLUID,
-			payload: res.data
-		});
-	} catch (error) {
-		history.push("/fluids");
-	}
 };
 
 export const updateFluid = (fluidId, updatedFluid) => async (dispatch) => {
