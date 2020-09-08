@@ -6,10 +6,10 @@ import {
 	deleteFluidRegistry,
 	updateFluidRegistry,
 	clearFluidRegistryState
-} from "../../actions/fluidRegistryActions";
-import FormatDate from "../Common/FormatDate";
+} from "../../../actions/fluidRegistryActions";
+import FormatDate from "../../Common/FormatDate";
 import { withStyles } from "@material-ui/core";
-import { tableStyles } from "../../consts/themeConsts";
+import { tableStyles } from "../../../consts/themeConsts";
 import {
 	Grid,
 	Typography,
@@ -33,7 +33,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import { FormikTextField } from "formik-material-fields";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
-import { setSnackbar } from "../../reducers/snackbarReducer";
+import { setSnackbar } from "../../../reducers/snackbarReducer";
 
 const validationSchema = Yup.object().shape({
 	quantity: Yup.number()
