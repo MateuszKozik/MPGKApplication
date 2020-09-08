@@ -4,7 +4,7 @@ import {
 	getActivities,
 	updateActivity,
 	clearActivityState
-} from "../../actions/activityActions";
+} from "../../../actions/activityActions";
 import PropTypes from "prop-types";
 import {
 	Grid,
@@ -29,8 +29,8 @@ import SearchIcon from "@material-ui/icons/Search";
 import { FormikTextField } from "formik-material-fields";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
-import { setSnackbar } from "../../reducers/snackbarReducer";
-import { tableStyles } from "./../../consts/themeConsts";
+import { setSnackbar } from "../../../reducers/snackbarReducer";
+import { tableStyles } from "./../../../consts/themeConsts";
 
 const validationSchema = Yup.object().shape({
 	name: Yup.string()
