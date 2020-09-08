@@ -1,6 +1,5 @@
 import {
 	GET_CONNECTIONS,
-	GET_CONNECTION,
 	DELETE_CONNECTION,
 	GET_HOMEPAGE_CONNECTIONS,
 	ADD_FLUID_REGISTRY,
@@ -19,12 +18,6 @@ export default function (state = initialState, action) {
 			return {
 				...state,
 				connections: action.payload
-			};
-
-		case GET_CONNECTION:
-			return {
-				...state,
-				connection: action.payload
 			};
 
 		case GET_HOMEPAGE_CONNECTIONS:
