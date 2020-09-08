@@ -1,6 +1,5 @@
 import {
 	GET_FLUID_REGISTRIES,
-	GET_FLUID_REGISTRY,
 	DELETE_FLUID_REGISTRY,
 	UPDATE_FLUID_REGISTRY,
 	ADD_FLUID_REGISTRY
@@ -17,12 +16,6 @@ export default function (state = initialState, action) {
 			return {
 				...state,
 				fluidRegistries: action.payload
-			};
-
-		case GET_FLUID_REGISTRY:
-			return {
-				...state,
-				fluidRegistry: action.payload
 			};
 
 		case UPDATE_FLUID_REGISTRY:
