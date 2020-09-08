@@ -1,6 +1,5 @@
 import { 
-    GET_PERSONS, 
-    GET_PERSON, 
+    GET_PERSONS,  
     DELETE_PERSON,
     ADD_PERSON,
     UPDATE_PERSON
@@ -19,12 +18,6 @@ export default function (state = initialState, action) {
                 persons: action.payload
             };
 
-        case GET_PERSON:
-            return {
-                ...state,
-                person: action.payload
-            };
-        
         case UPDATE_PERSON:
             return {
                 ...state,
