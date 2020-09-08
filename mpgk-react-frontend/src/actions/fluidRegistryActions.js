@@ -2,7 +2,6 @@ import axios from "axios";
 import {
 	GET_ERRORS,
 	GET_FLUID_REGISTRIES,
-	GET_FLUID_REGISTRY,
 	DELETE_FLUID_REGISTRY,
 	ADD_FLUID_REGISTRY,
 	UPDATE_FLUID_REGISTRY
@@ -34,18 +33,6 @@ export const getFluidRegistries = () => async (dispatch) => {
 		type: GET_FLUID_REGISTRIES,
 		payload: res.data
 	});
-};
-
-export const getFluidRegistry = (registryId, history) => async (dispatch) => {
-	try {
-		const res = await axios.get(`/api/fluid-registries/${registryId}`);
-		dispatch({
-			type: GET_FLUID_REGISTRY,
-			payload: res.data
-		});
-	} catch (error) {
-		history.push("/fluid-registries");
-	}
 };
 
 export const updateFluidRegistry = (registryId, updatedfluidRegistry) => async (
