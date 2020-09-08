@@ -52,9 +52,7 @@ class NitrogenList extends Component {
         const { classes } = this.props;
 		const filtered = inspections.filter((inspection) => {
             const {person} = inspection;
-           if(!person){
-           return inspection.datetime.includes(this.state.search.toLowerCase());
-           }
+           
            if(person){
                 return(
                     inspection.datetime.includes(this.state.search.toLowerCase()) ||
