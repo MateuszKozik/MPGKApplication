@@ -5,10 +5,10 @@ import {
 	addDevice,
 	updateDevice,
 	clearDeviceState
-} from "../../actions/deviceActions";
+} from "../../../actions/deviceActions";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core";
-import { tableStyles } from "../../consts/themeConsts";
+import { tableStyles } from "../../../consts/themeConsts";
 import {
 	Grid,
 	Typography,
@@ -33,7 +33,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import { FormikTextField, FormikSwitchField } from "formik-material-fields";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
-import { setSnackbar } from "../../reducers/snackbarReducer";
+import { setSnackbar } from "../../../reducers/snackbarReducer";
 
 const validationSchema = Yup.object().shape({
 	name: Yup.string()
