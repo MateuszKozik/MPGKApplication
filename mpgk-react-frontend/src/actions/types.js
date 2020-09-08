@@ -9,7 +9,6 @@ export const DELETE_DEVICE = "DELETE_DEVICE";
 //fluids
 export const ADD_FLUID = "ADD_FLUID";
 export const GET_FLUIDS = "GET_FLUIDS";
-export const GET_FLUID = "GET_FLUID";
 export const UPDATE_FLUID = "UPDATE_FLUID";
 export const DELETE_FLUID = "DELETE_FLUID";
 
