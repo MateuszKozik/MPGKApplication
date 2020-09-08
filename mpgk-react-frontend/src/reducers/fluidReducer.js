@@ -1,5 +1,4 @@
 import {
-	GET_FLUID,
 	GET_FLUIDS,
 	DELETE_FLUID,
 	UPDATE_FLUID,
@@ -17,12 +16,6 @@ export default function (state = initialState, action) {
 			return {
 				...state,
 				fluids: action.payload
-			};
-
-		case GET_FLUID:
-			return {
-				...state,
-				fluid: action.payload
 			};
 
 		case UPDATE_FLUID:
