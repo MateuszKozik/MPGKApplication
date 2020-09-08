@@ -2,7 +2,6 @@ import axios from "axios";
 import {
 	GET_ERRORS,
 	GET_CONNECTIONS,
-	GET_CONNECTION,
 	GET_HOMEPAGE_CONNECTIONS,
 	DELETE_CONNECTION,
 	ADD_CONNECTION,
@@ -35,18 +34,6 @@ export const getConnections = () => async (dispach) => {
 		type: GET_CONNECTIONS,
 		payload: res.data
 	});
-};
-
-export const getConnection = (connectionId, history) => async (dispach) => {
-	try {
-		const res = await axios.get(`/api/connections/${connectionId}`);
-		dispach({
-			type: GET_CONNECTION,
-			payload: res.data
-		});
-	} catch (error) {
-		history.push("/connections");
-	}
 };
 
 export const updateConnection = (connectionId, updatedConnection) => async (
