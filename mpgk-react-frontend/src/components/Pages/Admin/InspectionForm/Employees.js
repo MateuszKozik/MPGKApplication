@@ -10,8 +10,8 @@ import {
 	Grid,
 	Button
 } from "@material-ui/core";
-import { tableStyles } from "../../../consts/themeConsts";
-import { getPersons } from "../../../actions/personActions";
+import { tableStyles } from "../../../../consts/themeConsts";
+import { getPersons } from "../../../../actions/personActions";
 import PropTypes from "prop-types";
 import { Formik, Form } from "formik";
 
