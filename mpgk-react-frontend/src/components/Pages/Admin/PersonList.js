@@ -6,9 +6,9 @@ import {
 	addPerson,
     updatePerson,
 	clearPersonState
-} from "../../actions/personActions";
+} from "../../../actions/personActions";
 import { withStyles } from "@material-ui/core";
-import { tableStyles } from "../../consts/themeConsts";
+import { tableStyles } from "../../../consts/themeConsts";
 import PropTypes from "prop-types";
 import {
 	Grid,
@@ -35,7 +35,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import { FormikTextField } from "formik-material-fields";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
-import { setSnackbar } from "../../reducers/snackbarReducer";
+import { setSnackbar } from "../../../reducers/snackbarReducer";
 
 const validationSchema = Yup.object().shape({
 	name: Yup.string()
