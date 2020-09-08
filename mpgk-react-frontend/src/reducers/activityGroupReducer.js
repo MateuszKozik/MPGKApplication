@@ -1,6 +1,5 @@
 import { 
     GET_GROUPS, 
-    GET_GROUP, 
     DELETE_GROUP,
     ADD_GROUP, 
     UPDATE_GROUP
@@ -19,11 +18,6 @@ export default function (state = initialState, action) {
                 groups: action.payload
             };
 
-        case GET_GROUP:
-            return {
-                ...state,
-                group: action.payload
-            };
         case UPDATE_GROUP:
             return {
                 ...state,
