@@ -8,11 +8,11 @@ import {
 	Paper,
 	Typography
 } from "@material-ui/core";
-import { tableStyles } from "../../../consts/themeConsts";
+import { tableStyles } from "../../../../consts/themeConsts";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { getDevices } from "../../../actions/deviceActions";
-import { getInspectionTypes } from "../../../actions/inspectionTypeActions";
+import { getDevices } from "../../../../actions/deviceActions";
+import { getInspectionTypes } from "../../../../actions/inspectionTypeActions";
 import { Formik, Form } from "formik";
 import {
 	Button,
