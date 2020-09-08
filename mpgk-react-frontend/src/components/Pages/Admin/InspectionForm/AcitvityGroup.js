@@ -16,11 +16,11 @@ import {
 	IconButton,
 	Paper
 } from "@material-ui/core";
-import { tableStyles } from "../../../consts/themeConsts";
+import { tableStyles } from "../../../../consts/themeConsts";
 import InfoIcon from "@material-ui/icons/Info";
 import { Form, Formik } from "formik";
-import { addConnection } from "../../../actions/connectionActions";
-import { setSnackbar } from "../../../reducers/snackbarReducer";
+import { addConnection } from "../../../../actions/connectionActions";
+import { setSnackbar } from "../../../../reducers/snackbarReducer";
 
 class ActivityGroup extends Component {
 	state = {
