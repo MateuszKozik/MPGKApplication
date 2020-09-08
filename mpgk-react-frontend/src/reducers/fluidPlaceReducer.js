@@ -1,6 +1,5 @@
 import {
 	GET_FLUID_PLACES,
-	GET_FLUID_PLACE,
 	DELETE_FLUID_PLACE,
 	ADD_FLUID_PLACE,
 	UPDATE_FLUID_PLACE
@@ -17,12 +16,6 @@ export default function (state = initialState, action) {
 			return {
 				...state,
 				fluidPlaces: action.payload
-			};
-
-		case GET_FLUID_PLACE:
-			return {
-				...state,
-				fluidPlace: action.payload
 			};
 
 		case ADD_FLUID_PLACE: {
