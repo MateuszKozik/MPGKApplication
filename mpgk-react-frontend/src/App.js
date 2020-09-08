@@ -6,7 +6,7 @@ import DeviceList from "./components/Device/DeviceList";
 import { Provider } from "react-redux";
 import store from "./store";
 import FluidList from "./components/Fluid/FluidList";
-import PersonList from "./components/Person/PersonList";
+import PersonList from "./components/Pages/Admin/PersonList";
 import ActivityGroupList from "./components/ActivityGroup/ActivityGroupList";
 import ActivityList from "./components/Activity/ActivityList";
 import InspectionList from "./components/Inspection/InspectionList";
