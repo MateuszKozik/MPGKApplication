@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Header from "./components/Layout/Header";
-import DeviceList from "./components/Device/DeviceList";
+import DeviceList from "./components/Pages/Admin/DeviceList";
 import { Provider } from "react-redux";
 import store from "./store";
 import FluidList from "./components/Fluid/FluidList";
