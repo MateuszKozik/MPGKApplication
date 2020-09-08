@@ -5,7 +5,7 @@ import Header from "./components/Layout/Header";
 import DeviceList from "./components/Pages/Admin/DeviceList";
 import { Provider } from "react-redux";
 import store from "./store";
-import FluidList from "./components/Fluid/FluidList";
+import FluidList from "./components/Pages/Admin/FluidList";
 import PersonList from "./components/Pages/Admin/PersonList";
 import ActivityGroupList from "./components/Pages/Admin/ActivityGroupList";
 import ActivityList from "./components/Pages/Admin/ActivityList";
