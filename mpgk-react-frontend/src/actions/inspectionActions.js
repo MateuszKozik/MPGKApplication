@@ -2,7 +2,6 @@ import axios from "axios";
 import {
 	GET_ERRORS,
 	GET_INSPECTIONS,
-	GET_INSPECTION,
 	DELETE_INSPECTION,
 	CLEAR_INSPECTIONS_LIST_STATE,
 	GET_INSPECTIONS_BY_NAME_ACTIONS,
@@ -36,18 +35,6 @@ export const getInspections = () => async (dispatch) => {
 		type: GET_INSPECTIONS,
 		payload: res.data
 	});
-};
-
-export const getInspection = (inspectionId, history) => async (dispatch) => {
-	try {
-		const res = await axios.get(`/api/inspections/${inspectionId}`);
-		dispatch({
-			type: GET_INSPECTION,
-			payload: res.data
-		});
-	} catch (error) {
-		history.push("/inspections");
-	}
 };
 
 export const updateInspection = (inspectionId, updatedInspection) => async (
