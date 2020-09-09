@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.kozik.MPGK.services.MapValidationErrorService;
 import org.springframework.validation.BindingResult;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,12 +65,25 @@ public class InspectionController {
     // Update inspection
     @PutMapping("/{inspectionId}")
     public ResponseEntity<?> updateInspection(@PathVariable Long inspectionId,
-            @Valid @RequestBody Inspection inspection, BindingResult result) {
+            @Valid @RequestBody Inspection inspection, BindingResult result, Principal principal) {
         if (result.hasErrors()) {
             return mapValidationErrorService.MapValidationService(result);
         }
 
-        return new ResponseEntity<Inspection>(inspectionService.update(inspectionId, inspection), HttpStatus.OK);
+        return new ResponseEntity<Inspection>(inspectionService.update(inspectionId, inspection, principal),
+                HttpStatus.OK);
+    }
+
+    // Update inspection
+    @PutMapping("/overdue/{inspectionId}")
+    public ResponseEntity<?> updateOverdueInspection(@PathVariable Long inspectionId,
+            @Valid @RequestBody Inspection inspection, BindingResult result, Principal principal) {
+        if (result.hasErrors()) {
+            return mapValidationErrorService.MapValidationService(result);
+        }
+
+        return new ResponseEntity<Inspection>(inspectionService.update(inspectionId, inspection, principal),
+                HttpStatus.OK);
     }
 
     // Delete inspection
