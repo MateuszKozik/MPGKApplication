@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { createOnDemandInspections } from "../../actions/taskActions";
 import { getHomePageConnections } from "../../actions/connectionActions";
+import { clearInspectionsListState } from "../../actions/inspectionActions";
 import { withStyles } from "@material-ui/core/styles";
 import { tableStyles } from "./../../consts/themeConsts";
 import Timer from "../Common/Timer";
@@ -28,13 +29,17 @@ class Home extends Component {
 		this.props.getHomePageConnections();
 	}
 
+	componentWillUnmount() {
+		this.props.clearInspectionsListState();
+	}
+
 	render() {
 		const { classes } = this.props;
-		const { homePageConnections } = this.props.connection;
-		const onDemandConnections = homePageConnections.filter(
+		const { inspectionsList } = this.props.inspection;
+		const onDemandConnections = inspectionsList.filter(
 			(onDemand) => onDemand.connection.inspectionType.name === "Na żądanie"
 		);
-		const periodicConnections = homePageConnections.filter(
+		const periodicConnections = inspectionsList.filter(
 			(periodic) => periodic.connection.inspectionType.name !== "Na żądanie"
 		);
 		return (
@@ -407,12 +412,14 @@ const mapDispatchToProps = (dispatch) => ({
 	},
 	getHomePageConnections: () => {
 		dispatch(getHomePageConnections());
+	},
+	clearInspectionsListState: () => {
+		dispatch(clearInspectionsListState());
 	}
 });
 
 const mapStateToProps = (state) => ({
-	connection: state.connection,
-	homePageConnections: state.connection
+	inspection: state.inspection
 });
 
 export default connect(
