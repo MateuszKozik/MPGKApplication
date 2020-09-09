@@ -63,3 +63,6 @@ export const DELETE_FLUID_PLACE = "DELETE_FLUID_PLACE";
 
 //snackbar
 export const SET_SNACKBAR = "SET_SNACKBAR";
+
+//security
+export const SET_CURRENT_USER = "SET_CURRENT_USER";
