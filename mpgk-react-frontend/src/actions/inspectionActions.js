@@ -4,10 +4,8 @@ import {
 	GET_INSPECTIONS,
 	DELETE_INSPECTION,
 	CLEAR_INSPECTIONS_LIST_STATE,
-	GET_INSPECTIONS_BY_NAME_ACTIONS,
 	GET_INSPECTION_BY_CONNECTION,
 	GET_OVERDUE_BY_CONNECTION,
-	GET_INSPECTION_BY_CONNECTION_STARTTIME_ENDTIME,
 	UPDATE_INSPECTION,
 	GET_CONNECTION
 } from "./types";
@@ -123,7 +121,7 @@ export const getActionsByName = (history) => async (dispatch) => {
 	try {
 		const res = await axios.get(`/api/inspections/nitrogen`);
 		dispatch({
-			type: GET_INSPECTIONS_BY_NAME_ACTIONS,
+			type: GET_INSPECTIONS,
 			payload: res.data
 		});
 	} catch (error) {
@@ -164,7 +162,7 @@ export const getInspectionByConnectionAndStartTimeAndEndTime = (
 			`/api/inspections/list/${connectionId}/${startTime}/to/${endTime}/show`
 		);
 		dispatch({
-			type: GET_INSPECTION_BY_CONNECTION_STARTTIME_ENDTIME,
+			type: GET_INSPECTIONS,
 			payload: res.data
 		});
 	} catch (error) {
