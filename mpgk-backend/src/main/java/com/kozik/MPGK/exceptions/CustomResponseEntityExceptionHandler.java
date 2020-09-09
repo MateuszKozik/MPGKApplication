@@ -8,6 +8,8 @@ import com.kozik.MPGK.exceptions.fluidRegistryExceptions.*;
 import com.kozik.MPGK.exceptions.inspectionExceptions.*;
 import com.kozik.MPGK.exceptions.inspectionTypeExceptions.*;
 import com.kozik.MPGK.exceptions.roleExceptions.*;
+import com.kozik.MPGK.exceptions.userExceptions.UsernameAlreadyExistResponse;
+import com.kozik.MPGK.exceptions.userExceptions.UsernameAlreadyExistsException;
 import com.kozik.MPGK.exceptions.personExceptions.*;
 import com.kozik.MPGK.exceptions.activityExceptions.*;
 import com.kozik.MPGK.exceptions.activityGroupExceptions.*;
@@ -184,5 +186,12 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
     public final ResponseEntity<Object> handleEmptyListException(EmptyListException ex, WebRequest request) {
         EmptyListResponse response = new EmptyListResponse(ex.getMessage());
         return new ResponseEntity<Object>(response, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler
+    public final ResponseEntity<Object> handleUsernameAlreadyExists(UsernameAlreadyExistsException ex,
+            WebRequest request) {
+        UsernameAlreadyExistResponse existResponse = new UsernameAlreadyExistResponse(ex.getMessage());
+        return new ResponseEntity<Object>(existResponse, HttpStatus.CONFLICT);
     }
 }
