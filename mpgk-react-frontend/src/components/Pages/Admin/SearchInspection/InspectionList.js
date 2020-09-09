@@ -44,7 +44,7 @@ class InspectionList extends Component {
 				<Grid container className={classes.container}>
 					<Grid item xs={12}>
 						<Typography variant="h3" className={classes.title}>
-							{inspections[0] && inspections[0].activityGroup.connection.name}
+							{inspections[0] && inspections[0].activityGroup && inspections[0].activityGroup.connection.name}
 						</Typography>
 					</Grid>
 					<Grid item xs={false} md={2} />
