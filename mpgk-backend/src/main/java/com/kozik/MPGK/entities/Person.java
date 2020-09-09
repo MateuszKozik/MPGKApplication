@@ -50,10 +50,6 @@ public class Person {
     @JsonIgnore
     private List<Inspection> inspections;
 
-    @OneToMany(mappedBy = "supervisor")
-    @JsonIgnore
-    private List<Inspection> inspectionSupervisors;
-
     @OneToMany(mappedBy = "person")
     @JsonIgnore
     private List<FluidRegistry> fluidRegistries;

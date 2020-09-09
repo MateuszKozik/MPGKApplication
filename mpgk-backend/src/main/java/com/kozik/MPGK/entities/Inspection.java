@@ -54,10 +54,6 @@ public class Inspection {
     private Person person;
 
     @ManyToOne
-    @JoinColumn(name = "supervisor_id", nullable = true)
-    private Person supervisor;
-
-    @ManyToOne
     @JoinColumn(name = "activity_id", nullable = true)
     private Activity activity;
 

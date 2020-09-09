@@ -51,9 +51,8 @@ public class InspectionService {
     }
 
     public Inspection get(Long inspectionId) {
-        Inspection inspection = inspectionRepository.findById(inspectionId)
+        return inspectionRepository.findById(inspectionId)
                 .orElseThrow(() -> new InspectionNotFoundException(inspectionId));
-        return inspection;
     }
 
     public void delete(Long inspectionId) {
@@ -76,7 +75,6 @@ public class InspectionService {
                     + LocalDateTime.now().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm")));
             element.setActivity(inspection.getActivity());
             element.setPerson(personService.getByUsername(username));
-            element.setSupervisor(inspection.getSupervisor());
             return inspectionRepository.save(element);
         }).orElseThrow(() -> new InspectionNotFoundException(inspectionId));
 
@@ -93,7 +91,6 @@ public class InspectionService {
                     + LocalDateTime.now().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm")));
             element.setActivity(inspection.getActivity());
             element.setPerson(inspection.getPerson());
-            element.setSupervisor(inspection.getSupervisor());
             return inspectionRepository.save(element);
         }).orElseThrow(() -> new InspectionNotFoundException(inspectionId));
     }
@@ -107,8 +104,7 @@ public class InspectionService {
             element.setParameter(inspection.getParameter());
             element.setComment(inspection.getComment());
             element.setActivity(inspection.getActivity());
-            element.setPerson(inspection.getPerson());
-            element.setSupervisor(personService.getByUsername(username));
+            element.setPerson(personService.getByUsername(username));
             return inspectionRepository.save(element);
         }).orElseThrow(() -> new InspectionNotFoundException(inspectionId));
     }
@@ -123,7 +119,6 @@ public class InspectionService {
             element.setComment(inspection.getComment());
             element.setActivity(inspection.getActivity());
             element.setPerson(inspection.getPerson());
-            element.setSupervisor(inspection.getSupervisor());
             return inspectionRepository.save(element);
         }).orElseThrow(() -> new InspectionNotFoundException(inspectionId));
     }
