@@ -4,10 +4,13 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,10 +22,14 @@ import lombok.NoArgsConstructor;
 public class Role {
 
     @Id
-    @Column(name = "name", nullable = false, length = 25)
-    @NotBlank(message = "Nazwa uprawnienia jest wymagana")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "role_id")
+    private Long roleId;
+
+    @Column(name = "name")
     private String name;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "role")
     private List<User> users;
 }
