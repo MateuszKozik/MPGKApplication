@@ -1,5 +1,6 @@
 package com.kozik.MPGK.services;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -17,23 +18,27 @@ public class FluidRegistryService {
     @Autowired
     private FluidRegistryRepository fluidRegistryRepository;
 
+    @Autowired
+    private PersonService personService;
+
     public Iterable<FluidRegistry> listAll() {
         return fluidRegistryRepository.findAll();
     }
 
-    public FluidRegistry save(FluidRegistry fluidRegistry) {
+    public FluidRegistry save(FluidRegistry fluidRegistry, Principal principal) {
+        String username = principal.getName();
         if (fluidRegistry.getRegistryId() != null) {
             throw new FluidRegistryAlreadyExistException(fluidRegistry.getRegistryId());
         }
         fluidRegistry.setDatetime(LocalDateTime.now().toLocalDate().toString() + "T"
                 + LocalDateTime.now().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm")));
+        fluidRegistry.setPerson(personService.getByUsername(username));
         return fluidRegistryRepository.save(fluidRegistry);
     }
 
     public FluidRegistry get(Long registryId) {
-        FluidRegistry fluidRegistry = fluidRegistryRepository.findById(registryId)
+        return fluidRegistryRepository.findById(registryId)
                 .orElseThrow(() -> new FluidRegistryNotFoundException(registryId));
-        return fluidRegistry;
     }
 
     public void delete(Long registryId) {
@@ -45,7 +50,7 @@ public class FluidRegistryService {
     }
 
     public FluidRegistry update(Long registryId, FluidRegistry fluidRegistry) {
-        FluidRegistry newFluidRegistry = fluidRegistryRepository.findById(registryId).map(element -> {
+        return fluidRegistryRepository.findById(registryId).map(element -> {
             element.setQuantity(fluidRegistry.getQuantity());
             element.setDatetime(fluidRegistry.getDatetime());
             element.setPerson(fluidRegistry.getPerson());
@@ -53,7 +58,5 @@ public class FluidRegistryService {
             element.setFluidPlace(fluidRegistry.getFluidPlace());
             return fluidRegistryRepository.save(element);
         }).orElseThrow(() -> new FluidRegistryNotFoundException(registryId));
-
-        return newFluidRegistry;
     }
 }

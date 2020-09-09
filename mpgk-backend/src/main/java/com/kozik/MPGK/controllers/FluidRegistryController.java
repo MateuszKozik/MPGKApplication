@@ -1,5 +1,7 @@
 package com.kozik.MPGK.controllers;
 
+import java.security.Principal;
+
 import javax.validation.Valid;
 
 import com.kozik.MPGK.entities.FluidRegistry;
@@ -46,13 +48,14 @@ public class FluidRegistryController {
 
     // Create fluid registry
     @PostMapping("")
-    public ResponseEntity<?> createFluidRegistry(@Valid @RequestBody FluidRegistry fluidRegistry,
-            BindingResult result) {
+    public ResponseEntity<?> createFluidRegistry(@Valid @RequestBody FluidRegistry fluidRegistry, BindingResult result,
+            Principal principal) {
         if (result.hasErrors()) {
             return mapValidationErrorService.MapValidationService(result);
         }
 
-        return new ResponseEntity<FluidRegistry>(fluidRegistryService.save(fluidRegistry), HttpStatus.CREATED);
+        return new ResponseEntity<FluidRegistry>(fluidRegistryService.save(fluidRegistry, principal),
+                HttpStatus.CREATED);
     }
 
     // Update fluid registry
