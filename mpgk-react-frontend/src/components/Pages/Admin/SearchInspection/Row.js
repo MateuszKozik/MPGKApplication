@@ -32,7 +32,7 @@ function Row(inspection) {
             {row.status}
           </TableCell>
           <TableCell align="left" style={{ fontSize: 18 }} >
-            {row.activityGroup.name}
+            {row.activityGroup && row.activityGroup.name}
           </TableCell>
           
         </TableRow>
@@ -53,7 +53,7 @@ function Row(inspection) {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                  {row.inspections.map((inspection, i) => (
+                  {row.inspections && row.inspections.map((inspection, i) => (
                       <TableRow key={i}>
                         <TableCell component="th" scope="row">
                           {inspection.activity && inspection.activity.name}
