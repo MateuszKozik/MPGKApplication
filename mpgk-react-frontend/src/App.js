@@ -24,6 +24,7 @@ import InspectionPage from "./components/Pages/InspectionPage";
 import OverdueInspection from "./components/Pages/OverdueInspection";
 import Snackbar from "./components/Common/Snackbar";
 import FormInspectionWrapper from "./components/Pages/Admin/InspectionForm/FormInspectionWrapper";
+import Login from "./components/Pages/Login";
 
 function App() {
 	return (
@@ -32,6 +33,8 @@ function App() {
 				<div className="App">
 					<Snackbar />
 					<Header />
+					<Route exact path="/login" component={Login} />
+
 					<Route exact path="/" component={Home} />
 					<Route exact path="/devices" component={DeviceList} />
 					<Route exact path="/fluids" component={FluidList} />
