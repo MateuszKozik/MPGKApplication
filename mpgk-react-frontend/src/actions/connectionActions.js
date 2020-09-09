@@ -2,10 +2,10 @@ import axios from "axios";
 import {
 	GET_ERRORS,
 	GET_CONNECTIONS,
-	GET_HOMEPAGE_CONNECTIONS,
 	DELETE_CONNECTION,
 	ADD_CONNECTION,
-	UPDATE_CONNECTION
+	UPDATE_CONNECTION,
+	GET_CONNECTION
 } from "./types";
 
 export const addConnection = (connection) => async (dispatch) => {
@@ -74,7 +74,7 @@ export const deleteConnection = (connectionId) => async (dispach) => {
 export const getHomePageConnections = () => async (dispatch) => {
 	const res = await axios.get("/api/home/connections");
 	dispatch({
-		type: GET_HOMEPAGE_CONNECTIONS,
+		type: GET_CONNECTION,
 		payload: res.data
 	});
 };
