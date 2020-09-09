@@ -160,7 +160,7 @@ public class TaskService {
                     .findByActivityActivityGroupAndEndTimeLessThanAndStatus(activityGroup, LocalDateTime.now(), "Nowy");
             for (Inspection inspection : inspections) {
                 inspection.setStatus("Zaległy");
-                inspectionService.updateOverdue(inspection.getInspectionId(), inspection);
+                inspectionService.generateOverdue(inspection.getInspectionId(), inspection);
             }
         }
     }
