@@ -1,7 +1,5 @@
 package com.kozik.MPGK.services;
 
-
-
 import com.kozik.MPGK.entities.Person;
 import com.kozik.MPGK.repositories.PersonRepository;
 import com.kozik.MPGK.exceptions.personExceptions.PersonAlreadyExistException;
@@ -11,9 +9,10 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class PersonService {
-    @Autowired private PersonRepository personRepository;
+    @Autowired
+    private PersonRepository personRepository;
 
-    public Iterable<Person> listAll(){
+    public Iterable<Person> listAll() {
         return personRepository.findAll();
     }
 
@@ -33,7 +32,7 @@ public class PersonService {
         personRepository.delete(get(personId));
     }
 
-    public Boolean isPersonExist(Long id){
+    public Boolean isPersonExist(Long id) {
         return personRepository.existsById(id);
     }
 
@@ -45,5 +44,14 @@ public class PersonService {
         }).orElseThrow(() -> new PersonNotFoundException(personId));
 
         return newPerson;
+    }
+
+    // Get person by username
+    public Person getByUsername(String username) {
+        Person person = personRepository.findByUserUsername(username);
+        if (person == null) {
+            throw new PersonNotFoundException(0L);
+        }
+        return person;
     }
 }
