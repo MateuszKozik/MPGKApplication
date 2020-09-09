@@ -1,91 +1,74 @@
 package com.kozik.MPGK.controllers;
 
-import org.springframework.http.HttpHeaders;
-import java.util.List;
+import javax.validation.Valid;
 
 import com.kozik.MPGK.entities.User;
+import com.kozik.MPGK.payload.JWTLoginSuccessResponse;
+import com.kozik.MPGK.payload.LoginRequest;
+import com.kozik.MPGK.security.JwtTokenProvider;
+import com.kozik.MPGK.services.MapValidationErrorService;
 import com.kozik.MPGK.services.UserService;
-import com.kozik.MPGK.utilities.ErrorMessage;
+import com.kozik.MPGK.validator.UserValidator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.UriComponentsBuilder;
+
+import static com.kozik.MPGK.security.SecurityConstraints.TOKEN_PREFIX;;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/api")
+@RequestMapping("/api/users")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    // Get all users
-    @GetMapping("/users")
-    public ResponseEntity<List<User>> getUsers() {
-        List<User> users = userService.listAll();
-        if (users.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    @Autowired
+    private MapValidationErrorService mapValidationErrorService;
+
+    @Autowired
+    private UserValidator userValidator;
+
+    @Autowired
+    private JwtTokenProvider tokenProvider;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @PostMapping("/register")
+    public ResponseEntity<?> registerUser(@Valid @RequestBody User user, BindingResult result) {
+        userValidator.validate(user, result);
+        if (result.hasErrors()) {
+            return mapValidationErrorService.MapValidationService(result);
         }
-        return new ResponseEntity<List<User>>(users, HttpStatus.OK);
+
+        return new ResponseEntity<User>(userService.saveUser(user), HttpStatus.CREATED);
     }
 
-    // Get single user
-    @GetMapping("/users/{username}")
-    public ResponseEntity<?> getUser(@PathVariable("username") String username) {
-        if (!userService.isUserExist(username)) {
-            return new ResponseEntity<>(new ErrorMessage("User with name " + username + " not found."),
-                    HttpStatus.NOT_FOUND);
+    @PostMapping("/login")
+    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest, BindingResult result) {
+        if (result.hasErrors()) {
+            return mapValidationErrorService.MapValidationService(result);
         }
-        User user = userService.get(username);
-        return new ResponseEntity<User>(user, HttpStatus.OK);
-    }
 
-    // Create user
-    @PostMapping("/users")
-    public ResponseEntity<?> createUser(@RequestBody User user, UriComponentsBuilder builder) {
-        String username = user.getUsername();
-        if (userService.isUserExist(username)) {
-            return new ResponseEntity<>(
-                    new ErrorMessage("Unable to create. User with name " + username + " already exist."),
-                    HttpStatus.CONFLICT);
-        }
-        userService.savee(user);
-        HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(builder.path("/api/users/{username}").buildAndExpand(user.getUsername()).toUri());
-        return new ResponseEntity<String>(headers, HttpStatus.CREATED);
-    }
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
-    // Update user
-    @PutMapping("/users/{username}")
-    public ResponseEntity<?> updateUser(@PathVariable("username") String username, @RequestBody User user) {
-        if (!userService.isUserExist(username)) {
-            return new ResponseEntity<>(
-                    new ErrorMessage("Unable to update. User with name " + username + " not found."),
-                    HttpStatus.NOT_FOUND);
-        }
-        User currentUser = userService.update(username, user);
-        return new ResponseEntity<User>(currentUser, HttpStatus.OK);
-    }
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = TOKEN_PREFIX + tokenProvider.generateToken(authentication);
 
-    // Delete user
-    @DeleteMapping("/users/{username}")
-    public ResponseEntity<?> deleteFluid(@PathVariable("username") String username) {
-        if (!userService.isUserExist(username)) {
-            return new ResponseEntity<>(new ErrorMessage("Unable to delete. User with name " + username + " not found"),
-                    HttpStatus.NOT_FOUND);
-        }
-        userService.delete(username);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return ResponseEntity.ok(new JWTLoginSuccessResponse(true, jwt));
     }
 
 }
