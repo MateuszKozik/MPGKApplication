@@ -13,6 +13,7 @@
         "classnames": "^2.2.6",
         "formik": "^2.1.5",
         "formik-material-fields": "0.0.6",
+        "jwt-decode": "^3.0.0-beta.2",
         "react": "^16.13.1",
         "react-countdown": "^2.2.1",
         "react-dom": "^16.13.1",
