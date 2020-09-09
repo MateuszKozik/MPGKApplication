@@ -6,11 +6,10 @@ import {
 	CLEAR_INSPECTIONS_LIST_STATE,
 	GET_INSPECTIONS_BY_NAME_ACTIONS,
 	GET_INSPECTION_BY_CONNECTION,
-	GET_INSPECTIONS_BY_CONNECTION,
 	GET_OVERDUE_BY_CONNECTION,
-	GET_CONNECTION_START_TIME_BETWEEN,
 	GET_INSPECTION_BY_CONNECTION_STARTTIME_ENDTIME,
-	UPDATE_INSPECTION
+	UPDATE_INSPECTION,
+	GET_CONNECTION
 } from "./types";
 
 export const addInspection = (inspection, history) => async (dispatch) => {
@@ -112,7 +111,7 @@ export const getInspectionsByConnection = (connectionId, history) => async (
 	try {
 		const res = await axios.get(`/api/inspections/list/${connectionId}`);
 		dispatch({
-			type: GET_INSPECTIONS_BY_CONNECTION,
+			type: GET_CONNECTION,
 			payload: res.data
 		});
 	} catch (error) {
@@ -144,7 +143,7 @@ export const getConnectionAndStartTimeBetween = (
 			`/api/inspections/list/${id}/from/${startTime}/to/${endTime}?type=${typeName}`
 		);
 		dispatch({
-			type: GET_CONNECTION_START_TIME_BETWEEN,
+			type: GET_CONNECTION,
 			payload: res.data
 		});
 
