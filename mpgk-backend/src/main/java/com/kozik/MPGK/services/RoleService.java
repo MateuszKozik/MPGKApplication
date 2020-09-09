@@ -19,22 +19,22 @@ public class RoleService {
     }
 
     public Role save(Role role) {
-        if (roleRepository.existsById(role.getName())) {
-            throw new RoleAlreadyExistException(role.getName());
+        if (role.getRoleId() != null) {
+            throw new RoleAlreadyExistException(role.getRoleId());
         }
         return roleRepository.save(role);
     }
 
-    public Role get(String name) throws RoleNotFoundException {
-        Role role = roleRepository.findById(name).orElseThrow(() -> new RoleNotFoundException(name));
+    public Role get(Long roleId) throws RoleNotFoundException {
+        Role role = roleRepository.findById(roleId).orElseThrow(() -> new RoleNotFoundException(roleId));
         return role;
     }
 
-    public void delete(String name) {
-        roleRepository.delete(get(name));
+    public void delete(Long roleId) {
+        roleRepository.delete(get(roleId));
     }
 
-    public Boolean isRoleExist(String name) {
-        return roleRepository.existsById(name);
+    public Boolean isRoleExist(Long roleId) {
+        return roleRepository.existsById(roleId);
     }
 }

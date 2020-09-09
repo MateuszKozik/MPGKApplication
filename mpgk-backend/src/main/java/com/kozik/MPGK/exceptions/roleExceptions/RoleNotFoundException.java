@@ -8,8 +8,8 @@ public class RoleNotFoundException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 
-    public RoleNotFoundException(String name) {
-        super("Role with name: " + name + " not found.");
+    public RoleNotFoundException(Long roleId) {
+        super("Role with id: " + roleId + " not found.");
     }
 
 }

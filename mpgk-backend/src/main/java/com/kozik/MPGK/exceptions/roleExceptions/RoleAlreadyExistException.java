@@ -8,7 +8,7 @@ public class RoleAlreadyExistException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 
-    public RoleAlreadyExistException(String name) {
-        super("Role with name: " + name + " already exist.");
+    public RoleAlreadyExistException(Long roleId) {
+        super("Role with id: " + roleId + " already exist.");
     }
 }

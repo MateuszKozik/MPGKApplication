@@ -38,9 +38,9 @@ public class RoleController {
     }
 
     // Get single role
-    @GetMapping("/{name}")
-    public ResponseEntity<?> getRole(@PathVariable String name) {
-        return new ResponseEntity<Role>(roleService.get(name), HttpStatus.OK);
+    @GetMapping("/{roleId}")
+    public ResponseEntity<?> getRole(@PathVariable Long roleId) {
+        return new ResponseEntity<Role>(roleService.get(roleId), HttpStatus.OK);
     }
 
     // Create role
@@ -54,10 +54,10 @@ public class RoleController {
     }
 
     // Delete role
-    @DeleteMapping("/{name}")
-    public ResponseEntity<?> deleteRole(@PathVariable String name) {
-        roleService.delete(name);
-        return new ResponseEntity<Message>(new Message("Role with name: " + name + " has been removed."),
+    @DeleteMapping("/{roleId}")
+    public ResponseEntity<?> deleteRole(@PathVariable Long roleId) {
+        roleService.delete(roleId);
+        return new ResponseEntity<Message>(new Message("Role with id: " + roleId + " has been removed."),
                 HttpStatus.OK);
     }
 }
