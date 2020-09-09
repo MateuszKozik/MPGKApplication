@@ -2,10 +2,8 @@ import {
 	GET_INSPECTIONS,
 	DELETE_INSPECTION,
 	CLEAR_INSPECTIONS_LIST_STATE,
-	GET_INSPECTIONS_BY_NAME_ACTIONS,
 	GET_INSPECTION_BY_CONNECTION,
 	GET_OVERDUE_BY_CONNECTION,
-	GET_INSPECTION_BY_CONNECTION_STARTTIME_ENDTIME,
 	UPDATE_INSPECTION,
 	GET_CONNECTION
 } from "../actions/types";
@@ -70,24 +68,12 @@ export default function (state = initialState, action) {
 				inspectionsList: action.payload
 			};
 
-		case GET_INSPECTION_BY_CONNECTION_STARTTIME_ENDTIME:
-			return {
-				...state,
-				inspections: action.payload
-			};
-
 		case CLEAR_INSPECTIONS_LIST_STATE:
 			return {
 				...state,
 				inspectionsList: [],
 				overdueInspection: [],
 				actualInspection: []
-			};
-
-		case GET_INSPECTIONS_BY_NAME_ACTIONS:
-			return {
-				...state,
-				inspections: action.payload
 			};
 
 		default:
