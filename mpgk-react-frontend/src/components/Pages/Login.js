@@ -9,8 +9,7 @@ import { tableStyles } from "../../consts/themeConsts";
 export class Login extends Component {
 	state = {
 		username: "",
-		password: "",
-		errors: {}
+		password: ""
 	};
 
 	static getDerivedStateFromProps(nextProps, prevState) {
@@ -83,6 +82,7 @@ export class Login extends Component {
 
 Login.propTypes = {
 	errors: PropTypes.object.isRequired,
+	security: PropTypes.object.isRequired,
 	login: PropTypes.func.isRequired
 };
 
