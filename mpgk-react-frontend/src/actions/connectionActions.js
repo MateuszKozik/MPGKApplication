@@ -7,6 +7,7 @@ import {
 	UPDATE_CONNECTION,
 	GET_CONNECTION
 } from "./types";
+import isUserLogin from "../securityUtils/isUserLogin";
 
 export const addConnection = (connection) => async (dispatch) => {
 	try {
@@ -72,11 +73,13 @@ export const deleteConnection = (connectionId) => async (dispach) => {
 };
 
 export const getHomePageConnections = () => async (dispatch) => {
-	const res = await axios.get("/api/home/connections");
-	dispatch({
-		type: GET_CONNECTION,
-		payload: res.data
-	});
+	if (isUserLogin()) {
+		const res = await axios.get("/api/home/connections");
+		dispatch({
+			type: GET_CONNECTION,
+			payload: res.data
+		});
+	}
 };
 
 export const clearConnectionState = () => (dispach) => {
