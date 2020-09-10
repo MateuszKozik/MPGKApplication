@@ -10,10 +10,11 @@ import {
 	GET_CONNECTION
 } from "./types";
 import isUserLogin from "../securityUtils/isUserLogin";
+import {hostName} from "./host";
 
 export const addInspection = (inspection, history) => async (dispatch) => {
 	try {
-		await axios.post("/api/inspections", inspection);
+		await axios.post(`${hostName}/api/inspections`, inspection);
 		history.push("/inspections");
 		dispatch({
 			type: GET_ERRORS,
@@ -28,7 +29,7 @@ export const addInspection = (inspection, history) => async (dispatch) => {
 };
 
 export const getInspections = () => async (dispatch) => {
-	const res = await axios.get("/api/inspections");
+	const res = await axios.get(`${hostName}/api/inspections`);
 	dispatch({
 		type: GET_INSPECTIONS,
 		payload: res.data
@@ -41,7 +42,7 @@ export const updateInspection = (inspectionId, updatedInspection) => async (
 	try {
 		if (isUserLogin()) {
 			const res = await axios.put(
-				`/api/inspections/${inspectionId}`,
+				`${hostName}/api/inspections/${inspectionId}`,
 				updatedInspection
 			);
 			dispatch({
@@ -64,7 +65,7 @@ export const updateInspection = (inspectionId, updatedInspection) => async (
 
 export const deleteInspection = (inspectionId) => async (dispatch) => {
 	if (window.confirm("Czy jesteś pewny? Spowoduje to usunięcie przeglądu")) {
-		await axios.delete(`/api/inspections/${inspectionId}`);
+		await axios.delete(`${hostName}/api/inspections/${inspectionId}`);
 		dispatch({
 			type: DELETE_INSPECTION,
 			payload: inspectionId
@@ -78,7 +79,7 @@ export const getInspectionByConnection = (connectionId, history) => async (
 	try {
 		if (isUserLogin) {
 			const res = await axios.get(
-				`/api/inspections/list/${connectionId}/execute`
+				`${hostName}/api/inspections/list/${connectionId}/execute`
 			);
 			dispatch({
 				type: GET_INSPECTION_BY_CONNECTION,
@@ -97,7 +98,7 @@ export const getOverdueByConnection = (
 ) => async (dispatch) => {
 	try {
 		const res = await axios.get(
-			`/api/inspections/list/${connectionId}/overdue/${endTime}`
+			`${hostName}/api/inspections/list/${connectionId}/overdue/${endTime}`
 		);
 		dispatch({
 			type: GET_OVERDUE_BY_CONNECTION,
@@ -112,7 +113,7 @@ export const getInspectionsByConnection = (connectionId, history) => async (
 	dispatch
 ) => {
 	try {
-		const res = await axios.get(`/api/inspections/list/${connectionId}`);
+		const res = await axios.get(`${hostName}/api/inspections/list/${connectionId}`);
 		dispatch({
 			type: GET_CONNECTION,
 			payload: res.data
@@ -124,7 +125,7 @@ export const getInspectionsByConnection = (connectionId, history) => async (
 
 export const getActionsByName = (history) => async (dispatch) => {
 	try {
-		const res = await axios.get(`/api/inspections/nitrogen`);
+		const res = await axios.get(`${hostName}/api/inspections/nitrogen`);
 		dispatch({
 			type: GET_INSPECTIONS,
 			payload: res.data
@@ -143,7 +144,7 @@ export const getConnectionAndStartTimeBetween = (
 ) => async (dispatch) => {
 	try {
 		const res = await axios.get(
-			`/api/inspections/list/${id}/from/${startTime}/to/${endTime}?type=${typeName}`
+			`${hostName}/api/inspections/list/${id}/from/${startTime}/to/${endTime}?type=${typeName}`
 		);
 		dispatch({
 			type: GET_CONNECTION,
@@ -164,7 +165,7 @@ export const getInspectionByConnectionAndStartTimeAndEndTime = (
 ) => async (dispatch) => {
 	try {
 		const res = await axios.get(
-			`/api/inspections/list/${connectionId}/${startTime}/to/${endTime}/show`
+			`${hostName}/api/inspections/list/${connectionId}/${startTime}/to/${endTime}/show`
 		);
 		dispatch({
 			type: GET_INSPECTIONS,
@@ -181,7 +182,7 @@ export const createOnDemandInspections = (connectionId, history) => async (
 	if (isUserLogin()) {
 		if (window.confirm("Czy na pewno chcesz wygenerować przegląd?")) {
 			try {
-				await axios.post(`/api/tasks/on-demand/${connectionId}`);
+				await axios.post(`${hostName}/api/tasks/on-demand/${connectionId}`);
 				history.push("/");
 			} catch (error) {
 				history.push("/");
