@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import com.kozik.MPGK.entities.Person;
 import com.kozik.MPGK.entities.User;
 
 import org.springframework.security.core.Authentication;
