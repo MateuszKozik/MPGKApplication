@@ -35,11 +35,11 @@ class Home extends Component {
 
 	render() {
 		const { classes } = this.props;
-		const { inspectionsList } = this.props.inspection;
-		const onDemandConnections = inspectionsList.filter(
+		const { homePageConnections } = this.props.connection;
+		const onDemandConnections = homePageConnections.filter(
 			(onDemand) => onDemand.connection.inspectionType.name === "Na żądanie"
 		);
-		const periodicConnections = inspectionsList.filter(
+		const periodicConnections = homePageConnections.filter(
 			(periodic) => periodic.connection.inspectionType.name !== "Na żądanie"
 		);
 		return (
@@ -419,7 +419,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const mapStateToProps = (state) => ({
-	inspection: state.inspection
+	connection: state.connection
 });
 
 export default connect(
