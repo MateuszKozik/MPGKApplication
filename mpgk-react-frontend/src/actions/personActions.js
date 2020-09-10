@@ -7,11 +7,12 @@ import {
 	UPDATE_PERSON
 } from "./types";
 import isUserLogin from "../securityUtils/isUserLogin";
+import {hostName} from "./host";
 
 export const addPerson = (person) => async (dispatch) => {
 	try {
 		if (isUserLogin()) {
-			const res = await axios.post("/api/persons", person);
+			const res = await axios.post(`${hostName}/api/persons`, person);
 			dispatch({
 				type: ADD_PERSON,
 				payload: res.data
@@ -32,7 +33,7 @@ export const addPerson = (person) => async (dispatch) => {
 
 export const getPersons = () => async (dispatch) => {
 	if (isUserLogin()) {
-		const res = await axios.get("/api/persons");
+		const res = await axios.get(`${hostName}/api/persons`);
 		dispatch({
 			type: GET_PERSONS,
 			payload: res.data
@@ -43,7 +44,7 @@ export const getPersons = () => async (dispatch) => {
 export const updatePerson = (personId, updatedPerson) => async (dispatch) => {
 	try {
 		if (isUserLogin()) {
-			const res = await axios.put(`/api/persons/${personId}`, updatedPerson);
+			const res = await axios.put(`${hostName}/api/persons/${personId}`, updatedPerson);
 			dispatch({
 				type: UPDATE_PERSON,
 				payload: res.data
@@ -65,7 +66,7 @@ export const updatePerson = (personId, updatedPerson) => async (dispatch) => {
 export const deletePerson = (personId) => async (dispatch) => {
 	if (isUserLogin()) {
 		if (window.confirm("Czy jesteś pewny? Spowoduje to usunięcie osoby")) {
-			await axios.delete(`/api/persons/${personId}`);
+			await axios.delete(`${hostName}/api/persons/${personId}`);
 			dispatch({
 				type: DELETE_PERSON,
 				payload: personId
