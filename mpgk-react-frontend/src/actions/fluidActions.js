@@ -7,11 +7,12 @@ import {
 	UPDATE_FLUID
 } from "./types";
 import isUserLogin from "../securityUtils/isUserLogin";
+import {hostName} from "./host";
 
 export const addFluid = (fluid) => async (dispatch) => {
 	try {
 		if (isUserLogin()) {
-			const res = await axios.post("/api/fluids", fluid);
+			const res = await axios.post(`${hostName}/api/fluids`, fluid);
 			dispatch({
 				type: ADD_FLUID,
 				payload: res.data
@@ -32,7 +33,7 @@ export const addFluid = (fluid) => async (dispatch) => {
 
 export const getFluids = () => async (dispatch) => {
 	if (isUserLogin()) {
-		const res = await axios.get("/api/fluids");
+		const res = await axios.get(`${hostName}/api/fluids`);
 		dispatch({
 			type: GET_FLUIDS,
 			payload: res.data
@@ -43,7 +44,7 @@ export const getFluids = () => async (dispatch) => {
 export const updateFluid = (fluidId, updatedFluid) => async (dispatch) => {
 	try {
 		if (isUserLogin()) {
-			const res = await axios.put(`/api/fluids/${fluidId}`, updatedFluid);
+			const res = await axios.put(`${hostName}/api/fluids/${fluidId}`, updatedFluid);
 			dispatch({
 				type: UPDATE_FLUID,
 				payload: res.data
@@ -65,7 +66,7 @@ export const updateFluid = (fluidId, updatedFluid) => async (dispatch) => {
 export const deleteFluid = (fluidId) => async (dispatch) => {
 	if (isUserLogin()) {
 		if (window.confirm("Czy jesteś pewny? Spowoduje to usunięcie płynu")) {
-			await axios.delete(`/api/fluids/${fluidId}`);
+			await axios.delete(`${hostName}/api/fluids/${fluidId}`);
 			dispatch({
 				type: DELETE_FLUID,
 				payload: fluidId
