@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { createOnDemandInspections } from "../../actions/taskActions";
+import { createOnDemandInspections } from "../../actions/inspectionActions";
 import { getHomePageConnections } from "../../actions/connectionActions";
 import { withStyles } from "@material-ui/core/styles";
 import { tableStyles } from "./../../consts/themeConsts";
