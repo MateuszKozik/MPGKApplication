@@ -1,6 +1,6 @@
 export const tableStyles = (theme) => ({
 	head: {
-		backgroundColor: "#017bff",
+		backgroundColor: "#3f51b5",
 		color: "#fff"
 	},
 	form: {
