@@ -40,10 +40,10 @@ export const getGroups = () => async (dispatch) => {
 	}
 };
 
-export const updateGroup = (groupId, updateGroup) => async (dispatch) => {
+export const updateGroup = (groupId, updatedGroup) => async (dispatch) => {
 	try {
 		if (isUserLogin()) {
-			const res = await axios.put(`/api/groups/${groupId}`, updateGroup);
+			const res = await axios.put(`/api/groups/${groupId}`, updatedGroup);
 			dispatch({
 				type: UPDATE_GROUP,
 				payload: res.data
