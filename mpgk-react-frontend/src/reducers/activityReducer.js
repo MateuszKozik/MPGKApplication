@@ -2,13 +2,11 @@ import {
 	ADD_ACTIVITY,
 	GET_ACTIVITIES,
 	DELETE_ACTIVITY,
-	UPDATE_ACTIVITY,
-	GET_ACTIVITIES_BY_CONNECTION
+	UPDATE_ACTIVITY
 } from "../actions/types";
 
 const initialState = {
 	activities: [],
-	homePageActivities: [],
 	activity: {}
 };
 
@@ -38,12 +36,6 @@ export default function (state = initialState, action) {
 			return {
 				...state,
 				activities: [action.payload, ...state.activities]
-			};
-
-		case GET_ACTIVITIES_BY_CONNECTION:
-			return {
-				...state,
-				homePageActivities: action.payload
 			};
 
 		case DELETE_ACTIVITY:
