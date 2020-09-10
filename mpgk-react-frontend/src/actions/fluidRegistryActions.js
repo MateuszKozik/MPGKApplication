@@ -7,11 +7,12 @@ import {
 	UPDATE_FLUID_REGISTRY
 } from "./types";
 import isUserLogin from "../securityUtils/isUserLogin";
+import {hostName} from "./host";
 
 export const addFluidRegistry = (fluidRegistry) => async (dispatch) => {
 	try {
 		if (isUserLogin()) {
-			const res = await axios.post("/api/fluid-registries", fluidRegistry);
+			const res = await axios.post(`${hostName}/api/fluid-registries`, fluidRegistry);
 			dispatch({
 				type: ADD_FLUID_REGISTRY,
 				payload: res.data
@@ -32,7 +33,7 @@ export const addFluidRegistry = (fluidRegistry) => async (dispatch) => {
 
 export const getFluidRegistries = () => async (dispatch) => {
 	if (isUserLogin()) {
-		const res = await axios.get("/api/fluid-registries");
+		const res = await axios.get(`${hostName}/api/fluid-registries`);
 		dispatch({
 			type: GET_FLUID_REGISTRIES,
 			payload: res.data
@@ -46,7 +47,7 @@ export const updateFluidRegistry = (registryId, updatedfluidRegistry) => async (
 	try {
 		if (isUserLogin()) {
 			const res = await axios.put(
-				`/api/fluid-registries/${registryId}`,
+				`${hostName}/api/fluid-registries/${registryId}`,
 				updatedfluidRegistry
 			);
 			dispatch({
@@ -70,7 +71,7 @@ export const updateFluidRegistry = (registryId, updatedfluidRegistry) => async (
 export const deleteFluidRegistry = (registryId) => async (dispatch) => {
 	if (isUserLogin()) {
 		if (window.confirm("Czy jesteś pewny? Spowoduje to usunięcie wpisu.")) {
-			await axios.delete(`/api/fluid-registries/${registryId}`);
+			await axios.delete(`${hostName}/api/fluid-registries/${registryId}`);
 			dispatch({
 				type: DELETE_FLUID_REGISTRY,
 				payload: registryId
