@@ -8,11 +8,12 @@ import {
 	GET_CONNECTION
 } from "./types";
 import isUserLogin from "../securityUtils/isUserLogin";
+import {hostName} from "./host";
 
 export const addActivity = (activity) => async (dispatch) => {
 	try {
 		if (isUserLogin()) {
-			const res = await axios.post("/api/activities", activity);
+			const res = await axios.post(`${hostName}/api/activities`, activity);
 			dispatch({
 				type: ADD_ACTIVITY,
 				payload: res.data
@@ -33,7 +34,7 @@ export const addActivity = (activity) => async (dispatch) => {
 
 export const getActivities = () => async (dispatch) => {
 	if (isUserLogin()) {
-		const res = await axios.get("/api/activities");
+		const res = await axios.get(`${hostName}/api/activities`);
 		dispatch({
 			type: GET_ACTIVITIES,
 			payload: res.data
@@ -47,7 +48,7 @@ export const updateActivity = (activityId, updatedActivity) => async (
 	try {
 		if (isUserLogin()) {
 			const res = await axios.put(
-				`/api/activities/${activityId}`,
+				`${hostName}/api/activities/${activityId}`,
 				updatedActivity
 			);
 			dispatch({
@@ -71,7 +72,7 @@ export const updateActivity = (activityId, updatedActivity) => async (
 export const deleteActivity = (activityId) => async (dispatch) => {
 	if (isUserLogin()) {
 		if (window.confirm("Czy jesteś pewny? Spowoduje to usunięcie czynności")) {
-			await axios.delete(`/api/activities/${activityId}`);
+			await axios.delete(`${hostName}/api/activities/${activityId}`);
 			dispatch({
 				type: DELETE_ACTIVITY,
 				payload: activityId
@@ -85,7 +86,7 @@ export const getActivitiesByConnection = (connectionId, history) => async (
 ) => {
 	try {
 		if (isUserLogin()) {
-			const res = await axios.get(`/api/activities/list/${connectionId}`);
+			const res = await axios.get(`${hostName}/api/activities/list/${connectionId}`);
 			dispach({
 				type: GET_CONNECTION,
 				payload: res.data
