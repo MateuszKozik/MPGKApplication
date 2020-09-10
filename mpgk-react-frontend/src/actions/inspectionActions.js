@@ -175,6 +175,21 @@ export const getInspectionByConnectionAndStartTimeAndEndTime = (
 	}
 };
 
+export const createOnDemandInspections = (connectionId, history) => async (
+	dispatch
+) => {
+	if (isUserLogin()) {
+		if (window.confirm("Czy na pewno chcesz wygenerować przegląd?")) {
+			try {
+				await axios.post(`/api/tasks/on-demand/${connectionId}`);
+				history.push("/");
+			} catch (error) {
+				history.push("/");
+			}
+		}
+	}
+};
+
 export const clearInspectionsListState = () => (dispatch) => {
 	dispatch({
 		type: CLEAR_INSPECTIONS_LIST_STATE,
