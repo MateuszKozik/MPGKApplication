@@ -5,7 +5,7 @@ import {
 	GET_ACTIVITIES,
 	DELETE_ACTIVITY,
 	UPDATE_ACTIVITY,
-	GET_ACTIVITIES_BY_CONNECTION
+	GET_CONNECTION
 } from "./types";
 import isUserLogin from "../securityUtils/isUserLogin";
 
@@ -87,7 +87,7 @@ export const getActivitiesByConnection = (connectionId, history) => async (
 		if (isUserLogin()) {
 			const res = await axios.get(`/api/activities/list/${connectionId}`);
 			dispach({
-				type: GET_ACTIVITIES_BY_CONNECTION,
+				type: GET_CONNECTION,
 				payload: res.data
 			});
 		}
