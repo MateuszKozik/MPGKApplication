@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { createOnDemandInspections } from "../../actions/taskActions";
 import { getHomePageConnections } from "../../actions/connectionActions";
-import { clearInspectionsListState } from "../../actions/inspectionActions";
 import { withStyles } from "@material-ui/core/styles";
 import { tableStyles } from "./../../consts/themeConsts";
 import Timer from "../Common/Timer";
@@ -29,9 +28,6 @@ class Home extends Component {
 		this.props.getHomePageConnections();
 	}
 
-	componentWillUnmount() {
-		this.props.clearInspectionsListState();
-	}
 
 	render() {
 		const { classes } = this.props;
@@ -412,9 +408,6 @@ const mapDispatchToProps = (dispatch) => ({
 	},
 	getHomePageConnections: () => {
 		dispatch(getHomePageConnections());
-	},
-	clearInspectionsListState: () => {
-		dispatch(clearInspectionsListState());
 	}
 });
 
