@@ -62,7 +62,7 @@ function Row(inspection) {
                         <TableCell align="left">{inspection.parameter === "true" ? "Wykonany" :inspection.parameter !== null ? inspection.parameter: "Nie wykonany"}</TableCell>
                         <TableCell align="left">{inspection.comment}</TableCell>
                         <TableCell align="left">{inspection.status}</TableCell>
-                  <TableCell align="left">{inspection.person && inspection.person.name+ " " + inspection.person.surname} {inspection.supervisor && inspection.supervisor.name+" "+inspection.supervisor.surname}</TableCell>
+                  <TableCell align="left">{inspection.person && inspection.person.name+ " " + inspection.person.surname}</TableCell>
                       </TableRow>
                      
                     ))}
