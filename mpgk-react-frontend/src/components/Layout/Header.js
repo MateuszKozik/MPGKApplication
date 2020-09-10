@@ -1,79 +1,264 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
+// import React, { Component } from "react";
+// import { Link } from "react-router-dom";
+//
+//
+// import { logout } from "./../../actions/securityActions";
+// import AppBar from "@material-ui/core/AppBar";
+// import Toolbar from "@material-ui/core/Toolbar";
+// import Typography from "@material-ui/core/Typography";
+// import IconButton from "@material-ui/core/IconButton";
+// import MenuIcon from "@material-ui/icons/Menu";
+// import MenuItem from "@material-ui/core/MenuItem";
+// import Menu from "@material-ui/core/Menu";
+// import Button from "@material-ui/core/Button";
+// import useMediaQuery from "@material-ui/core/useMediaQuery";
+// //import { tableStyles } from "../../../../consts/themeConsts";
+// import { withStyles } from "@material-ui/core";
+// import { makeStyles, useTheme } from "@material-ui/core/styles";
 
-class Header extends Component {
-	render() {
-		return (
-			<nav className="navbar navbar-dark bg-primary navbar-expand-lg">
-				<Link className="navbar-brand" to="/">
-					MPGK
-				</Link>
+import React from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { logout } from "./../../actions/securityActions";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import IconButton from "@material-ui/core/IconButton";
+import MenuIcon from "@material-ui/icons/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import Menu from "@material-ui/core/Menu";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { withRouter, Link } from "react-router-dom";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
 
-				<button
-					className="navbar-toggler"
-					type="button"
-					data-toggle="collapse"
-					data-target="#mainmenu"
-					aria-controls="mainmenu"
-					aria-expanded="false"
-					aria-label="Navigation switch"
-				>
-					<span className="navbar-toggler-icon"></span>
-				</button>
+const useStyles = makeStyles((theme) => ({
+	root: {
+		flexGrow: 1
+	},
 
-				<div className="collapse navbar-collapse" id="mainmenu">
-					<ul className="navbar-nav mr-auto">
-						<li className="nav-item">
-							<Link className="nav-link" to="/devices">
-								Urządzenia
-							</Link>
-						</li>
-						<li className="navbar-nav mr-auto">
-							<Link className="nav-link" to="/fluids">
-								Czynniki
-							</Link>
-						</li>
-
-						<li className="navbar-nav mr-auto">
-							<Link className="nav-link" to="/persons">
-								Pracownicy
-							</Link>
-						</li>
-						<li className="navbar-nav mr-auto">
-							<Link className="nav-link" to="/groups">
-								Kategorie czynności
-							</Link>
-						</li>
-						<li className="navbar-nav mr-auto">
-							<Link className="nav-link" to="/activities">
-								Czynności
-							</Link>
-						</li>
-						<li className="navbar-nav mr-auto">
-							<Link className="nav-link" to="/inspections">
-								Rejestr przeglądów
-							</Link>
-						</li>
-						<li className="navbar-nav mr-auto">
-							<Link className="nav-link" to="/connections">
-								Przeglądy
-							</Link>
-						</li>
-						<li className="navbar-nav mr-auto">
-							<Link className="nav-link" to="/fluid-registries">
-								Rejestr płynów
-							</Link>
-						</li>
-						<li className="navbar-nav mr-auto">
-							<Link className="nav-link" to="/fluid-places">
-								Miejsca dodania czynników
-							</Link>
-						</li>
-					</ul>
-				</div>
-			</nav>
-		);
+	title: {
+		[theme.breakpoints.down("md")]: {
+			flexGrow: 1
+		}
+	},
+	headerOptions: {
+		display: "flex",
+		flex: 1
+	},
+	logoutButton: {
+		position: "relative",
+		[theme.breakpoints.up("sm")]: {
+			marginLeft: "auto"
+		}
 	}
-}
+}));
 
-export default Header;
+const Header = (props) => {
+	const { history } = props;
+
+	const classes = useStyles();
+	const [anchorEl, setAnchorEl] = React.useState(null);
+	const open = Boolean(anchorEl);
+	const theme = useTheme();
+	const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
+	const handleLogout = () => {
+		props.logout();
+		window.location.href = "/login";
+	};
+
+	const handleMenu = (event) => {
+		setAnchorEl(event.currentTarget);
+	};
+
+	const handleMenuClick = (pageURL) => {
+		history.push(pageURL);
+		setAnchorEl(null);
+	};
+
+	const handleButtonClick = (pageURL) => {
+		history.push(pageURL);
+	};
+
+	const menuItems = [
+		{
+			menuTitle: "Urządzenia",
+			pageURL: "/devices"
+		},
+		{
+			menuTitle: "Czynniki",
+			pageURL: "/fluids"
+		},
+		{
+			menuTitle: "Pracownicy",
+			pageURL: "/persons"
+		},
+		{
+			menuTitle: "Kategorie czynności",
+			pageURL: "/groups"
+		},
+		{
+			menuTitle: "Czynności",
+			pageURL: "/activities"
+		},
+		{
+			menuTitle: "Przeglądy",
+			pageURL: "/connections"
+		},
+		{
+			menuTitle: "Rejestr płynów",
+			pageURL: "/fluid-registries"
+		},
+		{
+			menuTitle: "Miejsca dodania płynów",
+			pageURL: "/fluid-places"
+		}
+	];
+
+	const { validToken, user } = props.security;
+	const { authorities } = user;
+
+	const userIsAuthenticated = (
+		<AppBar position="static">
+			<Toolbar>
+				<Link
+					style={{ textDecoration: "none", color: "#fff" }}
+					to="/"
+					className={classes.title}
+				>
+					<Typography variant="h6">MPGK</Typography>
+				</Link>
+				{isMobile ? (
+					<>
+						<MenuItem button={false}>
+							<Typography>{user.fullName}</Typography>
+						</MenuItem>
+						<IconButton
+							edge="start"
+							className={classes.menuButton}
+							style={{ marginLeft: 1 }}
+							color="inherit"
+							aria-label="menu"
+							onClick={() => handleLogout()}
+						>
+							<ExitToAppIcon />
+						</IconButton>
+					</>
+				) : (
+					<div className={classes.headerOptions}>
+						<MenuItem button={false} className={classes.logoutButton}>
+							<Typography>{user.fullName}</Typography>
+						</MenuItem>
+						<MenuItem
+							className={classes.logoutButton}
+							onClick={() => handleLogout()}
+						>
+							Wyloguj
+						</MenuItem>
+					</div>
+				)}
+			</Toolbar>
+		</AppBar>
+	);
+
+	const adminIsAuthenticated = (
+		<AppBar position="static">
+			<Toolbar>
+				<Link
+					style={{ textDecoration: "none", color: "#fff", marginRight: 20 }}
+					to="/"
+					className={classes.title}
+				>
+					<Typography variant="h6">MPGK</Typography>
+				</Link>
+				{isMobile ? (
+					<>
+						<IconButton
+							edge="start"
+							className={classes.menuButton}
+							color="inherit"
+							aria-label="menu"
+							onClick={handleMenu}
+						>
+							<MenuIcon />
+						</IconButton>
+						<Menu
+							id="menu-appbar"
+							anchorEl={anchorEl}
+							anchorOrigin={{
+								vertical: "top",
+								horizontal: "right"
+							}}
+							keepMounted
+							transformOrigin={{
+								vertical: "top",
+								horizontal: "right"
+							}}
+							open={open}
+							onClose={() => setAnchorEl(null)}
+						>
+							{menuItems.map((menuItem, index) => {
+								const { menuTitle, pageURL } = menuItem;
+								return (
+									<MenuItem
+										key={index}
+										onClick={() => handleMenuClick(pageURL)}
+									>
+										{menuTitle}
+									</MenuItem>
+								);
+							})}
+							<MenuItem
+								className={classes.logoutButton}
+								onClick={() => handleLogout()}
+							>
+								Wyloguj
+							</MenuItem>
+						</Menu>
+					</>
+				) : (
+					<div className={classes.headerOptions}>
+						{menuItems.map((menuItem, index) => {
+							const { menuTitle, pageURL } = menuItem;
+							return (
+								<MenuItem
+									key={index}
+									onClick={() => handleButtonClick(pageURL)}
+								>
+									{menuTitle}
+								</MenuItem>
+							);
+						})}
+						<MenuItem
+							className={classes.logoutButton}
+							onClick={() => handleLogout()}
+						>
+							Wyloguj
+						</MenuItem>
+					</div>
+				)}
+			</Toolbar>
+		</AppBar>
+	);
+
+	let headerLinks;
+
+	if (validToken && user) {
+		if (authorities === "ROLE_ADMIN") {
+			headerLinks = adminIsAuthenticated;
+		} else {
+			headerLinks = userIsAuthenticated;
+		}
+	}
+	return <div className={classes.root}>{headerLinks}</div>;
+};
+
+const mapStateToProps = (state) => {
+	return {
+		security: state.security
+	};
+};
+
+export default connect(mapStateToProps, { logout })(withRouter(Header));
