@@ -8,11 +8,12 @@ import {
 	GET_HOMEPAGE
 } from "./types";
 import isUserLogin from "../securityUtils/isUserLogin";
+import {hostName} from "./host";
 
 export const addConnection = (connection) => async (dispatch) => {
 	try {
 		if (isUserLogin()) {
-			const res = await axios.post("/api/connections", connection);
+			const res = await axios.post(`${hostName}/api/connections`, connection);
 			dispatch({
 				type: ADD_CONNECTION,
 				payload: res.data
@@ -33,7 +34,7 @@ export const addConnection = (connection) => async (dispatch) => {
 
 export const getConnections = () => async (dispach) => {
 	if (isUserLogin()) {
-		const res = await axios.get("/api/connections/");
+		const res = await axios.get(`${hostName}/api/connections/`);
 		dispach({
 			type: GET_CONNECTIONS,
 			payload: res.data
@@ -47,7 +48,7 @@ export const updateConnection = (connectionId, updatedConnection) => async (
 	try {
 		if (isUserLogin()) {
 			const res = await axios.put(
-				`/api/connections/${connectionId}`,
+				`${hostName}/api/connections/${connectionId}`,
 				updatedConnection
 			);
 			dispatch({
@@ -71,7 +72,7 @@ export const updateConnection = (connectionId, updatedConnection) => async (
 export const deleteConnection = (connectionId) => async (dispach) => {
 	if (isUserLogin()) {
 		if (window.confirm("Czy jesteś pewny? Spowoduje to usunięcie powiązania")) {
-			await axios.delete(`/api/connections/${connectionId}`);
+			await axios.delete(`${hostName}/api/connections/${connectionId}`);
 			dispach({
 				type: DELETE_CONNECTION,
 				payload: connectionId
@@ -82,7 +83,7 @@ export const deleteConnection = (connectionId) => async (dispach) => {
 
 export const getHomePageConnections = () => async (dispatch) => {
 	if (isUserLogin()) {
-		const res = await axios.get("/api/home/connections");
+		const res = await axios.get(`${hostName}/api/home/connections`);
 		dispatch({
 			type: GET_HOMEPAGE,
 			payload: res.data
