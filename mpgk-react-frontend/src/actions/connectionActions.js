@@ -5,7 +5,7 @@ import {
 	DELETE_CONNECTION,
 	ADD_CONNECTION,
 	UPDATE_CONNECTION,
-	GET_CONNECTION
+	GET_HOMEPAGE
 } from "./types";
 import isUserLogin from "../securityUtils/isUserLogin";
 
@@ -84,7 +84,7 @@ export const getHomePageConnections = () => async (dispatch) => {
 	if (isUserLogin()) {
 		const res = await axios.get("/api/home/connections");
 		dispatch({
-			type: GET_CONNECTION,
+			type: GET_HOMEPAGE,
 			payload: res.data
 		});
 	}
