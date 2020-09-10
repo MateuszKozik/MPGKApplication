@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 
 import Row from "../SearchInspection/Row";
 
-
 import { withStyles } from "@material-ui/core/styles";
 import { tableStyles } from "./../../../consts/themeConsts";
 import { connect } from "react-redux";
@@ -45,7 +44,9 @@ class InspectionList extends Component {
 				<Grid container className={classes.container}>
 					<Grid item xs={12}>
 						<Typography variant="h3" className={classes.title}>
-							{inspections[0] && inspections[0].activityGroup && inspections[0].activityGroup.connection.name}
+							{inspections[0] &&
+								inspections[0].activityGroup &&
+								inspections[0].activityGroup.connection.name}
 						</Typography>
 					</Grid>
 					<Grid item xs={false} md={2} />
@@ -84,13 +85,15 @@ const mapDispatchToProps = (dispatch) => {
 		getInspectionByConnectionAndStartTimeAndEndTime: (
 			connectionId,
 			starttime,
-			endtime
+			endtime,
+			history
 		) => {
 			dispatch(
 				getInspectionByConnectionAndStartTimeAndEndTime(
 					connectionId,
 					starttime,
-					endtime
+					endtime,
+					history
 				)
 			);
 		},
