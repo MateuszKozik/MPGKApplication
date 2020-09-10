@@ -1,6 +1,7 @@
 import {
 	GET_CONNECTIONS,
 	DELETE_CONNECTION,
+	GET_HOMEPAGE,
 	ADD_FLUID_REGISTRY,
 	UPDATE_CONNECTION
 } from "../actions/types";
@@ -17,6 +18,12 @@ export default function (state = initialState, action) {
 			return {
 				...state,
 				connections: action.payload
+			};
+		
+			case GET_HOMEPAGE:
+			return {
+				...state,
+				homePageConnections: action.payload
 			};
 
 		case DELETE_CONNECTION:
