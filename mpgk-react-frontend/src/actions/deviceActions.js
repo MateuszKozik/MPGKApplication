@@ -6,19 +6,22 @@ import {
 	ADD_DEVICE,
 	UPDATE_DEVICE
 } from "./types";
+import isUserLogin from "../securityUtils/isUserLogin";
 
 export const addDevice = (device) => async (dispatch) => {
 	try {
-		const res = await axios.post("/api/devices", device);
-		dispatch({
-			type: ADD_DEVICE,
-			payload: res.data
-		});
-		dispatch({
-			type: GET_ERRORS,
-			payload: {}
-		});
-		return res;
+		if (isUserLogin()) {
+			const res = await axios.post("/api/devices", device);
+			dispatch({
+				type: ADD_DEVICE,
+				payload: res.data
+			});
+			dispatch({
+				type: GET_ERRORS,
+				payload: {}
+			});
+			return res;
+		}
 	} catch (error) {
 		dispatch({
 			type: GET_ERRORS,
@@ -28,25 +31,29 @@ export const addDevice = (device) => async (dispatch) => {
 };
 
 export const getDevices = () => async (dispatch) => {
-	const res = await axios.get("/api/devices");
-	dispatch({
-		type: GET_DEVICES,
-		payload: res.data
-	});
+	if (isUserLogin()) {
+		const res = await axios.get("/api/devices");
+		dispatch({
+			type: GET_DEVICES,
+			payload: res.data
+		});
+	}
 };
 
 export const updateDevice = (deviceId, updatedDevice) => async (dispatch) => {
 	try {
-		const res = await axios.put(`/api/devices/${deviceId}`, updatedDevice);
-		dispatch({
-			type: UPDATE_DEVICE,
-			payload: res.data
-		});
-		dispatch({
-			type: GET_ERRORS,
-			payload: {}
-		});
-		return res;
+		if (isUserLogin()) {
+			const res = await axios.put(`/api/devices/${deviceId}`, updatedDevice);
+			dispatch({
+				type: UPDATE_DEVICE,
+				payload: res.data
+			});
+			dispatch({
+				type: GET_ERRORS,
+				payload: {}
+			});
+			return res;
+		}
 	} catch (error) {
 		dispatch({
 			type: GET_ERRORS,
@@ -56,12 +63,14 @@ export const updateDevice = (deviceId, updatedDevice) => async (dispatch) => {
 };
 
 export const deleteDevice = (deviceId) => async (dispatch) => {
-	if (window.confirm("Czy jesteś pewny? Spowoduje to usunięcie urządzenia")) {
-		await axios.delete(`/api/devices/${deviceId}`);
-		dispatch({
-			type: DELETE_DEVICE,
-			payload: deviceId
-		});
+	if (isUserLogin()) {
+		if (window.confirm("Czy jesteś pewny? Spowoduje to usunięcie urządzenia")) {
+			await axios.delete(`/api/devices/${deviceId}`);
+			dispatch({
+				type: DELETE_DEVICE,
+				payload: deviceId
+			});
+		}
 	}
 };
 

@@ -9,6 +9,7 @@ import {
 	UPDATE_INSPECTION,
 	GET_CONNECTION
 } from "./types";
+import isUserLogin from "../securityUtils/isUserLogin";
 
 export const addInspection = (inspection, history) => async (dispatch) => {
 	try {
@@ -38,19 +39,21 @@ export const updateInspection = (inspectionId, updatedInspection) => async (
 	dispatch
 ) => {
 	try {
-		const res = await axios.put(
-			`/api/inspections/${inspectionId}`,
-			updatedInspection
-		);
-		dispatch({
-			type: UPDATE_INSPECTION,
-			payload: res.data
-		});
-		dispatch({
-			type: GET_ERRORS,
-			payload: {}
-		});
-		return res;
+		if (isUserLogin()) {
+			const res = await axios.put(
+				`/api/inspections/${inspectionId}`,
+				updatedInspection
+			);
+			dispatch({
+				type: UPDATE_INSPECTION,
+				payload: res.data
+			});
+			dispatch({
+				type: GET_ERRORS,
+				payload: {}
+			});
+			return res;
+		}
 	} catch (error) {
 		dispatch({
 			type: GET_ERRORS,
@@ -73,13 +76,15 @@ export const getInspectionByConnection = (connectionId, history) => async (
 	dispatch
 ) => {
 	try {
-		const res = await axios.get(
-			`/api/inspections/list/${connectionId}/execute`
-		);
-		dispatch({
-			type: GET_INSPECTION_BY_CONNECTION,
-			payload: res.data
-		});
+		if (isUserLogin) {
+			const res = await axios.get(
+				`/api/inspections/list/${connectionId}/execute`
+			);
+			dispatch({
+				type: GET_INSPECTION_BY_CONNECTION,
+				payload: res.data
+			});
+		}
 	} catch (error) {
 		history.push("/");
 	}
