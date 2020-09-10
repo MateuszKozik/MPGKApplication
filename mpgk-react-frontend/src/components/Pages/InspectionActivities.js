@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { getActivitiesByConnection } from "../../actions/activityActions";
+import { clearInspectionsListState } from "../../actions/inspectionActions";
 import { Grid, Typography, Divider } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import { tableStyles } from "./../../consts/themeConsts";
@@ -12,12 +13,16 @@ class InspectionActivities extends Component {
 		this.props.getActivitiesByConnection(connectionId, this.props.history);
 	}
 
+	componentWillUnmount() {
+		this.props.clearInspectionsListState();
+	}
+
 	render() {
-		const { homePageActivities } = this.props.activity;
+		const { inspectionsList } = this.props.inspection;
 		const { classes } = this.props;
 		return (
 			<>
-				{homePageActivities.map((activitiesList, i) => (
+				{inspectionsList.map((activitiesList, i) => (
 					<Grid key={i} container className={classes.form}>
 						<Grid item xs={12}>
 							<Typography variant="h5" align="center">
@@ -53,20 +58,24 @@ class InspectionActivities extends Component {
 }
 
 InspectionActivities.propTypes = {
-	activity: PropTypes.object.isRequired,
-	getActivitiesByConnection: PropTypes.func.isRequired
+	inspection: PropTypes.object.isRequired,
+	getActivitiesByConnection: PropTypes.func.isRequired,
+	clearInspectionsListState: PropTypes.func.isRequired
 };
 
 const mapDispatchToProps = (dispatch) => {
 	return {
 		getActivitiesByConnection: (connectionId, history) => {
 			dispatch(getActivitiesByConnection(connectionId, history));
+		},
+		clearInspectionsListState: () => {
+			dispatch(clearInspectionsListState());
 		}
 	};
 };
 
 const mapStateToPros = (state) => ({
-	activity: state.activity
+	inspection: state.inspection
 });
 
 export default connect(
