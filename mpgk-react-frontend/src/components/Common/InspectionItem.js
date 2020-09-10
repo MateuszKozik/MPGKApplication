@@ -210,7 +210,7 @@ class InspectionItem extends Component {
 	render() {
 		const { classes } = this.props;
 		const { name, type, emsr, setting } = this.props.activity;
-		const { datetime, person, supervisor, showEmsr, showSetting } = this.props;
+		const { datetime, person, showEmsr, showSetting } = this.props;
 		return (
 			<div className={classes.form}>
 				{this.state.status === "Nowy" || this.state.status === "Zaległy" ? (
@@ -316,9 +316,6 @@ class InspectionItem extends Component {
 								</Grid>
 								<Grid item xs={12}>
 									{person && <p> {person.name + " " + person.surname} </p>}
-									{supervisor && (
-										<b> {supervisor.name + " " + supervisor.surname} </b>
-									)}
 								</Grid>
 							</Grid>
 						</Grid>
