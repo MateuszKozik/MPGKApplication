@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import com.kozik.MPGK.entities.Person;
 import com.kozik.MPGK.entities.User;
 
 import org.springframework.security.core.Authentication;
@@ -28,6 +29,10 @@ public class JwtTokenProvider {
     // Generate the token
     public String generateToken(Authentication authentication) {
         User user = (User) authentication.getPrincipal();
+        String fullName = "";
+        if (user.getPerson() != null) {
+            fullName = user.getPerson().getName() + " " + user.getPerson().getSurname();
+        }
 
         final String authorities = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
@@ -38,6 +43,7 @@ public class JwtTokenProvider {
         Map<String, Object> claims = new HashMap<>();
         claims.put("userId", Long.toString(user.getUserId()));
         claims.put("username", user.getUsername());
+        claims.put("fullName", fullName);
         claims.put("authorities", authorities);
 
         return Jwts.builder().setSubject(userId).setClaims(claims).setIssuedAt(now).setExpiration(expiryDate)
