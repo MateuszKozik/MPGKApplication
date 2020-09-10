@@ -7,11 +7,12 @@ import {
 	UPDATE_FLUID_PLACE
 } from "./types";
 import isUserLogin from "../securityUtils/isUserLogin";
+import {hostName} from "./host";
 
 export const addFluidPlace = (fludidPlace) => async (dispatch) => {
 	try {
 		if (isUserLogin()) {
-			const res = await axios.post("/api/fluid-places", fludidPlace);
+			const res = await axios.post(`${hostName}/api/fluid-places`, fludidPlace);
 			dispatch({
 				type: ADD_FLUID_PLACE,
 				payload: res.data
@@ -32,7 +33,7 @@ export const addFluidPlace = (fludidPlace) => async (dispatch) => {
 
 export const getFluidPlaces = () => async (dispatch) => {
 	if (isUserLogin()) {
-		const res = await axios.get("/api/fluid-places");
+		const res = await axios.get(`${hostName}/api/fluid-places`);
 		dispatch({
 			type: GET_FLUID_PLACES,
 			payload: res.data
@@ -46,7 +47,7 @@ export const updateFluidPlace = (placeId, updatedFluidPlace) => async (
 	try {
 		if (isUserLogin()) {
 			const res = await axios.put(
-				`/api/fluid-places/${placeId}`,
+				`${hostName}/api/fluid-places/${placeId}`,
 				updatedFluidPlace
 			);
 			dispatch({
@@ -74,7 +75,7 @@ export const deleteFluidPlace = (placeId) => async (dispatch) => {
 				"Czy jesteś pewny? Spowoduje to usunięcie miejsca dodania płynu"
 			)
 		) {
-			await axios.delete(`/api/fluid-places/${placeId}`);
+			await axios.delete(`${hostName}/api/fluid-places/${placeId}`);
 			dispatch({
 				type: DELETE_FLUID_PLACE,
 				payload: placeId
