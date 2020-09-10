@@ -2,10 +2,11 @@ import axios from "axios";
 import setJWTToken from "../securityUtils/setJWTToken";
 import jwt_decode from "jwt-decode";
 import { GET_ERRORS, SET_CURRENT_USER } from "./types";
+import {hostName} from "./host";
 
 export const login = (LoginRequest) => async (dispatch) => {
 	try {
-		const res = await axios.post("/api/users/login", LoginRequest);
+		const res = await axios.post(`${hostName}/api/users/login`, LoginRequest);
 		const { token } = res.data;
 
 		// Store the token in the localStorage
