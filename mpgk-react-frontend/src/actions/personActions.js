@@ -40,10 +40,10 @@ export const getPersons = () => async (dispatch) => {
 	}
 };
 
-export const updatePerson = (personId, updatePerson) => async (dispatch) => {
+export const updatePerson = (personId, updatedPerson) => async (dispatch) => {
 	try {
 		if (isUserLogin()) {
-			const res = await axios.put(`/api/persons/${personId}`, updatePerson);
+			const res = await axios.put(`/api/persons/${personId}`, updatedPerson);
 			dispatch({
 				type: UPDATE_PERSON,
 				payload: res.data
