@@ -1,21 +1,3 @@
-// import React, { Component } from "react";
-// import { Link } from "react-router-dom";
-//
-//
-// import { logout } from "./../../actions/securityActions";
-// import AppBar from "@material-ui/core/AppBar";
-// import Toolbar from "@material-ui/core/Toolbar";
-// import Typography from "@material-ui/core/Typography";
-// import IconButton from "@material-ui/core/IconButton";
-// import MenuIcon from "@material-ui/icons/Menu";
-// import MenuItem from "@material-ui/core/MenuItem";
-// import Menu from "@material-ui/core/Menu";
-// import Button from "@material-ui/core/Button";
-// import useMediaQuery from "@material-ui/core/useMediaQuery";
-// //import { tableStyles } from "../../../../consts/themeConsts";
-// import { withStyles } from "@material-ui/core";
-// import { makeStyles, useTheme } from "@material-ui/core/styles";
-
 import React from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
@@ -31,7 +13,6 @@ import Menu from "@material-ui/core/Menu";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { withRouter, Link } from "react-router-dom";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -261,4 +242,17 @@ const mapStateToProps = (state) => {
 	};
 };
 
-export default connect(mapStateToProps, { logout })(withRouter(Header));
+const mapDispatchToProps = (dispatch) => {
+	return {
+		logout: () => {
+			dispatch(logout());
+		}
+	};
+};
+
+Header.propTypes = {
+	security: PropTypes.object.isRequired,
+	logout: PropTypes.func.isRequired
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Header));
