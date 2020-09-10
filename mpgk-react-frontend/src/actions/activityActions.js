@@ -41,14 +41,14 @@ export const getActivities = () => async (dispatch) => {
 	}
 };
 
-export const updateActivity = (activityId, updateActivity) => async (
+export const updateActivity = (activityId, updatedActivity) => async (
 	dispatch
 ) => {
 	try {
 		if (isUserLogin()) {
 			const res = await axios.put(
 				`/api/activities/${activityId}`,
-				updateActivity
+				updatedActivity
 			);
 			dispatch({
 				type: UPDATE_ACTIVITY,
