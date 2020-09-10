@@ -12,6 +12,9 @@ import {
     TableHead,
     TableRow
 } from "@material-ui/core";
+import CheckCircleIcon from "@material-ui/icons/CheckCircle";
+import CancelIcon from "@material-ui/icons/Cancel";
+import ErrorIcon from "@material-ui/icons/Error";
 
 
 function Row(inspection) {
@@ -61,7 +64,15 @@ function Row(inspection) {
                         <TableCell><FormatDate date={inspection.datetime} /></TableCell>
                         <TableCell align="left">{inspection.parameter === "true" ? "Wykonany" :inspection.parameter !== null ? inspection.parameter: "Nie wykonany"}</TableCell>
                         <TableCell align="left">{inspection.comment}</TableCell>
-                        <TableCell align="left">{inspection.status}</TableCell>
+                        <TableCell align="left">
+                        {inspection.status === "Wykonany" ? (
+														<CheckCircleIcon fontSize="large" color="primary" />
+													) : inspection.status === "W trakcie" ? (
+														<CancelIcon fontSize="large" color="primary" />
+													) : (
+                                <ErrorIcon fontSize="large" color="secondary" />
+                            )}
+                        </TableCell>
                   <TableCell align="left">{inspection.person && inspection.person.name+ " " + inspection.person.surname}</TableCell>
                       </TableRow>
                      
