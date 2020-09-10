@@ -7,11 +7,12 @@ import {
 	UPDATE_DEVICE
 } from "./types";
 import isUserLogin from "../securityUtils/isUserLogin";
+import {hostName} from "./host";
 
 export const addDevice = (device) => async (dispatch) => {
 	try {
 		if (isUserLogin()) {
-			const res = await axios.post("/api/devices", device);
+			const res = await axios.post(`${hostName}/api/devices`, device);
 			dispatch({
 				type: ADD_DEVICE,
 				payload: res.data
@@ -32,7 +33,7 @@ export const addDevice = (device) => async (dispatch) => {
 
 export const getDevices = () => async (dispatch) => {
 	if (isUserLogin()) {
-		const res = await axios.get("/api/devices");
+		const res = await axios.get(`${hostName}/api/devices`);
 		dispatch({
 			type: GET_DEVICES,
 			payload: res.data
@@ -43,7 +44,7 @@ export const getDevices = () => async (dispatch) => {
 export const updateDevice = (deviceId, updatedDevice) => async (dispatch) => {
 	try {
 		if (isUserLogin()) {
-			const res = await axios.put(`/api/devices/${deviceId}`, updatedDevice);
+			const res = await axios.put(`${hostName}/api/devices/${deviceId}`, updatedDevice);
 			dispatch({
 				type: UPDATE_DEVICE,
 				payload: res.data
@@ -65,7 +66,7 @@ export const updateDevice = (deviceId, updatedDevice) => async (dispatch) => {
 export const deleteDevice = (deviceId) => async (dispatch) => {
 	if (isUserLogin()) {
 		if (window.confirm("Czy jesteś pewny? Spowoduje to usunięcie urządzenia")) {
-			await axios.delete(`/api/devices/${deviceId}`);
+			await axios.delete(`${hostName}/api/devices/${deviceId}`);
 			dispatch({
 				type: DELETE_DEVICE,
 				payload: deviceId
