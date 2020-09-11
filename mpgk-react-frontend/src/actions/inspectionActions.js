@@ -7,7 +7,8 @@ import {
 	GET_INSPECTION_BY_CONNECTION,
 	GET_OVERDUE_BY_CONNECTION,
 	UPDATE_INSPECTION,
-	GET_CONNECTION
+	GET_CONNECTION,
+	UPDATE_OVERDUE_INSPECTION
 } from "./types";
 import isUserLogin from "../securityUtils/isUserLogin";
 import { hostName } from "./host";
@@ -64,6 +65,35 @@ export const updateInspection = (inspectionId, updatedInspection) => async (
 			type: GET_ERRORS,
 			payload: error.response.data
 		});
+	}
+};
+
+export const updateOverdueInspection = (
+	inspectionId,
+	updatedInspection
+) => async (dispatch) => {
+	try {
+		if (isUserLogin()) {
+			const res = await axios.put(
+				`${hostName}/api/inspections/overdue/${inspectionId}`,
+				updatedInspection
+			);
+			dispatch({
+				type: UPDATE_OVERDUE_INSPECTION,
+				payload: res.data
+			});
+			dispatch({
+				type: GET_ERRORS,
+				payload: {}
+			});
+			return res;
+		}
+	} catch (error) {
+		dispatch({
+			type: GET_ERRORS,
+			payload: error.response.data
+		});
+		return error.response.data;
 	}
 };
 

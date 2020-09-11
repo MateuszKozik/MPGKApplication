@@ -5,7 +5,8 @@ import {
 	GET_INSPECTION_BY_CONNECTION,
 	GET_OVERDUE_BY_CONNECTION,
 	UPDATE_INSPECTION,
-	GET_CONNECTION
+	GET_CONNECTION,
+	UPDATE_OVERDUE_INSPECTION
 } from "../actions/types";
 
 const initialState = {
@@ -28,6 +29,24 @@ export default function (state = initialState, action) {
 			return {
 				...state,
 				actualInspection: state.actualInspection.map((inspection) => {
+					let edited = [];
+					inspection.inspections.map((item) => {
+						if (item.inspectionId === action.payload.inspectionId) {
+							edited = [...edited, action.payload];
+						} else {
+							edited = [...edited, item];
+						}
+						return item;
+					});
+					inspection.inspections = edited;
+					return inspection;
+				})
+			};
+
+		case UPDATE_OVERDUE_INSPECTION:
+			return {
+				...state,
+				overdueInspection: state.overdueInspection.map((inspection) => {
 					let edited = [];
 					inspection.inspections.map((item) => {
 						if (item.inspectionId === action.payload.inspectionId) {

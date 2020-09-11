@@ -2,7 +2,10 @@ import React, { Component } from "react";
 import FormatDate from "./FormatDate";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { updateInspection } from "../../actions/inspectionActions";
+import {
+	updateInspection,
+	updateOverdueInspection
+} from "../../actions/inspectionActions";
 import {
 	TextField,
 	Checkbox,
@@ -26,6 +29,7 @@ import { tableStyles } from "./../../consts/themeConsts";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { FormikTextField } from "formik-material-fields";
+import { setSnackbar } from "../../reducers/snackbarReducer";
 
 const validationSchema = Yup.object().shape({
 	comment: Yup.string().max(100, "Wprowadź krótszy tekst")
@@ -77,11 +81,29 @@ class InspectionItem extends Component {
 					listItems: this.state.listItems
 				};
 
-				this.setState({
-					status: "Wykonany"
-				});
+				if (this.props.status === "Nowy") {
+					this.props.updateInspection(
+						this.props.inspectionId,
+						updatedInspection
+					);
 
-				this.props.updateInspection(this.props.inspectionId, updatedInspection);
+					this.setState({
+						status: "Wykonany"
+					});
+				}
+				if (this.props.status === "Zaległy") {
+					this.props
+						.updateOverdueInspection(this.props.inspectionId, updatedInspection)
+						.then((res) => {
+							if (res && res.status === 403) {
+								this.props.setSnackbar(true, "Brak uprawnień!");
+							} else {
+								this.setState({
+									status: "Wykonany"
+								});
+							}
+						});
+				}
 			}
 			this.setState({ cancelSubmit: false });
 		}, 3000);
@@ -337,6 +359,16 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		updateInspection: (inspectionId, updatedInspection) => {
 			dispatch(updateInspection(inspectionId, updatedInspection));
+		},
+		setSnackbar: (snackbarOpen, snackbarMessage, snackbarTime) => {
+			dispatch(setSnackbar(snackbarOpen, snackbarMessage, snackbarTime));
+		},
+		updateOverdueInspection(inspectionId, updatedInspection) {
+			return dispatch(
+				updateOverdueInspection(inspectionId, updatedInspection)
+			).then((res) => {
+				if (res) return res;
+			});
 		}
 	};
 };
