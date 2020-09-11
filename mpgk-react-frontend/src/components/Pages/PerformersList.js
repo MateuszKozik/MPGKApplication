@@ -57,7 +57,7 @@ class PerformersList extends Component {
 			<>
 				<Grid container className={classes.container}>
 					<Grid item xs={12}>
-						<Typography variant="h2" className={classes.title}>
+						<Typography variant="h3" className={classes.title}>
                             Lista wykonawców
 						</Typography>
 					</Grid>
