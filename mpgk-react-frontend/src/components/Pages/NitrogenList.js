@@ -69,7 +69,7 @@ class NitrogenList extends Component {
 			<>
 				<Grid container className={classes.container}>
 					<Grid item xs={12}>
-						<Typography variant="h2" className={classes.title}>
+						<Typography variant="h3" className={classes.title}>
                             Rejestr wymiany butli z azotem w instalacji ORC
 						</Typography>
 					</Grid>
