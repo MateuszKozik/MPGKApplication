@@ -5,6 +5,13 @@ import {
 	updateConnection,
 	clearConnectionState
 } from "../../../actions/connectionActions";
+import { 
+	createDailyInspections,
+	createWeeklyInspections,
+	createDayShiftInspections,
+	createTwoMonthsInspections,
+	createYearlyInspections
+} from "../../../actions/taskActions";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core";
 import { tableStyles } from "../../../consts/themeConsts";
@@ -33,6 +40,7 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { setSnackbar } from "../../../reducers/snackbarReducer";
 import AddIcon from "@material-ui/icons/Add";
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 
 const validationSchema = Yup.object().shape({
 	name: Yup.string()
@@ -80,6 +88,70 @@ export class ConnectionList extends Component {
 			device: device && { ...device }
 		});
 	};
+
+	createInspections = (connection) => {
+		const {connectionId,inspectionType} = connection;
+
+		switch (inspectionType.name) {
+			case "Codziennie":
+				this.props.createDailyInspections(connectionId,this.props.history)
+				.then((res) => {
+					if (res) {
+						this.props.setSnackbar(true, "Przegląd wygenerowany!");
+						this.handleClose();
+					} else {
+						this.props.setSnackbar(true, "Wystąpił błąd!");
+					}
+				});
+				break;
+			case "Raz w tygodniu":
+				this.props.createWeeklyInspections(connectionId,this.props.history)
+				.then((res) => {
+					if (res) {
+						this.props.setSnackbar(true, "Przegląd wygenerowany!");
+						this.handleClose();
+					} else {
+						this.props.setSnackbar(true, "Wystąpił błąd!");
+					}
+				});
+				break;
+			case "Codziennie na dziennej zmianie":
+				this.props.createDayShiftInspections(connectionId,this.props.history)
+				.then((res) => {
+					if (res) {
+						this.props.setSnackbar(true, "Przegląd wygenerowany!");
+						this.handleClose();
+					} else {
+						this.props.setSnackbar(true, "Wystąpił błąd!");
+					}
+				});
+				break;
+			case "Raz na dwa miesiące":
+				this.props.createTwoMonthsInspections(connectionId,this.props.history)
+				.then((res) => {
+					if (res) {
+						this.props.setSnackbar(true, "Przegląd wygenerowany!");
+						this.handleClose();
+					} else {
+						this.props.setSnackbar(true, "Wystąpił błąd!");
+					}
+				});
+				break;
+			case "Raz w roku":
+				this.props.createYearlyInspections(connectionId,this.props.history)
+				.then((res) => {
+					if (res) {
+						this.props.setSnackbar(true, "Przegląd wygenerowany!");
+						this.handleClose();
+					} else {
+						this.props.setSnackbar(true, "Wystąpił błąd!");
+					}
+				});
+				break;
+			default:
+				break;
+		}
+	}
 
 	handleClose = () => {
 		this.setState({
@@ -189,6 +261,7 @@ export class ConnectionList extends Component {
 								</TableHead>
 								<TableBody>
 									{filtered.map((connection) => {
+										const {inspectionType} = connection;
 										return (
 											<TableRow key={connection.connectionId}>
 												<TableCell>
@@ -210,6 +283,16 @@ export class ConnectionList extends Component {
 															<EditIcon />
 														</IconButton>
 													</Tooltip>
+													{inspectionType.name && inspectionType.name !== "Na żądanie" ?
+													<Tooltip title="Dodaj">
+														<IconButton
+															color="default"
+															onClick={() => this.createInspections(connection)}
+														>
+															<AddCircleIcon fontSize="large"/>
+														</IconButton>
+													</Tooltip>
+													:null}
 												</TableCell>
 											</TableRow>
 										);
@@ -305,6 +388,11 @@ ConnectionList.propTypes = {
 	connection: PropTypes.object.isRequired,
 	errors: PropTypes.object.isRequired,
 	getConnections: PropTypes.func.isRequired,
+	createDailyInspections: PropTypes.func.isRequired,
+	createWeeklyInspections: PropTypes.func.isRequired,
+	createDayShiftInspections: PropTypes.func.isRequired,
+	createTwoMonthsInspections: PropTypes.func.isRequired,
+	createYearlyInspections: PropTypes.func.isRequired,
 	clearConnectionState: PropTypes.func.isRequired,
 	setSnackbar: PropTypes.func.isRequired,
 	updateConnection: PropTypes.func.isRequired
@@ -314,6 +402,31 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		getConnections: () => {
 			dispatch(getConnections());
+		},
+		createDailyInspections(connectionId, history) {
+			return dispatch(createDailyInspections(connectionId, history)).then((res) => {
+				if (res && res.status === 201) return res;
+			});
+		},
+		createWeeklyInspections(connectionId, history) {
+			return dispatch(createWeeklyInspections(connectionId, history)).then((res) => {
+				if (res && res.status === 201) return res;
+			});
+		},
+		createDayShiftInspections(connectionId, history) {
+			return dispatch(createDayShiftInspections(connectionId, history)).then((res) => {
+				if (res && res.status === 201) return res;
+			});
+		},
+		createTwoMonthsInspections(connectionId, history) {
+			return dispatch(createTwoMonthsInspections(connectionId, history)).then((res) => {
+				if (res && res.status === 201) return res;
+			});
+		},
+		createYearlyInspections(connectionId, history) {
+			return dispatch(createYearlyInspections(connectionId, history)).then((res) => {
+				if (res && res.status === 201) return res;
+			});
 		},
 		clearConnectionState: () => {
 			dispatch(clearConnectionState());
