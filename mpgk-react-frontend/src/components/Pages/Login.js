@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Grid, TextField, Button } from "@material-ui/core";
+import { Grid, TextField, Typography, Button } from "@material-ui/core";
 import { login } from "../../actions/securityActions";
 import { withStyles } from "@material-ui/core";
 import { tableStyles } from "../../consts/themeConsts";
@@ -45,7 +45,24 @@ export class Login extends Component {
 			<form className={classes.form} onSubmit={this.handleSubmit}>
 				<Grid container spacing={2}>
 					<Grid item xs={12}>
-						<TextField
+						<img src="logo.jpg" style={{
+							maxWidth: "100%"
+						}}/>
+					</Grid>
+					<Grid item xs={12}>
+						<Typography variant="h3" className={classes.title}>
+							Oddział Energetyki Cieplnej	
+						</Typography>
+					</Grid>
+					<Grid item xs={12}>
+						<Typography variant="h4" className={classes.title}>
+							Przeglądy okresowe
+						</Typography>
+					</Grid>
+					<Grid item xs={false} md={2} />
+					<Grid item xs={12}>
+						<TextField 
+							className={classes.formControl}
 							id="username"
 							name="username"
 							error={errors.username && true}
@@ -57,7 +74,8 @@ export class Login extends Component {
 						/>
 					</Grid>
 					<Grid item xs={12}>
-						<TextField
+						<TextField 
+							className={classes.formControl}
 							type="password"
 							id="password"
 							name="password"
