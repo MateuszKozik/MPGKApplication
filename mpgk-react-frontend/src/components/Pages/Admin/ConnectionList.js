@@ -12,6 +12,7 @@ import {
 	Grid,
 	Typography,
 	IconButton,
+	Fab,
 	Button,
 	Table,
 	TableBody,
@@ -31,6 +32,7 @@ import { FormikTextField, FormikSwitchField } from "formik-material-fields";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { setSnackbar } from "../../../reducers/snackbarReducer";
+import AddIcon from "@material-ui/icons/Add";
 
 const validationSchema = Yup.object().shape({
 	name: Yup.string()
@@ -284,6 +286,16 @@ export class ConnectionList extends Component {
 						)}
 					</Formik>
 				</Dialog>
+				<Tooltip title="Dodaj">
+					<Fab
+						className={classes.fab}
+						color="secondary"
+						href="/inspections/create"
+					>
+						<AddIcon fontSize="large" />
+					</Fab>
+					
+				</Tooltip>
 			</>
 		);
 	}
