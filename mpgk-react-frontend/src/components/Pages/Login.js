@@ -45,7 +45,7 @@ export class Login extends Component {
 			<form className={classes.form} onSubmit={this.handleSubmit}>
 				<Grid container spacing={2}>
 					<Grid item xs={12}>
-						<img src="logo.jpg" style={{
+						<img src="logo.jpg" alt="" style={{
 							maxWidth: "100%"
 						}}/>
 					</Grid>
