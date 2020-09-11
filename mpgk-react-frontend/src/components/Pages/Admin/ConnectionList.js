@@ -285,7 +285,7 @@ export class ConnectionList extends Component {
 														</IconButton>
 													</Tooltip>
 													{inspectionType.name && inspectionType.name !== "Na żądanie" ?
-													<Tooltip title="Dodaj">
+													<Tooltip title="Wygeneruj">
 														<IconButton
 															color="default"
 															onClick={() => this.createInspections(connection)}
