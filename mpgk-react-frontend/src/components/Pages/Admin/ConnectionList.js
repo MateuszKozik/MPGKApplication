@@ -41,6 +41,7 @@ import * as Yup from "yup";
 import { setSnackbar } from "../../../reducers/snackbarReducer";
 import AddIcon from "@material-ui/icons/Add";
 import AddCircleIcon from '@material-ui/icons/AddCircle';
+import { Link } from "react-router-dom";
 
 const validationSchema = Yup.object().shape({
 	name: Yup.string()
@@ -373,11 +374,17 @@ export class ConnectionList extends Component {
 					<Fab
 						className={classes.fab}
 						color="secondary"
-						href="/inspections/create"
-					>
-						<AddIcon fontSize="large" />
+					>	
+						<Link
+							style={{
+								color: "#fff"
+								
+							}}
+							to={"/inspections/create"}
+						>
+							<AddIcon fontSize="large" />
+						</Link>
 					</Fab>
-					
 				</Tooltip>
 			</>
 		);
