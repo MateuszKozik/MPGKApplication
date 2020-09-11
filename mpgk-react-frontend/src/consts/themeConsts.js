@@ -17,7 +17,7 @@ export const tableStyles = (theme) => ({
 	},
 	title: {
 		[theme.breakpoints.down("md")]: {
-			fontSize: "35px"
+			fontSize: "30px"
 		},
 		padding: "5px",
 		textAlign: "center"
