@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import static java.time.temporal.TemporalAdjusters.previous;
 
+import java.security.Principal;
 import java.time.DayOfWeek;
 
 @Service
@@ -43,6 +44,9 @@ public class TaskService {
 
     @Autowired
     private ConnectionRepository connectionRepository;
+
+    @Autowired
+    private PersonService personService;
 
     // The method will be called every 15 minutes
     @Scheduled(cron = "0 */15 * ? * *")
@@ -404,7 +408,7 @@ public class TaskService {
     }
 
     // Inspection on demand
-    public void onDemand(Long connectionId) {
+    public void onDemand(Long connectionId, Principal principal) {
 
         // Check if the device is working
         if ((connectionService.get(connectionId).getDevice().getStatus())) {
@@ -422,7 +426,17 @@ public class TaskService {
                         LocalDateTime start = LocalDateTime
                                 .parse(LocalDateTime.now().toLocalDate().toString() + "T00:01");
                         Inspection inspection = new Inspection();
-                        inspection.setStatus("Nowy");
+                        if (activity.getName().equals("Pracownik, który zlecił wygenerowanie przeglądu.")) {
+                            inspection.setStatus("Wykonany");
+                            inspection.setParameter("true");
+                            inspection.setComment("Wygenerowane");
+                            inspection.setDatetime(LocalDateTime.now().toLocalDate().toString() + "T"
+                                    + LocalDateTime.now().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm")));
+                            inspection.setPerson(personService.getByUsername(principal.getName()));
+                        } else {
+                            inspection.setStatus("Nowy");
+                        }
+
                         inspection.setStartTime(start.toString());
                         inspection.setEndTime(start.plusMonths(2).minusMinutes(2).toString());
                         inspection.setActivity(activity);

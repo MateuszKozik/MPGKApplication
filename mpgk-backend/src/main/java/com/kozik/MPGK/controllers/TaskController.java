@@ -1,5 +1,7 @@
 package com.kozik.MPGK.controllers;
 
+import java.security.Principal;
+
 import com.kozik.MPGK.services.TaskService;
 import com.kozik.MPGK.utilities.Message;
 
@@ -59,8 +61,8 @@ public class TaskController {
 
     // Generate on demand inspections
     @PostMapping("/on-demand/{connectionId}")
-    public ResponseEntity<?> createOnDemandInspections(@PathVariable Long connectionId) {
-        taskService.onDemand(connectionId);
+    public ResponseEntity<?> createOnDemandInspections(@PathVariable Long connectionId, Principal principal) {
+        taskService.onDemand(connectionId, principal);
         return new ResponseEntity<Message>(new Message("On demand inspections have been generated."),
                 HttpStatus.CREATED);
     }
