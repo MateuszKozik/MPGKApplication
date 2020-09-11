@@ -92,65 +92,61 @@ export class ConnectionList extends Component {
 
 	createInspections = (connection) => {
 		const {connectionId,inspectionType} = connection;
-
-		switch (inspectionType.name) {
-			case "Codziennie":
-				this.props.createDailyInspections(connectionId,this.props.history)
-				.then((res) => {
-					if (res) {
-						this.props.setSnackbar(true, "Przegląd wygenerowany!");
-						this.handleClose();
-					} else {
-						this.props.setSnackbar(true, "Wystąpił błąd!");
-					}
-				});
-				break;
-			case "Raz w tygodniu":
-				this.props.createWeeklyInspections(connectionId,this.props.history)
-				.then((res) => {
-					if (res) {
-						this.props.setSnackbar(true, "Przegląd wygenerowany!");
-						this.handleClose();
-					} else {
-						this.props.setSnackbar(true, "Wystąpił błąd!");
-					}
-				});
-				break;
-			case "Codziennie na dziennej zmianie":
-				this.props.createDayShiftInspections(connectionId,this.props.history)
-				.then((res) => {
-					if (res) {
-						this.props.setSnackbar(true, "Przegląd wygenerowany!");
-						this.handleClose();
-					} else {
-						this.props.setSnackbar(true, "Wystąpił błąd!");
-					}
-				});
-				break;
-			case "Raz na dwa miesiące":
-				this.props.createTwoMonthsInspections(connectionId,this.props.history)
-				.then((res) => {
-					if (res) {
-						this.props.setSnackbar(true, "Przegląd wygenerowany!");
-						this.handleClose();
-					} else {
-						this.props.setSnackbar(true, "Wystąpił błąd!");
-					}
-				});
-				break;
-			case "Raz w roku":
-				this.props.createYearlyInspections(connectionId,this.props.history)
-				.then((res) => {
-					if (res) {
-						this.props.setSnackbar(true, "Przegląd wygenerowany!");
-						this.handleClose();
-					} else {
-						this.props.setSnackbar(true, "Wystąpił błąd!");
-					}
-				});
-				break;
-			default:
-				break;
+		if (window.confirm("Czy na pewno chcesz wygenerować przegląd?")) {
+			switch (inspectionType.name) {
+				case "Codziennie":
+					this.props.createDailyInspections(connectionId,this.props.history)
+					.then((res) => {
+						if (res) {
+							this.props.setSnackbar(true, "Przegląd wygenerowany!");
+						} else {
+							this.props.setSnackbar(true, "Wystąpił błąd!");
+						}
+					});
+					break;
+				case "Raz w tygodniu":
+					this.props.createWeeklyInspections(connectionId,this.props.history)
+					.then((res) => {
+						if (res) {
+							this.props.setSnackbar(true, "Przegląd wygenerowany!");
+						} else {
+							this.props.setSnackbar(true, "Wystąpił błąd!");
+						}
+					});
+					break;
+				case "Codziennie na dziennej zmianie":
+					this.props.createDayShiftInspections(connectionId,this.props.history)
+					.then((res) => {
+						if (res) {
+							this.props.setSnackbar(true, "Przegląd wygenerowany!");
+						} else {
+							this.props.setSnackbar(true, "Wystąpił błąd!");
+						}
+					});
+					break;
+				case "Raz na dwa miesiące":
+					this.props.createTwoMonthsInspections(connectionId,this.props.history)
+					.then((res) => {
+						if (res) {
+							this.props.setSnackbar(true, "Przegląd wygenerowany!");
+						} else {
+							this.props.setSnackbar(true, "Wystąpił błąd!");
+						}
+					});
+					break;
+				case "Raz w roku":
+					this.props.createYearlyInspections(connectionId,this.props.history)
+					.then((res) => {
+						if (res) {
+							this.props.setSnackbar(true, "Przegląd wygenerowany!");
+						} else {
+							this.props.setSnackbar(true, "Wystąpił błąd!");
+						}
+					});
+					break;
+				default:
+					break;
+			}
 		}
 	}
 
