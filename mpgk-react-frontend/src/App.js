@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Header from "./components/Layout/Header";
 import DeviceList from "./components/Pages/Admin/DeviceList";
@@ -29,6 +29,8 @@ import jwt_decode from "jwt-decode";
 import setJWTToken from "./securityUtils/setJWTToken";
 import { SET_CURRENT_USER } from "./actions/types";
 import { logout } from "./actions/securityActions";
+import SecuredRoute from "./securityUtils/SecuredRoute";
+import SecuredAdminRoute from "./securityUtils/SecuredAdminRoute";
 
 const jwtToken = localStorage.getItem("jwtToken");
 
@@ -55,53 +57,103 @@ function App() {
 				<div className="App">
 					<Snackbar />
 					<Header />
+
+					{
+						//Public Routes
+					}
+
 					<Route exact path="/login" component={Login} />
 
-					<Route exact path="/" component={Home} />
-					<Route exact path="/devices" component={DeviceList} />
-					<Route exact path="/fluids" component={FluidList} />
-					<Route exact path="/persons" component={PersonList} />
-					<Route exact path="/groups" component={ActivityGroupList} />
-					<Route exact path="/activities" component={ActivityList} />
-					<Route exact path="/inspections" component={InspectionBetween} />
+					{
+						//Private Routes
+					}
+					<Switch>
+						<SecuredRoute exact path="/" component={Home} />
+						<SecuredRoute
+							exact
+							path="/inspections"
+							component={InspectionBetween}
+						/>
+						<SecuredRoute
+							exact
+							path="/new-fluid-registry"
+							component={FluidRegistry}
+						/>
+						<SecuredRoute
+							exact
+							path="/performers-list"
+							component={PerformersList}
+						/>
+						<SecuredRoute
+							exact
+							path="/nitrogen-list"
+							component={NitrogenList}
+						/>
+						<SecuredRoute
+							exact
+							path="/inspections/list/:connectionId"
+							component={InspectionPage}
+						/>
+						<SecuredRoute
+							exact
+							path="/inspections/list/:connectionId/execute"
+							component={Inspection}
+						/>
+						<SecuredRoute
+							exact
+							path="/inspections/list/:connectionId/activity"
+							component={InspectionActivities}
+						/>
+						<SecuredRoute
+							exact
+							path="/inspections/list/:connectionId/overdue/:endtime"
+							component={OverdueInspection}
+						/>
+						<SecuredRoute
+							exact
+							path="/inspections/list/:connectionId/:startTime/to/:endTime/show"
+							component={InspectionList}
+						/>
+					</Switch>
 
-					<Route exact path="/connections" component={ConnectionList} />
-					<Route exact path="/fluid-registries" component={FluidRegistryList} />
-					<Route exact path="/fluid-places" component={FluidPlaceList} />
-					<Route exact path="/new-fluid-registry" component={FluidRegistry} />
-					<Route exact path="/performers-list" component={PerformersList} />
-					<Route exact path="/nitrogen-list" component={NitrogenList} />
-
-					<Route
-						exact
-						path="/inspections/list/:connectionId"
-						component={InspectionPage}
-					/>
-					<Route
-						exact
-						path="/inspections/list/:connectionId/execute"
-						component={Inspection}
-					/>
-					<Route
-						exact
-						path="/inspections/list/:connectionId/activity"
-						component={InspectionActivities}
-					/>
-					<Route
-						exact
-						path="/inspections/list/:connectionId/overdue/:endtime"
-						component={OverdueInspection}
-					/>
-					<Route
-						exact
-						path="/inspections/list/:connectionId/:startTime/to/:endTime/show"
-						component={InspectionList}
-					/>
-					<Route
-						exact
-						path="/inspections/create"
-						component={FormInspectionWrapper}
-					/>
+					{
+						//Private admin Routes
+					}
+					<Switch>
+						<SecuredAdminRoute exact path="/devices" component={DeviceList} />
+						<SecuredAdminRoute exact path="/fluids" component={FluidList} />
+						<SecuredAdminRoute exact path="/persons" component={PersonList} />
+						<SecuredAdminRoute
+							exact
+							path="/groups"
+							component={ActivityGroupList}
+						/>
+						<SecuredAdminRoute
+							exact
+							path="/activities"
+							component={ActivityList}
+						/>
+						<SecuredAdminRoute
+							exact
+							path="/connections"
+							component={ConnectionList}
+						/>
+						<SecuredAdminRoute
+							exact
+							path="/fluid-registries"
+							component={FluidRegistryList}
+						/>
+						<SecuredAdminRoute
+							exact
+							path="/fluid-places"
+							component={FluidPlaceList}
+						/>
+						<SecuredAdminRoute
+							exact
+							path="/inspections/create"
+							component={FormInspectionWrapper}
+						/>
+					</Switch>
 				</div>
 			</Router>
 		</Provider>
