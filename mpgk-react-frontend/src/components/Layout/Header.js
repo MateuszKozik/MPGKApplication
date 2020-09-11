@@ -93,7 +93,7 @@ const Header = (props) => {
 			pageURL: "/fluid-registries"
 		},
 		{
-			menuTitle: "Miejsca dodania płynów",
+			menuTitle: "Miejsca dodania czynników",
 			pageURL: "/fluid-places"
 		}
 	];
