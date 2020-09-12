@@ -89,7 +89,7 @@ class DeviceAndInpectionType extends Component {
 										label="Urządzenie"
 									>
 										<MenuItem value={device}>{device.name}</MenuItem>
-										{devices.map((deviceItem) => (
+										{devices && devices.map((deviceItem) => (
 											<MenuItem key={deviceItem.deviceId} value={deviceItem}>
 												{deviceItem.name}
 											</MenuItem>
@@ -128,7 +128,7 @@ class DeviceAndInpectionType extends Component {
 										<MenuItem value={inspectionType}>
 											{inspectionType.name}
 										</MenuItem>
-										{inspectionTypes.map((inspectionTypeItem) => (
+										{inspectionTypes && inspectionTypes.map((inspectionTypeItem) => (
 											<MenuItem
 												key={inspectionTypeItem.typeId}
 												value={inspectionTypeItem}
