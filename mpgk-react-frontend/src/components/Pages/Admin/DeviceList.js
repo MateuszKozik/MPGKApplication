@@ -195,7 +195,7 @@ class DeviceList extends Component {
 									</TableRow>
 								</TableHead>
 								<TableBody>
-									{filtered.map((device) => {
+									{filtered && filtered.map((device) => {
 										return (
 											<TableRow key={device.deviceId}>
 												<TableCell>
@@ -249,7 +249,7 @@ class DeviceList extends Component {
 								<Grid container spacing={2} justify="center">
 									<Grid item xs={12}>
 										<FormikTextField
-											error={errors.name}
+											error={errors.name && true}
 											id="name"
 											name="name"
 											label="Nazwa"
