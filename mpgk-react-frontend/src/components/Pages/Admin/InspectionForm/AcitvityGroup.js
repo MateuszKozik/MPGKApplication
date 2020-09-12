@@ -93,7 +93,7 @@ class ActivityGroup extends Component {
 			>
 				{({ values }) => (
 					<Form className={classes.form}>
-						{activitiesGroups.map((x, i) => {
+						{activitiesGroups && activitiesGroups.map((x, i) => {
 							return (
 								<Grid key={i} container spacing={2} justify="center">
 									<Grid item xs={12}>
@@ -106,7 +106,7 @@ class ActivityGroup extends Component {
 											onChange={(e) => handleActivityGroupChange(e, i)}
 										/>
 									</Grid>
-									{x.activities.map((y, index) => {
+									{x.activities && x.activities.map((y, index) => {
 										return (
 											<Grid
 												container
