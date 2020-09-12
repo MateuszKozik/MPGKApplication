@@ -176,7 +176,7 @@ class FluidList extends Component {
 									</TableRow>
 								</TableHead>
 								<TableBody>
-									{filtered.map((fluid) => (
+									{filtered && filtered.map((fluid) => (
 										<TableRow key={fluid.fluidId}>
 											<TableCell>
 												<Typography>{fluid.name}</Typography>
@@ -217,7 +217,7 @@ class FluidList extends Component {
 								<Grid container spacing={2} justify="center">
 									<Grid item xs={12}>
 										<FormikTextField
-											error={errors.name}
+											error={errors.name && true}
 											id="name"
 											name="name"
 											label="Nazwa"
