@@ -208,7 +208,7 @@ class ActivityList extends Component {
 									</TableRow>
 								</TableHead>
 								<TableBody>
-									{filtered.map((activity,index) => {
+									{filtered && filtered.map((activity,index) => {
 										const {activityGroup} = activity;
 										return(
 											<TableRow key={index}>
@@ -262,7 +262,7 @@ class ActivityList extends Component {
 								<Grid container spacing={2} justify="center">
 									<Grid item xs={12}>
 										<FormikTextField
-											error={errors.name}
+											error={errors.name && true}
 											id="name"
 											name="name"
 											label="Nazwa"
@@ -274,7 +274,7 @@ class ActivityList extends Component {
 									</Grid>
                                     <Grid item xs={12}>
 										<FormikTextField
-											error={errors.emsr}
+											error={errors.emsr && true}
 											id="emsr"
 											name="emsr"
 											label="EMSR"
@@ -285,7 +285,7 @@ class ActivityList extends Component {
 									</Grid>
                                     <Grid item xs={12}>
 										<FormikTextField
-											error={errors.setting}
+											error={errors.setting && true}
 											id="setting"
 											name="setting"
 											label="Nastawa"
