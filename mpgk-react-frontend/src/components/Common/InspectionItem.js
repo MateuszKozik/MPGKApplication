@@ -204,7 +204,7 @@ class InspectionItem extends Component {
 							<MenuItem value="">
 								<em>Wybierz</em>
 							</MenuItem>
-							{listOfItems.map((item, i) => (
+							{listOfItems && listOfItems.map((item, i) => (
 								<MenuItem key={i} value={item}>
 									{item}
 								</MenuItem>
