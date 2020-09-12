@@ -175,7 +175,7 @@ class InspectionBetween extends Component {
 												<MenuItem value="">
 													<em>Wybierz przegląd</em>
 												</MenuItem>
-												{connections.map((connection, index) => (
+												{connections && connections.map((connection, index) => (
 													<MenuItem key={index} value={connection.connectionId}>
 														{connection.name}
 													</MenuItem>
@@ -198,7 +198,7 @@ class InspectionBetween extends Component {
 												<MenuItem value="">
 													<em>Wybierz urządzenie</em>
 												</MenuItem>
-												{devices.map((device, index) => (
+												{devices && devices.map((device, index) => (
 													<MenuItem key={index} value={device.deviceId}>
 														{device.name}
 													</MenuItem>
@@ -221,7 +221,7 @@ class InspectionBetween extends Component {
 												<MenuItem value="">
 													<em>Wybierz pracownika</em>
 												</MenuItem>
-												{persons.map((person, index) => (
+												{persons && persons.map((person, index) => (
 													<MenuItem key={index} value={person.personId}>
 														{person.name + " " + person.surname}
 													</MenuItem>
@@ -303,7 +303,7 @@ class InspectionBetween extends Component {
                                         ) : null}
 									</TableHead>
 									<TableBody>
-                                    {inspectionsList.map((inspection, i) => (
+                                    {inspectionsList && inspectionsList.map((inspection, i) => (
 										<TableRow key={i}>
 											<TableCell>
 												<Typography>
