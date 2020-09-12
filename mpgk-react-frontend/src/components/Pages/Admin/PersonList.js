@@ -195,7 +195,7 @@ class PersonList extends Component {
 									</TableRow>
 								</TableHead>
 								<TableBody>
-									{filtered.map((person) => {
+									{filtered && filtered.map((person) => {
 										return (
 											<TableRow key={person.personId}>
 												<TableCell>
@@ -256,7 +256,7 @@ class PersonList extends Component {
 								<Grid container spacing={2} justify="center">
 									<Grid item xs={12}>
 										<FormikTextField
-											error={errors.name}
+											error={errors.name && true}
 											id="name"
 											name="name"
 											label="Imię"
@@ -268,7 +268,7 @@ class PersonList extends Component {
 									</Grid>
 									<Grid item xs={12}>
                                     <FormikTextField
-											error={errors.surname}
+											error={errors.surname && true}
 											id="surname"
 											name="surname"
 											label="Nazwisko"
