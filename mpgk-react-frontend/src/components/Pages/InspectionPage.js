@@ -46,7 +46,7 @@ class InspectionPage extends Component {
 
 		return (
 			<>
-				{actualInspections.map((inspection, i) => (
+				{actualInspections && actualInspections.map((inspection, i) => (
 					<Grid key={i} container className={classes.form}>
 						<Grid item xs={12}>
 							<Typography variant="h5">Aktualny przegląd</Typography>
@@ -112,7 +112,7 @@ class InspectionPage extends Component {
 					</Grid>
 				))}
 
-				{overdueInspections.length > 0 && (
+				{overdueInspections && overdueInspections.length > 0 && (
 					<Grid container className={classes.form}>
 						<Grid item xs={12}>
 							<Typography variant="h5">Zaległe przeglądy</Typography>
@@ -142,7 +142,7 @@ class InspectionPage extends Component {
 									</TableHead>
 
 									<TableBody>
-										{overdueInspections.map((overdue, i) => (
+										{overdueInspections && overdueInspections.map((overdue, i) => (
 											<TableRow key={i}>
 												<TableCell>
 													<Typography>
