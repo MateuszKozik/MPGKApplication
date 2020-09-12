@@ -172,7 +172,7 @@ class ActivityGroupList extends Component {
 									</TableRow>
 								</TableHead>
 								<TableBody>
-									{filtered.map((activityGroup,index) => (
+									{filtered && filtered.map((activityGroup,index) => (
 										<TableRow key={index}>
 											<TableCell>
 												<Typography>{activityGroup.name}</Typography>
@@ -213,7 +213,7 @@ class ActivityGroupList extends Component {
 								<Grid container spacing={2} justify="center">
 									<Grid item xs={12}>
 										<FormikTextField
-											error={errors.name}
+											error={errors.name && true}
 											id="name"
 											name="name"
 											label="Nazwa"
