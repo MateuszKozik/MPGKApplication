@@ -25,7 +25,7 @@ class Inspection extends Component {
 		const { actualInspection } = this.props.inspection;
 		return (
 			<>
-				{actualInspection.map((inspectionList, k) => (
+				{actualInspection && actualInspection.map((inspectionList, k) => (
 					<Grid key={k} container className={classes.container}>
 						<Grid item xs={12}>
 							<Typography variant="h5" align="center">
@@ -34,7 +34,7 @@ class Inspection extends Component {
 						</Grid>
 
 						<Grid item xs={12}>
-							{inspectionList.inspections.map((inspection, i) => (
+							{inspectionList && inspectionList.inspections.map((inspection, i) => (
 								<InspectionItem
 									key={i}
 									{...inspection}
