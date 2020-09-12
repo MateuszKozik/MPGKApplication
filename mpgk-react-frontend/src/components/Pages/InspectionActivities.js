@@ -22,7 +22,7 @@ class InspectionActivities extends Component {
 		const { classes } = this.props;
 		return (
 			<>
-				{inspectionsList.map((activitiesList, i) => (
+				{inspectionsList && inspectionsList.map((activitiesList, i) => (
 					<Grid key={i} container className={classes.form}>
 						<Grid item xs={12}>
 							<Typography variant="h5" align="center">
@@ -30,7 +30,7 @@ class InspectionActivities extends Component {
 							</Typography>
 						</Grid>
 
-						{activitiesList.activities.map((activity, j) => (
+						{activitiesList && activitiesList.activities.map((activity, j) => (
 							<Grid item xs={12} key={j}>
 								<Grid container spacing={2} className={classes.container}>
 									<Grid item xs={12} md={8}>
