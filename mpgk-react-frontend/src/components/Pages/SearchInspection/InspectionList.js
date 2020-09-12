@@ -54,7 +54,7 @@ class InspectionList extends Component {
 						<TableContainer>
 							<Table aria-label="collapsible table">
 								<TableBody>
-									{inspections.map((inspection, i) => (
+									{inspections && inspections.map((inspection, i) => (
 										<Row key={i} row={inspection} />
 									))}
 								</TableBody>
