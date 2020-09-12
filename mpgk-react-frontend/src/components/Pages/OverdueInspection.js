@@ -30,7 +30,7 @@ class OverdueInspection extends Component {
 		const { overdueInspection } = this.props.inspection;
 		return (
 			<>
-				{overdueInspection.map((inspectionList, k) => (
+				{overdueInspection && overdueInspection.map((inspectionList, k) => (
 					<Grid key={k} container className={classes.container}>
 						<Grid item xs={12}>
 							<Typography variant="h5" align="center">
@@ -39,7 +39,7 @@ class OverdueInspection extends Component {
 						</Grid>
 
 						<Grid item xs={12}>
-							{inspectionList.inspections.map((inspection, i) => (
+							{inspectionList && inspectionList.inspections.map((inspection, i) => (
 								<InspectionItem
 									key={i}
 									{...inspection}
