@@ -70,7 +70,7 @@ class Home extends Component {
 									</TableRow>
 								</TableHead>
 								<TableBody>
-									{periodicConnections.map((periodic, i) => {
+									{periodicConnections && periodicConnections.map((periodic, i) => {
 										return (
 											<TableRow key={i}>
 												{periodic.active || periodic.overdueCount > 0 ? (
@@ -194,7 +194,7 @@ class Home extends Component {
 									</TableRow>
 								</TableHead>
 								<TableBody>
-									{onDemandConnections.map((onDemand, i) => {
+									{onDemandConnections && onDemandConnections.map((onDemand, i) => {
 										return (
 											<TableRow key={i}>
 												{(onDemand.connection.device.status === true &&
