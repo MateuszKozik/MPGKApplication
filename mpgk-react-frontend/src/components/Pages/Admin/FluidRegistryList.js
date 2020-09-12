@@ -250,7 +250,7 @@ class FluidRegistryList extends Component {
 									</TableRow>
 								</TableHead>
 								<TableBody>
-									{filtered.map((fluidRegistry, index) => {
+									{filtered && filtered.map((fluidRegistry, index) => {
 										const { fluidPlace, person, fluid } = fluidRegistry;
 										return (
 											<TableRow key={index}>
@@ -319,7 +319,7 @@ class FluidRegistryList extends Component {
 								<Grid container spacing={2} justify="center">
 									<Grid item xs={12}>
 										<FormikTextField
-											error={errors.quantity}
+											error={errors.quantity && true}
 											id="quantity"
 											name="quantity"
 											label="Ilość [litry]"
