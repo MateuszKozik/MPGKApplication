@@ -50,7 +50,7 @@ class Employees extends Component {
 					<Form className={classes.form}>
 						<Grid container spacing={2} justify="center">
 							<Grid item xs={12}>
-								{persons.map((person, index) => (
+								{persons && persons.map((person, index) => (
 									<Chip
 										key={index}
 										label={person.name + " " + person.surname}
@@ -75,7 +75,7 @@ class Employees extends Component {
 										value={persons}
 										onChange={handleChange("persons")}
 									>
-										{personList.map((person, index) => {
+										{personList && personList.map((person, index) => {
 											return (
 												<MenuItem key={index} value={person}>
 													{person.name + " " + person.surname}
