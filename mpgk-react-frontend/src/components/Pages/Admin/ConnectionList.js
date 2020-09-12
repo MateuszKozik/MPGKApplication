@@ -257,7 +257,7 @@ export class ConnectionList extends Component {
 									</TableRow>
 								</TableHead>
 								<TableBody>
-									{filtered.map((connection) => {
+									{filtered && filtered.map((connection) => {
 										const {inspectionType} = connection;
 										return (
 											<TableRow key={connection.connectionId}>
@@ -317,7 +317,7 @@ export class ConnectionList extends Component {
 								<Grid container spacing={2} justify="center">
 									<Grid item xs={12}>
 										<FormikTextField
-											error={errors.name}
+											error={errors.name && true}
 											id="name"
 											name="name"
 											label="Nazwa"
@@ -374,7 +374,6 @@ export class ConnectionList extends Component {
 						<Link
 							style={{
 								color: "#fff"
-								
 							}}
 							to={"/inspections/create"}
 						>
