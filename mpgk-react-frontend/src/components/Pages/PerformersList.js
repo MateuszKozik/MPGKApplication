@@ -92,7 +92,7 @@ class PerformersList extends Component {
 									</TableRow>
 								</TableHead>
 								<TableBody>
-									{filtered.map((connection,index) => {
+									{filtered && filtered.map((connection,index) => {
                                         const {persons} = connection;
 										return (
  
