@@ -107,7 +107,7 @@ class NitrogenList extends Component {
 									</TableRow>
 								</TableHead>
 								<TableBody>
-									{filtered.map((inspection,index) => {
+									{filtered && filtered.map((inspection,index) => {
                                         const{person} = inspection;
 										return (
  
