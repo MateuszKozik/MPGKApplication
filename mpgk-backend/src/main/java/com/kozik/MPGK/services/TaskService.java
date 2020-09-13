@@ -5,6 +5,7 @@ import java.time.LocalTime;
 import java.time.Month;
 
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.kozik.MPGK.entities.Activity;
@@ -26,6 +27,7 @@ import static java.time.temporal.TemporalAdjusters.previous;
 
 import java.security.Principal;
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 
 @Service
 public class TaskService {
@@ -154,6 +156,32 @@ public class TaskService {
             }
         }
 
+        setUncommon();
+    }
+
+    public void setUncommon() {
+        List<Inspection> inspections = inspectionRepository
+                .findByActivityNameAndStatusAndParameter("Układ kondensacji spalin załączony?", "Wykonany", "NIE");
+
+        List<String> items = new ArrayList<>();
+        items.add("Spuścić osady / szlam ze zbiornika (odstojnika).");
+        items.add(
+                "Sprawdzić działanie wentylatora powietrza świeżego do kondensacji (pod kątem hałasów i drgań), sprawdzić stan osłon i obudów.");
+        items.add("Sprawdzić/potwierdzić działanie pompy tłoczącej wodę z wanny do osadnika.");
+
+        for (Inspection inspection : inspections) {
+            String endTime = inspection.getEndTime();
+
+            for (String item : items) {
+                Inspection inspectionItem = inspectionRepository.findByActivityNameAndEndTime(item,
+                        LocalDateTime.parse(endTime));
+                if ((inspectionItem != null) && !inspectionItem.getStatus().equals("Wykonany")) {
+                    inspectionItem.setComment("Układ wyłączony");
+                    inspectionItem.setStatus("Wykonany");
+                    inspectionService.updateWithoutPerson(inspectionItem.getInspectionId(), inspectionItem);
+                }
+            }
+        }
     }
 
     // Set inspection status to overdue after the end time
