@@ -11,6 +11,10 @@ import { withStyles } from "@material-ui/core/styles";
 import { tableStyles } from "./../../consts/themeConsts";
 
 class Inspection extends Component {
+	state = {
+		active: "NIE"
+	};
+
 	componentDidMount() {
 		const { connectionId } = this.props.match.params;
 		this.props.getInspectionByConnection(connectionId, this.props.history);
@@ -20,32 +24,41 @@ class Inspection extends Component {
 		this.props.clearInspectionsListState();
 	}
 
+	handleCommonChange = (value) => {
+		this.setState({ active: value });
+	};
+
 	render() {
 		const { classes } = this.props;
 		const { actualInspection } = this.props.inspection;
+
 		return (
 			<>
-				{actualInspection && actualInspection.map((inspectionList, k) => (
-					<Grid key={k} container className={classes.container}>
-						<Grid item xs={12}>
-							<Typography variant="h5" align="center">
-								{inspectionList.activityGroup.name}
-							</Typography>
-						</Grid>
+				{actualInspection &&
+					actualInspection.map((inspectionList, k) => (
+						<Grid key={k} container className={classes.container}>
+							<Grid item xs={12}>
+								<Typography variant="h5" align="center">
+									{inspectionList.activityGroup.name}
+								</Typography>
+							</Grid>
 
-						<Grid item xs={12}>
-							{inspectionList && inspectionList.inspections.map((inspection, i) => (
-								<InspectionItem
-									key={i}
-									{...inspection}
-									showEmsr={inspectionList.showEmsr}
-									showSetting={inspectionList.showSetting}
-									connectionId={this.props.match.params.connectionId}
-								/>
-							))}
+							<Grid item xs={12}>
+								{inspectionList &&
+									inspectionList.inspections.map((inspection, i) => (
+										<InspectionItem
+											key={i}
+											handleCommonChange={this.handleCommonChange}
+											value={this.state.active}
+											{...inspection}
+											showEmsr={inspectionList.showEmsr}
+											showSetting={inspectionList.showSetting}
+											connectionId={this.props.match.params.connectionId}
+										/>
+									))}
+							</Grid>
 						</Grid>
-					</Grid>
-				))}
+					))}
 			</>
 		);
 	}

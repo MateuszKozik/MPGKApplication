@@ -31,6 +31,12 @@ import * as Yup from "yup";
 import { FormikTextField } from "formik-material-fields";
 import { setSnackbar } from "../../reducers/snackbarReducer";
 
+const checkedValue = [
+	"Spuścić osady / szlam ze zbiornika (odstojnika).",
+	"Sprawdzić działanie wentylatora powietrza świeżego do kondensacji (pod kątem hałasów i drgań), sprawdzić stan osłon i obudów.",
+	"Sprawdzić/potwierdzić działanie pompy tłoczącej wodę z wanny do osadnika."
+];
+
 const validationSchema = Yup.object().shape({
 	comment: Yup.string().max(100, "Wprowadź krótszy tekst")
 });
@@ -54,6 +60,13 @@ class InspectionItem extends Component {
 			status: this.props.status,
 			listItems: this.props.activity.listItems
 		});
+
+		if (
+			this.props.activity.name === "Układ kondensacji spalin załączony?" &&
+			this.props.parameter !== null
+		) {
+			this.props.set(this.props.parameter);
+		}
 	}
 
 	handleChange = (e) => {
@@ -63,6 +76,10 @@ class InspectionItem extends Component {
 			this.setState({ parameter: e.target.value });
 		} else {
 			this.setState({ [e.target.name]: e.target.value });
+		}
+
+		if (this.props.activity.name === "Układ kondensacji spalin załączony?") {
+			this.props.handleCommonChange(e.target.value);
 		}
 	};
 
@@ -204,11 +221,12 @@ class InspectionItem extends Component {
 							<MenuItem value="">
 								<em>Wybierz</em>
 							</MenuItem>
-							{listOfItems && listOfItems.map((item, i) => (
-								<MenuItem key={i} value={item}>
-									{item}
-								</MenuItem>
-							))}
+							{listOfItems &&
+								listOfItems.map((item, i) => (
+									<MenuItem key={i} value={item}>
+										{item}
+									</MenuItem>
+								))}
 						</Select>
 					</FormControl>
 				);
@@ -233,121 +251,130 @@ class InspectionItem extends Component {
 		const { classes } = this.props;
 		const { name, type, emsr, setting } = this.props.activity;
 		const { datetime, person, showEmsr, showSetting } = this.props;
-		return (
-			<div className={classes.form}>
-				{this.state.status === "Nowy" || this.state.status === "Zaległy" ? (
-					<Formik
-						initialValues={{
-							comment: this.state.comment || ""
-						}}
-						validationSchema={validationSchema}
-						onSubmit={(values, { setSubmitting }) =>
-							this.handleSubmit(values, { setSubmitting })
-						}
-					>
-						{({ isSubmitting, values }) => (
-							<Form>
-								<Grid container spacing={2}>
-									<Grid item xs={12} md={4}>
-										<Typography align="justify">{name}</Typography>
-									</Grid>
-									<Grid item xs={12} md={2}>
-										{this.selectInput(type)}
-									</Grid>
-
-									<Grid item xs={12} md={2}>
-										<FormikTextField
-											type="text"
-											name="comment"
-											label="Uwagi"
-											variant="outlined"
-											onChange={this.handleChange}
-										/>
-									</Grid>
-									{showEmsr && (
-										<Grid item xs={12} md={1}>
-											{emsr}
+		if (
+			(name === checkedValue[0] ||
+				name === checkedValue[1] ||
+				name === checkedValue[2]) &&
+			this.props.value === "NIE"
+		) {
+			return <></>;
+		} else {
+			return (
+				<div className={classes.form}>
+					{this.state.status === "Nowy" || this.state.status === "Zaległy" ? (
+						<Formik
+							initialValues={{
+								comment: this.state.comment || ""
+							}}
+							validationSchema={validationSchema}
+							onSubmit={(values, { setSubmitting }) =>
+								this.handleSubmit(values, { setSubmitting })
+							}
+						>
+							{({ isSubmitting, values }) => (
+								<Form>
+									<Grid container spacing={2}>
+										<Grid item xs={12} md={4}>
+											<Typography align="justify">{name}</Typography>
 										</Grid>
-									)}
-
-									{showSetting && (
-										<Grid item xs={12} md={1}>
-											{setting}
+										<Grid item xs={12} md={2}>
+											{this.selectInput(type)}
 										</Grid>
-									)}
 
-									<Grid item xs={12} md={2}>
-										{isSubmitting && (
-											<Button
-												colon="secondary"
-												onClick={() => this.setState({ cancelSubmit: true })}
-												disabled={this.state.cancelSubmit}
-											>
-												Anuluj
-											</Button>
+										<Grid item xs={12} md={2}>
+											<FormikTextField
+												type="text"
+												name="comment"
+												label="Uwagi"
+												variant="outlined"
+												onChange={this.handleChange}
+											/>
+										</Grid>
+										{showEmsr && (
+											<Grid item xs={12} md={1}>
+												{emsr}
+											</Grid>
 										)}
-										{!isSubmitting && (
-											<Button type="submit" color="primary">
-												Zapisz
-											</Button>
+
+										{showSetting && (
+											<Grid item xs={12} md={1}>
+												{setting}
+											</Grid>
 										)}
+
+										<Grid item xs={12} md={2}>
+											{isSubmitting && (
+												<Button
+													colon="secondary"
+													onClick={() => this.setState({ cancelSubmit: true })}
+													disabled={this.state.cancelSubmit}
+												>
+													Anuluj
+												</Button>
+											)}
+											{!isSubmitting && (
+												<Button type="submit" color="primary">
+													Zapisz
+												</Button>
+											)}
+										</Grid>
+
+										<Grid item xs={12} style={{ marginTop: 10 }}>
+											{isSubmitting && <LinearProgress />}
+											<Divider />
+										</Grid>
 									</Grid>
+								</Form>
+							)}
+						</Formik>
+					) : (
+						<Grid container spacing={2}>
+							<Grid item xs={12} md={4}>
+								<Typography align="justify">{name}</Typography>
+							</Grid>
+							<Grid item xs={12} md={2}>
+								{this.selectInput(type)}
+							</Grid>
 
-									<Grid item xs={12} style={{ marginTop: 10 }}>
-										{isSubmitting && <LinearProgress />}
-										<Divider />
+							<Grid item xs={12} md={2}>
+								<TextField
+									type="text"
+									name="comment"
+									label="Uwagi"
+									variant="outlined"
+									value={this.state.comment || ""}
+									disabled
+								/>
+							</Grid>
+							{showEmsr && (
+								<Grid item xs={12} md={1}>
+									{emsr}
+								</Grid>
+							)}
+
+							{showSetting && (
+								<Grid item xs={12} md={1}>
+									{setting}
+								</Grid>
+							)}
+							<Grid item xs={12} md={2}>
+								<Grid container spacing={1}>
+									<Grid item xs={12}>
+										<FormatDate date={datetime} datetime={true} />
+									</Grid>
+									<Grid item xs={12}>
+										{person && <p> {person.name + " " + person.surname} </p>}
 									</Grid>
 								</Grid>
-							</Form>
-						)}
-					</Formik>
-				) : (
-					<Grid container spacing={2}>
-						<Grid item xs={12} md={4}>
-							<Typography align="justify">{name}</Typography>
-						</Grid>
-						<Grid item xs={12} md={2}>
-							{this.selectInput(type)}
-						</Grid>
-
-						<Grid item xs={12} md={2}>
-							<TextField
-								type="text"
-								name="comment"
-								label="Uwagi"
-								variant="outlined"
-								value={this.state.comment || ""}
-								disabled
-							/>
-						</Grid>
-						{showEmsr && (
-							<Grid item xs={12} md={1}>
-								{emsr}
 							</Grid>
-						)}
-
-						{showSetting && (
-							<Grid item xs={12} md={1}>
-								{setting}
-							</Grid>
-						)}
-						<Grid item xs={12} md={2}>
-							<Grid container spacing={1}>
-								<Grid item xs={12}>
-									<FormatDate date={datetime} datetime={true} />
-								</Grid>
-								<Grid item xs={12}>
-									{person && <p> {person.name + " " + person.surname} </p>}
-								</Grid>
+							<Grid item xs={12} style={{ marginTop: 10 }}>
+								<Divider />
 							</Grid>
 						</Grid>
-						<Grid item xs={12} style={{ marginTop: 10 }}>
-							<Divider />
-						</Grid>
-					</Grid>
-				)}
-			</div>
-		);
+					)}
+				</div>
+			);
+		}
 	}
 }
 
