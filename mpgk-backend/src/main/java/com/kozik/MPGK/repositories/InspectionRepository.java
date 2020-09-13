@@ -11,6 +11,8 @@ import com.kozik.MPGK.entities.Person;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import jdk.vm.ci.meta.Local;
+
 public interface InspectionRepository extends JpaRepository<Inspection, Long> {
 
         List<Inspection> findByActivityActivityGroupAndEndTimeGreaterThan(ActivityGroup activityGroup,
@@ -34,13 +36,16 @@ public interface InspectionRepository extends JpaRepository<Inspection, Long> {
 
         List<Inspection> findByActivityActivityGroupAndEndTime(ActivityGroup activityGroup, LocalDateTime endTime);
 
-        List<Inspection> findByActivityActivityGroupConnectionAndStartTimeBetween(Connection connection, LocalDateTime startTime, LocalDateTime endTime);
+        List<Inspection> findByActivityActivityGroupConnectionAndStartTimeBetween(Connection connection,
+                        LocalDateTime startTime, LocalDateTime endTime);
 
         List<Inspection> findByActivityActivityGroupConnectionAndStartTime(Connection connection, LocalDateTime time);
 
-        List<Inspection> findByActivityActivityGroupAndStartTimeAndEndTime(ActivityGroup activityGroup, LocalDateTime startTime, LocalDateTime endTime);
+        List<Inspection> findByActivityActivityGroupAndStartTimeAndEndTime(ActivityGroup activityGroup,
+                        LocalDateTime startTime, LocalDateTime endTime);
 
-        List<Inspection> findByActivityActivityGroupConnectionDeviceAndStartTimeBetween(Device device, LocalDateTime startTime, LocalDateTime endTime);
+        List<Inspection> findByActivityActivityGroupConnectionDeviceAndStartTimeBetween(Device device,
+                        LocalDateTime startTime, LocalDateTime endTime);
 
         List<Inspection> findByActivityActivityGroupConnectionDeviceAndStartTime(Device device, LocalDateTime time);
 
@@ -48,7 +53,8 @@ public interface InspectionRepository extends JpaRepository<Inspection, Long> {
 
         List<Inspection> findByPersonAndStartTime(Person person, LocalDateTime time);
 
-        
+        List<Inspection> findByActivityNameAndStatusAndParameter(String activityName, String status, String parameter);
 
-        
+        Inspection findByActivityNameAndEndTime(String activityName, LocalDateTime endTime);
+
 }
