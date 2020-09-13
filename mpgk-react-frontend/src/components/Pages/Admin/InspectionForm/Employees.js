@@ -50,21 +50,18 @@ class Employees extends Component {
 					<Form className={classes.form}>
 						<Grid container spacing={2} justify="center">
 							<Grid item xs={12}>
-								{persons && persons.map((person, index) => (
-									<Chip
-										key={index}
-										label={person.name + " " + person.surname}
-										className={classes.chip}
-										onDelete={() => handleRemovePerson(index)}
-									/>
-								))}
+								{persons &&
+									persons.map((person, index) => (
+										<Chip
+											key={index}
+											label={person.name + " " + person.surname}
+											className={classes.chip}
+											onDelete={() => handleRemovePerson(index)}
+										/>
+									))}
 							</Grid>
 							<Grid item xs={12}>
-								<FormControl
-									className={classes.formControl}
-									variant="outlined"
-									required
-								>
+								<FormControl className={classes.formControl} variant="outlined">
 									<InputLabel id="persons-label">Pracownicy</InputLabel>
 									<Select
 										labelId="person-label"
@@ -75,13 +72,14 @@ class Employees extends Component {
 										value={persons}
 										onChange={handleChange("persons")}
 									>
-										{personList && personList.map((person, index) => {
-											return (
-												<MenuItem key={index} value={person}>
-													{person.name + " " + person.surname}
-												</MenuItem>
-											);
-										})}
+										{personList &&
+											personList.map((person, index) => {
+												return (
+													<MenuItem key={index} value={person}>
+														{person.name + " " + person.surname}
+													</MenuItem>
+												);
+											})}
 									</Select>
 								</FormControl>
 							</Grid>
