@@ -12,6 +12,8 @@ import fluidPlaceReducer from "./fluidPlaceReducer";
 import snackbarReducer from "./snackbarReducer";
 import inspectionTypeReducer from "./inspectionTypeReducer";
 import securityReducer from "./securityReducer";
+import roleReducer from "./roleReducer";
+import userReducer from "./userReducer";
 
 export default combineReducers({
 	errors: errorReducer,
@@ -26,5 +28,7 @@ export default combineReducers({
 	fluidPlace: fluidPlaceReducer,
 	inspectionType: inspectionTypeReducer,
 	snackbar: snackbarReducer,
-	security: securityReducer
+	security: securityReducer,
+	role: roleReducer,
+	user: userReducer
 });

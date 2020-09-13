@@ -67,3 +67,9 @@ export const SET_SNACKBAR = "SET_SNACKBAR";
 
 //security
 export const SET_CURRENT_USER = "SET_CURRENT_USER";
+
+//role
+export const GET_ROLES = "GET_ROLES";
+
+//user
+export const ADD_USER = "ADD_USER";
