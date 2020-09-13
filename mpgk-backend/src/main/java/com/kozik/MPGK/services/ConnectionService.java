@@ -35,7 +35,27 @@ public class ConnectionService {
         if (connection.getConnectionId() != null) {
             throw new ConnectionAlreadyExistException(connection.getConnectionId());
         }
-        connection.setActivitiesGroups(connection.getActivitiesGroups());
+        if (connection.getInspectionType().getName().equals("Na żądanie")) {
+            Activity newActivity = new Activity();
+            newActivity.setName("Pracownik, który zlecił wygenerowanie przeglądu.");
+            newActivity.setType("Zaznaczenie");
+            newActivity.setEmsr("");
+            newActivity.setSetting("");
+            newActivity.setListItems("");
+            List<Activity> activities = new ArrayList<>();
+            activities.add(newActivity);
+
+            ActivityGroup newGroup = new ActivityGroup();
+            newGroup.setConnection(connection);
+            newGroup.setName("Wygenerowany przez");
+            newGroup.setActivities(activities);
+
+            List<ActivityGroup> activitiesGroups = connection.getActivitiesGroups();
+            activitiesGroups.add(0, newGroup);
+            connection.setActivitiesGroups(activitiesGroups);
+        } else {
+            connection.setActivitiesGroups(connection.getActivitiesGroups());
+        }
         List<ActivityGroup> groups = connection.getActivitiesGroups();
         for (ActivityGroup activityGroup : groups) {
             activityGroup.setConnection(connection);
@@ -49,9 +69,8 @@ public class ConnectionService {
     }
 
     public Connection get(Long connectionId) {
-        Connection connection = connectionRepository.findById(connectionId)
+        return connectionRepository.findById(connectionId)
                 .orElseThrow(() -> new ConnectionNotFoundException(connectionId));
-        return connection;
     }
 
     public void delete(Long connectionId) {
@@ -63,14 +82,16 @@ public class ConnectionService {
     }
 
     public Connection update(Long connectionId, Connection connection) {
-        Connection newConnection = connectionRepository.findById(connectionId).map(element -> {
+        return connectionRepository.findById(connectionId).map(element -> {
             element.setName(connection.getName());
             element.setStatus(connection.getStatus());
             element.setInspectionType(connection.getInspectionType());
             element.setDevice(connection.getDevice());
+            element.setActivitiesGroups(connection.getActivitiesGroups());
+            element.setPersons(connection.getPersons());
             return connectionRepository.save(element);
         }).orElseThrow(() -> new ConnectionNotFoundException(connectionId));
-        return newConnection;
+
     }
 
     public ArrayList<ConnectionObject> getHomePageConnections() {
