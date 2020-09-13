@@ -1,6 +1,11 @@
 package com.kozik.MPGK.services;
 
 import com.kozik.MPGK.repositories.UserRepository;
+
+import java.util.List;
+
+import com.kozik.MPGK.entities.Connection;
+import com.kozik.MPGK.entities.Person;
 import com.kozik.MPGK.entities.User;
 import com.kozik.MPGK.exceptions.userExceptions.UsernameAlreadyExistsException;
 
@@ -17,13 +22,26 @@ public class UserService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public User saveUser(User newUser) {
+    @Autowired
+    private ConnectionService connectionService;
+
+    public User saveUser(User user) {
         try {
-            newUser.setPassword(bCryptPasswordEncoder.encode(newUser.getPassword()));
-            newUser.setConfirmPassword("");
-            return userRepository.save(newUser);
+            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+            user.setConfirmPassword("");
+            Person person = user.getPerson();
+            person.setUser(user);
+            User newUser = userRepository.save(user);
+            for (Connection connection : person.getConnections()) {
+                List<Person> persons = connection.getPersons();
+                persons.add(newUser.getPerson());
+                connection.setPersons(persons);
+                connectionService.update(connection.getConnectionId(), connection);
+            }
+
+            return user;
         } catch (Exception e) {
-            throw new UsernameAlreadyExistsException(newUser.getUsername());
+            throw new UsernameAlreadyExistsException(user.getUsername());
         }
     }
 }
