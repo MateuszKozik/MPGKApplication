@@ -31,6 +31,7 @@ import { SET_CURRENT_USER } from "./actions/types";
 import { logout } from "./actions/securityActions";
 import SecuredRoute from "./securityUtils/SecuredRoute";
 import SecuredAdminRoute from "./securityUtils/SecuredAdminRoute";
+import FormEmployeeWrapper from "./components/Pages/Admin/EmployeeFrom/FormEmployeeWrapper";
 
 const jwtToken = localStorage.getItem("jwtToken");
 
@@ -152,6 +153,11 @@ function App() {
 							exact
 							path="/inspections/create"
 							component={FormInspectionWrapper}
+						/>
+						<SecuredAdminRoute
+							exact
+							path="/persons/create"
+							component={FormEmployeeWrapper}
 						/>
 					</Switch>
 				</div>
