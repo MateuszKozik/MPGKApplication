@@ -11,8 +11,6 @@ import com.kozik.MPGK.entities.Person;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import jdk.vm.ci.meta.Local;
-
 public interface InspectionRepository extends JpaRepository<Inspection, Long> {
 
         List<Inspection> findByActivityActivityGroupAndEndTimeGreaterThan(ActivityGroup activityGroup,

@@ -27,7 +27,6 @@ import static java.time.temporal.TemporalAdjusters.previous;
 
 import java.security.Principal;
 import java.time.DayOfWeek;
-import java.time.LocalDate;
 
 @Service
 public class TaskService {
