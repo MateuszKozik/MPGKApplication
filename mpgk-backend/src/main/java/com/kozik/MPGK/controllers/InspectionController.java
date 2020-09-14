@@ -145,15 +145,7 @@ public class InspectionController {
                 inspectionService.getInspectionByConnectionAndStartTimeAndEndTime(connectionId, startTime, endTime),
                 HttpStatus.OK);
     }
-
- /*   @GetMapping("/list/{connectionId}/{startTime}/to/{endTime}/delete")
-    public ResponseEntity<?> deleteInspectionByConnectionAndStartTimeAndEndTime(@PathVariable Long connectionId,
-            @PathVariable String startTime, @PathVariable String endTime) {
-        return new ResponseEntity<ArrayList<InspectionObject>>(
-                inspectionService.deleteInspectionByConnectionAndStartTimeAndEndTime(connectionId, startTime, endTime),
-                HttpStatus.OK);
-    }*/
-    
+  
     @DeleteMapping("/list/{connectionId}/{startTime}/to/{endTime}/delete")
     public ResponseEntity<?> deleteInspectionByConnectionAndStartTimeAndEndTime(@PathVariable Long connectionId,
     @PathVariable String startTime, @PathVariable String endTime) {
