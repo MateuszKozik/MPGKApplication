@@ -5,7 +5,7 @@ import {
 	updateConnection,
 	clearConnectionState
 } from "../../../actions/connectionActions";
-import { 
+import {
 	createDailyInspections,
 	createWeeklyInspections,
 	createDayShiftInspections,
@@ -13,7 +13,14 @@ import {
 	createYearlyInspections
 } from "../../../actions/taskActions";
 import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core";
+import {
+	Chip,
+	FormControl,
+	InputLabel,
+	MenuItem,
+	Select,
+	withStyles
+} from "@material-ui/core";
 import { tableStyles } from "../../../consts/themeConsts";
 import {
 	Grid,
@@ -34,13 +41,15 @@ import {
 	Tooltip
 } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
+import GroupAddIcon from "@material-ui/icons/GroupAdd";
 import SearchIcon from "@material-ui/icons/Search";
+import { getPersons, clearPersonState } from "../../../actions/personActions";
 import { FormikTextField, FormikSwitchField } from "formik-material-fields";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { setSnackbar } from "../../../reducers/snackbarReducer";
 import AddIcon from "@material-ui/icons/Add";
-import AddCircleIcon from '@material-ui/icons/AddCircle';
+import FormatListBulletedIcon from "@material-ui/icons/FormatListBulleted";
 import { Link } from "react-router-dom";
 
 const validationSchema = Yup.object().shape({
@@ -52,16 +61,16 @@ const validationSchema = Yup.object().shape({
 export class ConnectionList extends Component {
 	state = {
 		dialogOpen: false,
+		employeesDialogOpen: false,
 		connectionId: "",
 		name: "",
 		status: "",
-		inspectionType: {},
-		device: {},
-		errors: {},
+		persons: [],
 		search: ""
 	};
 
 	componentDidMount() {
+		this.props.getPersons();
 		this.props.getConnections();
 	}
 
@@ -69,121 +78,136 @@ export class ConnectionList extends Component {
 		this.setState({ search: event.target.value });
 	};
 
-	onChange = (e) => {
+	handleChange = (e) => {
 		this.setState({ [e.target.name]: e.target.value });
 	};
 
 	componentWillUnmount() {
+		this.props.clearPersonState();
 		this.props.clearConnectionState();
 	}
 
-	handleOpen = (connection) => {
-		const { connectionId, name, status, inspectionType, device } = connection;
+	handleEditOpen = (connection) => {
+		const { connectionId, name, status, persons } = connection;
 
 		this.setState({
 			dialogOpen: true,
 			connectionId: connectionId,
 			name: name,
 			status: status,
-			inspectionType: inspectionType && { ...inspectionType },
-			device: device && { ...device }
+			persons: persons
+		});
+	};
+
+	handleEditEmployeesOpen = (connection) => {
+		const { connectionId, name, status, persons } = connection;
+
+		this.setState({
+			employeesDialogOpen: true,
+			connectionId: connectionId,
+			name: name,
+			status: status,
+			persons: persons
+		});
+	};
+
+	// Handle click event of the remove person button
+	handleRemovePerson = (index) => {
+		const persons = this.state.persons;
+		persons.splice(index, 1);
+		this.setState({
+			persons: persons
 		});
 	};
 
 	createInspections = (connection) => {
-		const {connectionId,inspectionType} = connection;
+		const { connectionId, inspectionType } = connection;
 		if (window.confirm("Czy na pewno chcesz wygenerować przegląd?")) {
 			switch (inspectionType.name) {
 				case "Codziennie":
-					this.props.createDailyInspections(connectionId,this.props.history)
-					.then((res) => {
-						if (res) {
-							this.props.setSnackbar(true, "Przegląd wygenerowany!");
-						} else {
-							this.props.setSnackbar(true, "Wystąpił błąd!");
-						}
-					});
+					this.props
+						.createDailyInspections(connectionId, this.props.history)
+						.then((res) => {
+							if (res) {
+								this.props.setSnackbar(true, "Przegląd wygenerowany!");
+							} else {
+								this.props.setSnackbar(true, "Wystąpił błąd!");
+							}
+						});
 					break;
 				case "Raz w tygodniu":
-					this.props.createWeeklyInspections(connectionId,this.props.history)
-					.then((res) => {
-						if (res) {
-							this.props.setSnackbar(true, "Przegląd wygenerowany!");
-						} else {
-							this.props.setSnackbar(true, "Wystąpił błąd!");
-						}
-					});
+					this.props
+						.createWeeklyInspections(connectionId, this.props.history)
+						.then((res) => {
+							if (res) {
+								this.props.setSnackbar(true, "Przegląd wygenerowany!");
+							} else {
+								this.props.setSnackbar(true, "Wystąpił błąd!");
+							}
+						});
 					break;
 				case "Codziennie na dziennej zmianie":
-					this.props.createDayShiftInspections(connectionId,this.props.history)
-					.then((res) => {
-						if (res) {
-							this.props.setSnackbar(true, "Przegląd wygenerowany!");
-						} else {
-							this.props.setSnackbar(true, "Wystąpił błąd!");
-						}
-					});
+					this.props
+						.createDayShiftInspections(connectionId, this.props.history)
+						.then((res) => {
+							if (res) {
+								this.props.setSnackbar(true, "Przegląd wygenerowany!");
+							} else {
+								this.props.setSnackbar(true, "Wystąpił błąd!");
+							}
+						});
 					break;
 				case "Raz na dwa miesiące":
-					this.props.createTwoMonthsInspections(connectionId,this.props.history)
-					.then((res) => {
-						if (res) {
-							this.props.setSnackbar(true, "Przegląd wygenerowany!");
-						} else {
-							this.props.setSnackbar(true, "Wystąpił błąd!");
-						}
-					});
+					this.props
+						.createTwoMonthsInspections(connectionId, this.props.history)
+						.then((res) => {
+							if (res) {
+								this.props.setSnackbar(true, "Przegląd wygenerowany!");
+							} else {
+								this.props.setSnackbar(true, "Wystąpił błąd!");
+							}
+						});
 					break;
 				case "Raz w roku":
-					this.props.createYearlyInspections(connectionId,this.props.history)
-					.then((res) => {
-						if (res) {
-							this.props.setSnackbar(true, "Przegląd wygenerowany!");
-						} else {
-							this.props.setSnackbar(true, "Wystąpił błąd!");
-						}
-					});
+					this.props
+						.createYearlyInspections(connectionId, this.props.history)
+						.then((res) => {
+							if (res) {
+								this.props.setSnackbar(true, "Przegląd wygenerowany!");
+							} else {
+								this.props.setSnackbar(true, "Wystąpił błąd!");
+							}
+						});
 					break;
 				default:
 					break;
 			}
 		}
-	}
+	};
 
 	handleClose = () => {
 		this.setState({
 			dialogOpen: false,
+			employeesDialogOpen: false,
 			connectionId: "",
 			name: "",
 			status: "",
-			inspectionType: {},
-			device: {}
+			persons: []
 		});
 	};
 
-	onSubmit = (values, { setSubmitting }) => {
+	handleSubmit = (values, { setSubmitting }) => {
 		setTimeout(() => {
 			setSubmitting(false);
 
-			let updatedConnection = {
-				connectionId: this.state.connectionId,
-				name: values.name,
-				status: values.status
+			const { connectionId, name, status, persons } = this.state;
+
+			const updatedConnection = {
+				connectionId: connectionId,
+				name: name,
+				status: status,
+				persons: persons
 			};
-
-			if (this.state.inspectionType !== null) {
-				updatedConnection = {
-					...updatedConnection,
-					inspectionType: this.state.inspectionType
-				};
-			}
-
-			if (this.state.device !== null) {
-				updatedConnection = {
-					...updatedConnection,
-					device: this.state.device
-				};
-			}
 
 			this.props
 				.updateConnection(this.state.connectionId, updatedConnection)
@@ -207,6 +231,9 @@ export class ConnectionList extends Component {
 	}
 
 	render() {
+		const personList = this.props.person.persons;
+		const { persons } = this.state;
+
 		const { classes } = this.props;
 		const { connections } = this.props.connection;
 		const { errors } = this.props;
@@ -257,43 +284,57 @@ export class ConnectionList extends Component {
 									</TableRow>
 								</TableHead>
 								<TableBody>
-									{filtered && filtered.map((connection) => {
-										const {inspectionType} = connection;
-										return (
-											<TableRow key={connection.connectionId}>
-												<TableCell>
-													<Typography>{connection.name}</Typography>
-												</TableCell>
-												<TableCell>
-													<Typography>
-														{connection.status === true
-															? "Aktywny"
-															: "Nieaktywny"}
-													</Typography>
-												</TableCell>
-												<TableCell>
-													<Tooltip title="Edytuj">
-														<IconButton
-															color="primary"
-															onClick={() => this.handleOpen(connection)}
-														>
-															<EditIcon />
-														</IconButton>
-													</Tooltip>
-													{inspectionType.name && inspectionType.name !== "Na żądanie" ?
-													<Tooltip title="Wygeneruj">
-														<IconButton
-															color="default"
-															onClick={() => this.createInspections(connection)}
-														>
-															<AddCircleIcon fontSize="large"/>
-														</IconButton>
-													</Tooltip>
-													:null}
-												</TableCell>
-											</TableRow>
-										);
-									})}
+									{filtered &&
+										filtered.map((connection) => {
+											const { inspectionType } = connection;
+											return (
+												<TableRow key={connection.connectionId}>
+													<TableCell>
+														<Typography>{connection.name}</Typography>
+													</TableCell>
+													<TableCell>
+														<Typography>
+															{connection.status === true
+																? "Aktywny"
+																: "Nieaktywny"}
+														</Typography>
+													</TableCell>
+													<TableCell>
+														<Tooltip title="Edytuj">
+															<IconButton
+																color="primary"
+																onClick={() => this.handleEditOpen(connection)}
+															>
+																<EditIcon />
+															</IconButton>
+														</Tooltip>
+														<Tooltip title="Dodaj pracowników">
+															<IconButton
+																onClick={() =>
+																	this.handleEditEmployeesOpen(connection)
+																}
+															>
+																<GroupAddIcon />
+															</IconButton>
+														</Tooltip>
+														{inspectionType.name &&
+														connection.status !== false &&
+														inspectionType.name !== "Na żądanie" ? (
+															<Tooltip title="Wygeneruj przegląd">
+																<IconButton
+																	color="inherit"
+																	onClick={() =>
+																		this.createInspections(connection)
+																	}
+																>
+																	<FormatListBulletedIcon />
+																</IconButton>
+															</Tooltip>
+														) : null}
+													</TableCell>
+												</TableRow>
+											);
+										})}
 								</TableBody>
 							</Table>
 						</TableContainer>
@@ -309,7 +350,7 @@ export class ConnectionList extends Component {
 						}}
 						validationSchema={validationSchema}
 						onSubmit={(values, { setSubmitting }) =>
-							this.onSubmit(values, { setSubmitting })
+							this.handleSubmit(values, { setSubmitting })
 						}
 					>
 						{({ isSubmitting, values }) => (
@@ -324,7 +365,7 @@ export class ConnectionList extends Component {
 											variant="outlined"
 											required
 											helperText={errors.name}
-											onChange={this.onChange}
+											onChange={this.handleChange}
 										/>
 									</Grid>
 									<Grid item xs={12}>
@@ -366,11 +407,86 @@ export class ConnectionList extends Component {
 						)}
 					</Formik>
 				</Dialog>
+
+				<Dialog
+					open={this.state.employeesDialogOpen}
+					onClose={this.handleClose}
+				>
+					<Formik
+						initialValues={{
+							personId: ""
+						}}
+						onSubmit={(values, { setSubmitting }) =>
+							this.handleSubmit(values, { setSubmitting })
+						}
+					>
+						{({ isSubmitting, values }) => (
+							<Form className={classes.form}>
+								<Grid container spacing={2} justify="center">
+									<Grid item xs={12}>
+										{persons &&
+											persons.map((person, index) => (
+												<Chip
+													key={index}
+													label={person.name + " " + person.surname}
+													className={classes.chip}
+													onDelete={() => this.handleRemovePerson(index)}
+												/>
+											))}
+									</Grid>
+									<Grid item xs={12}>
+										<FormControl
+											className={classes.formControl}
+											variant="outlined"
+										>
+											<InputLabel id="persons-label">Pracownicy</InputLabel>
+											<Select
+												labelId="person-label"
+												id="persons"
+												name="persons"
+												multiple
+												label="Pracownicy"
+												value={persons}
+												onChange={this.handleChange}
+											>
+												{personList &&
+													personList.map((person, index) => {
+														return (
+															<MenuItem key={index} value={person}>
+																{person.name + " " + person.surname}
+															</MenuItem>
+														);
+													})}
+											</Select>
+										</FormControl>
+									</Grid>
+									<Grid item xs={3} />
+									<Grid item xs={3}>
+										<Button onClick={this.handleClose} color="primary">
+											Anuluj
+										</Button>
+									</Grid>
+									<Grid item xs={3}>
+										<Button
+											type="submit"
+											color="primary"
+											disabled={isSubmitting}
+										>
+											Zapisz
+										</Button>
+									</Grid>
+									<Grid item xs={3} />
+									<Grid item xs={12}>
+										{isSubmitting && <LinearProgress />}
+									</Grid>
+								</Grid>
+							</Form>
+						)}
+					</Formik>
+				</Dialog>
+
 				<Tooltip title="Dodaj">
-					<Fab
-						className={classes.fab}
-						color="secondary"
-					>	
+					<Fab className={classes.fab} color="secondary">
 						<Link
 							style={{
 								color: "#fff"
@@ -397,7 +513,9 @@ ConnectionList.propTypes = {
 	createYearlyInspections: PropTypes.func.isRequired,
 	clearConnectionState: PropTypes.func.isRequired,
 	setSnackbar: PropTypes.func.isRequired,
-	updateConnection: PropTypes.func.isRequired
+	updateConnection: PropTypes.func.isRequired,
+	clearPersonState: PropTypes.func.isRequired,
+	getPersons: PropTypes.func.isRequired
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -406,29 +524,39 @@ const mapDispatchToProps = (dispatch) => {
 			dispatch(getConnections());
 		},
 		createDailyInspections(connectionId, history) {
-			return dispatch(createDailyInspections(connectionId, history)).then((res) => {
-				if (res && res.status === 201) return res;
-			});
+			return dispatch(createDailyInspections(connectionId, history)).then(
+				(res) => {
+					if (res && res.status === 201) return res;
+				}
+			);
 		},
 		createWeeklyInspections(connectionId, history) {
-			return dispatch(createWeeklyInspections(connectionId, history)).then((res) => {
-				if (res && res.status === 201) return res;
-			});
+			return dispatch(createWeeklyInspections(connectionId, history)).then(
+				(res) => {
+					if (res && res.status === 201) return res;
+				}
+			);
 		},
 		createDayShiftInspections(connectionId, history) {
-			return dispatch(createDayShiftInspections(connectionId, history)).then((res) => {
-				if (res && res.status === 201) return res;
-			});
+			return dispatch(createDayShiftInspections(connectionId, history)).then(
+				(res) => {
+					if (res && res.status === 201) return res;
+				}
+			);
 		},
 		createTwoMonthsInspections(connectionId, history) {
-			return dispatch(createTwoMonthsInspections(connectionId, history)).then((res) => {
-				if (res && res.status === 201) return res;
-			});
+			return dispatch(createTwoMonthsInspections(connectionId, history)).then(
+				(res) => {
+					if (res && res.status === 201) return res;
+				}
+			);
 		},
 		createYearlyInspections(connectionId, history) {
-			return dispatch(createYearlyInspections(connectionId, history)).then((res) => {
-				if (res && res.status === 201) return res;
-			});
+			return dispatch(createYearlyInspections(connectionId, history)).then(
+				(res) => {
+					if (res && res.status === 201) return res;
+				}
+			);
 		},
 		clearConnectionState: () => {
 			dispatch(clearConnectionState());
@@ -442,6 +570,12 @@ const mapDispatchToProps = (dispatch) => {
 					if (res && res.status === 200) return res;
 				}
 			);
+		},
+		clearPersonState: () => {
+			dispatch(clearPersonState());
+		},
+		getPersons: () => {
+			dispatch(getPersons());
 		}
 	};
 };
@@ -449,6 +583,7 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
 	return {
 		connection: state.connection,
+		person: state.person,
 		errors: state.errors
 	};
 };
