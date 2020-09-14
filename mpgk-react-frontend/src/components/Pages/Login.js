@@ -45,13 +45,17 @@ export class Login extends Component {
 			<form className={classes.form} onSubmit={this.handleSubmit}>
 				<Grid container spacing={2}>
 					<Grid item xs={12}>
-						<img src="logo.jpg" alt="" style={{
-							maxWidth: "100%"
-						}}/>
+						<img
+							src="logo.jpg"
+							alt=""
+							style={{
+								maxWidth: "100%"
+							}}
+						/>
 					</Grid>
 					<Grid item xs={12}>
 						<Typography variant="h3" className={classes.title}>
-							Oddział Energetyki Cieplnej	
+							Oddział Energetyki Cieplnej
 						</Typography>
 					</Grid>
 					<Grid item xs={12}>
@@ -61,20 +65,20 @@ export class Login extends Component {
 					</Grid>
 					<Grid item xs={false} md={2} />
 					<Grid item xs={12}>
-						<TextField 
+						<TextField
 							className={classes.formControl}
 							id="username"
 							name="username"
 							error={errors.username && true}
 							helperText={errors.username}
 							onChange={this.handleChange}
-							label="Login"
+							label="Nazwa użytkownika"
 							required
 							variant="outlined"
 						/>
 					</Grid>
 					<Grid item xs={12}>
-						<TextField 
+						<TextField
 							className={classes.formControl}
 							type="password"
 							id="password"
