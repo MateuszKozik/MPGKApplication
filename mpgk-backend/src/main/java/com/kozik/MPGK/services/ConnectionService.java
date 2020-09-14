@@ -85,9 +85,6 @@ public class ConnectionService {
         return connectionRepository.findById(connectionId).map(element -> {
             element.setName(connection.getName());
             element.setStatus(connection.getStatus());
-            element.setInspectionType(connection.getInspectionType());
-            element.setDevice(connection.getDevice());
-            element.setActivitiesGroups(connection.getActivitiesGroups());
             element.setPersons(connection.getPersons());
             return connectionRepository.save(element);
         }).orElseThrow(() -> new ConnectionNotFoundException(connectionId));
