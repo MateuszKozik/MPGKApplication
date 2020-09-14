@@ -14,7 +14,7 @@ const validationSchema = Yup.object().shape({
 		.required("Hasło jest wymagane")
 		.min(6, "Hasło musi składać się z minimum 6 znaków")
 		.max(60, "Wprowadź krótsze hasło"),
-	confirmPassword: Yup.string().required("Powtwierdzenie hasła jest wymagane")
+	confirmPassword: Yup.string().required("Potwierdzenie hasła jest wymagane")
 });
 
 export class User extends Component {
