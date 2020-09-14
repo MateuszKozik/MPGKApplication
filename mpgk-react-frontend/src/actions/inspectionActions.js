@@ -8,7 +8,8 @@ import {
 	GET_OVERDUE_BY_CONNECTION,
 	UPDATE_INSPECTION,
 	GET_CONNECTION,
-	UPDATE_OVERDUE_INSPECTION
+	UPDATE_OVERDUE_INSPECTION,
+	DELETE_INSPECTION_BY_CONNECTION
 } from "./types";
 import isUserLogin from "../securityUtils/isUserLogin";
 import { hostName } from "./host";
@@ -221,6 +222,21 @@ export const getInspectionByConnectionAndStartTimeAndEndTime = (
 		}
 	} catch (error) {
 		history.push("/");
+	}
+};
+
+
+export const deleteInspectionByConnectionAndStartTimeAndEndTime = (connectionId,startTime,endTime,history ) => async (dispatch) => {
+	if (isUserLogin()) {
+			const res = await axios.delete(`${hostName}/api/inspections/list/${connectionId}/${startTime}/to/${endTime}/delete`);
+			//history.push("/")
+			
+			dispatch({
+				type: DELETE_INSPECTION_BY_CONNECTION,
+				payload: connectionId
+			});
+			return res;
+		
 	}
 };
 
