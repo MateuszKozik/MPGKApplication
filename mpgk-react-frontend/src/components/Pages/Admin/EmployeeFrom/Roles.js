@@ -58,7 +58,7 @@ export class Roles extends Component {
 														value={item.roleId}
 														onChange={handleChange("role")}
 														control={<Radio color="primary" />}
-														label={item.name}
+														label={item.name.toLowerCase()}
 														checked={item.roleId === parseInt(role)}
 														labelPlacement="start"
 													/>

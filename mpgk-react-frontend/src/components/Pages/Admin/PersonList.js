@@ -187,10 +187,13 @@ class PersonList extends Component {
 								<TableHead>
 									<TableRow>
 										<TableCell className={classes.head}>
-											<Typography>Imię</Typography>
+											<Typography>Imię i Nazwisko</Typography>
 										</TableCell>
 										<TableCell className={classes.head}>
-											<Typography>Nazwisko</Typography>
+											<Typography>Login</Typography>
+										</TableCell>
+										<TableCell className={classes.head}>
+											<Typography>Uprawnienia</Typography>
 										</TableCell>
 										<TableCell className={classes.head}>
 											<Typography>Akcje</Typography>
@@ -203,10 +206,23 @@ class PersonList extends Component {
 											return (
 												<TableRow key={person.personId}>
 													<TableCell>
-														<Typography>{person.name}</Typography>
+														<Typography>
+															{person.name + " " + person.surname}
+														</Typography>
 													</TableCell>
 													<TableCell>
-														<Typography>{person.surname}</Typography>
+														<Typography>
+															{person.user && person.user.username}
+														</Typography>
+													</TableCell>
+													<TableCell>
+														{person.user &&
+															person.user.role &&
+															person.user.role.map((role, index) => (
+																<Typography key={index}>
+																	{role.name.toLowerCase()}
+																</Typography>
+															))}
 													</TableCell>
 													<TableCell>
 														<Tooltip title="Edytuj">
@@ -222,15 +238,6 @@ class PersonList extends Component {
 																}
 															>
 																<EditIcon />
-															</IconButton>
-														</Tooltip>
-														<Tooltip title="Usuń">
-															<IconButton
-																onClick={() =>
-																	this.props.deletePerson(person.personId)
-																}
-															>
-																<DeleteIcon />
 															</IconButton>
 														</Tooltip>
 													</TableCell>
