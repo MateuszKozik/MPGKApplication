@@ -50,7 +50,9 @@ public class PersonService {
         User user = userRepository.findById(person.getUser().getUserId()).map(item -> {
             item.setEnabled(person.getUser().getEnabled());
             item.setRole(person.getUser().getRole());
-            item.setPassword(bCryptPasswordEncoder.encode(person.getUser().getPassword()));
+            if (!item.getPassword().equals(person.getUser().getPassword())) {
+                item.setPassword(bCryptPasswordEncoder.encode(person.getUser().getPassword()));
+            }
             return userRepository.save(item);
         }).orElseThrow(() -> new PersonNotFoundException(personId));
 
