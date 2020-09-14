@@ -73,28 +73,24 @@ const Header = (props) => {
 			pageURL: "/fluids"
 		},
 		{
+			menuTitle: "Miejsca dodania czynników",
+			pageURL: "/fluid-places"
+		},
+		{
 			menuTitle: "Pracownicy",
 			pageURL: "/persons"
-		},
-		{
-			menuTitle: "Kategorie czynności",
-			pageURL: "/groups"
-		},
-		{
-			menuTitle: "Czynności",
-			pageURL: "/activities"
-		},
-		{
-			menuTitle: "Przeglądy",
-			pageURL: "/connections"
 		},
 		{
 			menuTitle: "Rejestr płynów",
 			pageURL: "/fluid-registries"
 		},
 		{
-			menuTitle: "Miejsca dodania czynników",
-			pageURL: "/fluid-places"
+			menuTitle: "Przeglądy",
+			pageURL: "/connections"
+		},
+		{
+			menuTitle: "Wyszukiwarka",
+			pageURL: "/inspections"
 		}
 	];
 
