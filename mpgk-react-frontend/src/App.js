@@ -7,8 +7,6 @@ import { Provider } from "react-redux";
 import store from "./store";
 import FluidList from "./components/Pages/Admin/FluidList";
 import PersonList from "./components/Pages/Admin/PersonList";
-import ActivityGroupList from "./components/Pages/Admin/ActivityGroupList";
-import ActivityList from "./components/Pages/Admin/ActivityList";
 import InspectionList from "./components/Pages/SearchInspection/InspectionList";
 import InspectionBetween from "./components/Pages/SearchInspection/InspectionBetween";
 import ConnectionList from "./components/Pages/Admin/ConnectionList";
@@ -124,16 +122,6 @@ function App() {
 						<SecuredAdminRoute exact path="/devices" component={DeviceList} />
 						<SecuredAdminRoute exact path="/fluids" component={FluidList} />
 						<SecuredAdminRoute exact path="/persons" component={PersonList} />
-						<SecuredAdminRoute
-							exact
-							path="/groups"
-							component={ActivityGroupList}
-						/>
-						<SecuredAdminRoute
-							exact
-							path="/activities"
-							component={ActivityList}
-						/>
 						<SecuredAdminRoute
 							exact
 							path="/connections"
