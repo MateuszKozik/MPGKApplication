@@ -12,3 +12,10 @@ export const getRoles = () => async (dispatch) => {
 		});
 	}
 };
+
+export const clearRoleState = () => (dispatch) => {
+	dispatch({
+		type: GET_ROLES,
+		payload: []
+	});
+};
