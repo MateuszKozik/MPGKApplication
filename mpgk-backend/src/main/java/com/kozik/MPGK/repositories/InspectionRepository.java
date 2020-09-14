@@ -51,8 +51,8 @@ public interface InspectionRepository extends JpaRepository<Inspection, Long> {
 
         List<Inspection> findByPersonAndStartTime(Person person, LocalDateTime time);
 
-        List<Inspection> findByActivityNameAndStatusAndParameter(String activityName, String status, String parameter);
+        List<Inspection> findByActivityNameAndStatusAndParameterAndEndTimeAfter(String activityName, String status,
+                        String parameter, LocalDateTime endTime);
 
         Inspection findByActivityNameAndEndTime(String activityName, LocalDateTime endTime);
-
 }

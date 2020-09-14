@@ -159,8 +159,8 @@ public class TaskService {
     }
 
     public void setUncommon() {
-        List<Inspection> inspections = inspectionRepository
-                .findByActivityNameAndStatusAndParameter("Układ kondensacji spalin załączony?", "Wykonany", "NIE");
+        List<Inspection> inspections = inspectionRepository.findByActivityNameAndStatusAndParameterAndEndTimeAfter(
+                "Układ kondensacji spalin załączony?", "Wykonany", "NIE", LocalDateTime.now().minusMonths(2));
 
         List<String> items = new ArrayList<>();
         items.add("Spuścić osady / szlam ze zbiornika (odstojnika).");
