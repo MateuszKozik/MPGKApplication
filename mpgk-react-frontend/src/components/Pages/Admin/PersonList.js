@@ -453,7 +453,7 @@ class PersonList extends Component {
 								<Grid container spacing={2} justify="center">
 									<Grid item xs={12}>
 										<FormikTextField
-											className={classes.formControl}
+											style={{ width: 210 }}
 											id="password"
 											name="password"
 											label="Hasło"
@@ -465,7 +465,7 @@ class PersonList extends Component {
 									</Grid>
 									<Grid item xs={12}>
 										<FormikTextField
-											className={classes.formControl}
+											style={{ width: 210 }}
 											helperText={this.state.error.confirmPassword}
 											id="confirmPassword"
 											name="confirmPassword"
