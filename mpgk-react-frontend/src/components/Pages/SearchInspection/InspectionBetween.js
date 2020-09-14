@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import {
 	getConnectionAndStartTimeBetween,
+	deleteInspectionByConnectionAndStartTimeAndEndTime,
 	clearInspectionsListState
 } from "../../../actions/inspectionActions";
 import { getConnections } from "../../../actions/connectionActions";
@@ -11,6 +12,7 @@ import PropTypes from "prop-types";
 import FormatDate from "../../Common/FormatDate";
 import { Link } from "react-router-dom";
 import { tableStyles } from "../../../consts/themeConsts";
+import DeleteIcon from '@material-ui/icons/Delete';
 import {
 	withStyles,
 	FormControl,
@@ -30,7 +32,9 @@ import {
 	TableHead,
 	TableRow,
 	Table,
-	TableBody
+	TableBody,
+	Tooltip,
+	IconButton
 } from "@material-ui/core";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import CancelIcon from "@material-ui/icons/Cancel";
@@ -59,6 +63,21 @@ class InspectionBetween extends Component {
 		this.props.getConnections();
 		this.props.getDevices();
 		this.props.getPersons();
+	}
+
+	deleteConnections = (inspection) => {
+		if (window.confirm("Czy jesteś pewny? Spowoduje to usunięcie przeglądu")) {
+			this.props.deleteInspectionByConnectionAndStartTimeAndEndTime(inspection.connection.connectionId, inspection.startTime, inspection.endTime, this.props.history)
+			.then((res) => {
+				if (res) {
+					this.props.setSnackbar(true, "Przegląd został usunięty");
+				} else {
+					this.props.setSnackbar(true, "Wystąpił błąd!");
+				}
+			});
+		}
+		
+		
 	}
 
 	handleSubmit = () => {
@@ -107,6 +126,8 @@ class InspectionBetween extends Component {
 		const { connections } = this.props.connection;
 		const { devices } = this.props.device;
 		const { persons } = this.props.person;
+		const { validToken, user } = this.props.security;
+		const { authorities } = user;
 
 		return (
 			<>
@@ -299,6 +320,13 @@ class InspectionBetween extends Component {
                                                         <b>Status</b>
                                                     </Typography>
                                                 </TableCell>
+												{validToken && user ? authorities === "ROLE_ADMIN" ?
+												<TableCell>
+                                                    <Typography>
+                                                        <b>Akcja</b>
+                                                    </Typography>
+                                                </TableCell>
+												: null :null}
                                             </TableRow>
                                         ) : null}
 									</TableHead>
@@ -335,6 +363,18 @@ class InspectionBetween extends Component {
                                                     )}
 												</Typography>
 											</TableCell>
+											{validToken && user ? authorities === "ROLE_ADMIN" ?
+											<TableCell>
+											<Tooltip title="Wygeneruj">
+														<IconButton
+															color="default"
+															onClick={() => this.deleteConnections(inspection)}
+														>
+															<DeleteIcon fontSize="large"/>
+														</IconButton>
+													</Tooltip>
+											</TableCell>
+											: null :null}
 										</TableRow>
                                         ))}
 									</TableBody>
@@ -358,6 +398,7 @@ InspectionBetween.propTypes = {
 	getConnections: PropTypes.func.isRequired,
 	getDevices: PropTypes.func.isRequired,
 	getPersons: PropTypes.func.isRequired,
+	deleteInspectionByConnectionAndStartTimeAndEndTime: PropTypes.func.isRequired,
 	clearInspectionsListState: PropTypes.func.isRequired
 };
 
@@ -365,7 +406,8 @@ const mapStateToPros = (state) => ({
 	inspection: state.inspection,
 	connection: state.connection,
 	device: state.device,
-	person: state.person
+	person: state.person,
+	security: state.security
 });
 
 const mapDispatchToProps = (dispatch) => {
@@ -378,6 +420,11 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		getPersons: () => {
 			dispatch(getPersons());
+		},
+		deleteInspectionByConnectionAndStartTimeAndEndTime(connectionId, startTime, endTime,history) {
+			return dispatch(deleteInspectionByConnectionAndStartTimeAndEndTime(connectionId, startTime, endTime,history)).then((res) => {
+				if (res && res.status === 200) return res;
+			});
 		},
 		clearInspectionsListState: () => {
 			dispatch(clearInspectionsListState());
