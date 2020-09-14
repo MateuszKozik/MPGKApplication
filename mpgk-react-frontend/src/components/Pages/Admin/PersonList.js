@@ -4,7 +4,7 @@ import {
 	getPersons,
 	deletePerson,
 	addPerson,
-    updatePerson,
+	updatePerson,
 	clearPersonState
 } from "../../../actions/personActions";
 import { withStyles } from "@material-ui/core";
@@ -36,12 +36,13 @@ import { FormikTextField } from "formik-material-fields";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { setSnackbar } from "../../../reducers/snackbarReducer";
+import { Link } from "react-router-dom";
 
 const validationSchema = Yup.object().shape({
 	name: Yup.string()
 		.required("Imię jest wymagane")
-        .max(35, "Wprowadź któtsze imię"),
-    surname: Yup.string()
+		.max(35, "Wprowadź któtsze imię"),
+	surname: Yup.string()
 		.required("Nazwisko jest wymagane")
 		.max(35, "Wprowadź któtsze nazwisko")
 });
@@ -51,8 +52,8 @@ class PersonList extends Component {
 		dialogOpen: false,
 		personId: "",
 		name: "",
-        surname: "",
-        actionType: "",
+		surname: "",
+		actionType: "",
 		search: "",
 		errors: {}
 	};
@@ -149,8 +150,10 @@ class PersonList extends Component {
 		const { classes } = this.props;
 		const { errors } = this.props;
 		const filtered = persons.filter((person) => {
-			return person.name.toLowerCase().includes(this.state.search.toLowerCase()) ||
-				person.surname.toLowerCase().includes(this.state.search.toLowerCase());
+			return (
+				person.name.toLowerCase().includes(this.state.search.toLowerCase()) ||
+				person.surname.toLowerCase().includes(this.state.search.toLowerCase())
+			);
 		});
 
 		return (
@@ -195,44 +198,45 @@ class PersonList extends Component {
 									</TableRow>
 								</TableHead>
 								<TableBody>
-									{filtered && filtered.map((person) => {
-										return (
-											<TableRow key={person.personId}>
-												<TableCell>
-													<Typography>{person.name}</Typography>
-												</TableCell>
-												<TableCell>
-                                                        <Typography>{person.surname}</Typography>	
-												</TableCell>
-												<TableCell>
-													<Tooltip title="Edytuj">
-														<IconButton
-															color="primary"
-															onClick={() =>
-																this.handleOpen(
-																	person.personId,
-																	person.name,
-																	person.surname,
-																	"edit"
-																)
-															}
-														>
-															<EditIcon />
-														</IconButton>
-													</Tooltip>
-													<Tooltip title="Usuń">
-														<IconButton
-															onClick={() =>
-																this.props.deletePerson(person.personId)
-															}
-														>
-															<DeleteIcon />
-														</IconButton>
-													</Tooltip>
-												</TableCell>
-											</TableRow>
-										);
-									})}
+									{filtered &&
+										filtered.map((person) => {
+											return (
+												<TableRow key={person.personId}>
+													<TableCell>
+														<Typography>{person.name}</Typography>
+													</TableCell>
+													<TableCell>
+														<Typography>{person.surname}</Typography>
+													</TableCell>
+													<TableCell>
+														<Tooltip title="Edytuj">
+															<IconButton
+																color="primary"
+																onClick={() =>
+																	this.handleOpen(
+																		person.personId,
+																		person.name,
+																		person.surname,
+																		"edit"
+																	)
+																}
+															>
+																<EditIcon />
+															</IconButton>
+														</Tooltip>
+														<Tooltip title="Usuń">
+															<IconButton
+																onClick={() =>
+																	this.props.deletePerson(person.personId)
+																}
+															>
+																<DeleteIcon />
+															</IconButton>
+														</Tooltip>
+													</TableCell>
+												</TableRow>
+											);
+										})}
 								</TableBody>
 							</Table>
 						</TableContainer>
@@ -244,7 +248,7 @@ class PersonList extends Component {
 					<Formik
 						initialValues={{
 							name: this.state.name,
-							surname: this.state.surname,
+							surname: this.state.surname
 						}}
 						validationSchema={validationSchema}
 						onSubmit={(values, { setSubmitting }) =>
@@ -267,7 +271,7 @@ class PersonList extends Component {
 										/>
 									</Grid>
 									<Grid item xs={12}>
-                                    <FormikTextField
+										<FormikTextField
 											error={errors.surname && true}
 											id="surname"
 											name="surname"
@@ -303,12 +307,15 @@ class PersonList extends Component {
 					</Formik>
 				</Dialog>
 				<Tooltip title="Dodaj">
-					<Fab
-						className={classes.fab}
-						color="secondary"
-						onClick={this.handleOpen}
-					>
-						<AddIcon fontSize="large" />
+					<Fab className={classes.fab} color="secondary">
+						<Link
+							style={{
+								color: "#fff"
+							}}
+							to={"/persons/create"}
+						>
+							<AddIcon fontSize="large" />
+						</Link>
 					</Fab>
 				</Tooltip>
 			</>
@@ -358,6 +365,6 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps
+	mapStateToProps,
+	mapDispatchToProps
 )(withStyles(tableStyles)(PersonList));
