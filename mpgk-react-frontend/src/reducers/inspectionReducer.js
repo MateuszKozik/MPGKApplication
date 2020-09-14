@@ -6,7 +6,8 @@ import {
 	GET_OVERDUE_BY_CONNECTION,
 	UPDATE_INSPECTION,
 	GET_CONNECTION,
-	UPDATE_OVERDUE_INSPECTION
+	UPDATE_OVERDUE_INSPECTION,
+	DELETE_INSPECTION_BY_CONNECTION
 } from "../actions/types";
 
 const initialState = {
@@ -80,6 +81,14 @@ export default function (state = initialState, action) {
 					(inspection) => inspection.inspectionId !== action.payload
 				)
 			};
+
+		case DELETE_INSPECTION_BY_CONNECTION:
+		return {
+			...state,
+			inspections: state.inspections.filter(
+				(inspection) => inspection.connection.connectionId !== action.payload
+			)
+		};
 
 		case GET_CONNECTION:
 			return {
