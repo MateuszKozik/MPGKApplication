@@ -37,12 +37,7 @@ public class InspectionService {
     private PersonService personService;
 
     @Autowired
-    private ActivityGroupService activityGroupService;
-
-    @Autowired
     private ActivityGroupRepository activityGroupRepository;
-    
-    
 
     public Iterable<Inspection> listAll() {
         return inspectionRepository.findAll();
@@ -423,29 +418,21 @@ public class InspectionService {
         return inspectionList;
     }
 
-    public void deleteInspectionByConnectionAndStartTimeAndEndTime(Long connectionId,
-            String startTime, String endTime) {
+    public void deleteInspectionByConnectionAndStartTimeAndEndTime(Long connectionId, String startTime,
+            String endTime) {
         Connection connection = connectionService.get(connectionId);
         List<ActivityGroup> groups = activityGroupRepository.findByConnection(connection);
 
-        
-        
         for (ActivityGroup activityGroup : groups) {
-             
-  
-            for(Inspection inspection : inspectionRepository.findByActivityActivityGroupAndStartTimeAndEndTime(
-                activityGroup, LocalDateTime.parse(startTime), LocalDateTime.parse(endTime))){
-                
-                    delete(inspection.getInspectionId());
-                
-                
+
+            for (Inspection inspection : inspectionRepository.findByActivityActivityGroupAndStartTimeAndEndTime(
+                    activityGroup, LocalDateTime.parse(startTime), LocalDateTime.parse(endTime))) {
+
+                delete(inspection.getInspectionId());
+
             }
 
-            
         }
-        
-        
-        
 
     }
 }
