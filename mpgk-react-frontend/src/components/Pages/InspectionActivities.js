@@ -22,7 +22,6 @@ class InspectionActivities extends Component {
 		const { classes } = this.props;
 		const { validToken, user } = this.props.security;
 		const { authorities } = user;
-		console.log(this.props)
 		return (
 			<>
 				{inspectionsList && inspectionsList.map((activitiesList, i) => (
@@ -53,7 +52,6 @@ class InspectionActivities extends Component {
 												<Typography>{activity.type}</Typography>
 											)}
 										</Grid>
-							
 									): null}
 									<Grid item xs={12} md={2}>
 										{activity.emsr && <Typography>{activity.emsr}</Typography>}
@@ -73,7 +71,6 @@ class InspectionActivities extends Component {
 												)}
 											</Grid>
 									): null}
-									
 									<Grid item xs={12}>
 										<Divider />
 									</Grid>
