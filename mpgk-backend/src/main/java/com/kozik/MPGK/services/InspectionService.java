@@ -410,6 +410,24 @@ public class InspectionService {
                     activityGroup, LocalDateTime.parse(startTime), LocalDateTime.parse(endTime));
 
             InspectionObject inspectionObject = new InspectionObject();
+
+            Integer countEmsr = 0;
+            Integer countSetting = 0;
+            for (Inspection inspection : inspections) {
+                if (!inspection.getActivity().getEmsr().isEmpty()) {
+                    countEmsr++;
+                }
+                if (!inspection.getActivity().getSetting().isEmpty()) {
+                    countSetting++;
+                }
+            }
+            if (countEmsr > 0) {
+                inspectionObject.setShowEmsr(true);
+            }
+            if (countSetting > 0) {
+                inspectionObject.setShowSetting(true);
+            }
+
             inspectionObject.setActivityGroup(activityGroup);
             inspectionObject.setInspections(inspections);
             inspectionList.add(inspectionObject);
