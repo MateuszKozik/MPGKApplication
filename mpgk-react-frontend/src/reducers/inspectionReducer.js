@@ -83,12 +83,22 @@ export default function (state = initialState, action) {
 			};
 
 		case DELETE_INSPECTION_BY_CONNECTION:
-		return {
-			...state,
-			inspections: state.inspections.filter(
-				(inspection) => inspection.connection.connectionId !== action.payload
-			)
-		};
+			let newList = [];
+			state.inspectionsList.map((inspection) => {
+				if (
+					!(
+						inspection.endTime === action.payload.endTime &&
+						inspection.connection.connectionId === action.payload.connectionId
+					)
+				) {
+					newList = [...newList, inspection];
+				}
+				return inspection;
+			});
+			return {
+				...state,
+				inspectionsList: newList
+			};
 
 		case GET_CONNECTION:
 			return {

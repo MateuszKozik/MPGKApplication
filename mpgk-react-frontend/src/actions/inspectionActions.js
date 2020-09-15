@@ -225,18 +225,21 @@ export const getInspectionByConnectionAndStartTimeAndEndTime = (
 	}
 };
 
-
-export const deleteInspectionByConnectionAndStartTimeAndEndTime = (connectionId,startTime,endTime,history ) => async (dispatch) => {
+export const deleteInspectionByConnectionAndStartTimeAndEndTime = (
+	connectionId,
+	startTime,
+	endTime
+) => async (dispatch) => {
 	if (isUserLogin()) {
-			const res = await axios.delete(`${hostName}/api/inspections/list/${connectionId}/${startTime}/to/${endTime}/delete`);
-			//history.push("/")
-			
-			dispatch({
-				type: DELETE_INSPECTION_BY_CONNECTION,
-				payload: connectionId
-			});
-			return res;
-		
+		const res = await axios.delete(
+			`${hostName}/api/inspections/list/${connectionId}/${startTime}/to/${endTime}/delete`
+		);
+
+		dispatch({
+			type: DELETE_INSPECTION_BY_CONNECTION,
+			payload: { endTime, connectionId }
+		});
+		return res;
 	}
 };
 
