@@ -17,48 +17,44 @@ import {
 	TableHead,
 	TableRow,
 	TextField,
-	InputAdornment,
+	InputAdornment
 } from "@material-ui/core";
 
 import SearchIcon from "@material-ui/icons/Search";
 
-
-
-
-
 class PerformersList extends Component {
-
-    state = {
-        search: ""
-    }
+	state = {
+		search: ""
+	};
 	componentDidMount() {
 		this.props.getConnections();
 	}
 
 	componentWillUnmount() {
 		this.props.clearConnectionState();
-    }
-    
-    updateSearch = (event) => {
+	}
+
+	updateSearch = (event) => {
 		this.setState({ search: event.target.value });
 	};
 
-	
-
 	render() {
-        
-        const { connections } = this.props.connection;
-        const { classes } = this.props;
-		const filtered = connections.filter((connection) => {
-           return connection.name.toLowerCase().includes(this.state.search.toLowerCase());   
-        });
+		const { connections } = this.props.connection;
+		const { classes } = this.props;
+		const filtered =
+			connections &&
+			connections.filter((connection) => {
+				return connection.name
+					.toLowerCase()
+					.includes(this.state.search.toLowerCase());
+			});
 
 		return (
 			<>
 				<Grid container className={classes.container}>
 					<Grid item xs={12}>
 						<Typography variant="h3" className={classes.title}>
-                            Lista wykonawców
+							Lista wykonawców
 						</Typography>
 					</Grid>
 					<Grid item xs={false} md={2} />
@@ -92,34 +88,32 @@ class PerformersList extends Component {
 									</TableRow>
 								</TableHead>
 								<TableBody>
-									{filtered && filtered.map((connection,index) => {
-                                        const {persons} = connection;
-										return (
- 
-											<TableRow key={index}>
-												<TableCell>
-													<Typography>{connection.name}</Typography>
-												</TableCell>
-												<TableCell>
-                                                    {persons.map((person,i) => { return(
-                                                        <Typography key={i}>
-                                                            {person && person.name + " " + person.surname} 
-                                                        </Typography>
-                                                        )})}	
-												</TableCell>                                     
-											</TableRow>
-                                            
-										);
-									})}
+									{filtered &&
+										filtered.map((connection, index) => {
+											const { persons } = connection;
+											return (
+												<TableRow key={index}>
+													<TableCell>
+														<Typography>{connection.name}</Typography>
+													</TableCell>
+													<TableCell>
+														{persons.map((person, i) => {
+															return (
+																<Typography key={i}>
+																	{person && person.name + " " + person.surname}
+																</Typography>
+															);
+														})}
+													</TableCell>
+												</TableRow>
+											);
+										})}
 								</TableBody>
 							</Table>
 						</TableContainer>
 					</Grid>
 					<Grid item xs={false} md={2} />
 				</Grid>
-
-				
-				
 			</>
 		);
 	}
@@ -142,12 +136,11 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		clearConnectionState: () => {
 			dispatch(clearConnectionState());
-		},
-		
+		}
 	};
 };
 
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps
+	mapStateToProps,
+	mapDispatchToProps
 )(withStyles(tableStyles)(PerformersList));

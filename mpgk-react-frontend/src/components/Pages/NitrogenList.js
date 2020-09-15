@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import {
 	getActionsByName,
-	clearInspectionsListState
+	clearInspectionState
 } from "../../actions/inspectionActions";
 import { withStyles } from "@material-ui/core";
 import { tableStyles } from "../../consts/themeConsts";
@@ -18,51 +18,42 @@ import {
 	TableHead,
 	TableRow,
 	TextField,
-	InputAdornment,
+	InputAdornment
 } from "@material-ui/core";
 
 import SearchIcon from "@material-ui/icons/Search";
 
-
-
-
-
 class NitrogenList extends Component {
-
-    state = {
-        search: ""
-    }
+	state = {
+		search: ""
+	};
 	componentDidMount() {
 		this.props.getActionsByName(this.props.history);
 	}
 
 	componentWillUnmount() {
-		this.props.clearInspectionsListState();
-    }
-    
-    updateSearch = (event) => {
+		this.props.clearInspectionState();
+	}
+
+	updateSearch = (event) => {
 		this.setState({ search: event.target.value });
 	};
 
-	
-
 	render() {
-        
-        const { inspections } = this.props.inspection;
-        const { classes } = this.props;
+		const { inspections } = this.props.inspection;
+		const { classes } = this.props;
 		const filtered = inspections.filter((inspection) => {
-            const {person} = inspection;
-           
-           if(person){
-                return(
-                    inspection.datetime.includes(this.state.search.toLowerCase()) ||
-                    person.name.toLowerCase().includes(this.state.search.toLowerCase()) ||
-                    person.surname.toLowerCase().includes(this.state.search.toLowerCase())
-                );
-           } else {
-                return inspection.datetime.includes(this.state.search.toLowerCase());
-           }
-            
+			const { person } = inspection;
+
+			if (person) {
+				return (
+					inspection.datetime.includes(this.state.search.toLowerCase()) ||
+					person.name.toLowerCase().includes(this.state.search.toLowerCase()) ||
+					person.surname.toLowerCase().includes(this.state.search.toLowerCase())
+				);
+			} else {
+				return inspection.datetime.includes(this.state.search.toLowerCase());
+			}
 		});
 
 		return (
@@ -70,7 +61,7 @@ class NitrogenList extends Component {
 				<Grid container className={classes.container}>
 					<Grid item xs={12}>
 						<Typography variant="h3" className={classes.title}>
-                            Rejestr wymiany butli z azotem w instalacji ORC
+							Rejestr wymiany butli z azotem w instalacji ORC
 						</Typography>
 					</Grid>
 					<Grid item xs={false} md={2} />
@@ -107,33 +98,34 @@ class NitrogenList extends Component {
 									</TableRow>
 								</TableHead>
 								<TableBody>
-									{filtered && filtered.map((inspection,index) => {
-                                        const{person} = inspection;
-										return (
- 
-											<TableRow key={index}>
-												<TableCell>
-													<Typography>Wymiana butli</Typography>
-												</TableCell>
-												<TableCell>
-                                                        <FormatDate date={inspection.datetime} datetime={true} />	
-												</TableCell>
-                                                <TableCell>
-                                                    <Typography>{person && person.name + " " + person.surname}</Typography>	
-												</TableCell>
-											</TableRow>
-                                            
-										);
-									})}
+									{filtered &&
+										filtered.map((inspection, index) => {
+											const { person } = inspection;
+											return (
+												<TableRow key={index}>
+													<TableCell>
+														<Typography>Wymiana butli</Typography>
+													</TableCell>
+													<TableCell>
+														<FormatDate
+															date={inspection.datetime}
+															datetime={true}
+														/>
+													</TableCell>
+													<TableCell>
+														<Typography>
+															{person && person.name + " " + person.surname}
+														</Typography>
+													</TableCell>
+												</TableRow>
+											);
+										})}
 								</TableBody>
 							</Table>
 						</TableContainer>
 					</Grid>
 					<Grid item xs={false} md={2} />
 				</Grid>
-
-				
-				
 			</>
 		);
 	}
@@ -142,7 +134,7 @@ class NitrogenList extends Component {
 NitrogenList.propTypes = {
 	inspection: PropTypes.object.isRequired,
 	getActionsByName: PropTypes.func.isRequired,
-	clearInspectionsListState: PropTypes.func.isRequired
+	clearInspectionState: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -155,14 +147,13 @@ const mapDispatchToProps = (dispatch) => {
 		getActionsByName: () => {
 			dispatch(getActionsByName());
 		},
-		clearInspectionsListState: () => {
-			dispatch(clearInspectionsListState());
-		},
-		
+		clearInspectionState: () => {
+			dispatch(clearInspectionState());
+		}
 	};
 };
 
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps
+	mapStateToProps,
+	mapDispatchToProps
 )(withStyles(tableStyles)(NitrogenList));
