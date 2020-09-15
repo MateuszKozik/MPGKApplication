@@ -10,13 +10,7 @@ import {
 	getInspectionByConnectionAndStartTimeAndEndTime,
 	clearInspectionState
 } from "../../../actions/inspectionActions";
-import {
-	Grid,
-	Typography,
-	Table,
-	TableBody,
-	TableContainer
-} from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 
 class InspectionList extends Component {
 	componentDidMount() {
@@ -41,28 +35,29 @@ class InspectionList extends Component {
 
 		return (
 			<>
-				<Grid container className={classes.container}>
-					<Grid item xs={12}>
-						<Typography variant="h3" className={classes.title}>
-							{inspections[0] &&
-								inspections[0].activityGroup &&
-								inspections[0].activityGroup.connection.name}
-						</Typography>
-					</Grid>
-					<Grid item xs={false} md={2} />
-					<Grid item xs={12} md={8}>
-						<TableContainer>
-							<Table aria-label="collapsible table">
-								<TableBody>
-									{inspections && inspections.map((inspection, i) => (
-										<Row key={i} row={inspection} />
+				{inspections &&
+					inspections.map((inspectionList, k) => (
+						<Grid key={k} container className={classes.container}>
+							<Grid item xs={12}>
+								<Typography variant="h5" align="center">
+									{inspectionList.activityGroup.name}
+								</Typography>
+							</Grid>
+
+							<Grid item xs={12}>
+								{inspectionList &&
+									inspectionList.inspections.map((inspection, i) => (
+										<Row
+											key={i}
+											{...inspection}
+											showEmsr={inspectionList.showEmsr}
+											showSetting={inspectionList.showSetting}
+											connectionId={this.props.match.params.connectionId}
+										/>
 									))}
-								</TableBody>
-							</Table>
-						</TableContainer>
-					</Grid>
-					<Grid item xs={false} md={2} />
-				</Grid>
+							</Grid>
+						</Grid>
+					))}
 			</>
 		);
 	}

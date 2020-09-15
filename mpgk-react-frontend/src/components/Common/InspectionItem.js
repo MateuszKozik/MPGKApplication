@@ -65,7 +65,7 @@ class InspectionItem extends Component {
 			this.props.activity.name === "Układ kondensacji spalin załączony?" &&
 			this.props.parameter !== null
 		) {
-			this.props.set(this.props.parameter);
+			this.props.handleCommonChange(this.props.parameter);
 		}
 	}
 
