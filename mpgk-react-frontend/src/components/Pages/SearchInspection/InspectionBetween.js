@@ -12,7 +12,7 @@ import PropTypes from "prop-types";
 import FormatDate from "../../Common/FormatDate";
 import { Link } from "react-router-dom";
 import { tableStyles } from "../../../consts/themeConsts";
-import DeleteIcon from '@material-ui/icons/Delete';
+import DeleteIcon from "@material-ui/icons/Delete";
 import {
 	withStyles,
 	FormControl,
@@ -67,18 +67,26 @@ class InspectionBetween extends Component {
 
 	deleteConnections = (inspection) => {
 		if (window.confirm("Czy jesteś pewny? Spowoduje to usunięcie przeglądu")) {
-			this.props.deleteInspectionByConnectionAndStartTimeAndEndTime(inspection.connection.connectionId, inspection.startTime, inspection.endTime, this.props.history)
-			.then((res) => {
-				if (res) {
-					this.props.setSnackbar(true, "Przegląd został usunięty");
-				} else {
-					this.props.setSnackbar(true, "Wystąpił błąd!");
-				}
-			});
+			const {
+				connection: { connectionId },
+				startTime,
+				endTime
+			} = inspection;
+			this.props
+				.deleteInspectionByConnectionAndStartTimeAndEndTime(
+					connectionId,
+					startTime,
+					endTime
+				)
+				.then((res) => {
+					if (res) {
+						this.props.setSnackbar(true, "Przegląd został usunięty");
+					} else {
+						this.props.setSnackbar(true, "Wystąpił błąd!");
+					}
+				});
 		}
-		
-		
-	}
+	};
 
 	handleSubmit = () => {
 		const {
@@ -196,11 +204,15 @@ class InspectionBetween extends Component {
 												<MenuItem value="">
 													<em>Wybierz przegląd</em>
 												</MenuItem>
-												{connections && connections.map((connection, index) => (
-													<MenuItem key={index} value={connection.connectionId}>
-														{connection.name}
-													</MenuItem>
-												))}
+												{connections &&
+													connections.map((connection, index) => (
+														<MenuItem
+															key={index}
+															value={connection.connectionId}
+														>
+															{connection.name}
+														</MenuItem>
+													))}
 											</Select>
 										</FormControl>
 									) : this.state.typeName === "urzadzenie" ? (
@@ -219,11 +231,12 @@ class InspectionBetween extends Component {
 												<MenuItem value="">
 													<em>Wybierz urządzenie</em>
 												</MenuItem>
-												{devices && devices.map((device, index) => (
-													<MenuItem key={index} value={device.deviceId}>
-														{device.name}
-													</MenuItem>
-												))}
+												{devices &&
+													devices.map((device, index) => (
+														<MenuItem key={index} value={device.deviceId}>
+															{device.name}
+														</MenuItem>
+													))}
 											</Select>
 										</FormControl>
 									) : this.state.typeName === "pracownik" ? (
@@ -242,11 +255,12 @@ class InspectionBetween extends Component {
 												<MenuItem value="">
 													<em>Wybierz pracownika</em>
 												</MenuItem>
-												{persons && persons.map((person, index) => (
-													<MenuItem key={index} value={person.personId}>
-														{person.name + " " + person.surname}
-													</MenuItem>
-												))}
+												{persons &&
+													persons.map((person, index) => (
+														<MenuItem key={index} value={person.personId}>
+															{person.name + " " + person.surname}
+														</MenuItem>
+													))}
 											</Select>
 										</FormControl>
 									) : null}
@@ -297,93 +311,100 @@ class InspectionBetween extends Component {
 						</Form>
 					)}
 				</Formik>
-                <Grid  container className={classes.form}>				
-						<Grid item xs={false} md={2} />
-						<Grid item xs={12} md={8}>
-							<TableContainer>
-								<Table>
-									<TableHead>
-                                        {inspectionsList[0] ? (
-                                            <TableRow>
-                                                <TableCell>
-                                                    <Typography>
-                                                        <b>Nazwa przeglądu</b>
-                                                    </Typography>
-                                                </TableCell>
-                                                <TableCell>
-                                                    <Typography>
-                                                        <b>Plan</b>
-                                                    </Typography>
-                                                </TableCell>
-                                                <TableCell>
-                                                    <Typography>
-                                                        <b>Status</b>
-                                                    </Typography>
-                                                </TableCell>
-												{validToken && user ? authorities === "ROLE_ADMIN" ?
+				<Grid container className={classes.form}>
+					<Grid item xs={false} md={2} />
+					<Grid item xs={12} md={8}>
+						<TableContainer>
+							<Table>
+								<TableHead>
+									{inspectionsList[0] ? (
+										<TableRow>
+											<TableCell>
+												<Typography>
+													<b>Nazwa przeglądu</b>
+												</Typography>
+											</TableCell>
+											<TableCell>
+												<Typography>
+													<b>Plan</b>
+												</Typography>
+											</TableCell>
+											<TableCell>
+												<Typography>
+													<b>Status</b>
+												</Typography>
+											</TableCell>
+											{validToken && user && authorities === "ROLE_ADMIN" ? (
 												<TableCell>
-                                                    <Typography>
-                                                        <b>Akcja</b>
-                                                    </Typography>
-                                                </TableCell>
-												: null :null}
-                                            </TableRow>
-                                        ) : null}
-									</TableHead>
-									<TableBody>
-                                    {inspectionsList && inspectionsList.map((inspection, i) => (
-										<TableRow key={i}>
-											<TableCell>
-												<Typography>
-													<Link
-														style={{
-															color: "#000",
-															textDecoration: "none"
-														}}
-														to={`/inspections/list/${inspection.connection.connectionId}/${inspection.startTime}/to/${inspection.endTime}/show`}
-													>
-														{inspection.connection.name}
-													</Link>
-												</Typography>
-											</TableCell>
-											<TableCell>
-												<Typography component="div">
-                                                    <FormatDate date={inspection.startTime} /> Do
-									                <FormatDate date={inspection.endTime} />
-												</Typography>
-											</TableCell>
-											<TableCell>
-												<Typography>
-													{inspection.inspectionStatus === "Wykonany" ? (
-														<CheckCircleIcon fontSize="large" color="primary" />
-													) : inspection.inspectionStatus === "W trakcie" ? (
-														<CancelIcon fontSize="large" color="primary" />
-													) : (
-                                                        <ErrorIcon fontSize="large" color="secondary" />
-                                                    )}
-												</Typography>
-											</TableCell>
-											{validToken && user ? authorities === "ROLE_ADMIN" ?
-											<TableCell>
-											<Tooltip title="Wygeneruj">
-														<IconButton
-															color="default"
-															onClick={() => this.deleteConnections(inspection)}
-														>
-															<DeleteIcon fontSize="large"/>
-														</IconButton>
-													</Tooltip>
-											</TableCell>
-											: null :null}
+													<Typography>
+														<b>Akcja</b>
+													</Typography>
+												</TableCell>
+											) : null}
 										</TableRow>
-                                        ))}
-									</TableBody>
-								</Table>
-							</TableContainer>
-						</Grid>
-						<Grid item xs={false} md={2} />
+									) : null}
+								</TableHead>
+								<TableBody>
+									{inspectionsList &&
+										inspectionsList.map((inspection, i) => (
+											<TableRow key={i}>
+												<TableCell>
+													<Typography>
+														{inspection.connection && (
+															<Link
+																style={{
+																	color: "#000",
+																	textDecoration: "none"
+																}}
+																to={`/inspections/list/${inspection.connection.connectionId}/${inspection.startTime}/to/${inspection.endTime}/show`}
+															>
+																{inspection.connection.name}
+															</Link>
+														)}
+													</Typography>
+												</TableCell>
+												<TableCell>
+													<Typography component="div">
+														<FormatDate date={inspection.startTime} /> Do
+														<FormatDate date={inspection.endTime} />
+													</Typography>
+												</TableCell>
+												<TableCell>
+													<Typography>
+														{inspection.inspectionStatus === "Wykonany" ? (
+															<CheckCircleIcon
+																fontSize="large"
+																color="primary"
+															/>
+														) : inspection.inspectionStatus === "W trakcie" ? (
+															<CancelIcon fontSize="large" color="primary" />
+														) : (
+															<ErrorIcon fontSize="large" color="secondary" />
+														)}
+													</Typography>
+												</TableCell>
+												{validToken && user && authorities === "ROLE_ADMIN" ? (
+													<TableCell>
+														<Tooltip title="Usuń">
+															<IconButton
+																color="default"
+																onClick={() =>
+																	this.deleteConnections(inspection)
+																}
+															>
+																<DeleteIcon fontSize="large" />
+															</IconButton>
+														</Tooltip>
+													</TableCell>
+												) : null}
+											</TableRow>
+										))}
+								</TableBody>
+							</Table>
+						</TableContainer>
 					</Grid>
-                    
+					<Grid item xs={false} md={2} />
+				</Grid>
 			</>
 		);
 	}
@@ -421,8 +442,18 @@ const mapDispatchToProps = (dispatch) => {
 		getPersons: () => {
 			dispatch(getPersons());
 		},
-		deleteInspectionByConnectionAndStartTimeAndEndTime(connectionId, startTime, endTime,history) {
-			return dispatch(deleteInspectionByConnectionAndStartTimeAndEndTime(connectionId, startTime, endTime,history)).then((res) => {
+		deleteInspectionByConnectionAndStartTimeAndEndTime(
+			connectionId,
+			startTime,
+			endTime
+		) {
+			return dispatch(
+				deleteInspectionByConnectionAndStartTimeAndEndTime(
+					connectionId,
+					startTime,
+					endTime
+				)
+			).then((res) => {
 				if (res && res.status === 200) return res;
 			});
 		},
