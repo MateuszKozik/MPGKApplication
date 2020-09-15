@@ -20,7 +20,8 @@ export const tableStyles = (theme) => ({
 			fontSize: "30px"
 		},
 		padding: "5px",
-		textAlign: "center"
+		textAlign: "center",
+		fontWeight: 300
 	},
 	search: {
 		[theme.breakpoints.down("md")]: {
