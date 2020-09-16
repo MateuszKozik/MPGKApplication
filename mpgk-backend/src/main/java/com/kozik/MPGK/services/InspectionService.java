@@ -138,6 +138,8 @@ public class InspectionService {
             Integer countEmsr = 0;
             Integer countSetting = 0;
             for (Inspection inspection : inspections) {
+                inspectionObject.setStartTime(inspection.getStartTime());
+                inspectionObject.setEndTime(inspection.getEndTime());
                 if (!inspection.getActivity().getEmsr().isEmpty()) {
                     countEmsr++;
                 }
@@ -234,6 +236,25 @@ public class InspectionService {
                     LocalDateTime.parse(endTime));
 
             InspectionObject inspectionObject = new InspectionObject();
+            Integer countEmsr = 0;
+            Integer countSetting = 0;
+            for (Inspection inspection : inspections) {
+                inspectionObject.setStartTime(inspection.getStartTime());
+                inspectionObject.setEndTime(inspection.getEndTime());
+                if (!inspection.getActivity().getEmsr().isEmpty()) {
+                    countEmsr++;
+                }
+                if (!inspection.getActivity().getSetting().isEmpty()) {
+                    countSetting++;
+                }
+            }
+            if (countEmsr > 0) {
+                inspectionObject.setShowEmsr(true);
+            }
+            if (countSetting > 0) {
+                inspectionObject.setShowSetting(true);
+            }
+
             inspectionObject.setActivityGroup(activityGroup);
             inspectionObject.setInspections(inspections);
             inspectionList.add(inspectionObject);
@@ -414,6 +435,8 @@ public class InspectionService {
             Integer countEmsr = 0;
             Integer countSetting = 0;
             for (Inspection inspection : inspections) {
+                inspectionObject.setStartTime(inspection.getStartTime());
+                inspectionObject.setEndTime(inspection.getEndTime());
                 if (!inspection.getActivity().getEmsr().isEmpty()) {
                     countEmsr++;
                 }
