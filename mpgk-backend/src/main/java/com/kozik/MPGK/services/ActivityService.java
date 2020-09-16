@@ -71,8 +71,23 @@ public class ActivityService {
         ArrayList<ActivityObject> activityObjects = new ArrayList<>();
         for (ActivityGroup group : groups) {
             List<Activity> activities = activityRepository.findByActivityGroup(group);
-
+            Integer countEmsr = 0;
+            Integer countSetting = 0;
+            for (Activity activity : activities) {
+                if (!activity.getEmsr().isEmpty()) {
+                    countEmsr++;
+                }
+                if (!activity.getSetting().isEmpty()) {
+                    countSetting++;
+                }
+            }
             ActivityObject activityObject = new ActivityObject();
+            if (countEmsr > 0) {
+                activityObject.setShowEmsr(true);
+            }
+            if (countSetting > 0) {
+                activityObject.setShowSetting(true);
+            }
             activityObject.setActivities(activities);
             activityObject.setActivityGroup(group);
             activityObjects.add(activityObject);
