@@ -16,6 +16,6 @@ public class InspectionObject {
     private List<Inspection> inspections;
     private Boolean showEmsr = false;
     private Boolean showSetting = false;
-    String startTime;
-    String endTime;
+    private String startTime;
+    private String endTime;
 }
