@@ -437,6 +437,9 @@ public class TaskService {
     // Inspection on demand
     public void onDemand(Long connectionId, Principal principal) {
 
+        // Change status of overdue on demand inspections
+        setOverdue(connectionId);
+
         // Check if the device is working
         if ((connectionService.get(connectionId).getDevice().getStatus())) {
 
