@@ -14,4 +14,6 @@ public class ActivityObject {
 
     private ActivityGroup activityGroup;
     private List<Activity> activities;
+    private Boolean showEmsr = false;
+    private Boolean showSetting = false;
 }
