@@ -290,15 +290,17 @@ export class ConnectionList extends Component {
 											return (
 												<TableRow key={connection.connectionId}>
 													<TableCell>
-														<Link
-															style={{
-																color: "#000",
-																textDecoration: "none"
-															}}
-															to={`/inspections/list/${connection.connectionId}/activity`}
-														>
-															{connection.name}
-														</Link>
+														<Typography>
+															<Link
+																style={{
+																	color: "#000",
+																	textDecoration: "none"
+																}}
+																to={`/inspections/list/${connection.connectionId}/activity`}
+															>
+																{connection.name}
+															</Link>
+														</Typography>
 													</TableCell>
 													<TableCell>
 														<Typography>
