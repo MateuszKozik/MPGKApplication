@@ -11,6 +11,7 @@
         "axios": "^0.19.2",
         "bootstrap": "^4.4.1",
         "classnames": "^2.2.6",
+        "downloadjs": "^1.4.7",
         "formik": "^2.1.5",
         "formik-material-fields": "0.0.6",
         "jwt-decode": "^3.0.0-beta.2",
