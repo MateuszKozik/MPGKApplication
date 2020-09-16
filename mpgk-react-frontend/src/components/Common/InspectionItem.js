@@ -379,7 +379,9 @@ class InspectionItem extends Component {
 }
 
 InspectionItem.propTypes = {
-	updateInspection: PropTypes.func.isRequired
+	updateInspection: PropTypes.func.isRequired,
+	setSnackbar: PropTypes.func.isRequired,
+	updateOverdueInspection: PropTypes.func.isRequired
 };
 
 const mapDispatchToProps = (dispatch) => {
