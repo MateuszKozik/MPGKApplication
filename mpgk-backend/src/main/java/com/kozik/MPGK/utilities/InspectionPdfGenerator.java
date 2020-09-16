@@ -41,8 +41,8 @@ public class InspectionPdfGenerator {
         boolean isEmsr = false;
         boolean isSetting = false;
         if (!inspections.isEmpty()) {
-            isEmsr = inspections.get(0).getShowEmsr();
-            isSetting = inspections.get(0).getShowSetting();
+            isEmsr = inspections.get(1).getShowEmsr();
+            isSetting = inspections.get(1).getShowSetting();
         }
 
         try {
@@ -70,7 +70,7 @@ public class InspectionPdfGenerator {
             hcell.setPadding(8);
             table.addCell(hcell);
 
-            if (isEmsr && isSetting) {
+            if (isEmsr || isSetting) {
                 hcell = new PdfPCell(new Phrase("EMSR", headFont));
                 hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
                 hcell.setPadding(8);
@@ -109,7 +109,7 @@ public class InspectionPdfGenerator {
                 cell.setHorizontalAlignment(Element.ALIGN_CENTER);
                 table.addCell(cell);
 
-                if (isEmsr && isSetting) {
+                if (isEmsr || isSetting) {
                     cell = new PdfPCell();
                     cell.setPadding(8);
                     cell.setBorderWidthRight(0);
