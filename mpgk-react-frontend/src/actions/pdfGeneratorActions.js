@@ -18,3 +18,16 @@ export const generateInspectionReport = (
 		download(res.data, fileName, content);
 	}
 };
+
+export const generateActivityReport = (connectionId, fileName) => async (
+	dispatch
+) => {
+	if (isUserLogin()) {
+		const res = await axios.get(
+			`${hostName}/api/generate/activity-report/${connectionId}`,
+			{ responseType: "blob" }
+		);
+		const content = res.headers["content-type"];
+		download(res.data, fileName, content);
+	}
+};
