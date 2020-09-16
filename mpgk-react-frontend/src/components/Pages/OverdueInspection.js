@@ -6,9 +6,10 @@ import {
 	clearInspectionsListState
 } from "../../actions/inspectionActions";
 import InspectionItem from "../Common/InspectionItem";
-import { Grid, Typography } from "@material-ui/core";
+import { Button, Grid, Typography } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import { tableStyles } from "./../../consts/themeConsts";
+import { generateInspectionReport } from "../../actions/pdfGeneratorActions";
 
 class OverdueInspection extends Component {
 	state = {
@@ -36,8 +37,35 @@ class OverdueInspection extends Component {
 	render() {
 		const { classes } = this.props;
 		const { overdueInspection } = this.props.inspection;
+		const { connectionId } = this.props.match.params;
+
 		return (
 			<>
+				{overdueInspection && overdueInspection[0] && (
+					<Grid
+						container
+						className={classes.form}
+						style={{ textAlign: "left" }}
+					>
+						<Grid item xs={12}>
+							<Button
+								variant="contained"
+								color="primary"
+								onClick={() => {
+									this.props.generateInspectionReport(
+										connectionId,
+										overdueInspection[0].startTime,
+										overdueInspection[0].endTime,
+										"Raport"
+									);
+								}}
+							>
+								Drukuj
+							</Button>
+						</Grid>
+					</Grid>
+				)}
+
 				{overdueInspection &&
 					overdueInspection.map((inspectionList, k) => (
 						<Grid key={k} container className={classes.container}>
@@ -71,7 +99,8 @@ class OverdueInspection extends Component {
 OverdueInspection.propTypes = {
 	inspection: PropTypes.object.isRequired,
 	getOverdueByConnection: PropTypes.func.isRequired,
-	clearInspectionsListState: PropTypes.func.isRequired
+	clearInspectionsListState: PropTypes.func.isRequired,
+	generateInspectionReport: PropTypes.func.isRequired
 };
 
 const mapStateToPros = (state) => ({
@@ -85,6 +114,11 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		clearInspectionsListState: () => {
 			dispatch(clearInspectionsListState());
+		},
+		generateInspectionReport: (connectionId, startTime, endTime, fileName) => {
+			dispatch(
+				generateInspectionReport(connectionId, startTime, endTime, fileName)
+			);
 		}
 	};
 };

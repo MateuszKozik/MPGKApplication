@@ -10,7 +10,8 @@ import {
 	getInspectionByConnectionAndStartTimeAndEndTime,
 	clearInspectionState
 } from "../../../actions/inspectionActions";
-import { Grid, Typography } from "@material-ui/core";
+import { Button, Grid, Typography } from "@material-ui/core";
+import { generateInspectionReport } from "../../../actions/pdfGeneratorActions";
 
 class InspectionList extends Component {
 	componentDidMount() {
@@ -32,9 +33,35 @@ class InspectionList extends Component {
 	render() {
 		const { inspections } = this.props.inspection;
 		const { classes } = this.props;
+		const { connectionId } = this.props.match.params;
 
 		return (
 			<>
+				{inspections && inspections[0] && (
+					<Grid
+						container
+						className={classes.form}
+						style={{ textAlign: "left" }}
+					>
+						<Grid item xs={12}>
+							<Button
+								variant="contained"
+								color="primary"
+								onClick={() => {
+									this.props.generateInspectionReport(
+										connectionId,
+										inspections[0].startTime,
+										inspections[0].endTime,
+										"Raport"
+									);
+								}}
+							>
+								Drukuj
+							</Button>
+						</Grid>
+					</Grid>
+				)}
+
 				{inspections &&
 					inspections.map((inspectionList, k) => (
 						<Grid key={k} container className={classes.container}>
@@ -66,7 +93,8 @@ class InspectionList extends Component {
 InspectionList.propTypes = {
 	inspection: PropTypes.object.isRequired,
 	getInspectionByConnectionAndStartTimeAndEndTime: PropTypes.func.isRequired,
-	clearInspectionState: PropTypes.func.isRequired
+	clearInspectionState: PropTypes.func.isRequired,
+	generateInspectionReport: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => {
@@ -94,6 +122,11 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		clearInspectionState: () => {
 			dispatch(clearInspectionState());
+		},
+		generateInspectionReport: (connectionId, startTime, endTime, fileName) => {
+			dispatch(
+				generateInspectionReport(connectionId, startTime, endTime, fileName)
+			);
 		}
 	};
 };
