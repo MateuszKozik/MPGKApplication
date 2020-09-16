@@ -2,8 +2,8 @@ import {
 	GET_CONNECTIONS,
 	DELETE_CONNECTION,
 	GET_HOMEPAGE,
-	ADD_FLUID_REGISTRY,
-	UPDATE_CONNECTION
+	UPDATE_CONNECTION,
+	ADD_CONNECTION
 } from "../actions/types";
 
 const initialState = {
@@ -19,8 +19,8 @@ export default function (state = initialState, action) {
 				...state,
 				connections: action.payload
 			};
-		
-			case GET_HOMEPAGE:
+
+		case GET_HOMEPAGE:
 			return {
 				...state,
 				homePageConnections: action.payload
@@ -34,7 +34,7 @@ export default function (state = initialState, action) {
 				)
 			};
 
-		case ADD_FLUID_REGISTRY:
+		case ADD_CONNECTION:
 			return {
 				...state,
 				connections: [action.payload, ...state.connections]
