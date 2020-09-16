@@ -4,7 +4,10 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.List;
 
+import com.kozik.MPGK.services.ActivityService;
 import com.kozik.MPGK.services.InspectionService;
+import com.kozik.MPGK.utilities.ActivityObject;
+import com.kozik.MPGK.utilities.ActivityPdfGenerator;
 import com.kozik.MPGK.utilities.InspectionObject;
 import com.kozik.MPGK.utilities.InspectionPdfGenerator;
 
@@ -27,6 +30,9 @@ public class PDFGeneratorController {
     @Autowired
     private InspectionService inspectionService;
 
+    @Autowired
+    private ActivityService activityService;
+
     @GetMapping(value = "/inspection-report/{connectionId}/{startTime}/{endTime}", produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<InputStreamResource> generateInspectionReport(@PathVariable Long connectionId,
             @PathVariable String startTime, @PathVariable String endTime) throws IOException {
@@ -36,6 +42,19 @@ public class PDFGeneratorController {
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "attachment; filename=inspections.pdf");
+
+        return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF)
+                .body(new InputStreamResource(bis));
+    }
+
+    @GetMapping("/activity-report/{connectionId}")
+    public ResponseEntity<InputStreamResource> generateActivityReport(@PathVariable Long connectionId)
+            throws IOException {
+        List<ActivityObject> activities = activityService.getActivitiesByConnection(connectionId);
+        ByteArrayInputStream bis = ActivityPdfGenerator.generateActivityReport(activities);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "attachment; filename=activities.pdf");
 
         return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF)
                 .body(new InputStreamResource(bis));
