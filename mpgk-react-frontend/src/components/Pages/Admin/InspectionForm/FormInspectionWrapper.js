@@ -1,11 +1,16 @@
 import React, { Component } from "react";
 import Connection from "./Connection";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
 import DeviceAndInspectionType from "./DeviceAndInspectionType";
 import ActivityGroup from "./AcitvityGroup";
 import Employees from "./Employees";
+import { clearDeviceState } from "../../../../actions/deviceActions";
+import { clearPersonState } from "../../../../actions/personActions";
+import { clearInspectionTypeState } from "../../../../actions/inspectionTypeActions";
 
 const steps = [
 	"Podaj nazwę oraz status przeglądu",
@@ -37,6 +42,13 @@ class FormInspectionWrapper extends Component {
 			}
 		]
 	};
+
+	// Clear state
+	componentWillUnmount() {
+		this.props.clearDeviceState();
+		this.props.clearInspectionTypeState();
+		this.props.clearPersonState();
+	}
 
 	// Proceed to next step
 	nextStep = () => {
@@ -140,7 +152,7 @@ class FormInspectionWrapper extends Component {
 
 	// Handle histroy push
 	handleHistoryPush = () => {
-		this.props.history.push("/inspections");
+		this.props.history.push("/connections");
 	};
 
 	render() {
@@ -253,4 +265,24 @@ class FormInspectionWrapper extends Component {
 	}
 }
 
-export default FormInspectionWrapper;
+FormInspectionWrapper.propTypes = {
+	clearDeviceState: PropTypes.func.isRequired,
+	clearInspectionTypeState: PropTypes.func.isRequired,
+	clearPersonState: PropTypes.func.isRequired
+};
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		clearDeviceState: () => {
+			dispatch(clearDeviceState());
+		},
+		clearInspectionTypeState: () => {
+			dispatch(clearInspectionTypeState());
+		},
+		clearPersonState: () => {
+			dispatch(clearPersonState());
+		}
+	};
+};
+
+export default connect(null, mapDispatchToProps)(FormInspectionWrapper);

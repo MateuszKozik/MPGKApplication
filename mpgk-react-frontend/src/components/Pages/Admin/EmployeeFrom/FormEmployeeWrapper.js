@@ -1,5 +1,9 @@
 import { Step, StepLabel, Stepper } from "@material-ui/core";
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { clearConnectionState } from "../../../../actions/connectionActions";
+import { clearRoleState } from "../../../../actions/roleActions";
 import Inspections from "./Inspections";
 import Person from "./Person";
 import Roles from "./Roles";
@@ -24,6 +28,12 @@ export class FormEmployeeWrapper extends Component {
 		surname: "",
 		connections: []
 	};
+
+	// Clear state
+	componentWillUnmount() {
+		this.props.clearConnectionState();
+		this.props.clearRoleState();
+	}
 
 	// Proceed to next step
 	nextStep = () => {
@@ -168,4 +178,20 @@ export class FormEmployeeWrapper extends Component {
 	}
 }
 
-export default FormEmployeeWrapper;
+FormEmployeeWrapper.propTypes = {
+	clearConnectionState: PropTypes.func.isRequired,
+	clearRoleState: PropTypes.func.isRequired
+};
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		clearConnectionState: () => {
+			dispatch(clearConnectionState());
+		},
+		clearRoleState: () => {
+			dispatch(clearRoleState());
+		}
+	};
+};
+
+export default connect(null, mapDispatchToProps)(FormEmployeeWrapper);

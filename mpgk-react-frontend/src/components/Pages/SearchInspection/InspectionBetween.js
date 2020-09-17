@@ -5,9 +5,12 @@ import {
 	deleteInspectionByConnectionAndStartTimeAndEndTime,
 	clearInspectionsListState
 } from "../../../actions/inspectionActions";
-import { getConnections } from "../../../actions/connectionActions";
-import { getDevices } from "../../../actions/deviceActions";
-import { getPersons } from "../../../actions/personActions";
+import {
+	getConnections,
+	clearConnectionState
+} from "../../../actions/connectionActions";
+import { getDevices, clearDeviceState } from "../../../actions/deviceActions";
+import { getPersons, clearPersonState } from "../../../actions/personActions";
 import PropTypes from "prop-types";
 import FormatDate from "../../Common/FormatDate";
 import { Link } from "react-router-dom";
@@ -58,6 +61,9 @@ class InspectionBetween extends Component {
 
 	componentWillUnmount() {
 		this.props.clearInspectionsListState();
+		this.props.clearConnectionState();
+		this.props.clearDeviceState();
+		this.props.clearPersonState();
 	}
 	componentDidMount() {
 		this.props.getConnections();
@@ -420,7 +426,10 @@ InspectionBetween.propTypes = {
 	getDevices: PropTypes.func.isRequired,
 	getPersons: PropTypes.func.isRequired,
 	deleteInspectionByConnectionAndStartTimeAndEndTime: PropTypes.func.isRequired,
-	clearInspectionsListState: PropTypes.func.isRequired
+	clearInspectionsListState: PropTypes.func.isRequired,
+	clearConnectionState: PropTypes.func.isRequired,
+	clearDeviceState: PropTypes.func.isRequired,
+	clearPersonState: PropTypes.func.isRequired
 };
 
 const mapStateToPros = (state) => ({
@@ -462,6 +471,15 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		setSnackbar: (snackbarOpen, snackbarMessage, snackbarTime) => {
 			dispatch(setSnackbar(snackbarOpen, snackbarMessage, snackbarTime));
+		},
+		clearConnectionState: () => {
+			dispatch(clearConnectionState());
+		},
+		clearDeviceState: () => {
+			dispatch(clearDeviceState());
+		},
+		clearPersonState: () => {
+			dispatch(clearPersonState());
 		},
 		getConnectionAndStartTimeBetween(
 			connectionId,
