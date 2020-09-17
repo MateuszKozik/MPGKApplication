@@ -6,8 +6,11 @@ import {
 	clearFluidRegistryState,
 	addFluidRegistry
 } from "../../actions/fluidRegistryActions";
-import { getFluidPlaces } from "../../actions/fluidPlaceActions";
-import { getFluids } from "../../actions/fluidActions";
+import {
+	getFluidPlaces,
+	clearFluidPlaceState
+} from "../../actions/fluidPlaceActions";
+import { getFluids, clearFluidState } from "../../actions/fluidActions";
 import FormatDate from "../Common/FormatDate";
 import {
 	withStyles,
@@ -73,6 +76,8 @@ class FluidRegistry extends Component {
 
 	componentWillUnmount() {
 		this.props.clearFluidRegistryState();
+		this.props.clearFluidPlaceState();
+		this.props.clearFluidState();
 	}
 
 	handleClose = () => {
@@ -210,32 +215,36 @@ class FluidRegistry extends Component {
 									</TableRow>
 								</TableHead>
 								<TableBody>
-									{filtered && filtered.map((fluidRegistry, index) => {
-										const { fluidPlace, person, fluid } = fluidRegistry;
-										return (
-											<TableRow key={index}>
-												<TableCell>
-													<Typography>
-														{fluidPlace && fluidPlace.name}
-													</Typography>
-												</TableCell>
-												<TableCell>
-													<Typography>{fluid && fluid.name}</Typography>
-												</TableCell>
-												<TableCell>
-													<Typography>{fluidRegistry.quantity}</Typography>
-												</TableCell>
-												<TableCell>
-													<FormatDate date={fluidRegistry.datetime} datetime />
-												</TableCell>
-												<TableCell>
-													<Typography>
-														{person && person.name + " " + person.surname}
-													</Typography>
-												</TableCell>
-											</TableRow>
-										);
-									})}
+									{filtered &&
+										filtered.map((fluidRegistry, index) => {
+											const { fluidPlace, person, fluid } = fluidRegistry;
+											return (
+												<TableRow key={index}>
+													<TableCell>
+														<Typography>
+															{fluidPlace && fluidPlace.name}
+														</Typography>
+													</TableCell>
+													<TableCell>
+														<Typography>{fluid && fluid.name}</Typography>
+													</TableCell>
+													<TableCell>
+														<Typography>{fluidRegistry.quantity}</Typography>
+													</TableCell>
+													<TableCell>
+														<FormatDate
+															date={fluidRegistry.datetime}
+															datetime
+														/>
+													</TableCell>
+													<TableCell>
+														<Typography>
+															{person && person.name + " " + person.surname}
+														</Typography>
+													</TableCell>
+												</TableRow>
+											);
+										})}
 								</TableBody>
 							</Table>
 						</TableContainer>
@@ -293,11 +302,15 @@ class FluidRegistry extends Component {
 												<MenuItem value="">
 													<em>Wybierz miejsce</em>
 												</MenuItem>
-												{fluidPlaces && fluidPlaces.map((fluidPlace) => (
-													<MenuItem key={fluidPlace.placeId} value={fluidPlace}>
-														{fluidPlace.name}
-													</MenuItem>
-												))}
+												{fluidPlaces &&
+													fluidPlaces.map((fluidPlace) => (
+														<MenuItem
+															key={fluidPlace.placeId}
+															value={fluidPlace}
+														>
+															{fluidPlace.name}
+														</MenuItem>
+													))}
 											</Select>
 										</FormControl>
 									</Grid>
@@ -319,11 +332,12 @@ class FluidRegistry extends Component {
 												<MenuItem value="">
 													<em>Wybierz czynnik</em>
 												</MenuItem>
-												{fluids && fluids.map((fluid) => (
-													<MenuItem key={fluid.fluidId} value={fluid}>
-														{fluid.name}
-													</MenuItem>
-												))}
+												{fluids &&
+													fluids.map((fluid) => (
+														<MenuItem key={fluid.fluidId} value={fluid}>
+															{fluid.name}
+														</MenuItem>
+													))}
 											</Select>
 										</FormControl>
 									</Grid>
@@ -376,7 +390,9 @@ FluidRegistry.propTypes = {
 	addFluidRegistry: PropTypes.func.isRequired,
 	setSnackbar: PropTypes.func.isRequired,
 	getFluidPlaces: PropTypes.func.isRequired,
-	getFluids: PropTypes.func.isRequired
+	getFluids: PropTypes.func.isRequired,
+	clearFluidPlaceState: PropTypes.func.isRequired,
+	clearFluidState: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -398,6 +414,12 @@ const mapDispatchToProps = (dispatch) => ({
 	},
 	clearFluidRegistryState: () => {
 		dispatch(clearFluidRegistryState());
+	},
+	clearFluidState: () => {
+		dispatch(clearFluidState());
+	},
+	clearFluidPlaceState: () => {
+		dispatch(clearFluidPlaceState());
 	},
 	setSnackbar: (snackbarOpen, snackbarMessage, snackbarTime) => {
 		dispatch(setSnackbar(snackbarOpen, snackbarMessage, snackbarTime));
