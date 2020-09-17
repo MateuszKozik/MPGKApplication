@@ -66,7 +66,7 @@ class OverdueInspection extends Component {
 					</Grid>
 				)}
 
-				{overdueInspection &&
+				{overdueInspection && overdueInspection.length > 0 ? (
 					overdueInspection.map((inspectionList, k) => (
 						<Grid key={k} container className={classes.container}>
 							<Grid item xs={12}>
@@ -90,7 +90,19 @@ class OverdueInspection extends Component {
 									))}
 							</Grid>
 						</Grid>
-					))}
+					))
+				) : (
+					<Typography
+						style={{
+							display: "flex",
+							justifyContent: "center",
+							marginTop: 20
+						}}
+						variant="h5"
+					>
+						Trwa wczytywanie..
+					</Typography>
+				)}
 			</>
 		);
 	}

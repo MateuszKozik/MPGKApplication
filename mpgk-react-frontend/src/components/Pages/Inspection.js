@@ -60,7 +60,8 @@ class Inspection extends Component {
 						</Grid>
 					</Grid>
 				)}
-				{actualInspection &&
+
+				{actualInspection && actualInspection.length > 0 ? (
 					actualInspection.map((inspectionList, k) => (
 						<Grid key={k} container className={classes.container}>
 							<Grid item xs={12}>
@@ -84,7 +85,19 @@ class Inspection extends Component {
 									))}
 							</Grid>
 						</Grid>
-					))}
+					))
+				) : (
+					<Typography
+						style={{
+							display: "flex",
+							justifyContent: "center",
+							marginTop: 20
+						}}
+						variant="h5"
+					>
+						Trwa wczytywanie..
+					</Typography>
+				)}
 			</>
 		);
 	}
