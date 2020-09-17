@@ -37,9 +37,7 @@ public class ActivityService {
     }
 
     public Activity get(Long activityId) {
-        Activity activity = activityRepository.findById(activityId)
-                .orElseThrow(() -> new ActivityNotFoundException(activityId));
-        return activity;
+        return activityRepository.findById(activityId).orElseThrow(() -> new ActivityNotFoundException(activityId));
     }
 
     public void delete(Long activityId) {
@@ -51,7 +49,7 @@ public class ActivityService {
     }
 
     public Activity update(Long activityId, Activity activity) {
-        Activity newActivity = activityRepository.findById(activityId).map(element -> {
+        return activityRepository.findById(activityId).map(element -> {
             element.setName(activity.getName());
             element.setType(activity.getType());
             element.setEmsr(activity.getEmsr());
@@ -60,19 +58,19 @@ public class ActivityService {
             element.setActivityGroup(activity.getActivityGroup());
             return activityRepository.save(element);
         }).orElseThrow(() -> new ActivityNotFoundException(activityId));
-
-        return newActivity;
     }
 
     public ArrayList<ActivityObject> getActivitiesByConnection(Long connectionId) {
         Connection connection = connectionService.get(connectionId);
         List<ActivityGroup> groups = activityGroupRepository.findByConnection(connection);
 
-        ArrayList<ActivityObject> activityObjects = new ArrayList<>();
+        Integer countEmsr = 0;
+        Integer countSetting = 0;
+
+        // Check if emsr and setting should display
         for (ActivityGroup group : groups) {
             List<Activity> activities = activityRepository.findByActivityGroup(group);
-            Integer countEmsr = 0;
-            Integer countSetting = 0;
+
             for (Activity activity : activities) {
                 if (!activity.getEmsr().isEmpty()) {
                     countEmsr++;
@@ -81,13 +79,21 @@ public class ActivityService {
                     countSetting++;
                 }
             }
+        }
+
+        ArrayList<ActivityObject> activityObjects = new ArrayList<>();
+        for (ActivityGroup group : groups) {
+            List<Activity> activities = activityRepository.findByActivityGroup(group);
+
             ActivityObject activityObject = new ActivityObject();
+
             if (countEmsr > 0) {
                 activityObject.setShowEmsr(true);
             }
             if (countSetting > 0) {
                 activityObject.setShowSetting(true);
             }
+
             activityObject.setActivities(activities);
             activityObject.setActivityGroup(group);
             activityObjects.add(activityObject);

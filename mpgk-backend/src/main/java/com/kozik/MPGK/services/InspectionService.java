@@ -126,20 +126,18 @@ public class InspectionService {
     public ArrayList<InspectionObject> getInspectionByConnection(Long connectionId) {
         Connection connection = connectionService.get(connectionId);
         List<ActivityGroup> groups = activityGroupRepository.findByConnection(connection);
-
         ArrayList<InspectionObject> inspectionList = new ArrayList<>();
 
+        LocalDateTime now = LocalDateTime.now();
+        Integer countEmsr = 0;
+        Integer countSetting = 0;
+
+        // Check if emsr and setting should display
         for (ActivityGroup activityGroup : groups) {
-            LocalDateTime now = LocalDateTime.now();
             List<Inspection> inspections = inspectionRepository
                     .findByActivityActivityGroupAndEndTimeGreaterThan(activityGroup, now);
 
-            InspectionObject inspectionObject = new InspectionObject();
-            Integer countEmsr = 0;
-            Integer countSetting = 0;
             for (Inspection inspection : inspections) {
-                inspectionObject.setStartTime(inspection.getStartTime());
-                inspectionObject.setEndTime(inspection.getEndTime());
                 if (!inspection.getActivity().getEmsr().isEmpty()) {
                     countEmsr++;
                 }
@@ -147,6 +145,20 @@ public class InspectionService {
                     countSetting++;
                 }
             }
+        }
+
+        for (ActivityGroup activityGroup : groups) {
+
+            List<Inspection> inspections = inspectionRepository
+                    .findByActivityActivityGroupAndEndTimeGreaterThan(activityGroup, now);
+
+            InspectionObject inspectionObject = new InspectionObject();
+
+            for (Inspection inspection : inspections) {
+                inspectionObject.setStartTime(inspection.getStartTime());
+                inspectionObject.setEndTime(inspection.getEndTime());
+            }
+
             if (countEmsr > 0) {
                 inspectionObject.setShowEmsr(true);
             }
@@ -231,16 +243,15 @@ public class InspectionService {
 
         ArrayList<InspectionObject> inspectionList = new ArrayList<>();
 
+        Integer countEmsr = 0;
+        Integer countSetting = 0;
+
+        // Check if emsr and setting should display
         for (ActivityGroup activityGroup : groups) {
             List<Inspection> inspections = inspectionRepository.findByActivityActivityGroupAndEndTime(activityGroup,
                     LocalDateTime.parse(endTime));
 
-            InspectionObject inspectionObject = new InspectionObject();
-            Integer countEmsr = 0;
-            Integer countSetting = 0;
             for (Inspection inspection : inspections) {
-                inspectionObject.setStartTime(inspection.getStartTime());
-                inspectionObject.setEndTime(inspection.getEndTime());
                 if (!inspection.getActivity().getEmsr().isEmpty()) {
                     countEmsr++;
                 }
@@ -248,6 +259,19 @@ public class InspectionService {
                     countSetting++;
                 }
             }
+        }
+
+        for (ActivityGroup activityGroup : groups) {
+            List<Inspection> inspections = inspectionRepository.findByActivityActivityGroupAndEndTime(activityGroup,
+                    LocalDateTime.parse(endTime));
+
+            InspectionObject inspectionObject = new InspectionObject();
+
+            for (Inspection inspection : inspections) {
+                inspectionObject.setStartTime(inspection.getStartTime());
+                inspectionObject.setEndTime(inspection.getEndTime());
+            }
+
             if (countEmsr > 0) {
                 inspectionObject.setShowEmsr(true);
             }
@@ -426,24 +450,35 @@ public class InspectionService {
 
         ArrayList<InspectionObject> inspectionList = new ArrayList<>();
 
+        Integer countEmsr = 0;
+        Integer countSetting = 0;
+
+        // Check if emsr and setting should display
         for (ActivityGroup activityGroup : groups) {
             List<Inspection> inspections = inspectionRepository.findByActivityActivityGroupAndStartTimeAndEndTime(
                     activityGroup, LocalDateTime.parse(startTime), LocalDateTime.parse(endTime));
 
-            InspectionObject inspectionObject = new InspectionObject();
-
-            Integer countEmsr = 0;
-            Integer countSetting = 0;
             for (Inspection inspection : inspections) {
-                inspectionObject.setStartTime(inspection.getStartTime());
-                inspectionObject.setEndTime(inspection.getEndTime());
-                if (!inspection.getActivity().getEmsr().isEmpty()) {
+                if (!inspection.getActivity().getEmsr().isEmpty() || !inspection.getActivity().getSetting().isEmpty()) {
                     countEmsr++;
                 }
                 if (!inspection.getActivity().getSetting().isEmpty()) {
                     countSetting++;
                 }
             }
+        }
+
+        for (ActivityGroup activityGroup : groups) {
+            List<Inspection> inspections = inspectionRepository.findByActivityActivityGroupAndStartTimeAndEndTime(
+                    activityGroup, LocalDateTime.parse(startTime), LocalDateTime.parse(endTime));
+
+            InspectionObject inspectionObject = new InspectionObject();
+
+            for (Inspection inspection : inspections) {
+                inspectionObject.setStartTime(inspection.getStartTime());
+                inspectionObject.setEndTime(inspection.getEndTime());
+            }
+
             if (countEmsr > 0) {
                 inspectionObject.setShowEmsr(true);
             }

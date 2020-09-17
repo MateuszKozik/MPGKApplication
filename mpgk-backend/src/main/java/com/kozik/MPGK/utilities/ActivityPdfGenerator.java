@@ -29,8 +29,8 @@ public class ActivityPdfGenerator {
         boolean isEmsr = false;
         boolean isSetting = false;
         if (!activityObjects.isEmpty()) {
-            isEmsr = activityObjects.get(1).getShowEmsr();
-            isSetting = activityObjects.get(1).getShowSetting();
+            isEmsr = activityObjects.get(0).getShowEmsr();
+            isSetting = activityObjects.get(0).getShowSetting();
         }
 
         try {

@@ -41,8 +41,8 @@ public class InspectionPdfGenerator {
         boolean isEmsr = false;
         boolean isSetting = false;
         if (!inspections.isEmpty()) {
-            isEmsr = inspections.get(1).getShowEmsr();
-            isSetting = inspections.get(1).getShowSetting();
+            isEmsr = inspections.get(0).getShowEmsr();
+            isSetting = inspections.get(0).getShowSetting();
         }
 
         try {
