@@ -1,6 +1,5 @@
 import {
 	GET_FLUIDS,
-	DELETE_FLUID,
 	UPDATE_FLUID,
 	ADD_FLUID
 } from "../actions/types";
@@ -39,11 +38,6 @@ export default function (state = initialState, action) {
 				fluids: [action.payload, ...state.fluids]
 			};
 
-		case DELETE_FLUID:
-			return {
-				...state,
-				fluids: state.fluids.filter((fluid) => fluid.fluidId !== action.payload)
-			};
 
 		default:
 			return state;
