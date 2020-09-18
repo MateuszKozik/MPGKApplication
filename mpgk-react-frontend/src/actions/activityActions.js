@@ -3,7 +3,6 @@ import {
 	ADD_ACTIVITY,
 	GET_ERRORS,
 	GET_ACTIVITIES,
-	DELETE_ACTIVITY,
 	UPDATE_ACTIVITY,
 	GET_CONNECTION
 } from "./types";
@@ -69,17 +68,6 @@ export const updateActivity = (activityId, updatedActivity) => async (
 	}
 };
 
-export const deleteActivity = (activityId) => async (dispatch) => {
-	if (isUserLogin()) {
-		if (window.confirm("Czy jesteś pewny? Spowoduje to usunięcie czynności")) {
-			await axios.delete(`${hostName}/api/activities/${activityId}`);
-			dispatch({
-				type: DELETE_ACTIVITY,
-				payload: activityId
-			});
-		}
-	}
-};
 
 export const getActivitiesByConnection = (connectionId, history) => async (
 	dispach
