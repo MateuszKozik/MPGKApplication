@@ -2,7 +2,6 @@ import axios from "axios";
 import {
 	GET_ERRORS,
 	GET_PERSONS,
-	DELETE_PERSON,
 	ADD_PERSON,
 	UPDATE_PERSON
 } from "./types";
@@ -60,18 +59,6 @@ export const updatePerson = (personId, updatedPerson) => async (dispatch) => {
 			type: GET_ERRORS,
 			payload: error.response.data
 		});
-	}
-};
-
-export const deletePerson = (personId) => async (dispatch) => {
-	if (isUserLogin()) {
-		if (window.confirm("Czy jesteś pewny? Spowoduje to usunięcie osoby")) {
-			await axios.delete(`${hostName}/api/persons/${personId}`);
-			dispatch({
-				type: DELETE_PERSON,
-				payload: personId
-			});
-		}
 	}
 };
 
