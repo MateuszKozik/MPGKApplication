@@ -331,18 +331,18 @@ class InspectionBetween extends Component {
 												</Typography>
 											</TableCell>
 											<TableCell>
-												<Typography>
+												<Typography align="center">
 													<b>Plan</b>
 												</Typography>
 											</TableCell>
 											<TableCell>
-												<Typography>
+												<Typography align="center">
 													<b>Status</b>
 												</Typography>
 											</TableCell>
 											{validToken && user && authorities === "ROLE_ADMIN" ? (
 												<TableCell>
-													<Typography>
+													<Typography align="center">
 														<b>Akcja</b>
 													</Typography>
 												</TableCell>
@@ -369,13 +369,13 @@ class InspectionBetween extends Component {
 														)}
 													</Typography>
 												</TableCell>
-												<TableCell>
+												<TableCell align="center">
 													<Typography component="div">
-														<FormatDate date={inspection.startTime} /> Do
+														<FormatDate date={inspection.startTime} /> do
 														<FormatDate date={inspection.endTime} />
 													</Typography>
 												</TableCell>
-												<TableCell>
+												<TableCell align="center">
 													<Typography>
 														{inspection.inspectionStatus === "Wykonany" ? (
 															<CheckCircleIcon
@@ -390,7 +390,7 @@ class InspectionBetween extends Component {
 													</Typography>
 												</TableCell>
 												{validToken && user && authorities === "ROLE_ADMIN" ? (
-													<TableCell>
+													<TableCell align="center">
 														<Tooltip title="Usuń">
 															<IconButton
 																color="default"
