@@ -1,6 +1,5 @@
 import {
 	GET_CONNECTIONS,
-	DELETE_CONNECTION,
 	GET_HOMEPAGE,
 	UPDATE_CONNECTION,
 	ADD_CONNECTION
@@ -24,14 +23,6 @@ export default function (state = initialState, action) {
 			return {
 				...state,
 				homePageConnections: action.payload
-			};
-
-		case DELETE_CONNECTION:
-			return {
-				...state,
-				connections: state.connections.filter(
-					(connection) => connection.connectionId !== action.payload
-				)
 			};
 
 		case ADD_CONNECTION:
