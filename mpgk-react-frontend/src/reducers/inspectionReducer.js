@@ -1,6 +1,5 @@
 import {
 	GET_INSPECTIONS,
-	DELETE_INSPECTION,
 	CLEAR_INSPECTIONS_LIST_STATE,
 	GET_INSPECTION_BY_CONNECTION,
 	GET_OVERDUE_BY_CONNECTION,
@@ -72,14 +71,6 @@ export default function (state = initialState, action) {
 			return {
 				...state,
 				overdueInspection: action.payload
-			};
-
-		case DELETE_INSPECTION:
-			return {
-				...state,
-				inspections: state.inspections.filter(
-					(inspection) => inspection.inspectionId !== action.payload
-				)
 			};
 
 		case DELETE_INSPECTION_BY_CONNECTION:
