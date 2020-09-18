@@ -2,7 +2,6 @@ import axios from "axios";
 import {
 	GET_ERRORS,
 	GET_FLUIDS,
-	DELETE_FLUID,
 	ADD_FLUID,
 	UPDATE_FLUID
 } from "./types";
@@ -63,17 +62,6 @@ export const updateFluid = (fluidId, updatedFluid) => async (dispatch) => {
 	}
 };
 
-export const deleteFluid = (fluidId) => async (dispatch) => {
-	if (isUserLogin()) {
-		if (window.confirm("Czy jesteś pewny? Spowoduje to usunięcie płynu")) {
-			await axios.delete(`${hostName}/api/fluids/${fluidId}`);
-			dispatch({
-				type: DELETE_FLUID,
-				payload: fluidId
-			});
-		}
-	}
-};
 
 export const clearFluidState = () => (dispatch) => {
 	dispatch({
