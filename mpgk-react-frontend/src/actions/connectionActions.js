@@ -2,7 +2,6 @@ import axios from "axios";
 import {
 	GET_ERRORS,
 	GET_CONNECTIONS,
-	DELETE_CONNECTION,
 	ADD_CONNECTION,
 	UPDATE_CONNECTION,
 	GET_HOMEPAGE
@@ -66,18 +65,6 @@ export const updateConnection = (connectionId, updatedConnection) => async (
 			type: GET_ERRORS,
 			payload: error.response.data
 		});
-	}
-};
-
-export const deleteConnection = (connectionId) => async (dispach) => {
-	if (isUserLogin()) {
-		if (window.confirm("Czy jesteś pewny? Spowoduje to usunięcie powiązania")) {
-			await axios.delete(`${hostName}/api/connections/${connectionId}`);
-			dispach({
-				type: DELETE_CONNECTION,
-				payload: connectionId
-			});
-		}
 	}
 };
 
