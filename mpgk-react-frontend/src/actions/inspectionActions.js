@@ -2,7 +2,6 @@ import axios from "axios";
 import {
 	GET_ERRORS,
 	GET_INSPECTIONS,
-	DELETE_INSPECTION,
 	CLEAR_INSPECTIONS_LIST_STATE,
 	GET_INSPECTION_BY_CONNECTION,
 	GET_OVERDUE_BY_CONNECTION,
@@ -95,18 +94,6 @@ export const updateOverdueInspection = (
 			payload: error.response.data
 		});
 		return error.response.data;
-	}
-};
-
-export const deleteInspection = (inspectionId) => async (dispatch) => {
-	if (isUserLogin()) {
-		if (window.confirm("Czy jesteś pewny? Spowoduje to usunięcie przeglądu")) {
-			await axios.delete(`${hostName}/api/inspections/${inspectionId}`);
-			dispatch({
-				type: DELETE_INSPECTION,
-				payload: inspectionId
-			});
-		}
 	}
 };
 
