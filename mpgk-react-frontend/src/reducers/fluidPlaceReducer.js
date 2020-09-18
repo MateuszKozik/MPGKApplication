@@ -1,6 +1,5 @@
 import {
 	GET_FLUID_PLACES,
-	DELETE_FLUID_PLACE,
 	ADD_FLUID_PLACE,
 	UPDATE_FLUID_PLACE
 } from "../actions/types";
@@ -41,13 +40,6 @@ export default function (state = initialState, action) {
 			};
 		}
 
-		case DELETE_FLUID_PLACE:
-			return {
-				...state,
-				fluidPlaces: state.fluidPlaces.filter(
-					(fluidPlace) => fluidPlace.placeId !== action.payload
-				)
-			};
 		default:
 			return state;
 	}
