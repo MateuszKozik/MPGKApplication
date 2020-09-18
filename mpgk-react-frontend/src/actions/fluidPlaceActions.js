@@ -2,7 +2,6 @@ import axios from "axios";
 import {
 	GET_ERRORS,
 	GET_FLUID_PLACES,
-	DELETE_FLUID_PLACE,
 	ADD_FLUID_PLACE,
 	UPDATE_FLUID_PLACE
 } from "./types";
@@ -65,22 +64,6 @@ export const updateFluidPlace = (placeId, updatedFluidPlace) => async (
 			type: GET_ERRORS,
 			payload: error.response.data
 		});
-	}
-};
-
-export const deleteFluidPlace = (placeId) => async (dispatch) => {
-	if (isUserLogin()) {
-		if (
-			window.confirm(
-				"Czy jesteś pewny? Spowoduje to usunięcie miejsca dodania płynu"
-			)
-		) {
-			await axios.delete(`${hostName}/api/fluid-places/${placeId}`);
-			dispatch({
-				type: DELETE_FLUID_PLACE,
-				payload: placeId
-			});
-		}
 	}
 };
 
