@@ -66,16 +66,20 @@ public class InspectionService {
     public Inspection update(Long inspectionId, Inspection inspection, Principal principal) {
         String username = principal.getName();
         return inspectionRepository.findById(inspectionId).map(element -> {
-            element.setStatus(inspection.getStatus());
-            element.setStartTime(inspection.getStartTime());
-            element.setEndTime(inspection.getEndTime());
-            element.setParameter(inspection.getParameter());
-            element.setComment(inspection.getComment());
-            element.setDatetime(LocalDateTime.now().toLocalDate().toString() + "T"
-                    + LocalDateTime.now().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm")));
-            element.setActivity(inspection.getActivity());
-            element.setPerson(personService.getByUsername(username));
-            return inspectionRepository.save(element);
+            if (LocalDateTime.now().isBefore(LocalDateTime.parse(element.getEndTime()))) {
+                element.setStatus(inspection.getStatus());
+                element.setStartTime(inspection.getStartTime());
+                element.setEndTime(inspection.getEndTime());
+                element.setParameter(inspection.getParameter());
+                element.setComment(inspection.getComment());
+                element.setDatetime(LocalDateTime.now().toLocalDate().toString() + "T"
+                        + LocalDateTime.now().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm")));
+                element.setActivity(inspection.getActivity());
+                element.setPerson(personService.getByUsername(username));
+                return inspectionRepository.save(element);
+            } else {
+                return inspection;
+            }
         }).orElseThrow(() -> new InspectionNotFoundException(inspectionId));
 
     }
