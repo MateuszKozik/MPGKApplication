@@ -1,6 +1,5 @@
 import { 
     GET_GROUPS, 
-    DELETE_GROUP,
     ADD_GROUP, 
     UPDATE_GROUP
 } from "../actions/types";
@@ -37,14 +36,6 @@ export default function (state = initialState, action) {
             ...state,
             groups: [action.payload, ...state.groups]
         };
-
-        case DELETE_GROUP:
-            return {
-                ...state,
-                groups: state.groups.filter(
-                    (group) => group.groupId !== action.payload
-                )
-            };
 
         default:
             return state;
