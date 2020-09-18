@@ -1,6 +1,5 @@
 import { 
     GET_PERSONS,  
-    DELETE_PERSON,
     ADD_PERSON,
     UPDATE_PERSON
 } from "../actions/types";
@@ -36,14 +35,6 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 persons: [action.payload, ...state.persons]
-            };
-
-        case DELETE_PERSON:
-            return {
-                ...state,
-                persons: state.persons.filter(
-                    (person) => person.personId !== action.payload
-                )
             };
 
         default:
