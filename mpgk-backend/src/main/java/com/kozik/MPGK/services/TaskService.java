@@ -62,7 +62,7 @@ public class TaskService {
     private static final String MINUTE_AFTER_MIDNIGHT = "T00:01";
 
     // The method will be called every 15 minutes
-    @Scheduled(cron = "0 */1 * ? * *")
+    @Scheduled(cron = "0 */15 * ? * *")
     @Transactional
     public void check() {
         for (String string : inspectionTypes) {
