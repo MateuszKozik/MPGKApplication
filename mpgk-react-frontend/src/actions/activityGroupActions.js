@@ -3,7 +3,6 @@ import {
 	ADD_GROUP,
 	GET_ERRORS,
 	GET_GROUPS,
-	DELETE_GROUP,
 	UPDATE_GROUP
 } from "./types";
 import isUserLogin from "../securityUtils/isUserLogin";
@@ -63,17 +62,6 @@ export const updateGroup = (groupId, updatedGroup) => async (dispatch) => {
 	}
 };
 
-export const deleteGroup = (groupId) => async (dispatch) => {
-	if (isUserLogin()) {
-		if (window.confirm("Czy jesteś pewny? Spowoduje to usunięcie grupy")) {
-			await axios.delete(`${hostName}/api/groups/${groupId}`);
-			dispatch({
-				type: DELETE_GROUP,
-				payload: groupId
-			});
-		}
-	}
-};
 
 export const clearGroupState = () => (dispatch) => {
 	dispatch({
