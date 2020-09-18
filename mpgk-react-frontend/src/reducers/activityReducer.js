@@ -1,7 +1,6 @@
 import {
 	ADD_ACTIVITY,
 	GET_ACTIVITIES,
-	DELETE_ACTIVITY,
 	UPDATE_ACTIVITY
 } from "../actions/types";
 
@@ -36,14 +35,6 @@ export default function (state = initialState, action) {
 			return {
 				...state,
 				activities: [action.payload, ...state.activities]
-			};
-
-		case DELETE_ACTIVITY:
-			return {
-				...state,
-				activities: state.activities.filter(
-					(activity) => activity.activityId !== action.payload
-				)
 			};
 
 		default:
