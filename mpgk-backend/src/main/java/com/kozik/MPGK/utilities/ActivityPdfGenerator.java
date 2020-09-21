@@ -118,7 +118,6 @@ public class ActivityPdfGenerator {
 
                 cell = new PdfPCell();
                 cell.setPadding(8);
-                cell.setBorderWidthRight(0);
                 cell.setBorderWidthLeft(0);
                 cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
                 cell.setHorizontalAlignment(Element.ALIGN_CENTER);
