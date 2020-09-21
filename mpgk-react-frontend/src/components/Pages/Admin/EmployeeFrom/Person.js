@@ -43,38 +43,44 @@ export class Person extends Component {
 				{({ values }) => (
 					<Form className={classes.form}>
 						<Grid container spacing={2} justify="center">
-							<Grid item xs={12}>
-								<FormikTextField
-									className={classes.formControl}
-									id="name"
-									name="name"
-									label="Imię"
-									variant="outlined"
-									required
-									onChange={handleChange("name")}
-								/>
+							<Grid item xs={12} md={4} />
+							<Grid item xs={12} md={4}>
+								<Grid container spacing={2}>
+									<Grid item xs={12}>
+										<FormikTextField
+											className={classes.formControl}
+											id="name"
+											name="name"
+											label="Imię"
+											variant="outlined"
+											required
+											onChange={handleChange("name")}
+										/>
+									</Grid>
+									<Grid item xs={12}>
+										<FormikTextField
+											className={classes.formControl}
+											id="surname"
+											name="surname"
+											label="Nazwisko"
+											variant="outlined"
+											required
+											onChange={handleChange("surname")}
+										/>
+									</Grid>
+									<Grid item xs={3} />
+									<Grid item xs={3}>
+										<Button onClick={this.back}>Wróć</Button>
+									</Grid>
+									<Grid item xs={3}>
+										<Button type="submit" color="primary">
+											Dalej
+										</Button>
+									</Grid>
+									<Grid item xs={3} />
+								</Grid>
 							</Grid>
-							<Grid item xs={12}>
-								<FormikTextField
-									className={classes.formControl}
-									id="surname"
-									name="surname"
-									label="Nazwisko"
-									variant="outlined"
-									required
-									onChange={handleChange("surname")}
-								/>
-							</Grid>
-							<Grid item xs={3} />
-							<Grid item xs={3}>
-								<Button onClick={this.back}>Wróć</Button>
-							</Grid>
-							<Grid item xs={3}>
-								<Button type="submit" color="primary">
-									Dalej
-								</Button>
-							</Grid>
-							<Grid item xs={3} />
+							<Grid item xs={12} md={4} />
 						</Grid>
 					</Form>
 				)}

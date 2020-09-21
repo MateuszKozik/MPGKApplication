@@ -368,6 +368,7 @@ export class ConnectionList extends Component {
 								<Grid container spacing={2} justify="center">
 									<Grid item xs={12}>
 										<FormikTextField
+											className={classes.formControl}
 											error={errors.name && true}
 											id="name"
 											name="name"

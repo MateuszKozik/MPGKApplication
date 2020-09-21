@@ -49,62 +49,68 @@ export class User extends Component {
 				{({ values }) => (
 					<Form className={classes.form}>
 						<Grid container spacing={2} justify="center">
-							<Grid item xs={12}>
-								<FormikTextField
-									className={classes.formControl}
-									id="username"
-									name="username"
-									label="Nazwa użytkownika"
-									variant="outlined"
-									required
-									onChange={handleChange("username")}
-								/>
+							<Grid item xs={12} md={4} />
+							<Grid item xs={12} md={4}>
+								<Grid container spacing={2}>
+									<Grid item xs={12}>
+										<FormikTextField
+											className={classes.formControl}
+											id="username"
+											name="username"
+											label="Nazwa użytkownika"
+											variant="outlined"
+											required
+											onChange={handleChange("username")}
+										/>
+									</Grid>
+									<Grid item xs={12}>
+										<FormikTextField
+											className={classes.formControl}
+											id="password"
+											name="password"
+											label="Hasło"
+											type="password"
+											variant="outlined"
+											required
+											onChange={handleChange("password")}
+										/>
+									</Grid>
+									<Grid item xs={12}>
+										<FormikTextField
+											className={classes.formControl}
+											helperText={this.state.error.confirmPassword}
+											id="confirmPassword"
+											name="confirmPassword"
+											label="Powtórz hasło"
+											type="password"
+											variant="outlined"
+											required
+											onChange={handleChange("confirmPassword")}
+										/>
+									</Grid>
+									<Grid item xs={12}>
+										<FormikSwitchField
+											label="Status konta"
+											id="enabled"
+											name="enabled"
+											onChange={handleSwitchChange("enabled")}
+											trueValue={true}
+											falseValue={false}
+											controlLabel={
+												values.enabled === true
+													? "Aktywne"
+													: values.enabled === false && "Niektywne"
+											}
+										/>
+									</Grid>
+									<Grid item xs={12}>
+										<Button type="submit" color="primary">
+											Dalej
+										</Button>
+									</Grid>
+								</Grid>
 							</Grid>
-							<Grid item xs={12}>
-								<FormikTextField
-									className={classes.formControl}
-									id="password"
-									name="password"
-									label="Hasło"
-									type="password"
-									variant="outlined"
-									required
-									onChange={handleChange("password")}
-								/>
-							</Grid>
-							<Grid item xs={12}>
-								<FormikTextField
-									className={classes.formControl}
-									helperText={this.state.error.confirmPassword}
-									id="confirmPassword"
-									name="confirmPassword"
-									label="Powtórz hasło"
-									type="password"
-									variant="outlined"
-									required
-									onChange={handleChange("confirmPassword")}
-								/>
-							</Grid>
-							<Grid item xs={12}>
-								<FormikSwitchField
-									label="Status konta"
-									id="enabled"
-									name="enabled"
-									onChange={handleSwitchChange("enabled")}
-									trueValue={true}
-									falseValue={false}
-									controlLabel={
-										values.enabled === true
-											? "Aktywne"
-											: values.enabled === false && "Niektywne"
-									}
-								/>
-							</Grid>
-							<Grid item xs={12}>
-								<Button type="submit" color="primary">
-									Dalej
-								</Button>
-							</Grid>
+							<Grid item xs={12} md={4} />
 						</Grid>
 					</Form>
 				)}

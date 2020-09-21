@@ -30,7 +30,7 @@ export const tableStyles = (theme) => ({
 		padding: "10px"
 	},
 	formControl: {
-		width: "340px"
+		width: "70%"
 	},
 	chip: {
 		margin: 2

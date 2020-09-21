@@ -73,82 +73,93 @@ class DeviceAndInpectionType extends Component {
 				{({ values }) => (
 					<Form className={classes.form}>
 						<Grid container spacing={2} justify="center">
-							<Grid item xs={12}>
-								<FormControl
-									required
-									variant="outlined"
-									className={classes.formControl}
-								>
-									<InputLabel id="device-label">Urządzenie</InputLabel>
-									<Select
-										labelId="device-label"
-										id="device"
-										name="device"
-										value={device}
-										onChange={handleChange("device")}
-										label="Urządzenie"
-									>
-										<MenuItem value={device}>{device.name}</MenuItem>
-										{devices && devices.map((deviceItem) => (
-											<MenuItem key={deviceItem.deviceId} value={deviceItem}>
-												{deviceItem.name}
-											</MenuItem>
-										))}
-									</Select>
-								</FormControl>
-							</Grid>
-							<Grid item xs={12}></Grid>
-							<Grid item xs={12}>
-								<FormControl
-									required
-									variant="outlined"
-									className={classes.formControl}
-								>
-									<InputLabel id="inspection-type-label">
-										Rodzaj przeglądu
-									</InputLabel>
-									<Select
-										labelId="inspection-type-label"
-										id="inspectionType"
-										name="inspectionType"
-										value={inspectionType}
-										onChange={handleChange("inspectionType")}
-										label="Rodzaj przeglądu"
-										endAdornment={
-											<InputAdornment position="start">
-												<IconButton
-													onClick={(e) => this.handlePopoverClick(e)}
-													aria-describedby={id}
-												>
-													<InfoIcon />
-												</IconButton>
-											</InputAdornment>
-										}
-									>
-										<MenuItem value={inspectionType}>
-											{inspectionType.name}
-										</MenuItem>
-										{inspectionTypes && inspectionTypes.map((inspectionTypeItem) => (
-											<MenuItem
-												key={inspectionTypeItem.typeId}
-												value={inspectionTypeItem}
+							<Grid item xs={12} md={4} />
+							<Grid item xs={12} md={4}>
+								<Grid container spacing={2}>
+									<Grid item xs={12}>
+										<FormControl
+											required
+											variant="outlined"
+											className={classes.formControl}
+										>
+											<InputLabel id="device-label">Urządzenie</InputLabel>
+											<Select
+												labelId="device-label"
+												id="device"
+												name="device"
+												value={device}
+												onChange={handleChange("device")}
+												label="Urządzenie"
 											>
-												{inspectionTypeItem.name}
-											</MenuItem>
-										))}
-									</Select>
-								</FormControl>
+												<MenuItem value={device}>{device.name}</MenuItem>
+												{devices &&
+													devices.map((deviceItem) => (
+														<MenuItem
+															key={deviceItem.deviceId}
+															value={deviceItem}
+														>
+															{deviceItem.name}
+														</MenuItem>
+													))}
+											</Select>
+										</FormControl>
+									</Grid>
+									<Grid item xs={12}></Grid>
+									<Grid item xs={12}>
+										<FormControl
+											required
+											variant="outlined"
+											className={classes.formControl}
+										>
+											<InputLabel id="inspection-type-label">
+												Rodzaj przeglądu
+											</InputLabel>
+											<Select
+												labelId="inspection-type-label"
+												id="inspectionType"
+												name="inspectionType"
+												value={inspectionType}
+												onChange={handleChange("inspectionType")}
+												label="Rodzaj przeglądu"
+												endAdornment={
+													<InputAdornment position="start">
+														<IconButton
+															onClick={(e) => this.handlePopoverClick(e)}
+															aria-describedby={id}
+														>
+															<InfoIcon />
+														</IconButton>
+													</InputAdornment>
+												}
+											>
+												<MenuItem value={inspectionType}>
+													{inspectionType.name}
+												</MenuItem>
+												{inspectionTypes &&
+													inspectionTypes.map((inspectionTypeItem) => (
+														<MenuItem
+															key={inspectionTypeItem.typeId}
+															value={inspectionTypeItem}
+														>
+															{inspectionTypeItem.name}
+														</MenuItem>
+													))}
+											</Select>
+										</FormControl>
+									</Grid>
+									<Grid item xs={3} />
+									<Grid item xs={3}>
+										<Button onClick={this.back}>Wróć</Button>
+									</Grid>
+									<Grid item xs={3}>
+										<Button type="submit" color="primary">
+											Dalej
+										</Button>
+									</Grid>
+									<Grid item xs={3} />
+								</Grid>
 							</Grid>
-							<Grid item xs={3} />
-							<Grid item xs={3}>
-								<Button onClick={this.back}>Wróć</Button>
-							</Grid>
-							<Grid item xs={3}>
-								<Button type="submit" color="primary">
-									Dalej
-								</Button>
-							</Grid>
-							<Grid item xs={3} />
+							<Grid item xs={12} md={4} />
 						</Grid>
 						<Popover
 							id={id}

@@ -88,50 +88,61 @@ export class Inspections extends Component {
 				{({ values }) => (
 					<Form className={classes.form}>
 						<Grid container spacing={2} justify="center">
-							<Grid item xs={12}>
-								{connections &&
-									connections.map((connection, index) => (
-										<Chip
-											key={index}
-											label={connection.name}
-											className={classes.chip}
-											onDelete={() => handleRemoveConnection(index)}
-										/>
-									))}
+							<Grid item xs={false} md={4} />
+
+							<Grid item xs={12} md={4}>
+								<Grid container spacing={2}>
+									<Grid item xs={12}>
+										{connections &&
+											connections.map((connection, index) => (
+												<Chip
+													key={index}
+													label={connection.name}
+													className={classes.chip}
+													onDelete={() => handleRemoveConnection(index)}
+												/>
+											))}
+									</Grid>
+									<Grid item xs={12}>
+										<FormControl
+											className={classes.formControl}
+											variant="outlined"
+										>
+											<InputLabel id="connections-label">Przeglądy</InputLabel>
+											<Select
+												labelId="connections-label"
+												id="connections"
+												name="connections"
+												multiple
+												label="Przeglądy"
+												value={connections}
+												onChange={handleChange("connections")}
+											>
+												{connectionList &&
+													connectionList.map((connection, index) => {
+														return (
+															<MenuItem key={index} value={connection}>
+																{connection.name}
+															</MenuItem>
+														);
+													})}
+											</Select>
+										</FormControl>
+									</Grid>
+									<Grid item xs={3} />
+									<Grid item xs={3}>
+										<Button onClick={this.back}>Wróć</Button>
+									</Grid>
+									<Grid item xs={3}>
+										<Button type="submit" color="primary">
+											Dalej
+										</Button>
+									</Grid>
+									<Grid item xs={3} />
+								</Grid>
 							</Grid>
-							<Grid item xs={12}>
-								<FormControl className={classes.formControl} variant="outlined">
-									<InputLabel id="connections-label">Przeglądy</InputLabel>
-									<Select
-										labelId="connections-label"
-										id="connections"
-										name="connections"
-										multiple
-										label="Przeglądy"
-										value={connections}
-										onChange={handleChange("connections")}
-									>
-										{connectionList &&
-											connectionList.map((connection, index) => {
-												return (
-													<MenuItem key={index} value={connection}>
-														{connection.name}
-													</MenuItem>
-												);
-											})}
-									</Select>
-								</FormControl>
-							</Grid>
-							<Grid item xs={3} />
-							<Grid item xs={3}>
-								<Button onClick={this.back}>Wróć</Button>
-							</Grid>
-							<Grid item xs={3}>
-								<Button type="submit" color="primary">
-									Dalej
-								</Button>
-							</Grid>
-							<Grid item xs={3} />
+
+							<Grid item xs={false} md={4} />
 						</Grid>
 					</Form>
 				)}

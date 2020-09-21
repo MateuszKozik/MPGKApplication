@@ -194,116 +194,131 @@ class InspectionBetween extends Component {
 									</FormControl>
 								</Grid>
 								<Grid item xs={12}>
-									{this.state.typeName === "przeglad" ? (
-										<FormControl
-											required
-											variant="outlined"
-											className={classes.formControl}
-										>
-											<InputLabel>Przegląd</InputLabel>
-											<Select
-												name="connectionId"
-												value={this.state.connectionId}
-												onChange={this.onChange}
-												label="Przegląd"
-											>
-												<MenuItem value="">
-													<em>Wybierz przegląd</em>
-												</MenuItem>
-												{connections &&
-													connections.map((connection, index) => (
-														<MenuItem
-															key={index}
-															value={connection.connectionId}
+									<Grid container spacing={2}>
+										<Grid item xs={false} md={4} />
+										<Grid item xs={12} md={4}>
+											<Grid container spacing={2}>
+												<Grid item xs={12}>
+													{this.state.typeName === "przeglad" ? (
+														<FormControl
+															required
+															variant="outlined"
+															className={classes.formControl}
 														>
-															{connection.name}
-														</MenuItem>
-													))}
-											</Select>
-										</FormControl>
-									) : this.state.typeName === "urzadzenie" ? (
-										<FormControl
-											required
-											variant="outlined"
-											className={classes.formControl}
-										>
-											<InputLabel>Urządzenie</InputLabel>
-											<Select
-												name="deviceId"
-												value={this.state.deviceId}
-												onChange={this.onChange}
-												label="Urządzenie"
-											>
-												<MenuItem value="">
-													<em>Wybierz urządzenie</em>
-												</MenuItem>
-												{devices &&
-													devices.map((device, index) => (
-														<MenuItem key={index} value={device.deviceId}>
-															{device.name}
-														</MenuItem>
-													))}
-											</Select>
-										</FormControl>
-									) : this.state.typeName === "pracownik" ? (
-										<FormControl
-											required
-											variant="outlined"
-											className={classes.formControl}
-										>
-											<InputLabel>Pracownik</InputLabel>
-											<Select
-												name="personId"
-												value={this.state.personId}
-												onChange={this.onChange}
-												label="Pracownik"
-											>
-												<MenuItem value="">
-													<em>Wybierz pracownika</em>
-												</MenuItem>
-												{persons &&
-													persons.map((person, index) => (
-														<MenuItem key={index} value={person.personId}>
-															{person.name + " " + person.surname}
-														</MenuItem>
-													))}
-											</Select>
-										</FormControl>
-									) : null}
-								</Grid>
-								<Grid item xs={12}>
-									<TextField
-										className={classes.formControl}
-										required
-										id="startTime"
-										label="Początkowa data"
-										type="datetime-local"
-										variant="outlined"
-										name="startTime"
-										value={this.state.startTime}
-										onChange={this.onChange}
-										InputLabelProps={{
-											shrink: true
-										}}
-									/>
-								</Grid>
-								<Grid item xs={12}>
-									<TextField
-										className={classes.formControl}
-										required
-										id="endTime"
-										label="Końcowa data"
-										type="datetime-local"
-										variant="outlined"
-										name="endTime"
-										value={this.state.endTime}
-										onChange={this.onChange}
-										InputLabelProps={{
-											shrink: true
-										}}
-									/>
-								</Grid>
-								<Grid item xs={12}>
+															<InputLabel>Przegląd</InputLabel>
+															<Select
+																name="connectionId"
+																value={this.state.connectionId}
+																onChange={this.onChange}
+																label="Przegląd"
+															>
+																<MenuItem value="">
+																	<em>Wybierz przegląd</em>
+																</MenuItem>
+																{connections &&
+																	connections.map((connection, index) => (
+																		<MenuItem
+																			key={index}
+																			value={connection.connectionId}
+																		>
+																			{connection.name}
+																		</MenuItem>
+																	))}
+															</Select>
+														</FormControl>
+													) : this.state.typeName === "urzadzenie" ? (
+														<FormControl
+															required
+															variant="outlined"
+															className={classes.formControl}
+														>
+															<InputLabel>Urządzenie</InputLabel>
+															<Select
+																name="deviceId"
+																value={this.state.deviceId}
+																onChange={this.onChange}
+																label="Urządzenie"
+															>
+																<MenuItem value="">
+																	<em>Wybierz urządzenie</em>
+																</MenuItem>
+																{devices &&
+																	devices.map((device, index) => (
+																		<MenuItem
+																			key={index}
+																			value={device.deviceId}
+																		>
+																			{device.name}
+																		</MenuItem>
+																	))}
+															</Select>
+														</FormControl>
+													) : this.state.typeName === "pracownik" ? (
+														<FormControl
+															required
+															variant="outlined"
+															className={classes.formControl}
+														>
+															<InputLabel>Pracownik</InputLabel>
+															<Select
+																name="personId"
+																value={this.state.personId}
+																onChange={this.onChange}
+																label="Pracownik"
+															>
+																<MenuItem value="">
+																	<em>Wybierz pracownika</em>
+																</MenuItem>
+																{persons &&
+																	persons.map((person, index) => (
+																		<MenuItem
+																			key={index}
+																			value={person.personId}
+																		>
+																			{person.name + " " + person.surname}
+																		</MenuItem>
+																	))}
+															</Select>
+														</FormControl>
+													) : null}
+												</Grid>
+												<Grid item xs={12}>
+													<TextField
+														className={classes.formControl}
+														required
+														id="startTime"
+														label="Początkowa data"
+														type="datetime-local"
+														variant="outlined"
+														name="startTime"
+														value={this.state.startTime}
+														onChange={this.onChange}
+														InputLabelProps={{
+															shrink: true
+														}}
+													/>
+												</Grid>
+												<Grid item xs={12}>
+													<TextField
+														className={classes.formControl}
+														required
+														id="endTime"
+														label="Końcowa data"
+														type="datetime-local"
+														variant="outlined"
+														name="endTime"
+														value={this.state.endTime}
+														onChange={this.onChange}
+														InputLabelProps={{
+															shrink: true
+														}}
+													/>
+												</Grid>
+											</Grid>
+										</Grid>
+										<Grid item xs={false} md={4} />
+									</Grid>
+
 									<Button
 										className="mt-2 ml-2"
 										type="submit"

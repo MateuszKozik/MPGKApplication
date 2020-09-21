@@ -47,7 +47,7 @@ export class Login extends Component {
 					<Grid item xs={12}>
 						<img
 							src="logo.jpg"
-							alt=""
+							alt="logo"
 							style={{
 								maxWidth: "100%"
 							}}
@@ -63,34 +63,44 @@ export class Login extends Component {
 							Przeglądy okresowe
 						</Typography>
 					</Grid>
-					<Grid item xs={false} md={2} />
-					<Grid item xs={12}>
-						<TextField
-							className={classes.formControl}
-							id="username"
-							name="username"
-							error={errors.username && true}
-							helperText={errors.username}
-							onChange={this.handleChange}
-							label="Nazwa użytkownika"
-							required
-							variant="outlined"
-						/>
+					<Grid item xs={12} style={{ marginTop: 15 }}>
+						<Grid container>
+							<Grid item xs={false} md={4} />
+							<Grid item xs={12} md={4}>
+								<Grid container spacing={2}>
+									<Grid item xs={12}>
+										<TextField
+											className={classes.formControl}
+											id="username"
+											name="username"
+											error={errors.username && true}
+											helperText={errors.username}
+											onChange={this.handleChange}
+											label="Nazwa użytkownika"
+											required
+											variant="outlined"
+										/>
+									</Grid>
+									<Grid item xs={12}>
+										<TextField
+											className={classes.formControl}
+											type="password"
+											id="password"
+											name="password"
+											error={errors.password && true}
+											helperText={errors.password}
+											label="Hasło"
+											onChange={this.handleChange}
+											required
+											variant="outlined"
+										/>
+									</Grid>
+								</Grid>
+							</Grid>
+							<Grid item xs={false} md={4} />
+						</Grid>
 					</Grid>
-					<Grid item xs={12}>
-						<TextField
-							className={classes.formControl}
-							type="password"
-							id="password"
-							name="password"
-							error={errors.password && true}
-							helperText={errors.password}
-							label="Hasło"
-							onChange={this.handleChange}
-							required
-							variant="outlined"
-						/>
-					</Grid>
+					<Grid item xs={12}></Grid>
 					<Grid item xs={12}>
 						<Button type="submit" variant="contained" color="primary">
 							Zaloguj
