@@ -38,7 +38,7 @@ public class ConnectionService {
         if (connection.getInspectionType().getName().equals("Na żądanie")) {
             Activity newActivity = new Activity();
             newActivity.setName("Pracownik, który zlecił wygenerowanie przeglądu.");
-            newActivity.setType("Zaznaczenie");
+            newActivity.setType("Pole tekstowe");
             newActivity.setEmsr("");
             newActivity.setSetting("");
             newActivity.setListItems("");

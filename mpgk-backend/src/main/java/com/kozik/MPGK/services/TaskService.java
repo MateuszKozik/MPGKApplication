@@ -12,6 +12,7 @@ import com.kozik.MPGK.entities.Activity;
 import com.kozik.MPGK.entities.ActivityGroup;
 import com.kozik.MPGK.entities.Connection;
 import com.kozik.MPGK.entities.Inspection;
+import com.kozik.MPGK.entities.Person;
 import com.kozik.MPGK.repositories.ActivityGroupRepository;
 import com.kozik.MPGK.repositories.ConnectionRepository;
 import com.kozik.MPGK.repositories.InspectionRepository;
@@ -359,12 +360,13 @@ public class TaskService {
                                 .parse(LocalDateTime.now().toLocalDate().toString() + MINUTE_AFTER_MIDNIGHT);
                         Inspection inspection = new Inspection();
                         if (activity.getName().equals("Pracownik, który zlecił wygenerowanie przeglądu.")) {
+                            Person person = personService.getByUsername(principal.getName());
                             inspection.setStatus(INSPECTION_COMPLETED);
-                            inspection.setParameter("true");
+                            inspection.setParameter(person.getName() + " " + person.getSurname());
                             inspection.setComment(INSPECTION_GENERATED);
                             inspection.setDatetime(LocalDateTime.now().toLocalDate().toString() + "T"
                                     + LocalDateTime.now().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm")));
-                            inspection.setPerson(personService.getByUsername(principal.getName()));
+                            inspection.setPerson(person);
                         } else {
                             inspection.setStatus(NEW_INSPECTION);
                         }
