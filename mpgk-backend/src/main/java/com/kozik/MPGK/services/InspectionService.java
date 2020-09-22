@@ -127,7 +127,7 @@ public class InspectionService {
         }).orElseThrow(() -> new InspectionNotFoundException(inspectionId));
     }
 
-    public ArrayList<InspectionObject> getInspectionByConnection(Long connectionId) {
+    public List<InspectionObject> getInspectionByConnection(Long connectionId) {
         Connection connection = connectionService.get(connectionId);
         List<ActivityGroup> groups = activityGroupRepository.findByConnection(connection);
         ArrayList<InspectionObject> inspectionList = new ArrayList<>();
@@ -194,7 +194,7 @@ public class InspectionService {
         updateWithoutPerson(inspection.getInspectionId(), inspection);
     }
 
-    public ArrayList<ConnectionObject> getInspectionsListByConnection(Long connectionId) {
+    public List<ConnectionObject> getInspectionsListByConnection(Long connectionId) {
         ArrayList<ConnectionObject> connectionObjects = new ArrayList<>();
 
         Connection connection = connectionService.get(connectionId);
@@ -239,7 +239,7 @@ public class InspectionService {
         return connectionObjects;
     }
 
-    public ArrayList<InspectionObject> getOverdueInspectionByConnection(Long connectionId, String endTime) {
+    public List<InspectionObject> getOverdueInspectionByConnection(Long connectionId, String endTime) {
         Connection connection = connectionService.get(connectionId);
         List<ActivityGroup> groups = activityGroupRepository.findByConnection(connection);
 
@@ -289,7 +289,7 @@ public class InspectionService {
         return inspectionList;
     }
 
-    public ArrayList<ConnectionObject> getConnectionAndStartTimeBetween(Long id, String startTime, String endTime,
+    public List<ConnectionObject> getConnectionAndStartTimeBetween(Long id, String startTime, String endTime,
             String type) {
         ArrayList<ConnectionObject> connectionObjects = new ArrayList<>();
         if (type.equals("przeglad")) {
@@ -445,8 +445,8 @@ public class InspectionService {
         return connectionObjects;
     }
 
-    public ArrayList<InspectionObject> getInspectionByConnectionAndStartTimeAndEndTime(Long connectionId,
-            String startTime, String endTime) {
+    public List<InspectionObject> getInspectionByConnectionAndStartTimeAndEndTime(Long connectionId, String startTime,
+            String endTime) {
         Connection connection = connectionService.get(connectionId);
         List<ActivityGroup> groups = activityGroupRepository.findByConnection(connection);
 

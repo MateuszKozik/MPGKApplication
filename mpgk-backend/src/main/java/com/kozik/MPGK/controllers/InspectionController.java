@@ -21,14 +21,11 @@ import com.kozik.MPGK.services.MapValidationErrorService;
 import org.springframework.validation.BindingResult;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
 
-import com.kozik.MPGK.utilities.ConnectionObject;
 import com.kozik.MPGK.utilities.Message;
-import com.kozik.MPGK.utilities.InspectionObject;
 
 @RestController
 @CrossOrigin
@@ -107,49 +104,47 @@ public class InspectionController {
     public ResponseEntity<?> getActionsByName() {
         List<Inspection> inspections = inspectionService
                 .getActionsByName("Czy na bieżącej zmianie wymieniona została butla z azotem?", "TAK");
-        return new ResponseEntity<List<Inspection>>(inspections, HttpStatus.OK);
+        return new ResponseEntity<>(inspections, HttpStatus.OK);
     }
 
     // Get all inspections by connection
     @GetMapping("/list/{connectionId}")
     public ResponseEntity<?> getInspectionsListByConnection(@PathVariable Long connectionId) {
-        return new ResponseEntity<ArrayList<ConnectionObject>>(
-                inspectionService.getInspectionsListByConnection(connectionId), HttpStatus.OK);
+        return new ResponseEntity<>(inspectionService.getInspectionsListByConnection(connectionId), HttpStatus.OK);
     }
 
     // Get inspections by connection
     @GetMapping("/list/{connectionId}/execute")
     public ResponseEntity<?> getInspectionByConnection(@PathVariable Long connectionId) {
-        return new ResponseEntity<ArrayList<InspectionObject>>(
-                inspectionService.getInspectionByConnection(connectionId), HttpStatus.OK);
+        return new ResponseEntity<>(inspectionService.getInspectionByConnection(connectionId), HttpStatus.OK);
     }
 
     @GetMapping("/list/{connectionId}/overdue/{endTime}")
     public ResponseEntity<?> getOverdueInspectionByConnection(@PathVariable Long connectionId,
             @PathVariable String endTime) {
-        return new ResponseEntity<ArrayList<InspectionObject>>(
-                inspectionService.getOverdueInspectionByConnection(connectionId, endTime), HttpStatus.OK);
+        return new ResponseEntity<>(inspectionService.getOverdueInspectionByConnection(connectionId, endTime),
+                HttpStatus.OK);
     }
 
     @GetMapping("/list/{id}/from/{startTime}/to/{endTime}")
     public ResponseEntity<?> getConnectionAndStartTimeBetween(@PathVariable Long id, @PathVariable String startTime,
             @PathVariable String endTime, @RequestParam String type) {
-        return new ResponseEntity<ArrayList<ConnectionObject>>(
-                inspectionService.getConnectionAndStartTimeBetween(id, startTime, endTime, type), HttpStatus.OK);
+        return new ResponseEntity<>(inspectionService.getConnectionAndStartTimeBetween(id, startTime, endTime, type),
+                HttpStatus.OK);
     }
 
     @GetMapping("/list/{connectionId}/{startTime}/to/{endTime}/show")
     public ResponseEntity<?> getInspectionByConnectionAndStartTimeAndEndTime(@PathVariable Long connectionId,
             @PathVariable String startTime, @PathVariable String endTime) {
-        return new ResponseEntity<ArrayList<InspectionObject>>(
+        return new ResponseEntity<>(
                 inspectionService.getInspectionByConnectionAndStartTimeAndEndTime(connectionId, startTime, endTime),
                 HttpStatus.OK);
     }
-  
+
     @DeleteMapping("/list/{connectionId}/{startTime}/to/{endTime}/delete")
     public ResponseEntity<?> deleteInspectionByConnectionAndStartTimeAndEndTime(@PathVariable Long connectionId,
-    @PathVariable String startTime, @PathVariable String endTime) {
+            @PathVariable String startTime, @PathVariable String endTime) {
         inspectionService.deleteInspectionByConnectionAndStartTimeAndEndTime(connectionId, startTime, endTime);
-        return new ResponseEntity<Message>(new Message("Inspection have been deleted."), HttpStatus.OK);
+        return new ResponseEntity<>(new Message("Inspection have been deleted."), HttpStatus.OK);
     }
 }
