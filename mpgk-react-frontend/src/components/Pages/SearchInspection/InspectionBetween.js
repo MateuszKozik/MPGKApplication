@@ -14,7 +14,7 @@ import { getPersons, clearPersonState } from "../../../actions/personActions";
 import PropTypes from "prop-types";
 import FormatDate from "../../Common/FormatDate";
 import { Link } from "react-router-dom";
-import { tableStyles } from "../../../consts/themeConsts";
+import { styles } from "../../../consts/themeConsts";
 import DeleteIcon from "@material-ui/icons/Delete";
 import {
 	withStyles,
@@ -521,4 +521,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
 	mapStateToPros,
 	mapDispatchToProps
-)(withStyles(tableStyles)(InspectionBetween));
+)(withStyles(styles)(InspectionBetween));

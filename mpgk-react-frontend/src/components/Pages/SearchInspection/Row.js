@@ -16,7 +16,7 @@ import {
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
 import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
 import { withStyles } from "@material-ui/core/styles";
-import { tableStyles } from "../../../consts/themeConsts";
+import { styles } from "../../../consts/themeConsts";
 import FormatDate from "../../Common/FormatDate";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import CancelIcon from "@material-ui/icons/Cancel";
@@ -214,4 +214,4 @@ class Row extends Component {
 	}
 }
 
-export default withStyles(tableStyles)(Row);
+export default withStyles(styles)(Row);

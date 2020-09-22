@@ -8,7 +8,7 @@ import {
 	Paper,
 	Typography
 } from "@material-ui/core";
-import { tableStyles } from "../../../../consts/themeConsts";
+import { styles } from "../../../../consts/themeConsts";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getDevices } from "../../../../actions/deviceActions";
@@ -241,4 +241,4 @@ const mapStateToProps = (state) => {
 export default connect(
 	mapStateToProps,
 	mapDispatchToProps
-)(withStyles(tableStyles)(DeviceAndInpectionType));
+)(withStyles(styles)(DeviceAndInpectionType));

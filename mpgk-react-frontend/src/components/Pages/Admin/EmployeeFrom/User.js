@@ -4,7 +4,7 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { FormikTextField, FormikSwitchField } from "formik-material-fields";
 import { withStyles } from "@material-ui/core";
-import { tableStyles } from "../../../../consts/themeConsts";
+import { styles } from "../../../../consts/themeConsts";
 
 const validationSchema = Yup.object().shape({
 	username: Yup.string()
@@ -119,4 +119,4 @@ export class User extends Component {
 	}
 }
 
-export default withStyles(tableStyles)(User);
+export default withStyles(styles)(User);

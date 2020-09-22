@@ -1,4 +1,4 @@
-export const tableStyles = (theme) => ({
+export const styles = (theme) => ({
 	head: {
 		backgroundColor: "#3f51b5",
 		color: "#fff"

@@ -8,7 +8,7 @@ import {
 import InspectionItem from "../Common/InspectionItem";
 import { Button, Grid, Typography } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
-import { tableStyles } from "./../../consts/themeConsts";
+import { styles } from "./../../consts/themeConsts";
 import { generateInspectionReport } from "../../actions/pdfGeneratorActions";
 
 class Inspection extends Component {
@@ -135,4 +135,4 @@ const mapStateToPros = (state) => {
 export default connect(
 	mapStateToPros,
 	mapDispatchToProps
-)(withStyles(tableStyles)(Inspection));
+)(withStyles(styles)(Inspection));

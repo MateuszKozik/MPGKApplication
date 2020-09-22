@@ -25,7 +25,7 @@ import {
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
 import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
 import { withStyles } from "@material-ui/core/styles";
-import { tableStyles } from "./../../consts/themeConsts";
+import { styles } from "./../../consts/themeConsts";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { FormikTextField } from "formik-material-fields";
@@ -405,4 +405,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
 	null,
 	mapDispatchToProps
-)(withStyles(tableStyles)(InspectionItem));
+)(withStyles(styles)(InspectionItem));

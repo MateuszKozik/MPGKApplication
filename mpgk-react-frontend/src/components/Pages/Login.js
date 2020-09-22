@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { Grid, TextField, Typography, Button } from "@material-ui/core";
 import { login } from "../../actions/securityActions";
 import { withStyles } from "@material-ui/core";
-import { tableStyles } from "../../consts/themeConsts";
+import { styles } from "../../consts/themeConsts";
 
 export class Login extends Component {
 	state = {
@@ -136,4 +136,4 @@ const mapStateToProps = (state) => {
 export default connect(
 	mapStateToProps,
 	mapDispatchToProps
-)(withStyles(tableStyles)(Login));
+)(withStyles(styles)(Login));

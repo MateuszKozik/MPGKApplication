@@ -8,7 +8,7 @@ import {
 } from "../../../actions/deviceActions";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core";
-import { tableStyles } from "../../../consts/themeConsts";
+import { styles } from "../../../consts/themeConsts";
 import {
 	Grid,
 	Typography,
@@ -195,37 +195,40 @@ class DeviceList extends Component {
 									</TableRow>
 								</TableHead>
 								<TableBody>
-									{filtered && filtered.map((device) => {
-										return (
-											<TableRow key={device.deviceId}>
-												<TableCell>
-													<Typography>{device.name}</Typography>
-												</TableCell>
-												<TableCell>
-													<Typography>
-														{device.status === true ? "Włączone" : "Wyłączone"}
-													</Typography>
-												</TableCell>
-												<TableCell>
-													<Tooltip title="Edytuj">
-														<IconButton
-															color="primary"
-															onClick={() =>
-																this.handleOpen(
-																	device.deviceId,
-																	device.name,
-																	device.status,
-																	"edit"
-																)
-															}
-														>
-															<EditIcon />
-														</IconButton>
-													</Tooltip>
-												</TableCell>
-											</TableRow>
-										);
-									})}
+									{filtered &&
+										filtered.map((device) => {
+											return (
+												<TableRow key={device.deviceId}>
+													<TableCell>
+														<Typography>{device.name}</Typography>
+													</TableCell>
+													<TableCell>
+														<Typography>
+															{device.status === true
+																? "Włączone"
+																: "Wyłączone"}
+														</Typography>
+													</TableCell>
+													<TableCell>
+														<Tooltip title="Edytuj">
+															<IconButton
+																color="primary"
+																onClick={() =>
+																	this.handleOpen(
+																		device.deviceId,
+																		device.name,
+																		device.status,
+																		"edit"
+																	)
+																}
+															>
+																<EditIcon />
+															</IconButton>
+														</Tooltip>
+													</TableCell>
+												</TableRow>
+											);
+										})}
 								</TableBody>
 							</Table>
 						</TableContainer>
@@ -352,4 +355,4 @@ const mapStateToProps = (state) => {
 export default connect(
 	mapStateToProps,
 	mapDispatchToProps
-)(withStyles(tableStyles)(DeviceList));
+)(withStyles(styles)(DeviceList));

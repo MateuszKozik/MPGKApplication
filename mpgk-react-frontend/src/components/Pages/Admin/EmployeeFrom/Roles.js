@@ -11,7 +11,7 @@ import {
 import { Formik, Form } from "formik";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core";
-import { tableStyles } from "../../../../consts/themeConsts";
+import { styles } from "../../../../consts/themeConsts";
 import { getRoles } from "../../../../actions/roleActions";
 import PropTypes from "prop-types";
 
@@ -109,4 +109,4 @@ const mapStateToProps = (state) => {
 export default connect(
 	mapStateToProps,
 	mapDispatchToProps
-)(withStyles(tableStyles)(Roles));
+)(withStyles(styles)(Roles));

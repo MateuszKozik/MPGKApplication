@@ -10,7 +10,7 @@ import {
 	Grid,
 	Button
 } from "@material-ui/core";
-import { tableStyles } from "../../../../consts/themeConsts";
+import { styles } from "../../../../consts/themeConsts";
 import PropTypes from "prop-types";
 import { Formik, Form } from "formik";
 import { getConnections } from "../../../../actions/connectionActions";
@@ -183,4 +183,4 @@ const mapStateToProps = (state) => {
 export default connect(
 	mapStateToProps,
 	mapDispatchToProps
-)(withStyles(tableStyles)(Inspections));
+)(withStyles(styles)(Inspections));

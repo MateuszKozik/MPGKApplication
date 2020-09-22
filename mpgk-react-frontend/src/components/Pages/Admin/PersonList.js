@@ -13,7 +13,7 @@ import {
 	RadioGroup,
 	withStyles
 } from "@material-ui/core";
-import { tableStyles } from "../../../consts/themeConsts";
+import { styles } from "../../../consts/themeConsts";
 import { getRoles, clearRoleState } from "../../../actions/roleActions";
 import PropTypes from "prop-types";
 import {
@@ -564,4 +564,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
 	mapStateToProps,
 	mapDispatchToProps
-)(withStyles(tableStyles)(PersonList));
+)(withStyles(styles)(PersonList));

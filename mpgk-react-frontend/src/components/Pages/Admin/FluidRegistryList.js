@@ -9,7 +9,7 @@ import {
 } from "../../../actions/fluidRegistryActions";
 import FormatDate from "../../Common/FormatDate";
 import { withStyles } from "@material-ui/core";
-import { tableStyles } from "../../../consts/themeConsts";
+import { styles } from "../../../consts/themeConsts";
 import {
 	Grid,
 	Typography,
@@ -250,53 +250,57 @@ class FluidRegistryList extends Component {
 									</TableRow>
 								</TableHead>
 								<TableBody>
-									{filtered && filtered.map((fluidRegistry, index) => {
-										const { fluidPlace, person, fluid } = fluidRegistry;
-										return (
-											<TableRow key={index}>
-												<TableCell>
-													<Typography>
-														{fluidPlace && fluidPlace.name}
-													</Typography>
-												</TableCell>
-												<TableCell>
-													<Typography>{fluid && fluid.name}</Typography>
-												</TableCell>
-												<TableCell>
-													<Typography>{fluidRegistry.quantity}</Typography>
-												</TableCell>
-												<TableCell>
-													<FormatDate date={fluidRegistry.datetime} datetime />
-												</TableCell>
-												<TableCell>
-													<Typography>
-														{person && person.name + " " + person.surname}
-													</Typography>
-												</TableCell>
-												<TableCell>
-													<Tooltip title="Edytuj">
-														<IconButton
-															color="primary"
-															onClick={() => this.handleOpen(fluidRegistry)}
-														>
-															<EditIcon />
-														</IconButton>
-													</Tooltip>
-													<Tooltip title="Usuń">
-														<IconButton
-															onClick={() =>
-																this.props.deleteFluidRegistry(
-																	fluidRegistry.registryId
-																)
-															}
-														>
-															<DeleteIcon />
-														</IconButton>
-													</Tooltip>
-												</TableCell>
-											</TableRow>
-										);
-									})}
+									{filtered &&
+										filtered.map((fluidRegistry, index) => {
+											const { fluidPlace, person, fluid } = fluidRegistry;
+											return (
+												<TableRow key={index}>
+													<TableCell>
+														<Typography>
+															{fluidPlace && fluidPlace.name}
+														</Typography>
+													</TableCell>
+													<TableCell>
+														<Typography>{fluid && fluid.name}</Typography>
+													</TableCell>
+													<TableCell>
+														<Typography>{fluidRegistry.quantity}</Typography>
+													</TableCell>
+													<TableCell>
+														<FormatDate
+															date={fluidRegistry.datetime}
+															datetime
+														/>
+													</TableCell>
+													<TableCell>
+														<Typography>
+															{person && person.name + " " + person.surname}
+														</Typography>
+													</TableCell>
+													<TableCell>
+														<Tooltip title="Edytuj">
+															<IconButton
+																color="primary"
+																onClick={() => this.handleOpen(fluidRegistry)}
+															>
+																<EditIcon />
+															</IconButton>
+														</Tooltip>
+														<Tooltip title="Usuń">
+															<IconButton
+																onClick={() =>
+																	this.props.deleteFluidRegistry(
+																		fluidRegistry.registryId
+																	)
+																}
+															>
+																<DeleteIcon />
+															</IconButton>
+														</Tooltip>
+													</TableCell>
+												</TableRow>
+											);
+										})}
 								</TableBody>
 							</Table>
 						</TableContainer>
@@ -400,4 +404,4 @@ const mapStateToProps = (state) => ({
 export default connect(
 	mapStateToProps,
 	mapDispatchToProps
-)(withStyles(tableStyles)(FluidRegistryList));
+)(withStyles(styles)(FluidRegistryList));

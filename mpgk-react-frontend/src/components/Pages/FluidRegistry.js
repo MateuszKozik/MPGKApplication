@@ -19,7 +19,7 @@ import {
 	MenuItem,
 	Select
 } from "@material-ui/core";
-import { tableStyles } from "../../consts/themeConsts";
+import { styles } from "../../consts/themeConsts";
 import {
 	Grid,
 	Typography,
@@ -434,4 +434,4 @@ const mapDispatchToProps = (dispatch) => ({
 export default connect(
 	mapStateToProps,
 	mapDispatchToProps
-)(withStyles(tableStyles)(FluidRegistry));
+)(withStyles(styles)(FluidRegistry));

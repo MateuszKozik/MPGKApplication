@@ -5,7 +5,7 @@ import {
 	clearConnectionState
 } from "../../actions/connectionActions";
 import { withStyles } from "@material-ui/core";
-import { tableStyles } from "../../consts/themeConsts";
+import { styles } from "../../consts/themeConsts";
 import PropTypes from "prop-types";
 import {
 	Grid,
@@ -143,4 +143,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
 	mapStateToProps,
 	mapDispatchToProps
-)(withStyles(tableStyles)(PerformersList));
+)(withStyles(styles)(PerformersList));

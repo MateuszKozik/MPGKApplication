@@ -5,7 +5,7 @@ import {
 	clearInspectionState
 } from "../../actions/inspectionActions";
 import { withStyles } from "@material-ui/core";
-import { tableStyles } from "../../consts/themeConsts";
+import { styles } from "../../consts/themeConsts";
 import FormatDate from "../Common/FormatDate";
 import PropTypes from "prop-types";
 import {
@@ -156,4 +156,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
 	mapStateToProps,
 	mapDispatchToProps
-)(withStyles(tableStyles)(NitrogenList));
+)(withStyles(styles)(NitrogenList));

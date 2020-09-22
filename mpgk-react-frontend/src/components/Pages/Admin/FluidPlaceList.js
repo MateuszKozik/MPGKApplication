@@ -8,7 +8,7 @@ import {
 	clearFluidPlaceState
 } from "../../../actions/fluidPlaceActions";
 import { withStyles } from "@material-ui/core";
-import { tableStyles } from "../../../consts/themeConsts";
+import { styles } from "../../../consts/themeConsts";
 import {
 	Grid,
 	Typography,
@@ -179,29 +179,30 @@ class FluidPlaceList extends Component {
 									</TableRow>
 								</TableHead>
 								<TableBody>
-									{filtered && filtered.map((fluidPlace) => (
-										<TableRow key={fluidPlace.placeId}>
-											<TableCell>
-												<Typography>{fluidPlace.name}</Typography>
-											</TableCell>
-											<TableCell>
-												<Tooltip title="Edytuj">
-													<IconButton
-														color="primary"
-														onClick={() =>
-															this.handleOpen(
-																fluidPlace.placeId,
-																fluidPlace.name,
-																"edit"
-															)
-														}
-													>
-														<EditIcon />
-													</IconButton>
-												</Tooltip>
-											</TableCell>
-										</TableRow>
-									))}
+									{filtered &&
+										filtered.map((fluidPlace) => (
+											<TableRow key={fluidPlace.placeId}>
+												<TableCell>
+													<Typography>{fluidPlace.name}</Typography>
+												</TableCell>
+												<TableCell>
+													<Tooltip title="Edytuj">
+														<IconButton
+															color="primary"
+															onClick={() =>
+																this.handleOpen(
+																	fluidPlace.placeId,
+																	fluidPlace.name,
+																	"edit"
+																)
+															}
+														>
+															<EditIcon />
+														</IconButton>
+													</Tooltip>
+												</TableCell>
+											</TableRow>
+										))}
 								</TableBody>
 							</Table>
 						</TableContainer>
@@ -317,4 +318,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
 	mapStateToProps,
 	mapDispatchToProps
-)(withStyles(tableStyles)(FluidPlaceList));
+)(withStyles(styles)(FluidPlaceList));

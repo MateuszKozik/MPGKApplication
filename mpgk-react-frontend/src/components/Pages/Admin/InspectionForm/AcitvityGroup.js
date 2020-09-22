@@ -16,7 +16,7 @@ import {
 	IconButton,
 	Paper
 } from "@material-ui/core";
-import { tableStyles } from "../../../../consts/themeConsts";
+import { styles } from "../../../../consts/themeConsts";
 import InfoIcon from "@material-ui/icons/Info";
 import { Form, Formik } from "formik";
 import { addConnection } from "../../../../actions/connectionActions";
@@ -93,159 +93,184 @@ class ActivityGroup extends Component {
 			>
 				{({ values }) => (
 					<Form className={classes.form}>
-						{activitiesGroups && activitiesGroups.map((x, i) => {
-							return (
-								<Grid key={i} container spacing={2} justify="center">
-									<Grid item xs={12}>
-										<TextField
-											name="name"
-											label="Nazwa kategorii"
-											variant="outlined"
-											value={x.name}
-											required
-											onChange={(e) => handleActivityGroupChange(e, i)}
-										/>
-									</Grid>
-									{x.activities && x.activities.map((y, index) => {
-										return (
-											<Grid
-												container
-												spacing={1}
-												key={index}
-												style={{ marginTop: 5 }}
-											>
-												<Grid item xs={12} md={2}>
-													<TextField
-														fullWidth
-														name="name"
-														label="Nazwa czynności"
-														value={y.name}
-														variant="outlined"
-														required
-														onChange={(e) => handleActivityChange(e, i, index)}
-													/>
-												</Grid>
-												<Grid item xs={12} md={2}>
-													<FormControl fullWidth required variant="outlined">
-														<InputLabel id="type-label">Rodzaj pola</InputLabel>
-														<Select
-															labelId="type-label"
-															id="type"
-															name="type"
-															value={y.type}
-															onChange={(e) =>
-																handleActivityChange(e, i, index)
-															}
-															label="Urządzenie"
-														>
-															<MenuItem value="Zaznaczenie">
-																Zaznaczenie
-															</MenuItem>
-															<MenuItem value="Pole tekstowe">
-																Pole tekstowe
-															</MenuItem>
-															<MenuItem value="Zakres liczb">
-																Pole numeryczne
-															</MenuItem>
-															<MenuItem value="Pole wyboru">
-																Pole wyboru <em> (tak/nie)</em>
-															</MenuItem>
-															<MenuItem value="Lista">Lista</MenuItem>
-														</Select>
-													</FormControl>
-												</Grid>
-												<Grid item xs={12} md={2}>
-													<TextField
-														fullWidth
-														name="listItems"
-														label="Elementy listy"
-														value={y.listItems}
-														variant="outlined"
-														InputProps={{
-															endAdornment: (
-																<InputAdornment position="end">
-																	<IconButton
-																		onClick={(e) => this.handlePopoverClick(e)}
-																		aria-describedby={id}
-																	>
-																		<InfoIcon />
-																	</IconButton>
-																</InputAdornment>
-															)
-														}}
-														onChange={(e) => handleActivityChange(e, i, index)}
-													/>
-												</Grid>
-												<Grid item xs={12} md={2}>
-													<TextField
-														fullWidth
-														name="emsr"
-														label="EMSR"
-														value={y.emsr}
-														variant="outlined"
-														onChange={(e) => handleActivityChange(e, i, index)}
-													/>
-												</Grid>
-												<Grid item xs={12} md={2}>
-													<TextField
-														fullWidth
-														name="setting"
-														label="Nastawa"
-														value={y.setting}
-														variant="outlined"
-														onChange={(e) => handleActivityChange(e, i, index)}
-													/>
-												</Grid>
-
-												<Grid
-													item
-													xs={12}
-													md={2}
-													style={{ display: "flex", justifyContent: "center" }}
-												>
-													<Button
-														onClick={() => handleRemoveActivityClick(i, index)}
+						{activitiesGroups &&
+							activitiesGroups.map((x, i) => {
+								return (
+									<Grid key={i} container spacing={2} justify="center">
+										<Grid item xs={12}>
+											<TextField
+												name="name"
+												label="Nazwa kategorii"
+												variant="outlined"
+												value={x.name}
+												required
+												onChange={(e) => handleActivityGroupChange(e, i)}
+											/>
+										</Grid>
+										{x.activities &&
+											x.activities.map((y, index) => {
+												return (
+													<Grid
+														container
+														spacing={1}
+														key={index}
+														style={{ marginTop: 5 }}
 													>
-														Usuń
-													</Button>
-													{x.activities.length === index + 1 && (
-														<Button
-															onClick={() => handleAddActivityClick(i, index)}
-														>
-															Dodaj
-														</Button>
-													)}
-												</Grid>
-											</Grid>
-										);
-									})}
+														<Grid item xs={12} md={2}>
+															<TextField
+																fullWidth
+																name="name"
+																label="Nazwa czynności"
+																value={y.name}
+																variant="outlined"
+																required
+																onChange={(e) =>
+																	handleActivityChange(e, i, index)
+																}
+															/>
+														</Grid>
+														<Grid item xs={12} md={2}>
+															<FormControl
+																fullWidth
+																required
+																variant="outlined"
+															>
+																<InputLabel id="type-label">
+																	Rodzaj pola
+																</InputLabel>
+																<Select
+																	labelId="type-label"
+																	id="type"
+																	name="type"
+																	value={y.type}
+																	onChange={(e) =>
+																		handleActivityChange(e, i, index)
+																	}
+																	label="Urządzenie"
+																>
+																	<MenuItem value="Zaznaczenie">
+																		Zaznaczenie
+																	</MenuItem>
+																	<MenuItem value="Pole tekstowe">
+																		Pole tekstowe
+																	</MenuItem>
+																	<MenuItem value="Zakres liczb">
+																		Pole numeryczne
+																	</MenuItem>
+																	<MenuItem value="Pole wyboru">
+																		Pole wyboru <em> (tak/nie)</em>
+																	</MenuItem>
+																	<MenuItem value="Lista">Lista</MenuItem>
+																</Select>
+															</FormControl>
+														</Grid>
+														<Grid item xs={12} md={2}>
+															<TextField
+																fullWidth
+																name="listItems"
+																label="Elementy listy"
+																value={y.listItems}
+																variant="outlined"
+																InputProps={{
+																	endAdornment: (
+																		<InputAdornment position="end">
+																			<IconButton
+																				onClick={(e) =>
+																					this.handlePopoverClick(e)
+																				}
+																				aria-describedby={id}
+																			>
+																				<InfoIcon />
+																			</IconButton>
+																		</InputAdornment>
+																	)
+																}}
+																onChange={(e) =>
+																	handleActivityChange(e, i, index)
+																}
+															/>
+														</Grid>
+														<Grid item xs={12} md={2}>
+															<TextField
+																fullWidth
+																name="emsr"
+																label="EMSR"
+																value={y.emsr}
+																variant="outlined"
+																onChange={(e) =>
+																	handleActivityChange(e, i, index)
+																}
+															/>
+														</Grid>
+														<Grid item xs={12} md={2}>
+															<TextField
+																fullWidth
+																name="setting"
+																label="Nastawa"
+																value={y.setting}
+																variant="outlined"
+																onChange={(e) =>
+																	handleActivityChange(e, i, index)
+																}
+															/>
+														</Grid>
 
-									<Grid
-										item
-										xs={12}
-										style={{ display: "flex", justifyContent: "center" }}
-									>
-										{activitiesGroups.length !== 1 && (
-											<Button
-												color="primary"
-												onClick={() => handleRemoveActivityGroupClick(i)}
-											>
-												Usuń kategorię
-											</Button>
-										)}
-										{activitiesGroups.length - 1 === i && (
-											<Button
-												color="primary"
-												onClick={handleAddActivityGroupClick}
-											>
-												Dodaj kategorię
-											</Button>
-										)}
+														<Grid
+															item
+															xs={12}
+															md={2}
+															style={{
+																display: "flex",
+																justifyContent: "center"
+															}}
+														>
+															<Button
+																onClick={() =>
+																	handleRemoveActivityClick(i, index)
+																}
+															>
+																Usuń
+															</Button>
+															{x.activities.length === index + 1 && (
+																<Button
+																	onClick={() =>
+																		handleAddActivityClick(i, index)
+																	}
+																>
+																	Dodaj
+																</Button>
+															)}
+														</Grid>
+													</Grid>
+												);
+											})}
+
+										<Grid
+											item
+											xs={12}
+											style={{ display: "flex", justifyContent: "center" }}
+										>
+											{activitiesGroups.length !== 1 && (
+												<Button
+													color="primary"
+													onClick={() => handleRemoveActivityGroupClick(i)}
+												>
+													Usuń kategorię
+												</Button>
+											)}
+											{activitiesGroups.length - 1 === i && (
+												<Button
+													color="primary"
+													onClick={handleAddActivityGroupClick}
+												>
+													Dodaj kategorię
+												</Button>
+											)}
+										</Grid>
+										<Grid item xs={12}></Grid>
 									</Grid>
-									<Grid item xs={12}></Grid>
-								</Grid>
-							);
-						})}
+								);
+							})}
 						<Grid container spacing={2} justify="center">
 							<Grid item xs={3} />
 							<Grid item xs={3}>
@@ -309,4 +334,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
 	null,
 	mapDispatchToProps
-)(withStyles(tableStyles)(ActivityGroup));
+)(withStyles(styles)(ActivityGroup));

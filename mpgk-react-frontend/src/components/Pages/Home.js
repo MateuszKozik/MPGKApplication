@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { createOnDemandInspections } from "../../actions/inspectionActions";
 import { getHomePageConnections } from "../../actions/connectionActions";
 import { withStyles } from "@material-ui/core/styles";
-import { tableStyles } from "./../../consts/themeConsts";
+import { styles } from "./../../consts/themeConsts";
 import Timer from "../Common/Timer";
 import FormatDate from "../Common/FormatDate";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
@@ -27,7 +27,6 @@ class Home extends Component {
 	componentDidMount() {
 		this.props.getHomePageConnections();
 	}
-
 
 	render() {
 		const { classes } = this.props;
@@ -70,93 +69,94 @@ class Home extends Component {
 									</TableRow>
 								</TableHead>
 								<TableBody>
-									{periodicConnections && periodicConnections.map((periodic, i) => {
-										return (
-											<TableRow key={i}>
-												{periodic.active || periodic.overdueCount > 0 ? (
-													<>
-														<TableCell>
-															<Typography>
-																{periodic.active ||
-																periodic.overdueCount > 0 ? (
-																	<Link
-																		style={{
-																			color: "#000",
-																			textDecoration: "none"
-																		}}
-																		to={`/inspections/list/${periodic.connection.connectionId}`}
-																	>
-																		{periodic.connection.name}
-																	</Link>
-																) : (
-																	<Link
-																		style={{
-																			color: "#000",
-																			textDecoration: "none"
-																		}}
-																		to={`/inspections/list/${periodic.connection.connectionId}/activity`}
-																	>
-																		{periodic.connection.name}
-																	</Link>
-																)}
-															</Typography>
-														</TableCell>
-														<TableCell>
-															<div
-																style={{
-																	display: "flex",
-																	alignItems: "center"
-																}}
-															>
-																{periodic.inspectionStatus === "Wykonany" &&
-																periodic.active ? (
-																	<CheckCircleIcon
-																		fontSize="large"
-																		color="primary"
-																	/>
-																) : (
-																	periodic.active && (
-																		<CancelIcon
+									{periodicConnections &&
+										periodicConnections.map((periodic, i) => {
+											return (
+												<TableRow key={i}>
+													{periodic.active || periodic.overdueCount > 0 ? (
+														<>
+															<TableCell>
+																<Typography>
+																	{periodic.active ||
+																	periodic.overdueCount > 0 ? (
+																		<Link
+																			style={{
+																				color: "#000",
+																				textDecoration: "none"
+																			}}
+																			to={`/inspections/list/${periodic.connection.connectionId}`}
+																		>
+																			{periodic.connection.name}
+																		</Link>
+																	) : (
+																		<Link
+																			style={{
+																				color: "#000",
+																				textDecoration: "none"
+																			}}
+																			to={`/inspections/list/${periodic.connection.connectionId}/activity`}
+																		>
+																			{periodic.connection.name}
+																		</Link>
+																	)}
+																</Typography>
+															</TableCell>
+															<TableCell>
+																<div
+																	style={{
+																		display: "flex",
+																		alignItems: "center"
+																	}}
+																>
+																	{periodic.inspectionStatus === "Wykonany" &&
+																	periodic.active ? (
+																		<CheckCircleIcon
 																			fontSize="large"
 																			color="primary"
 																		/>
-																	)
-																)}
+																	) : (
+																		periodic.active && (
+																			<CancelIcon
+																				fontSize="large"
+																				color="primary"
+																			/>
+																		)
+																	)}
 
-																{periodic.overdueCount > 0 ? (
-																	<Badge
-																		badgeContent={periodic.overdueCount}
-																		color="primary"
-																	>
-																		<ErrorIcon
-																			fontSize="large"
-																			color="secondary"
-																		/>
-																	</Badge>
-																) : null}
-															</div>
-														</TableCell>
-														<TableCell align="center">
-															<Typography component="div">
-																{periodic.active && (
-																	<>
-																		<FormatDate date={periodic.startTime} />
-																		do
-																		<FormatDate date={periodic.endTime} />
-																	</>
-																)}
-															</Typography>
-														</TableCell>
-														<TableCell align="center">
-															<Typography>
-																<Timer date={periodic.endTime} />
-															</Typography>
-														</TableCell>
-													</>
-												) : null}
-											</TableRow>
-										);
-									})}
+																	{periodic.overdueCount > 0 ? (
+																		<Badge
+																			badgeContent={periodic.overdueCount}
+																			color="primary"
+																		>
+																			<ErrorIcon
+																				fontSize="large"
+																				color="secondary"
+																			/>
+																		</Badge>
+																	) : null}
+																</div>
+															</TableCell>
+															<TableCell align="center">
+																<Typography component="div">
+																	{periodic.active && (
+																		<>
+																			<FormatDate date={periodic.startTime} />
+																			do
+																			<FormatDate date={periodic.endTime} />
+																		</>
+																	)}
+																</Typography>
+															</TableCell>
+															<TableCell align="center">
+																<Typography>
+																	<Timer date={periodic.endTime} />
+																</Typography>
+															</TableCell>
+														</>
+													) : null}
+												</TableRow>
+											);
+										})}
 								</TableBody>
 							</Table>
 						</TableContainer>
@@ -194,112 +194,113 @@ class Home extends Component {
 									</TableRow>
 								</TableHead>
 								<TableBody>
-									{onDemandConnections && onDemandConnections.map((onDemand, i) => {
-										return (
-											<TableRow key={i}>
-												{(onDemand.connection.device.status === true &&
-													onDemand.connection.status === true) ||
-												onDemand.overdueCount > 0 ||
-												onDemand.active === true ? (
-													<>
-														<TableCell>
-															<Typography>
-																{onDemand.active === true ||
-																onDemand.overdueCount > 0 ? (
-																	<Link
-																		style={{
-																			color: "#000",
-																			textDecoration: "none"
-																		}}
-																		to={`/inspections/list/${onDemand.connection.connectionId}`}
-																	>
-																		{onDemand.connection.name}
-																	</Link>
-																) : (
-																	<Link
-																		style={{
-																			color: "#000",
-																			textDecoration: "none"
-																		}}
-																		to={`/inspections/list/${onDemand.connection.connectionId}/activity`}
-																	>
-																		{onDemand.connection.name}
-																	</Link>
-																)}
-															</Typography>
-														</TableCell>
-														<TableCell>
-															<div
-																style={{
-																	display: "flex",
-																	alignItems: "center"
-																}}
-															>
-																{onDemand.inspectionStatus === "Wykonany" &&
-																onDemand.active ? (
-																	<CheckCircleIcon
-																		fontSize="large"
-																		color="primary"
-																	/>
-																) : (
-																	onDemand.active && (
-																		<CancelIcon
+									{onDemandConnections &&
+										onDemandConnections.map((onDemand, i) => {
+											return (
+												<TableRow key={i}>
+													{(onDemand.connection.device.status === true &&
+														onDemand.connection.status === true) ||
+													onDemand.overdueCount > 0 ||
+													onDemand.active === true ? (
+														<>
+															<TableCell>
+																<Typography>
+																	{onDemand.active === true ||
+																	onDemand.overdueCount > 0 ? (
+																		<Link
+																			style={{
+																				color: "#000",
+																				textDecoration: "none"
+																			}}
+																			to={`/inspections/list/${onDemand.connection.connectionId}`}
+																		>
+																			{onDemand.connection.name}
+																		</Link>
+																	) : (
+																		<Link
+																			style={{
+																				color: "#000",
+																				textDecoration: "none"
+																			}}
+																			to={`/inspections/list/${onDemand.connection.connectionId}/activity`}
+																		>
+																			{onDemand.connection.name}
+																		</Link>
+																	)}
+																</Typography>
+															</TableCell>
+															<TableCell>
+																<div
+																	style={{
+																		display: "flex",
+																		alignItems: "center"
+																	}}
+																>
+																	{onDemand.inspectionStatus === "Wykonany" &&
+																	onDemand.active ? (
+																		<CheckCircleIcon
 																			fontSize="large"
 																			color="primary"
 																		/>
-																	)
-																)}
+																	) : (
+																		onDemand.active && (
+																			<CancelIcon
+																				fontSize="large"
+																				color="primary"
+																			/>
+																		)
+																	)}
 
-																{onDemand.overdueCount > 0 ? (
-																	<Badge
-																		badgeContent={onDemand.overdueCount}
-																		color="primary"
-																	>
-																		<ErrorIcon
-																			fontSize="large"
-																			color="secondary"
-																		/>
-																	</Badge>
-																) : null}
-															</div>
-														</TableCell>
-														<TableCell align="center">
-															<Typography component="div">
-																{onDemand.active && (
-																	<>
-																		<FormatDate date={onDemand.startTime} />
-																		do
-																		<FormatDate date={onDemand.endTime} />
-																	</>
-																)}
-															</Typography>
-														</TableCell>
-														<TableCell align="center">
-															<Typography>
-																{onDemand.active === false ? (
-																	<Button
-																		onClick={() => {
-																			this.props.createOnDemandInspections(
-																				onDemand.connection.connectionId,
-																				this.props.history
-																			);
-																			window.location.reload(false);
-																		}}
-																		variant="contained"
-																		color="primary"
-																	>
-																		Rozpocznij
-																	</Button>
-																) : (
-																	<Timer date={onDemand.endTime} />
-																)}
-															</Typography>
-														</TableCell>
-													</>
-												) : null}
-											</TableRow>
-										);
-									})}
+																	{onDemand.overdueCount > 0 ? (
+																		<Badge
+																			badgeContent={onDemand.overdueCount}
+																			color="primary"
+																		>
+																			<ErrorIcon
+																				fontSize="large"
+																				color="secondary"
+																			/>
+																		</Badge>
+																	) : null}
+																</div>
+															</TableCell>
+															<TableCell align="center">
+																<Typography component="div">
+																	{onDemand.active && (
+																		<>
+																			<FormatDate date={onDemand.startTime} />
+																			do
+																			<FormatDate date={onDemand.endTime} />
+																		</>
+																	)}
+																</Typography>
+															</TableCell>
+															<TableCell align="center">
+																<Typography>
+																	{onDemand.active === false ? (
+																		<Button
+																			onClick={() => {
+																				this.props.createOnDemandInspections(
+																					onDemand.connection.connectionId,
+																					this.props.history
+																				);
+																				window.location.reload(false);
+																			}}
+																			variant="contained"
+																			color="primary"
+																		>
+																			Rozpocznij
+																		</Button>
+																	) : (
+																		<Timer date={onDemand.endTime} />
+																	)}
+																</Typography>
+															</TableCell>
+														</>
+													) : null}
+												</TableRow>
+											);
+										})}
 								</TableBody>
 							</Table>
 						</TableContainer>
@@ -418,4 +419,4 @@ const mapStateToProps = (state) => ({
 export default connect(
 	mapStateToProps,
 	mapDispatchToProps
-)(withStyles(tableStyles)(Home));
+)(withStyles(styles)(Home));

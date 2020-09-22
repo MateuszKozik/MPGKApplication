@@ -33,7 +33,7 @@ import { FormikTextField } from "formik-material-fields";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { setSnackbar } from "../../../reducers/snackbarReducer";
-import { tableStyles } from "../../../consts/themeConsts";
+import { styles } from "../../../consts/themeConsts";
 
 const validationSchema = Yup.object().shape({
 	name: Yup.string()
@@ -176,25 +176,30 @@ class FluidList extends Component {
 									</TableRow>
 								</TableHead>
 								<TableBody>
-									{filtered && filtered.map((fluid) => (
-										<TableRow key={fluid.fluidId}>
-											<TableCell>
-												<Typography>{fluid.name}</Typography>
-											</TableCell>
-											<TableCell>
-												<Tooltip title="Edytuj">
-													<IconButton
-														color="primary"
-														onClick={() =>
-															this.handleOpen(fluid.fluidId, fluid.name, "edit")
-														}
-													>
-														<EditIcon />
-													</IconButton>
-												</Tooltip>
-											</TableCell>
-										</TableRow>
-									))}
+									{filtered &&
+										filtered.map((fluid) => (
+											<TableRow key={fluid.fluidId}>
+												<TableCell>
+													<Typography>{fluid.name}</Typography>
+												</TableCell>
+												<TableCell>
+													<Tooltip title="Edytuj">
+														<IconButton
+															color="primary"
+															onClick={() =>
+																this.handleOpen(
+																	fluid.fluidId,
+																	fluid.name,
+																	"edit"
+																)
+															}
+														>
+															<EditIcon />
+														</IconButton>
+													</Tooltip>
+												</TableCell>
+											</TableRow>
+										))}
 								</TableBody>
 							</Table>
 						</TableContainer>
@@ -308,4 +313,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
 	mapStateToProps,
 	mapDispatchToProps
-)(withStyles(tableStyles)(FluidList));
+)(withStyles(styles)(FluidList));

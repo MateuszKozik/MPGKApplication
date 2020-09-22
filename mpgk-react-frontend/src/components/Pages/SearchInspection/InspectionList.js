@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import Row from "../SearchInspection/Row";
 
 import { withStyles } from "@material-ui/core/styles";
-import { tableStyles } from "./../../../consts/themeConsts";
+import { styles } from "./../../../consts/themeConsts";
 import { connect } from "react-redux";
 import {
 	getInspectionByConnectionAndStartTimeAndEndTime,
@@ -134,4 +134,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
 	mapStateToProps,
 	mapDispatchToProps
-)(withStyles(tableStyles)(InspectionList));
+)(withStyles(styles)(InspectionList));

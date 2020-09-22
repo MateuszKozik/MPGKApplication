@@ -5,7 +5,7 @@ import { getActivitiesByConnection } from "../../actions/activityActions";
 import { clearInspectionsListState } from "../../actions/inspectionActions";
 import { Grid, Typography, Divider, Button } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
-import { tableStyles } from "./../../consts/themeConsts";
+import { styles } from "./../../consts/themeConsts";
 import { generateActivityReport } from "../../actions/pdfGeneratorActions";
 
 class InspectionActivities extends Component {
@@ -144,4 +144,4 @@ const mapStateToPros = (state) => ({
 export default connect(
 	mapStateToPros,
 	mapDispatchToProps
-)(withStyles(tableStyles)(InspectionActivities));
+)(withStyles(styles)(InspectionActivities));

@@ -21,7 +21,7 @@ import {
 	Select,
 	withStyles
 } from "@material-ui/core";
-import { tableStyles } from "../../../consts/themeConsts";
+import { styles } from "../../../consts/themeConsts";
 import {
 	Grid,
 	Typography,
@@ -602,4 +602,4 @@ const mapStateToProps = (state) => {
 export default connect(
 	mapStateToProps,
 	mapDispatchToProps
-)(withStyles(tableStyles)(ConnectionList));
+)(withStyles(styles)(ConnectionList));
