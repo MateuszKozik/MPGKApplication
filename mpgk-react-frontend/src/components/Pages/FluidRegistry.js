@@ -125,42 +125,14 @@ class FluidRegistry extends Component {
 		const { fluids } = this.props.fluid;
 		const { errors } = this.props;
 		const filtered = fluidRegistries.filter((fluidRegistry) => {
-			const { fluidPlace, fluid, person } = fluidRegistry;
-			if (!fluidPlace && !fluid && !person) {
-				return fluidRegistry.datetime.includes(this.state.search.toLowerCase());
-			}
-			if (!fluid) {
+			const { fluidPlace } = fluidRegistry;
+
+			if (fluidPlace) {
 				return (
-					fluidRegistry.datetime.includes(this.state.search.toLowerCase()) ||
-					fluidPlace.name
-						.toLowerCase()
-						.includes(this.state.search.toLowerCase())
-				);
-			}
-			if (!fluidPlace) {
-				return (
-					fluidRegistry.datetime.includes(this.state.search.toLowerCase()) ||
-					fluid.name.toLowerCase().includes(this.state.search.toLowerCase())
-				);
-			}
-			if (!person) {
-				return (
-					fluid.name.toLowerCase().includes(this.state.search.toLowerCase()) ||
 					fluidPlace.name
 						.toLowerCase()
 						.includes(this.state.search.toLowerCase()) ||
 					fluidRegistry.datetime.includes(this.state.search.toLowerCase())
-				);
-			}
-			if (fluidPlace && fluid && person) {
-				return (
-					fluid.name.toLowerCase().includes(this.state.search.toLowerCase()) ||
-					fluidPlace.name
-						.toLowerCase()
-						.includes(this.state.search.toLowerCase()) ||
-					fluidRegistry.datetime.includes(this.state.search.toLowerCase()) ||
-					person.name.toLowerCase().includes(this.state.search.toLowerCase()) ||
-					person.surname.toLowerCase().includes(this.state.search.toLowerCase())
 				);
 			} else {
 				return fluidRegistry.datetime.includes(this.state.search.toLowerCase());
@@ -209,9 +181,6 @@ class FluidRegistry extends Component {
 										<TableCell className={classes.head}>
 											<Typography>Data</Typography>
 										</TableCell>
-										<TableCell className={classes.head}>
-											<Typography>Imię i nazwisko</Typography>
-										</TableCell>
 									</TableRow>
 								</TableHead>
 								<TableBody>
@@ -232,13 +201,14 @@ class FluidRegistry extends Component {
 														<Typography>{fluidRegistry.quantity}</Typography>
 													</TableCell>
 													<TableCell>
-														<FormatDate
-															date={fluidRegistry.datetime}
-															showTime={true}
-														/>
-													</TableCell>
-													<TableCell>
-														<Typography>
+														<Typography component="div" align="center">
+															<FormatDate
+																date={fluidRegistry.datetime}
+																showTime={true}
+															/>
+														</Typography>
+
+														<Typography align="center">
 															{person && person.name + " " + person.surname}
 														</Typography>
 													</TableCell>
