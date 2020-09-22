@@ -366,7 +366,6 @@ public class TaskService {
                             inspection.setComment(INSPECTION_GENERATED);
                             inspection.setDatetime(LocalDateTime.now().toLocalDate().toString() + "T"
                                     + LocalDateTime.now().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm")));
-                            inspection.setPerson(person);
                         } else {
                             inspection.setStatus(NEW_INSPECTION);
                         }
