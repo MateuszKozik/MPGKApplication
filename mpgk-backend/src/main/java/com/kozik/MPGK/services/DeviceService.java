@@ -26,8 +26,7 @@ public class DeviceService {
     }
 
     public Device get(Long deviceId) {
-        Device device = deviceRepository.findById(deviceId).orElseThrow(() -> new DeviceNotFoundException(deviceId));
-        return device;
+        return deviceRepository.findById(deviceId).orElseThrow(() -> new DeviceNotFoundException(deviceId));
     }
 
     public void delete(Long deviceId) {
@@ -39,12 +38,10 @@ public class DeviceService {
     }
 
     public Device update(Long deviceId, Device device) {
-        Device newDevice = deviceRepository.findById(deviceId).map(element -> {
+        return deviceRepository.findById(deviceId).map(element -> {
             element.setName(device.getName());
             element.setStatus(device.getStatus());
             return deviceRepository.save(element);
         }).orElseThrow(() -> new DeviceNotFoundException(deviceId));
-
-        return newDevice;
     }
 }

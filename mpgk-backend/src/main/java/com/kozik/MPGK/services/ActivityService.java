@@ -60,7 +60,7 @@ public class ActivityService {
         }).orElseThrow(() -> new ActivityNotFoundException(activityId));
     }
 
-    public ArrayList<ActivityObject> getActivitiesByConnection(Long connectionId) {
+    public List<ActivityObject> getActivitiesByConnection(Long connectionId) {
         Connection connection = connectionService.get(connectionId);
         List<ActivityGroup> groups = activityGroupRepository.findByConnection(connection);
 

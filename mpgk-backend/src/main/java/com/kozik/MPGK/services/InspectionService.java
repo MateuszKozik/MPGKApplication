@@ -179,9 +179,7 @@ public class InspectionService {
     }
 
     public List<Inspection> getActionsByName(String name, String parameter) {
-        List<Inspection> inspections = inspectionRepository.findByActivityNameAndParameter(name, parameter);
-
-        return inspections;
+        return inspectionRepository.findByActivityNameAndParameter(name, parameter);
     }
 
     public void deleteAll() {

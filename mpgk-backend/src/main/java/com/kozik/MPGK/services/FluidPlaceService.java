@@ -26,9 +26,7 @@ public class FluidPlaceService {
     }
 
     public FluidPlace get(Long placeId) {
-        FluidPlace fluidPlace = fluidPlaceRepository.findById(placeId)
-                .orElseThrow(() -> new FluidPlaceNotFoundException(placeId));
-        return fluidPlace;
+        return fluidPlaceRepository.findById(placeId).orElseThrow(() -> new FluidPlaceNotFoundException(placeId));
     }
 
     public void delete(Long placeId) {
@@ -40,11 +38,9 @@ public class FluidPlaceService {
     }
 
     public FluidPlace update(Long placeId, FluidPlace fluidPlace) {
-        FluidPlace newFluidPlace = fluidPlaceRepository.findById(placeId).map(element -> {
+        return fluidPlaceRepository.findById(placeId).map(element -> {
             element.setName(fluidPlace.getName());
             return fluidPlaceRepository.save(element);
         }).orElseThrow(() -> new FluidPlaceNotFoundException(placeId));
-
-        return newFluidPlace;
     }
 }

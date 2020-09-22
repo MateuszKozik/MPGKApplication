@@ -16,11 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.kozik.MPGK.services.MapValidationErrorService;
 
-import java.util.ArrayList;
-
 import javax.validation.Valid;
-
-import com.kozik.MPGK.utilities.ActivityObject;
 import com.kozik.MPGK.utilities.Message;
 import org.springframework.validation.BindingResult;
 
@@ -44,7 +40,7 @@ public class ActivityController {
     // Get single activity
     @GetMapping("/{activityId}")
     public ResponseEntity<?> getActivity(@PathVariable Long activityId) {
-        return new ResponseEntity<Activity>(activityService.get(activityId), HttpStatus.OK);
+        return new ResponseEntity<>(activityService.get(activityId), HttpStatus.OK);
     }
 
     // Create activity
@@ -54,7 +50,7 @@ public class ActivityController {
             return mapValidationErrorService.MapValidationService(result);
         }
 
-        return new ResponseEntity<Activity>(activityService.save(activity), HttpStatus.CREATED);
+        return new ResponseEntity<>(activityService.save(activity), HttpStatus.CREATED);
     }
 
     // Update activity
@@ -65,21 +61,20 @@ public class ActivityController {
             return mapValidationErrorService.MapValidationService(result);
         }
 
-        return new ResponseEntity<Activity>(activityService.update(activityId, activity), HttpStatus.OK);
+        return new ResponseEntity<>(activityService.update(activityId, activity), HttpStatus.OK);
     }
 
     // Delete activity
     @DeleteMapping("/{activityId}")
     public ResponseEntity<?> deleteActivity(@PathVariable Long activityId) {
         activityService.delete(activityId);
-        return new ResponseEntity<Message>(new Message("Activity with id: " + activityId + " has been removed."),
+        return new ResponseEntity<>(new Message("Activity with id: " + activityId + " has been removed."),
                 HttpStatus.OK);
     }
 
     // Get activities by connection
     @GetMapping("/list/{connectionId}")
     public ResponseEntity<?> getInspectionsByConnection(@PathVariable Long connectionId) {
-        return new ResponseEntity<ArrayList<ActivityObject>>(activityService.getActivitiesByConnection(connectionId),
-                HttpStatus.OK);
+        return new ResponseEntity<>(activityService.getActivitiesByConnection(connectionId), HttpStatus.OK);
     }
 }

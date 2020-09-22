@@ -26,8 +26,7 @@ public class FluidService {
     }
 
     public Fluid get(Long fluidId) {
-        Fluid fluid = fluidRepository.findById(fluidId).orElseThrow(() -> new FluidNotFoundException(fluidId));
-        return fluid;
+        return fluidRepository.findById(fluidId).orElseThrow(() -> new FluidNotFoundException(fluidId));
     }
 
     public void delete(Long fluidId) {
@@ -39,11 +38,9 @@ public class FluidService {
     }
 
     public Fluid update(Long fluidId, Fluid fluid) {
-        Fluid newFluid = fluidRepository.findById(fluidId).map(element -> {
+        return fluidRepository.findById(fluidId).map(element -> {
             element.setName(fluid.getName());
             return fluidRepository.save(element);
         }).orElseThrow(() -> new FluidNotFoundException(fluidId));
-
-        return newFluid;
     }
 }

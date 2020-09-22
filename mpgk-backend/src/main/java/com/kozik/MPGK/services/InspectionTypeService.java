@@ -26,9 +26,7 @@ public class InspectionTypeService {
     }
 
     public InspectionType get(Long typeId) {
-        InspectionType inspectionType = inspectionTypeRepository.findById(typeId)
-                .orElseThrow(() -> new InspectionTypeNotFoundException(typeId));
-        return inspectionType;
+        return inspectionTypeRepository.findById(typeId).orElseThrow(() -> new InspectionTypeNotFoundException(typeId));
     }
 
     public void delete(Long typeId) {
@@ -40,11 +38,9 @@ public class InspectionTypeService {
     }
 
     public InspectionType update(Long typeId, InspectionType inspectionType) {
-        InspectionType newInspectionType = inspectionTypeRepository.findById(typeId).map(element -> {
+        return inspectionTypeRepository.findById(typeId).map(element -> {
             element.setName(inspectionType.getName());
             return inspectionTypeRepository.save(element);
         }).orElseThrow(() -> new InspectionTypeNotFoundException(typeId));
-
-        return newInspectionType;
     }
 }

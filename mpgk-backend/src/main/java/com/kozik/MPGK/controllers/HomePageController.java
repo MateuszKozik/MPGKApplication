@@ -1,6 +1,6 @@
 package com.kozik.MPGK.controllers;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import com.kozik.MPGK.services.ConnectionService;
 import com.kozik.MPGK.utilities.ConnectionObject;
@@ -20,7 +20,7 @@ public class HomePageController {
     private ConnectionService connectionService;
 
     @GetMapping("/connections")
-    public ArrayList<ConnectionObject> getConnections() {
+    public List<ConnectionObject> getConnections() {
         return connectionService.getHomePageConnections();
     }
 }

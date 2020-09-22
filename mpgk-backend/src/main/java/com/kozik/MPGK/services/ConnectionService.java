@@ -91,7 +91,7 @@ public class ConnectionService {
 
     }
 
-    public ArrayList<ConnectionObject> getHomePageConnections() {
+    public List<ConnectionObject> getHomePageConnections() {
         Iterable<Connection> connections = listAll();
 
         ArrayList<ConnectionObject> connectionObjects = new ArrayList<>();

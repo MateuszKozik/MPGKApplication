@@ -33,8 +33,7 @@ public class PersonService {
     }
 
     public Person get(Long personId) {
-        Person person = personRepository.findById(personId).orElseThrow(() -> new PersonNotFoundException(personId));
-        return person;
+        return personRepository.findById(personId).orElseThrow(() -> new PersonNotFoundException(personId));
     }
 
     public void delete(Long personId) {

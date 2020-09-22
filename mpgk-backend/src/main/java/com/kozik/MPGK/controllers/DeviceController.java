@@ -42,7 +42,7 @@ public class DeviceController {
     @GetMapping("/{deviceId}")
     public ResponseEntity<?> getDevice(@PathVariable Long deviceId) {
 
-        return new ResponseEntity<Device>(deviceService.get(deviceId), HttpStatus.OK);
+        return new ResponseEntity<>(deviceService.get(deviceId), HttpStatus.OK);
     }
 
     // Create device
@@ -52,7 +52,7 @@ public class DeviceController {
         if (result.hasErrors())
             return mapValidationErrorService.MapValidationService(result);
 
-        return new ResponseEntity<Device>(deviceService.save(device), HttpStatus.CREATED);
+        return new ResponseEntity<>(deviceService.save(device), HttpStatus.CREATED);
     }
 
     // Update device
@@ -63,7 +63,7 @@ public class DeviceController {
         if (result.hasErrors())
             return mapValidationErrorService.MapValidationService(result);
 
-        return new ResponseEntity<Device>(deviceService.update(deviceId, device), HttpStatus.OK);
+        return new ResponseEntity<>(deviceService.update(deviceId, device), HttpStatus.OK);
     }
 
     // Delete device
@@ -71,7 +71,6 @@ public class DeviceController {
     public ResponseEntity<?> deleteDevice(@PathVariable Long deviceId) {
 
         deviceService.delete(deviceId);
-        return new ResponseEntity<Message>(new Message("Device with id: " + deviceId + " has been removed"),
-                HttpStatus.OK);
+        return new ResponseEntity<>(new Message("Device with id: " + deviceId + " has been removed"), HttpStatus.OK);
     }
 }

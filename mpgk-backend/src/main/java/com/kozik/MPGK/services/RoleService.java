@@ -26,8 +26,7 @@ public class RoleService {
     }
 
     public Role get(Long roleId) throws RoleNotFoundException {
-        Role role = roleRepository.findById(roleId).orElseThrow(() -> new RoleNotFoundException(roleId));
-        return role;
+        return roleRepository.findById(roleId).orElseThrow(() -> new RoleNotFoundException(roleId));
     }
 
     public void delete(Long roleId) {
