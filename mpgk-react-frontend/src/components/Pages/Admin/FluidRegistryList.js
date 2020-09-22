@@ -153,43 +153,11 @@ class FluidRegistryList extends Component {
 		const { fluidRegistries } = this.props.fluidRegistry;
 		const { errors } = this.props;
 		const filtered = fluidRegistries.filter((fluidRegistry) => {
-			const { fluidPlace, fluid, person } = fluidRegistry;
-			if (!fluidPlace && !fluid && !person) {
-				return fluidRegistry.datetime.includes(this.state.search.toLowerCase());
-			}
-			if (!fluid) {
-				return (
-					fluidRegistry.datetime.includes(this.state.search.toLowerCase()) ||
-					fluidPlace.name
-						.toLowerCase()
-						.includes(this.state.search.toLowerCase())
-				);
-			}
-			if (!fluidPlace) {
-				return (
-					fluidRegistry.datetime.includes(this.state.search.toLowerCase()) ||
-					fluid.name.toLowerCase().includes(this.state.search.toLowerCase())
-				);
-			}
-			if (!person) {
-				return (
-					fluid.name.toLowerCase().includes(this.state.search.toLowerCase()) ||
-					fluidPlace.name
-						.toLowerCase()
-						.includes(this.state.search.toLowerCase()) ||
-					fluidRegistry.datetime.includes(this.state.search.toLowerCase())
-				);
-			}
-			if (fluidPlace && fluid && person) {
-				return (
-					fluid.name.toLowerCase().includes(this.state.search.toLowerCase()) ||
-					fluidPlace.name
-						.toLowerCase()
-						.includes(this.state.search.toLowerCase()) ||
-					fluidRegistry.datetime.includes(this.state.search.toLowerCase()) ||
-					person.name.toLowerCase().includes(this.state.search.toLowerCase()) ||
-					person.surname.toLowerCase().includes(this.state.search.toLowerCase())
-				);
+			const { fluidPlace } = fluidRegistry;
+			if (fluidPlace) {
+				return fluidPlace.name
+					.toLowerCase()
+					.includes(this.state.search.toLowerCase());
 			} else {
 				return fluidRegistry.datetime.includes(this.state.search.toLowerCase());
 			}
@@ -238,9 +206,6 @@ class FluidRegistryList extends Component {
 											<Typography>Data</Typography>
 										</TableCell>
 										<TableCell className={classes.head}>
-											<Typography>Imię i nazwisko</Typography>
-										</TableCell>
-										<TableCell className={classes.head}>
 											<Typography>Akcje</Typography>
 										</TableCell>
 									</TableRow>
@@ -263,13 +228,14 @@ class FluidRegistryList extends Component {
 														<Typography>{fluidRegistry.quantity}</Typography>
 													</TableCell>
 													<TableCell>
-														<FormatDate
-															date={fluidRegistry.datetime}
-															showTime={true}
-														/>
-													</TableCell>
-													<TableCell>
-														<Typography>
+														<Typography component="div" align="center">
+															<FormatDate
+																date={fluidRegistry.datetime}
+																showTime={true}
+															/>
+														</Typography>
+
+														<Typography align="center">
 															{person && person.name + " " + person.surname}
 														</Typography>
 													</TableCell>
