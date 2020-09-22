@@ -81,7 +81,7 @@ public class InspectionController {
             return mapValidationErrorService.MapValidationService(result);
         }
 
-        return new ResponseEntity<Inspection>(inspectionService.update(inspectionId, inspection, principal),
+        return new ResponseEntity<Inspection>(inspectionService.updateOverdue(inspectionId, inspection, principal),
                 HttpStatus.OK);
     }
 
