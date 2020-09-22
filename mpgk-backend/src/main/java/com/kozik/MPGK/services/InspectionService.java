@@ -291,34 +291,26 @@ public class InspectionService {
 
     public List<ConnectionObject> getConnectionAndStartTimeBetween(Long id, String startTime, String endTime,
             String type) {
-        ArrayList<ConnectionObject> connectionObjects = new ArrayList<>();
+        List<ConnectionObject> connectionObjects = new ArrayList<>();
         if (type.equals("przeglad")) {
             Connection connection = connectionService.get(id);
-            List<Inspection> inspectionsAll = inspectionRepository
-                    .findByActivityActivityGroupConnectionAndStartTimeBetween(connection,
-                            LocalDateTime.parse(startTime), LocalDateTime.parse(endTime));
-
             List<String> times = new ArrayList<>();
 
-            for (Inspection inspection : inspectionsAll) {
+            for (Inspection inspection : inspectionRepository.findByActivityActivityGroupConnectionAndStartTimeBetween(
+                    connection, LocalDateTime.parse(startTime), LocalDateTime.parse(endTime))) {
                 if (!times.contains(inspection.getStartTime())) {
                     times.add(inspection.getStartTime());
-
                 }
-
             }
 
             // Sort array of date
-            times.sort(Comparator.naturalOrder());
+            times.sort(Comparator.reverseOrder());
             for (String time : times) {
-
                 Integer overdue = 0;
                 Integer actually = 0;
-                List<Inspection> inspections = inspectionRepository.findByActivityActivityGroupConnectionAndStartTime(
-                        connection, LocalDateTime.parse(time, DateTimeFormatter.ISO_LOCAL_DATE_TIME));
                 ConnectionObject connectionObject = new ConnectionObject();
-                for (Inspection inspection : inspections) {
-
+                for (Inspection inspection : inspectionRepository.findByActivityActivityGroupConnectionAndStartTime(
+                        connection, LocalDateTime.parse(time, DateTimeFormatter.ISO_LOCAL_DATE_TIME))) {
                     if (inspection.getStatus().equals("Zaległy")) {
                         overdue++;
                     }
@@ -326,7 +318,6 @@ public class InspectionService {
                         actually++;
                     }
                     connectionObject.setEndTime(inspection.getEndTime());
-
                 }
 
                 connectionObject.setConnection(connection);
@@ -339,109 +330,118 @@ public class InspectionService {
                 else
                     connectionObject.setInspectionStatus("W trakcie");
                 connectionObjects.add(connectionObject);
-
             }
         } else if (type.equals("urzadzenie")) {
             Device device = deviceService.get(id);
-            List<Inspection> inspectionsAll = inspectionRepository
-                    .findByActivityActivityGroupConnectionDeviceAndStartTimeBetween(device,
-                            LocalDateTime.parse(startTime), LocalDateTime.parse(endTime));
 
             List<String> times = new ArrayList<>();
-            for (Inspection inspection : inspectionsAll) {
+            List<Long> connectionsId = new ArrayList<>();
+            for (Inspection inspection : inspectionRepository
+                    .findByActivityActivityGroupConnectionDeviceAndStartTimeBetween(device,
+                            LocalDateTime.parse(startTime), LocalDateTime.parse(endTime))) {
                 if (!times.contains(inspection.getStartTime())) {
                     times.add(inspection.getStartTime());
-
                 }
-
+                if (!connectionsId
+                        .contains(inspection.getActivity().getActivityGroup().getConnection().getConnectionId())) {
+                    connectionsId.add(inspection.getActivity().getActivityGroup().getConnection().getConnectionId());
+                }
             }
 
             // Sort array of date
-            times.sort(Comparator.naturalOrder());
+            times.sort(Comparator.reverseOrder());
             for (String time : times) {
+                for (Long connectionId : connectionsId) {
+                    List<Inspection> inspections = inspectionRepository
+                            .findByActivityActivityGroupConnectionAndStartTime(connectionService.get(connectionId),
+                                    LocalDateTime.parse(time, DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+                    if (!inspections.isEmpty()) {
+                        Integer overdue = 0;
+                        Integer actually = 0;
+                        Connection deviceConnection = null;
 
-                Integer overdue = 0;
-                Integer actually = 0;
-                Connection deviceConnection = null;
-                List<Inspection> inspections = inspectionRepository
-                        .findByActivityActivityGroupConnectionDeviceAndStartTime(device,
-                                LocalDateTime.parse(time, DateTimeFormatter.ISO_LOCAL_DATE_TIME));
-                ConnectionObject connectionObject = new ConnectionObject();
-                for (Inspection inspection : inspections) {
-                    deviceConnection = inspection.getActivity().getActivityGroup().getConnection();
-                    if (inspection.getStatus().equals("Zaległy")) {
-                        overdue++;
-                    }
-                    if (inspection.getStatus().equals("Nowy")) {
-                        actually++;
-                    }
-                    connectionObject.setEndTime(inspection.getEndTime());
+                        ConnectionObject connectionObject = new ConnectionObject();
+                        for (Inspection inspection : inspections) {
+                            deviceConnection = inspection.getActivity().getActivityGroup().getConnection();
+                            if (inspection.getStatus().equals("Zaległy")) {
+                                overdue++;
+                            }
+                            if (inspection.getStatus().equals("Nowy")) {
+                                actually++;
+                            }
+                            connectionObject.setEndTime(inspection.getEndTime());
+                        }
 
+                        connectionObject.setConnection(deviceConnection);
+                        connectionObject.setStartTime(time);
+
+                        if (actually == 0 && overdue == 0) {
+                            connectionObject.setInspectionStatus("Wykonany");
+                        } else if (overdue > 0)
+                            connectionObject.setInspectionStatus("Zaległy");
+                        else
+                            connectionObject.setInspectionStatus("W trakcie");
+                        connectionObjects.add(connectionObject);
+                    }
                 }
-
-                connectionObject.setConnection(deviceConnection);
-                connectionObject.setStartTime(time);
-
-                if (actually == 0 && overdue == 0) {
-                    connectionObject.setInspectionStatus("Wykonany");
-                } else if (overdue > 0)
-                    connectionObject.setInspectionStatus("Zaległy");
-                else
-                    connectionObject.setInspectionStatus("W trakcie");
-                connectionObjects.add(connectionObject);
 
             }
         } else if (type.equals("pracownik")) {
             Person person = personService.get(id);
-            List<Inspection> inspectionsAll = inspectionRepository.findByPersonAndStartTimeBetween(person,
-                    LocalDateTime.parse(startTime), LocalDateTime.parse(endTime));
 
             List<String> times = new ArrayList<>();
-
-            for (Inspection inspection : inspectionsAll) {
+            List<Long> connectionsId = new ArrayList<>();
+            for (Inspection inspection : inspectionRepository.findByPersonAndStartTimeBetween(person,
+                    LocalDateTime.parse(startTime), LocalDateTime.parse(endTime))) {
                 if (!times.contains(inspection.getStartTime())) {
                     times.add(inspection.getStartTime());
-
+                }
+                if (!connectionsId
+                        .contains(inspection.getActivity().getActivityGroup().getConnection().getConnectionId())) {
+                    connectionsId.add(inspection.getActivity().getActivityGroup().getConnection().getConnectionId());
                 }
             }
 
             // Sort array of date
-            times.sort(Comparator.naturalOrder());
+            times.sort(Comparator.reverseOrder());
             for (String time : times) {
+                for (Long connectionId : connectionsId) {
 
-                Integer overdue = 0;
-                Integer actually = 0;
-                Connection personConnection = null;
-                List<Inspection> inspections = inspectionRepository.findByPersonAndStartTime(person,
-                        LocalDateTime.parse(time, DateTimeFormatter.ISO_LOCAL_DATE_TIME));
-                ConnectionObject connectionObject = new ConnectionObject();
-                for (Inspection inspection : inspections) {
-                    personConnection = inspection.getActivity().getActivityGroup().getConnection();
-                    if (inspection.getStatus().equals("Zaległy")) {
-                        overdue++;
+                    List<Inspection> inspections = inspectionRepository
+                            .findByActivityActivityGroupConnectionAndStartTime(connectionService.get(connectionId),
+                                    LocalDateTime.parse(time, DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+
+                    if (!inspections.isEmpty()) {
+                        Integer overdue = 0;
+                        Integer actually = 0;
+                        Connection personConnection = null;
+                        ConnectionObject connectionObject = new ConnectionObject();
+                        for (Inspection inspection : inspections) {
+                            personConnection = inspection.getActivity().getActivityGroup().getConnection();
+                            if (inspection.getStatus().equals("Zaległy")) {
+                                overdue++;
+                            }
+                            if (inspection.getStatus().equals("Nowy")) {
+                                actually++;
+                            }
+                            connectionObject.setEndTime(inspection.getEndTime());
+                        }
+
+                        connectionObject.setConnection(personConnection);
+                        connectionObject.setStartTime(time);
+
+                        if (actually == 0 && overdue == 0) {
+                            connectionObject.setInspectionStatus("Wykonany");
+                        } else if (overdue > 0)
+                            connectionObject.setInspectionStatus("Zaległy");
+                        else
+                            connectionObject.setInspectionStatus("W trakcie");
+                        connectionObjects.add(connectionObject);
                     }
-                    if (inspection.getStatus().equals("Nowy")) {
-                        actually++;
-                    }
-                    connectionObject.setEndTime(inspection.getEndTime());
 
                 }
-
-                connectionObject.setConnection(personConnection);
-                connectionObject.setStartTime(time);
-
-                if (actually == 0 && overdue == 0) {
-                    connectionObject.setInspectionStatus("Wykonany");
-                } else if (overdue > 0)
-                    connectionObject.setInspectionStatus("Zaległy");
-                else
-                    connectionObject.setInspectionStatus("W trakcie");
-                connectionObjects.add(connectionObject);
-
             }
-
         }
-
         return connectionObjects;
     }
 

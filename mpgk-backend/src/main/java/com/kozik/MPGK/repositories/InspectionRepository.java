@@ -47,6 +47,9 @@ public interface InspectionRepository extends JpaRepository<Inspection, Long> {
 
         List<Inspection> findByActivityActivityGroupConnectionDeviceAndStartTime(Device device, LocalDateTime time);
 
+        List<Inspection> findByActivityActivityGroupConnectionDeviceAndActivityActivityGroupConnectionAndStartTime(
+                        Device device, Connection connection, LocalDateTime time);
+
         List<Inspection> findByPersonAndStartTimeBetween(Person person, LocalDateTime startTime, LocalDateTime endTime);
 
         List<Inspection> findByPersonAndStartTime(Person person, LocalDateTime time);
