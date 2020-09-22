@@ -4,6 +4,8 @@ import com.kozik.MPGK.repositories.UserRepository;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import com.kozik.MPGK.entities.Connection;
 import com.kozik.MPGK.entities.Person;
 import com.kozik.MPGK.entities.User;
@@ -25,6 +27,7 @@ public class UserService {
     @Autowired
     private ConnectionService connectionService;
 
+    @Transactional
     public User saveUser(User user) {
         try {
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));

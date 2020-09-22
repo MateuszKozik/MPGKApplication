@@ -5,6 +5,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import com.kozik.MPGK.entities.Activity;
 import com.kozik.MPGK.entities.ActivityGroup;
 import com.kozik.MPGK.entities.Connection;
@@ -31,6 +33,7 @@ public class ConnectionService {
         return connectionRepository.findAll();
     }
 
+    @Transactional
     public Connection save(Connection connection) {
         if (connection.getConnectionId() != null) {
             throw new ConnectionAlreadyExistException(connection.getConnectionId());
