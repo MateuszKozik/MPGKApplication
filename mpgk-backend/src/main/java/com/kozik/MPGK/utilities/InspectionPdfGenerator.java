@@ -203,6 +203,12 @@ public class InspectionPdfGenerator {
                         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
                         cell.setPadding(8);
                         table.addCell(cell);
+                    } else if (!inspection.getDatetime().equals("")) {
+                        cell = new PdfPCell(new Phrase(formatDate(inspection.getDatetime(), true), headFont));
+                        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+                        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                        cell.setPadding(8);
+                        table.addCell(cell);
                     } else {
                         cell = new PdfPCell();
                         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
