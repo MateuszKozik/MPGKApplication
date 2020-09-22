@@ -60,16 +60,12 @@ class DeviceList extends Component {
 		this.setState({ search: event.target.value });
 	};
 
-	onChange = (e) => {
+	handleChange = (e) => {
 		if (e.target.type === "checkbox") {
 			this.setState({ [e.target.name]: e.target.checked });
 		} else {
 			this.setState({ [e.target.name]: e.target.value });
 		}
-	};
-
-	onDeleteClick = (deviceId) => {
-		this.props.deleteDevice(deviceId);
 	};
 
 	componentWillUnmount() {
@@ -100,7 +96,7 @@ class DeviceList extends Component {
 		});
 	};
 
-	onSubmit = (values, { setSubmitting }) => {
+	handleSubmit = (values, { setSubmitting }) => {
 		setTimeout(() => {
 			setSubmitting(false);
 			if (this.state.actionType === "add") {
@@ -244,7 +240,7 @@ class DeviceList extends Component {
 						}}
 						validationSchema={validationSchema}
 						onSubmit={(values, { setSubmitting }) =>
-							this.onSubmit(values, { setSubmitting })
+							this.handleSubmit(values, { setSubmitting })
 						}
 					>
 						{({ isSubmitting, values }) => (
@@ -259,7 +255,7 @@ class DeviceList extends Component {
 											variant="outlined"
 											required
 											helperText={errors.name}
-											onChange={this.onChange}
+											onChange={this.handleChange}
 										/>
 									</Grid>
 									<Grid item xs={12}>

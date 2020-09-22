@@ -70,7 +70,7 @@ class FluidRegistry extends Component {
 		this.setState({ search: event.target.value });
 	};
 
-	onChange = (e) => {
+	handleChange = (e) => {
 		this.setState({ [e.target.name]: e.target.value });
 	};
 
@@ -89,7 +89,7 @@ class FluidRegistry extends Component {
 		});
 	};
 
-	onSubmit = (values, { setSubmitting }) => {
+	handleSubmit = (values, { setSubmitting }) => {
 		setTimeout(() => {
 			setSubmitting(false);
 
@@ -261,7 +261,7 @@ class FluidRegistry extends Component {
 						}}
 						validationSchema={validationSchema}
 						onSubmit={(values, { setSubmitting }) =>
-							this.onSubmit(values, { setSubmitting })
+							this.handleSubmit(values, { setSubmitting })
 						}
 					>
 						{({ isSubmitting }) => (
@@ -278,7 +278,7 @@ class FluidRegistry extends Component {
 											type="number"
 											required
 											helperText={errors.quantity}
-											onChange={this.onChange}
+											onChange={this.handleChange}
 										/>
 									</Grid>
 
@@ -296,7 +296,7 @@ class FluidRegistry extends Component {
 												id="fluidPlace"
 												name="fluidPlace"
 												value={this.state.fluidPlace}
-												onChange={this.onChange}
+												onChange={this.handleChange}
 												label="Miejsce dodania"
 											>
 												<MenuItem value="">
@@ -326,7 +326,7 @@ class FluidRegistry extends Component {
 												id="fluid"
 												name="fluid"
 												value={this.state.fluid}
-												onChange={this.onChange}
+												onChange={this.handleChange}
 												label="Rodzaj czynnika"
 											>
 												<MenuItem value="">

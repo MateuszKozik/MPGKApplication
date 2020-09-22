@@ -55,7 +55,7 @@ class InspectionBetween extends Component {
 		typeName: "przeglad"
 	};
 
-	onChange = (e) => {
+	handleChange = (e) => {
 		this.setState({ [e.target.name]: e.target.value });
 	};
 
@@ -209,7 +209,7 @@ class InspectionBetween extends Component {
 															<Select
 																name="connectionId"
 																value={this.state.connectionId}
-																onChange={this.onChange}
+																onChange={this.handleChange}
 																label="Przegląd"
 															>
 																<MenuItem value="">
@@ -236,7 +236,7 @@ class InspectionBetween extends Component {
 															<Select
 																name="deviceId"
 																value={this.state.deviceId}
-																onChange={this.onChange}
+																onChange={this.handleChange}
 																label="Urządzenie"
 															>
 																<MenuItem value="">
@@ -263,7 +263,7 @@ class InspectionBetween extends Component {
 															<Select
 																name="personId"
 																value={this.state.personId}
-																onChange={this.onChange}
+																onChange={this.handleChange}
 																label="Pracownik"
 															>
 																<MenuItem value="">
@@ -292,7 +292,7 @@ class InspectionBetween extends Component {
 														variant="outlined"
 														name="startTime"
 														value={this.state.startTime}
-														onChange={this.onChange}
+														onChange={this.handleChange}
 														InputLabelProps={{
 															shrink: true
 														}}
@@ -308,7 +308,7 @@ class InspectionBetween extends Component {
 														variant="outlined"
 														name="endTime"
 														value={this.state.endTime}
-														onChange={this.onChange}
+														onChange={this.handleChange}
 														InputLabelProps={{
 															shrink: true
 														}}

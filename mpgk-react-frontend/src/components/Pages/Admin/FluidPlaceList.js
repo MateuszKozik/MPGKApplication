@@ -58,7 +58,7 @@ class FluidPlaceList extends Component {
 		this.setState({ search: event.target.value });
 	};
 
-	onChange = (e) => {
+	handleChange = (e) => {
 		this.setState({ [e.target.name]: e.target.value });
 	};
 
@@ -88,7 +88,7 @@ class FluidPlaceList extends Component {
 		});
 	};
 
-	onSubmit = (values, { setSubmitting }) => {
+	handleSubmit = (values, { setSubmitting }) => {
 		setTimeout(() => {
 			setSubmitting(false);
 			if (this.state.actionType === "add") {
@@ -217,7 +217,7 @@ class FluidPlaceList extends Component {
 						}}
 						validationSchema={validationSchema}
 						onSubmit={(values, { setSubmitting }) =>
-							this.onSubmit(values, { setSubmitting })
+							this.handleSubmit(values, { setSubmitting })
 						}
 					>
 						{({ isSubmitting }) => (
@@ -232,7 +232,7 @@ class FluidPlaceList extends Component {
 											variant="outlined"
 											required
 											helperText={errors.name}
-											onChange={this.onChange}
+											onChange={this.handleChange}
 										/>
 									</Grid>
 									<Grid item xs={3} />

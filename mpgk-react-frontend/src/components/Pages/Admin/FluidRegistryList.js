@@ -58,15 +58,11 @@ class FluidRegistryList extends Component {
 		this.props.getFluidRegistries();
 	}
 
-	onDeleteClick(registryId) {
-		this.props.deleteFluidRegistry(registryId);
-	}
-
 	updateSearch = (event) => {
 		this.setState({ search: event.target.value });
 	};
 
-	onChange = (e) => {
+	handleChange = (e) => {
 		this.setState({ [e.target.name]: e.target.value });
 	};
 
@@ -100,7 +96,7 @@ class FluidRegistryList extends Component {
 		});
 	};
 
-	onSubmit = (values, { setSubmitting }) => {
+	handleSubmit = (values, { setSubmitting }) => {
 		setTimeout(() => {
 			setSubmitting(false);
 
@@ -315,7 +311,7 @@ class FluidRegistryList extends Component {
 						}}
 						validationSchema={validationSchema}
 						onSubmit={(values, { setSubmitting }) =>
-							this.onSubmit(values, { setSubmitting })
+							this.handleSubmit(values, { setSubmitting })
 						}
 					>
 						{({ isSubmitting }) => (
@@ -331,7 +327,7 @@ class FluidRegistryList extends Component {
 											type="number"
 											required
 											helperText={errors.quantity}
-											onChange={this.onChange}
+											onChange={this.handleChange}
 										/>
 									</Grid>
 									<Grid item xs={3} />
