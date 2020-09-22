@@ -25,7 +25,7 @@ public class RoleService {
         return roleRepository.save(role);
     }
 
-    public Role get(Long roleId) throws RoleNotFoundException {
+    public Role get(Long roleId) {
         return roleRepository.findById(roleId).orElseThrow(() -> new RoleNotFoundException(roleId));
     }
 
