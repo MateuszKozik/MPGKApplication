@@ -43,7 +43,7 @@ public class FluidRegistryController {
     // Get single fluid registry
     @GetMapping("/{registryId}")
     public ResponseEntity<?> getFluidRegistry(@PathVariable Long registryId) {
-        return new ResponseEntity<FluidRegistry>(fluidRegistryService.get(registryId), HttpStatus.OK);
+        return new ResponseEntity<>(fluidRegistryService.get(registryId), HttpStatus.OK);
     }
 
     // Create fluid registry
@@ -54,8 +54,7 @@ public class FluidRegistryController {
             return mapValidationErrorService.MapValidationService(result);
         }
 
-        return new ResponseEntity<FluidRegistry>(fluidRegistryService.save(fluidRegistry, principal),
-                HttpStatus.CREATED);
+        return new ResponseEntity<>(fluidRegistryService.save(fluidRegistry, principal), HttpStatus.CREATED);
     }
 
     // Update fluid registry
@@ -66,14 +65,14 @@ public class FluidRegistryController {
             return mapValidationErrorService.MapValidationService(result);
         }
 
-        return new ResponseEntity<FluidRegistry>(fluidRegistryService.update(registryId, fluidRegistry), HttpStatus.OK);
+        return new ResponseEntity<>(fluidRegistryService.update(registryId, fluidRegistry), HttpStatus.OK);
     }
 
     // Delete fluid registry
     @DeleteMapping("/{registryId}")
     public ResponseEntity<?> deleteFluidRegistry(@PathVariable Long registryId) {
         fluidRegistryService.delete(registryId);
-        return new ResponseEntity<Message>(new Message("Fluid registry with id: " + registryId + " has been removed."),
+        return new ResponseEntity<>(new Message("Fluid registry with id: " + registryId + " has been removed."),
                 HttpStatus.OK);
     }
 }

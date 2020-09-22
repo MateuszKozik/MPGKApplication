@@ -47,7 +47,7 @@ public class InspectionController {
     // Get single inspection
     @GetMapping("/{inspectionId}")
     public ResponseEntity<?> getInspection(@PathVariable Long inspectionId) {
-        return new ResponseEntity<Inspection>(inspectionService.get(inspectionId), HttpStatus.OK);
+        return new ResponseEntity<>(inspectionService.get(inspectionId), HttpStatus.OK);
     }
 
     // Create inspection
@@ -57,7 +57,7 @@ public class InspectionController {
             return mapValidationErrorService.MapValidationService(result);
         }
 
-        return new ResponseEntity<Inspection>(inspectionService.save(inspection), HttpStatus.CREATED);
+        return new ResponseEntity<>(inspectionService.save(inspection), HttpStatus.CREATED);
     }
 
     // Update inspection
@@ -68,8 +68,7 @@ public class InspectionController {
             return mapValidationErrorService.MapValidationService(result);
         }
 
-        return new ResponseEntity<Inspection>(inspectionService.update(inspectionId, inspection, principal),
-                HttpStatus.OK);
+        return new ResponseEntity<>(inspectionService.update(inspectionId, inspection, principal), HttpStatus.OK);
     }
 
     // Update overdue inspection
@@ -81,7 +80,7 @@ public class InspectionController {
             return mapValidationErrorService.MapValidationService(result);
         }
 
-        return new ResponseEntity<Inspection>(inspectionService.updateOverdue(inspectionId, inspection, principal),
+        return new ResponseEntity<>(inspectionService.updateOverdue(inspectionId, inspection, principal),
                 HttpStatus.OK);
     }
 
@@ -89,7 +88,7 @@ public class InspectionController {
     @DeleteMapping("/{inspectionId}")
     public ResponseEntity<?> deleteInspection(@PathVariable Long inspectionId) {
         inspectionService.delete(inspectionId);
-        return new ResponseEntity<Message>(new Message("Inspection with id: " + inspectionId + " has been removed."),
+        return new ResponseEntity<>(new Message("Inspection with id: " + inspectionId + " has been removed."),
                 HttpStatus.OK);
     }
 
@@ -97,7 +96,7 @@ public class InspectionController {
     @DeleteMapping("")
     public ResponseEntity<?> deleteAllInspections() {
         inspectionService.deleteAll();
-        return new ResponseEntity<Message>(new Message("All inspection have been deleted."), HttpStatus.OK);
+        return new ResponseEntity<>(new Message("All inspection have been deleted."), HttpStatus.OK);
     }
 
     @GetMapping("/nitrogen")

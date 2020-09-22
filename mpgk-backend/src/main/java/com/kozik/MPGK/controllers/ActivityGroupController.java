@@ -39,7 +39,7 @@ public class ActivityGroupController {
     // Get single activity group
     @GetMapping("/{groupId}")
     public ResponseEntity<?> getActivityGroup(@PathVariable Long groupId) {
-        return new ResponseEntity<ActivityGroup>(activityGroupService.get(groupId), HttpStatus.OK);
+        return new ResponseEntity<>(activityGroupService.get(groupId), HttpStatus.OK);
     }
 
     // Create activity group
@@ -50,7 +50,7 @@ public class ActivityGroupController {
             return mapValidationErrorService.MapValidationService(result);
         }
 
-        return new ResponseEntity<ActivityGroup>(activityGroupService.save(activityGroup), HttpStatus.CREATED);
+        return new ResponseEntity<>(activityGroupService.save(activityGroup), HttpStatus.CREATED);
     }
 
     // Update activity group
@@ -61,14 +61,14 @@ public class ActivityGroupController {
             return mapValidationErrorService.MapValidationService(result);
         }
 
-        return new ResponseEntity<ActivityGroup>(activityGroupService.update(groupId, activityGroup), HttpStatus.OK);
+        return new ResponseEntity<>(activityGroupService.update(groupId, activityGroup), HttpStatus.OK);
     }
 
     // Delete activity group
     @DeleteMapping("/{groupId}")
     public ResponseEntity<?> deleteActivityGroup(@PathVariable Long groupId) {
         activityGroupService.delete(groupId);
-        return new ResponseEntity<Message>(new Message("Activity group with id: " + groupId + " has been removed."),
+        return new ResponseEntity<>(new Message("Activity group with id: " + groupId + " has been removed."),
                 HttpStatus.OK);
     }
 }

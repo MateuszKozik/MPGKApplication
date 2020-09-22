@@ -41,7 +41,7 @@ public class FluidController {
     // Get single fluid
     @GetMapping("/{fluidId}")
     public ResponseEntity<?> getFluid(@PathVariable Long fluidId) {
-        return new ResponseEntity<Fluid>(fluidService.get(fluidId), HttpStatus.OK);
+        return new ResponseEntity<>(fluidService.get(fluidId), HttpStatus.OK);
     }
 
     // Create fluid
@@ -51,7 +51,7 @@ public class FluidController {
             return mapValidationErrorService.MapValidationService(result);
         }
 
-        return new ResponseEntity<Fluid>(fluidService.save(fluid), HttpStatus.CREATED);
+        return new ResponseEntity<>(fluidService.save(fluid), HttpStatus.CREATED);
     }
 
     // Update fluid
@@ -62,14 +62,13 @@ public class FluidController {
             return mapValidationErrorService.MapValidationService(result);
         }
 
-        return new ResponseEntity<Fluid>(fluidService.update(fluidId, fluid), HttpStatus.OK);
+        return new ResponseEntity<>(fluidService.update(fluidId, fluid), HttpStatus.OK);
     }
 
     // Delete fluid
     @DeleteMapping("/{fluidId}")
     public ResponseEntity<?> deleteFluid(@PathVariable Long fluidId) {
         fluidService.delete(fluidId);
-        return new ResponseEntity<Message>(new Message("Fluid with id: " + fluidId + " has been removed."),
-                HttpStatus.OK);
+        return new ResponseEntity<>(new Message("Fluid with id: " + fluidId + " has been removed."), HttpStatus.OK);
     }
 }

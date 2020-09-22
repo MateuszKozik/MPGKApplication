@@ -39,7 +39,7 @@ public class PersonController {
     // Get single person
     @GetMapping("/{personId}")
     public ResponseEntity<?> getPerson(@PathVariable Long personId) {
-        return new ResponseEntity<Person>(personService.get(personId), HttpStatus.OK);
+        return new ResponseEntity<>(personService.get(personId), HttpStatus.OK);
     }
 
     // Create person
@@ -49,7 +49,7 @@ public class PersonController {
             return mapValidationErrorService.MapValidationService(result);
         }
 
-        return new ResponseEntity<Person>(personService.save(person), HttpStatus.CREATED);
+        return new ResponseEntity<>(personService.save(person), HttpStatus.CREATED);
     }
 
     // Update person
@@ -60,14 +60,13 @@ public class PersonController {
             return mapValidationErrorService.MapValidationService(result);
         }
 
-        return new ResponseEntity<Person>(personService.update(personId, person), HttpStatus.OK);
+        return new ResponseEntity<>(personService.update(personId, person), HttpStatus.OK);
     }
 
     // Delete person
     @DeleteMapping("/{personId}")
     public ResponseEntity<?> deletePerson(@PathVariable Long personId) {
         personService.delete(personId);
-        return new ResponseEntity<Message>(new Message("Person with id: " + personId + " has been removed."),
-                HttpStatus.OK);
+        return new ResponseEntity<>(new Message("Person with id: " + personId + " has been removed."), HttpStatus.OK);
     }
 }

@@ -41,7 +41,7 @@ public class FluidPlaceController {
     // Get single fluid place
     @GetMapping("/{placeId}")
     public ResponseEntity<?> getFluidPlace(@PathVariable Long placeId) {
-        return new ResponseEntity<FluidPlace>(fluidPlaceService.get(placeId), HttpStatus.OK);
+        return new ResponseEntity<>(fluidPlaceService.get(placeId), HttpStatus.OK);
     }
 
     // Create fluid place
@@ -51,7 +51,7 @@ public class FluidPlaceController {
             return mapValidationErrorService.MapValidationService(result);
         }
 
-        return new ResponseEntity<FluidPlace>(fluidPlaceService.save(fluidPlace), HttpStatus.CREATED);
+        return new ResponseEntity<>(fluidPlaceService.save(fluidPlace), HttpStatus.CREATED);
     }
 
     // Update fluid place
@@ -69,7 +69,7 @@ public class FluidPlaceController {
     @DeleteMapping("{placeId}")
     public ResponseEntity<?> deleteFluidPlace(@PathVariable Long placeId) {
         fluidPlaceService.delete(placeId);
-        return new ResponseEntity<Message>(new Message("Fluid place with id: " + placeId + " has been removed."),
+        return new ResponseEntity<>(new Message("Fluid place with id: " + placeId + " has been removed."),
                 HttpStatus.OK);
     }
 }

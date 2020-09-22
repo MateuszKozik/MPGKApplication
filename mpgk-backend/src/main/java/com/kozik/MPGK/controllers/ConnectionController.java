@@ -41,7 +41,7 @@ public class ConnectionController {
     // Get single connection
     @GetMapping("/{connectionId}")
     public ResponseEntity<?> getConnection(@PathVariable Long connectionId) {
-        return new ResponseEntity<Connection>(connectionService.get(connectionId), HttpStatus.OK);
+        return new ResponseEntity<>(connectionService.get(connectionId), HttpStatus.OK);
     }
 
     // Create connection
@@ -50,7 +50,7 @@ public class ConnectionController {
         if (result.hasErrors())
             return mapValidationErrorService.MapValidationService(result);
 
-        return new ResponseEntity<Connection>(connectionService.save(connection), HttpStatus.CREATED);
+        return new ResponseEntity<>(connectionService.save(connection), HttpStatus.CREATED);
     }
 
     // Update connection
@@ -60,14 +60,14 @@ public class ConnectionController {
         if (result.hasErrors())
             return mapValidationErrorService.MapValidationService(result);
 
-        return new ResponseEntity<Connection>(connectionService.update(connectionId, connection), HttpStatus.OK);
+        return new ResponseEntity<>(connectionService.update(connectionId, connection), HttpStatus.OK);
     }
 
     // Delete connection
     @DeleteMapping("/{connectionId}")
     public ResponseEntity<?> deleteConnection(@PathVariable Long connectionId) {
         connectionService.delete(connectionId);
-        return new ResponseEntity<Message>(new Message("Connection with id: " + connectionId + " has been removed."),
+        return new ResponseEntity<>(new Message("Connection with id: " + connectionId + " has been removed."),
                 HttpStatus.OK);
     }
 }

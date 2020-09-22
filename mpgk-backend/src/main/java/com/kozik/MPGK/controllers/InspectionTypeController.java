@@ -51,7 +51,7 @@ public class InspectionTypeController {
         if (result.hasErrors())
             return mapValidationErrorService.MapValidationService(result);
 
-        return new ResponseEntity<InspectionType>(inspectionTypeService.save(inspectionType), HttpStatus.CREATED);
+        return new ResponseEntity<>(inspectionTypeService.save(inspectionType), HttpStatus.CREATED);
     }
 
     // Update inspection type
@@ -61,14 +61,14 @@ public class InspectionTypeController {
         if (result.hasErrors())
             return mapValidationErrorService.MapValidationService(result);
 
-        return new ResponseEntity<InspectionType>(inspectionTypeService.update(typeId, inspectionType), HttpStatus.OK);
+        return new ResponseEntity<>(inspectionTypeService.update(typeId, inspectionType), HttpStatus.OK);
     }
 
     // Delete inspection type
     @DeleteMapping("/{typeId}")
     public ResponseEntity<?> deleteInspectionType(@PathVariable Long typeId) {
         inspectionTypeService.delete(typeId);
-        return new ResponseEntity<Message>(new Message("Inspection type with id: " + typeId + " has been removed."),
+        return new ResponseEntity<>(new Message("Inspection type with id: " + typeId + " has been removed."),
                 HttpStatus.OK);
     }
 }

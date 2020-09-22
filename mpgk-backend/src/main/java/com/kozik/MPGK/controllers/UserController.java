@@ -53,7 +53,7 @@ public class UserController {
             return mapValidationErrorService.MapValidationService(result);
         }
 
-        return new ResponseEntity<User>(userService.saveUser(user), HttpStatus.CREATED);
+        return new ResponseEntity<>(userService.saveUser(user), HttpStatus.CREATED);
     }
 
     @PostMapping("/login")
