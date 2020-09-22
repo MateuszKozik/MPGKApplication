@@ -360,7 +360,7 @@ class InspectionItem extends Component {
 							<Grid item xs={12} md={2}>
 								<Grid container spacing={1}>
 									<Grid item xs={12}>
-										<FormatDate date={datetime} datetime={true} />
+										<FormatDate date={datetime} showTime={true} />
 									</Grid>
 									<Grid item xs={12}>
 										{person && <p> {person.name + " " + person.surname} </p>}

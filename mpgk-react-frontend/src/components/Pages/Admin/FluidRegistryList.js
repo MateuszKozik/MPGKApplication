@@ -269,7 +269,7 @@ class FluidRegistryList extends Component {
 													<TableCell>
 														<FormatDate
 															date={fluidRegistry.datetime}
-															datetime
+															showTime={true}
 														/>
 													</TableCell>
 													<TableCell>

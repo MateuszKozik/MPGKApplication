@@ -109,7 +109,7 @@ class NitrogenList extends Component {
 													<TableCell>
 														<FormatDate
 															date={inspection.datetime}
-															datetime={true}
+															showTime={true}
 														/>
 													</TableCell>
 													<TableCell>
