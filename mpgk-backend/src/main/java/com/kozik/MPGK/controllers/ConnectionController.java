@@ -21,8 +21,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+
 @RestController
 @CrossOrigin
+@Api(tags = "connections", description = "Operations about connection")
 @RequestMapping("/api/connections")
 public class ConnectionController {
 
@@ -33,20 +38,26 @@ public class ConnectionController {
     private MapValidationErrorService mapValidationErrorService;
 
     // Get all connections
+    @ApiOperation(value = "Get all connections")
     @GetMapping("")
     public Iterable<Connection> getConnections() {
         return connectionService.listAll();
     }
 
     // Get single connection
+    @ApiOperation(value = "Get connection by id")
     @GetMapping("/{connectionId}")
-    public ResponseEntity<?> getConnection(@PathVariable Long connectionId) {
+    public ResponseEntity<?> getConnection(
+            @ApiParam(value = "Unique id of connection", example = "123") @PathVariable Long connectionId) {
         return new ResponseEntity<>(connectionService.get(connectionId), HttpStatus.OK);
     }
 
     // Create connection
+    @ApiOperation(value = "Create new connection")
     @PostMapping("")
-    public ResponseEntity<?> createConnection(@Valid @RequestBody Connection connection, BindingResult result) {
+    public ResponseEntity<?> createConnection(
+            @ApiParam(value = "Created connection object") @Valid @RequestBody Connection connection,
+            BindingResult result) {
         if (result.hasErrors())
             return mapValidationErrorService.MapValidationService(result);
 
@@ -54,9 +65,12 @@ public class ConnectionController {
     }
 
     // Update connection
+    @ApiOperation(value = "Update connection")
     @PutMapping("/{connectionId}")
-    public ResponseEntity<?> updateConnection(@PathVariable Long connectionId,
-            @Valid @RequestBody Connection connection, BindingResult result) {
+    public ResponseEntity<?> updateConnection(
+            @ApiParam(value = "Id that need to be updated", example = "123") @PathVariable Long connectionId,
+            @ApiParam(value = "Updated connection object") @Valid @RequestBody Connection connection,
+            BindingResult result) {
         if (result.hasErrors())
             return mapValidationErrorService.MapValidationService(result);
 
@@ -64,8 +78,10 @@ public class ConnectionController {
     }
 
     // Delete connection
+    @ApiOperation(value = "Delete connection")
     @DeleteMapping("/{connectionId}")
-    public ResponseEntity<?> deleteConnection(@PathVariable Long connectionId) {
+    public ResponseEntity<?> deleteConnection(
+            @ApiParam(value = "Id that need to be deleted", example = "123") @PathVariable Long connectionId) {
         connectionService.delete(connectionId);
         return new ResponseEntity<>(new Message("Connection with id: " + connectionId + " has been removed."),
                 HttpStatus.OK);
