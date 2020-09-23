@@ -23,8 +23,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+
 @RestController
 @CrossOrigin
+@Api(tags = "fluid registries", description = "Operations about fluid registry")
 @RequestMapping("/api/fluid-registries")
 public class FluidRegistryController {
 
@@ -35,21 +40,26 @@ public class FluidRegistryController {
     private MapValidationErrorService mapValidationErrorService;
 
     // Get all fluid registries
+    @ApiOperation(value = "Get all fluid registries")
     @GetMapping("")
     public Iterable<FluidRegistry> getFluidRegistries() {
         return fluidRegistryService.listAll();
     }
 
     // Get single fluid registry
+    @ApiOperation(value = "Get fluid registry by id")
     @GetMapping("/{registryId}")
-    public ResponseEntity<?> getFluidRegistry(@PathVariable Long registryId) {
+    public ResponseEntity<?> getFluidRegistry(
+            @ApiParam(value = "Unique id of fluid registry", example = "123") @PathVariable Long registryId) {
         return new ResponseEntity<>(fluidRegistryService.get(registryId), HttpStatus.OK);
     }
 
     // Create fluid registry
+    @ApiOperation(value = "Create new fluid registry")
     @PostMapping("")
-    public ResponseEntity<?> createFluidRegistry(@Valid @RequestBody FluidRegistry fluidRegistry, BindingResult result,
-            Principal principal) {
+    public ResponseEntity<?> createFluidRegistry(
+            @ApiParam(value = "Created fluid registry object") @Valid @RequestBody FluidRegistry fluidRegistry,
+            BindingResult result, Principal principal) {
         if (result.hasErrors()) {
             return mapValidationErrorService.MapValidationService(result);
         }
@@ -58,9 +68,12 @@ public class FluidRegistryController {
     }
 
     // Update fluid registry
+    @ApiOperation(value = "Update fluid registry")
     @PutMapping("/{registryId}")
-    public ResponseEntity<?> updateFluidRegistry(@PathVariable Long registryId,
-            @Valid @RequestBody FluidRegistry fluidRegistry, BindingResult result) {
+    public ResponseEntity<?> updateFluidRegistry(
+            @ApiParam(value = "Id that need to be updated", example = "123") @PathVariable Long registryId,
+            @ApiParam(value = "Updated fluid registry object") @Valid @RequestBody FluidRegistry fluidRegistry,
+            BindingResult result) {
         if (result.hasErrors()) {
             return mapValidationErrorService.MapValidationService(result);
         }
@@ -69,8 +82,10 @@ public class FluidRegistryController {
     }
 
     // Delete fluid registry
+    @ApiOperation(value = "Delete fluid registry")
     @DeleteMapping("/{registryId}")
-    public ResponseEntity<?> deleteFluidRegistry(@PathVariable Long registryId) {
+    public ResponseEntity<?> deleteFluidRegistry(
+            @ApiParam(value = "Id that need to be deleted", example = "123") @PathVariable Long registryId) {
         fluidRegistryService.delete(registryId);
         return new ResponseEntity<>(new Message("Fluid registry with id: " + registryId + " has been removed."),
                 HttpStatus.OK);
