@@ -21,8 +21,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+
 @RestController
 @CrossOrigin
+@Api(tags = "fluid places", description = "Operations about fluid place")
 @RequestMapping("/api/fluid-places")
 public class FluidPlaceController {
 
@@ -33,20 +38,26 @@ public class FluidPlaceController {
     private MapValidationErrorService mapValidationErrorService;
 
     // Get all fluid places
+    @ApiOperation(value = "Get all fluid places")
     @GetMapping("")
     public Iterable<FluidPlace> getFluidPlaces() {
         return fluidPlaceService.listAll();
     }
 
     // Get single fluid place
+    @ApiOperation(value = "Get fluid place by id")
     @GetMapping("/{placeId}")
-    public ResponseEntity<?> getFluidPlace(@PathVariable Long placeId) {
+    public ResponseEntity<?> getFluidPlace(
+            @ApiParam(value = "Unique id of fluid place", example = "123") @PathVariable Long placeId) {
         return new ResponseEntity<>(fluidPlaceService.get(placeId), HttpStatus.OK);
     }
 
     // Create fluid place
+    @ApiOperation(value = "Create new fluid place")
     @PostMapping("")
-    public ResponseEntity<?> createFluidPlace(@Valid @RequestBody FluidPlace fluidPlace, BindingResult result) {
+    public ResponseEntity<?> createFluidPlace(
+            @ApiParam(value = "Created fluid place object") @Valid @RequestBody FluidPlace fluidPlace,
+            BindingResult result) {
         if (result.hasErrors()) {
             return mapValidationErrorService.MapValidationService(result);
         }
@@ -55,8 +66,11 @@ public class FluidPlaceController {
     }
 
     // Update fluid place
+    @ApiOperation(value = "Update fluid place")
     @PutMapping("/{placeId}")
-    public ResponseEntity<?> updateFluidPlace(@PathVariable Long placeId, @Valid @RequestBody FluidPlace fluidPlace,
+    public ResponseEntity<?> updateFluidPlace(
+            @ApiParam(value = "Id that need to be updated", example = "123") @PathVariable Long placeId,
+            @ApiParam(value = "Updated fluid place object") @Valid @RequestBody FluidPlace fluidPlace,
             BindingResult result) {
         if (result.hasErrors()) {
             return mapValidationErrorService.MapValidationService(result);
@@ -66,8 +80,10 @@ public class FluidPlaceController {
     }
 
     // Delete fluid place
+    @ApiOperation(value = "Delete fluid place")
     @DeleteMapping("{placeId}")
-    public ResponseEntity<?> deleteFluidPlace(@PathVariable Long placeId) {
+    public ResponseEntity<?> deleteFluidPlace(
+            @ApiParam(value = "Id that need to be deleted", example = "123") @PathVariable Long placeId) {
         fluidPlaceService.delete(placeId);
         return new ResponseEntity<>(new Message("Fluid place with id: " + placeId + " has been removed."),
                 HttpStatus.OK);
