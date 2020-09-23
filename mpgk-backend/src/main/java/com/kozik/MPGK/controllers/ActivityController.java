@@ -69,7 +69,7 @@ public class ActivityController {
     @PutMapping("/{activityId}")
     public ResponseEntity<?> updateupdateActivityFluid(
             @ApiParam(value = "Id that need to be updated", example = "123") @PathVariable Long activityId,
-            @ApiParam(value = "Update activity object") @Valid @RequestBody Activity activity, BindingResult result) {
+            @ApiParam(value = "Updated activity object") @Valid @RequestBody Activity activity, BindingResult result) {
         if (result.hasErrors()) {
             return mapValidationErrorService.MapValidationService(result);
         }
