@@ -197,16 +197,16 @@ class FluidRegistryList extends Component {
 											<Typography>Miejsce dodania</Typography>
 										</TableCell>
 										<TableCell className={classes.head}>
-											<Typography>Rodzaj czynnika</Typography>
+											<Typography align="center">Rodzaj czynnika</Typography>
 										</TableCell>
 										<TableCell className={classes.head}>
-											<Typography>Ilość [litry]</Typography>
+											<Typography align="center">Ilość [litry]</Typography>
 										</TableCell>
 										<TableCell className={classes.head}>
-											<Typography>Data</Typography>
+											<Typography align="center">Data</Typography>
 										</TableCell>
 										<TableCell className={classes.head}>
-											<Typography>Akcje</Typography>
+											<Typography align="center">Akcje</Typography>
 										</TableCell>
 									</TableRow>
 								</TableHead>
@@ -222,10 +222,10 @@ class FluidRegistryList extends Component {
 														</Typography>
 													</TableCell>
 													<TableCell>
-														<Typography>{fluid && fluid.name}</Typography>
+														<Typography align="center">{fluid && fluid.name}</Typography>
 													</TableCell>
 													<TableCell>
-														<Typography>{fluidRegistry.quantity}</Typography>
+														<Typography align="center">{fluidRegistry.quantity}</Typography>
 													</TableCell>
 													<TableCell>
 														<Typography component="div" align="center">
