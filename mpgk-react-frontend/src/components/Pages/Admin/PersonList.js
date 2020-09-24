@@ -264,13 +264,13 @@ class PersonList extends Component {
 											<Typography>Imię i Nazwisko</Typography>
 										</TableCell>
 										<TableCell className={classes.head}>
-											<Typography>Uprawnienia</Typography>
+											<Typography align="center">Uprawnienia</Typography>
 										</TableCell>
 										<TableCell className={classes.head}>
-											<Typography>Dane konta</Typography>
+											<Typography align="center">Dane konta</Typography>
 										</TableCell>
 										<TableCell className={classes.head}>
-											<Typography>Akcje</Typography>
+											<Typography align="center">Akcje</Typography>
 										</TableCell>
 									</TableRow>
 								</TableHead>
@@ -284,7 +284,7 @@ class PersonList extends Component {
 															{person.name + " " + person.surname}
 														</Typography>
 													</TableCell>
-													<TableCell>
+													<TableCell align="center">
 														{person.user &&
 															person.user.role &&
 															person.user.role.map((role, index) => (
@@ -293,7 +293,7 @@ class PersonList extends Component {
 																</Typography>
 															))}
 													</TableCell>
-													<TableCell>
+													<TableCell align="center">
 														<Typography>
 															<b>Login: </b>
 															{person.user && person.user.username}
@@ -305,7 +305,7 @@ class PersonList extends Component {
 																: " Wyłączone"}
 														</Typography>
 													</TableCell>
-													<TableCell>
+													<TableCell align="center">
 														<Tooltip title="Edytuj">
 															<IconButton
 																color="primary"
