@@ -276,10 +276,10 @@ export class ConnectionList extends Component {
 											<Typography>Nazwa przeglądu</Typography>
 										</TableCell>
 										<TableCell className={classes.head}>
-											<Typography>Status</Typography>
+											<Typography align="center">Status</Typography>
 										</TableCell>
 										<TableCell className={classes.head}>
-											<Typography>Akcje</Typography>
+											<Typography align="center">Akcje</Typography>
 										</TableCell>
 									</TableRow>
 								</TableHead>
@@ -303,13 +303,13 @@ export class ConnectionList extends Component {
 														</Typography>
 													</TableCell>
 													<TableCell>
-														<Typography>
+														<Typography align="center">
 															{connection.status === true
 																? "Aktywny"
 																: "Nieaktywny"}
 														</Typography>
 													</TableCell>
-													<TableCell>
+													<TableCell align="center">
 														<Tooltip title="Edytuj">
 															<IconButton
 																color="primary"
