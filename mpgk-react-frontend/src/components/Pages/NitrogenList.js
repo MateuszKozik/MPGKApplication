@@ -90,10 +90,10 @@ class NitrogenList extends Component {
 											<Typography>Nazwa</Typography>
 										</TableCell>
 										<TableCell className={classes.head}>
-											<Typography>Data i godzina</Typography>
+											<Typography align="center">Data i godzina</Typography>
 										</TableCell>
 										<TableCell className={classes.head}>
-											<Typography>Imię i nazwisko</Typography>
+											<Typography align="center">Imię i nazwisko</Typography>
 										</TableCell>
 									</TableRow>
 								</TableHead>
@@ -106,14 +106,14 @@ class NitrogenList extends Component {
 													<TableCell>
 														<Typography>Wymiana butli</Typography>
 													</TableCell>
-													<TableCell>
+													<TableCell align="center">
 														<FormatDate
 															date={inspection.datetime}
 															showTime={true}
 														/>
 													</TableCell>
 													<TableCell>
-														<Typography>
+														<Typography align="center">
 															{person && person.name + " " + person.surname}
 														</Typography>
 													</TableCell>
