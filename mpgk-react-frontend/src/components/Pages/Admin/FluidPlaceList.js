@@ -174,7 +174,7 @@ class FluidPlaceList extends Component {
 											<Typography>Nazwa miejsca</Typography>
 										</TableCell>
 										<TableCell className={classes.head}>
-											<Typography>Akcje</Typography>
+											<Typography align="center">Akcje</Typography>
 										</TableCell>
 									</TableRow>
 								</TableHead>
@@ -185,7 +185,7 @@ class FluidPlaceList extends Component {
 												<TableCell>
 													<Typography>{fluidPlace.name}</Typography>
 												</TableCell>
-												<TableCell>
+												<TableCell align="center">
 													<Tooltip title="Edytuj">
 														<IconButton
 															color="primary"
