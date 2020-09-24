@@ -22,41 +22,54 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+
 @RestController
 @CrossOrigin
+@Api(tags = "pdf generating", description = "Operations about pdf generating")
 @RequestMapping("/api/generate")
 public class PDFGeneratorController {
 
-    @Autowired
-    private InspectionService inspectionService;
+        @Autowired
+        private InspectionService inspectionService;
 
-    @Autowired
-    private ActivityService activityService;
+        @Autowired
+        private ActivityService activityService;
 
-    @GetMapping(value = "/inspection-report/{connectionId}/{startTime}/{endTime}", produces = MediaType.APPLICATION_PDF_VALUE)
-    public ResponseEntity<InputStreamResource> generateInspectionReport(@PathVariable Long connectionId,
-            @PathVariable String startTime, @PathVariable String endTime) throws IOException {
-        List<InspectionObject> inspections = inspectionService
-                .getInspectionByConnectionAndStartTimeAndEndTime(connectionId, startTime, endTime);
-        ByteArrayInputStream bis = InspectionPdfGenerator.generateInspectionReport(inspections);
+        // Generate pdf with inspections by connection id and date of inspection
+        @ApiOperation(value = "Generate pdf with inspections by connection id and date of inspection")
+        @GetMapping(value = "/inspection-report/{connectionId}/{startTime}/{endTime}", produces = MediaType.APPLICATION_PDF_VALUE)
+        public ResponseEntity<InputStreamResource> generateInspectionReport(
+                        @ApiParam(value = "Unique id of connection", example = "123") @PathVariable Long connectionId,
+                        @ApiParam(value = "Starting date", example = "2020-11-01T00:01") @PathVariable String startTime,
+                        @ApiParam(value = "End date", example = "2020-12-31T23:59") @PathVariable String endTime)
+                        throws IOException {
+                List<InspectionObject> inspections = inspectionService
+                                .getInspectionByConnectionAndStartTimeAndEndTime(connectionId, startTime, endTime);
+                ByteArrayInputStream bis = InspectionPdfGenerator.generateInspectionReport(inspections);
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Disposition", "attachment; filename=inspections.pdf");
+                HttpHeaders headers = new HttpHeaders();
+                headers.add("Content-Disposition", "attachment; filename=inspections.pdf");
 
-        return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF)
-                .body(new InputStreamResource(bis));
-    }
+                return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF)
+                                .body(new InputStreamResource(bis));
+        }
 
-    @GetMapping("/activity-report/{connectionId}")
-    public ResponseEntity<InputStreamResource> generateActivityReport(@PathVariable Long connectionId)
-            throws IOException {
-        List<ActivityObject> activities = activityService.getActivitiesByConnection(connectionId);
-        ByteArrayInputStream bis = ActivityPdfGenerator.generateActivityReport(activities);
+        // Generate pdf with inspections by connection id
+        @ApiOperation(value = "Generate pdf with inspections by connection id")
+        @GetMapping("/activity-report/{connectionId}")
+        public ResponseEntity<InputStreamResource> generateActivityReport(
+                        @ApiParam(value = "Unique id of connection", example = "123") @PathVariable Long connectionId)
+                        throws IOException {
+                List<ActivityObject> activities = activityService.getActivitiesByConnection(connectionId);
+                ByteArrayInputStream bis = ActivityPdfGenerator.generateActivityReport(activities);
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Disposition", "attachment; filename=activities.pdf");
+                HttpHeaders headers = new HttpHeaders();
+                headers.add("Content-Disposition", "attachment; filename=activities.pdf");
 
-        return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF)
-                .body(new InputStreamResource(bis));
-    }
+                return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF)
+                                .body(new InputStreamResource(bis));
+        }
 }
