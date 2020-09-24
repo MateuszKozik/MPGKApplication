@@ -17,10 +17,16 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+
 import com.kozik.MPGK.utilities.Message;
 
 @RestController
 @CrossOrigin
+@Api(tags = "persons", description = "Operations about person")
 @RequestMapping("/api/persons")
 public class PersonController {
 
@@ -31,20 +37,25 @@ public class PersonController {
     private MapValidationErrorService mapValidationErrorService;
 
     // Get all persons
+    @ApiOperation(value = "Get all persons")
     @GetMapping("")
     public Iterable<Person> getPersons() {
         return personService.listAll();
     }
 
     // Get single person
+    @ApiOperation(value = "Get person by id")
     @GetMapping("/{personId}")
-    public ResponseEntity<?> getPerson(@PathVariable Long personId) {
+    public ResponseEntity<?> getPerson(
+            @ApiParam(value = "Unique id of person", example = "123") @PathVariable Long personId) {
         return new ResponseEntity<>(personService.get(personId), HttpStatus.OK);
     }
 
     // Create person
+    @ApiOperation(value = "Create new person")
     @PostMapping("")
-    public ResponseEntity<?> createPerson(@Valid @RequestBody Person person, BindingResult result) {
+    public ResponseEntity<?> createPerson(@ApiParam(value = "Created person object") @Valid @RequestBody Person person,
+            BindingResult result) {
         if (result.hasErrors()) {
             return mapValidationErrorService.MapValidationService(result);
         }
@@ -53,9 +64,11 @@ public class PersonController {
     }
 
     // Update person
+    @ApiOperation(value = "Update person")
     @PutMapping("/{personId}")
-    public ResponseEntity<?> updatePerson(@PathVariable Long personId, @Valid @RequestBody Person person,
-            BindingResult result) {
+    public ResponseEntity<?> updatePerson(
+            @ApiParam(value = "Id that need to be updated", example = "123") @PathVariable Long personId,
+            @ApiParam(value = "Updated person object") @Valid @RequestBody Person person, BindingResult result) {
         if (result.hasErrors()) {
             return mapValidationErrorService.MapValidationService(result);
         }
@@ -64,8 +77,10 @@ public class PersonController {
     }
 
     // Delete person
+    @ApiOperation(value = "Delete person")
     @DeleteMapping("/{personId}")
-    public ResponseEntity<?> deletePerson(@PathVariable Long personId) {
+    public ResponseEntity<?> deletePerson(
+            @ApiParam(value = "Id that need to be deleted", example = "123") @PathVariable Long personId) {
         personService.delete(personId);
         return new ResponseEntity<>(new Message("Person with id: " + personId + " has been removed."), HttpStatus.OK);
     }
