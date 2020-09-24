@@ -24,10 +24,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+
 import static com.kozik.MPGK.security.SecurityConstraints.TOKEN_PREFIX;;
 
 @RestController
 @CrossOrigin
+@Api(tags = "users", description = "Register and login operations")
 @RequestMapping("/api/users")
 public class UserController {
 
@@ -46,8 +51,11 @@ public class UserController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    // Register new user
+    @ApiOperation(value = "Register new user")
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody User user, BindingResult result) {
+    public ResponseEntity<?> registerUser(@ApiParam(value = "Created user object") @Valid @RequestBody User user,
+            BindingResult result) {
         userValidator.validate(user, result);
         if (result.hasErrors()) {
             return mapValidationErrorService.MapValidationService(result);
@@ -56,8 +64,11 @@ public class UserController {
         return new ResponseEntity<>(userService.saveUser(user), HttpStatus.CREATED);
     }
 
+    // Authenticate user
+    @ApiOperation(value = "Authenticate user")
     @PostMapping("/login")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest, BindingResult result) {
+    public ResponseEntity<?> authenticateUser(
+            @ApiParam(value = "Login data") @Valid @RequestBody LoginRequest loginRequest, BindingResult result) {
         if (result.hasErrors()) {
             return mapValidationErrorService.MapValidationService(result);
         }
