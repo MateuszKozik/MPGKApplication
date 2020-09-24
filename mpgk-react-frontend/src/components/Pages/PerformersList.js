@@ -83,7 +83,7 @@ class PerformersList extends Component {
 											<Typography>Rodzaj przeglądu</Typography>
 										</TableCell>
 										<TableCell className={classes.head}>
-											<Typography>Imię i nazwisko</Typography>
+											<Typography align="center">Imię i nazwisko</Typography>
 										</TableCell>
 									</TableRow>
 								</TableHead>
@@ -99,7 +99,7 @@ class PerformersList extends Component {
 													<TableCell>
 														{persons.map((person, i) => {
 															return (
-																<Typography key={i}>
+																<Typography key={i} align="center">
 																	{person && person.name + " " + person.surname}
 																</Typography>
 															);
