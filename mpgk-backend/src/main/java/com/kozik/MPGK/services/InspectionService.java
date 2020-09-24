@@ -229,7 +229,7 @@ public class InspectionService {
         }
 
         // Sort array of date
-        times.sort(Comparator.naturalOrder());
+        times.sort(Comparator.reverseOrder());
         for (String time : times) {
             ConnectionObject connectionObject = new ConnectionObject();
             connectionObject.setConnection(connection);
