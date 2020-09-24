@@ -183,10 +183,10 @@ class DeviceList extends Component {
 											<Typography>Nazwa urządzenia</Typography>
 										</TableCell>
 										<TableCell className={classes.head}>
-											<Typography>Status</Typography>
+											<Typography align="center">Status</Typography>
 										</TableCell>
 										<TableCell className={classes.head}>
-											<Typography>Akcje</Typography>
+											<Typography align="center">Akcje</Typography>
 										</TableCell>
 									</TableRow>
 								</TableHead>
@@ -199,13 +199,13 @@ class DeviceList extends Component {
 														<Typography>{device.name}</Typography>
 													</TableCell>
 													<TableCell>
-														<Typography>
+														<Typography align="center">
 															{device.status === true
 																? "Włączone"
 																: "Wyłączone"}
 														</Typography>
 													</TableCell>
-													<TableCell>
+													<TableCell align="center">
 														<Tooltip title="Edytuj">
 															<IconButton
 																color="primary"
