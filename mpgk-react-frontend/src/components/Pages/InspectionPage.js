@@ -64,12 +64,12 @@ class InspectionPage extends Component {
 													</Typography>
 												</TableCell>
 												<TableCell>
-													<Typography>
+													<Typography align="center">
 														<b>Pozostały czas</b>
 													</Typography>
 												</TableCell>
 												<TableCell>
-													<Typography>
+													<Typography align="center">
 														<b>Status</b>
 													</Typography>
 												</TableCell>
@@ -91,12 +91,12 @@ class InspectionPage extends Component {
 													</Typography>
 												</TableCell>
 												<TableCell>
-													<Typography>
+													<Typography align="center">
 														<Timer date={inspection.endTime} />
 													</Typography>
 												</TableCell>
 												<TableCell>
-													<Typography>
+													<Typography align="center">
 														{inspection.inspectionStatus === "Wykonany" ? (
 															<CheckCircleIcon
 																fontSize="large"
@@ -133,12 +133,12 @@ class InspectionPage extends Component {
 												</Typography>
 											</TableCell>
 											<TableCell>
-												<Typography>
+												<Typography align="center">
 													<b>Data zakończenia</b>
 												</Typography>
 											</TableCell>
 											<TableCell>
-												<Typography>
+												<Typography align="center">
 													<b>Status</b>
 												</Typography>
 											</TableCell>
@@ -163,12 +163,12 @@ class InspectionPage extends Component {
 														</Typography>
 													</TableCell>
 													<TableCell>
-														<Typography component="div">
+														<Typography align="center" component="div">
 															<FormatDate date={overdue.endTime} />
 														</Typography>
 													</TableCell>
 													<TableCell>
-														<Typography>
+														<Typography align="center">
 															<ErrorIcon fontSize="large" color="secondary" />
 														</Typography>
 													</TableCell>
