@@ -171,7 +171,7 @@ class FluidList extends Component {
 											<Typography>Nazwa czynnika</Typography>
 										</TableCell>
 										<TableCell className={classes.head}>
-											<Typography>Akcje</Typography>
+											<Typography align="center">Akcje</Typography>
 										</TableCell>
 									</TableRow>
 								</TableHead>
@@ -182,7 +182,7 @@ class FluidList extends Component {
 												<TableCell>
 													<Typography>{fluid.name}</Typography>
 												</TableCell>
-												<TableCell>
+												<TableCell align="center">
 													<Tooltip title="Edytuj">
 														<IconButton
 															color="primary"
