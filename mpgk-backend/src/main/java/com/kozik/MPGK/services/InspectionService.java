@@ -181,7 +181,7 @@ public class InspectionService {
     }
 
     public List<Inspection> getActionsByName(String name, String parameter) {
-        return inspectionRepository.findByActivityNameAndParameter(name, parameter);
+        return inspectionRepository.findByActivityNameAndParameterOrderByDatetimeDesc(name, parameter);
     }
 
     public void deleteAll() {

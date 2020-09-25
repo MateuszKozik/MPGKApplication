@@ -19,7 +19,7 @@ public interface InspectionRepository extends JpaRepository<Inspection, Long> {
         Inspection findFirstByActivityActivityGroupConnectionAndEndTimeGreaterThan(Connection connection,
                         LocalDateTime endTime);
 
-        List<Inspection> findByActivityNameAndParameter(String name, String parameter);
+        List<Inspection> findByActivityNameAndParameterOrderByDatetimeDesc(String name, String parameter);
 
         Integer countByActivityActivityGroupConnectionAndStatus(Connection connection, String status);
 
