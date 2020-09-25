@@ -107,10 +107,12 @@ class NitrogenList extends Component {
 														<Typography>Wymiana butli</Typography>
 													</TableCell>
 													<TableCell align="center">
-														<FormatDate
-															date={inspection.datetime}
-															showTime={true}
-														/>
+														<Typography component="div">
+															<FormatDate
+																date={inspection.datetime}
+																showTime={true}
+															/>
+														</Typography>
 													</TableCell>
 													<TableCell>
 														<Typography align="center">
