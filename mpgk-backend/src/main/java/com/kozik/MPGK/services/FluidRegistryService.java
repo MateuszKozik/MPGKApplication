@@ -22,7 +22,7 @@ public class FluidRegistryService {
     private PersonService personService;
 
     public Iterable<FluidRegistry> listAll() {
-        return fluidRegistryRepository.findAll();
+        return fluidRegistryRepository.findAllByOrderByDatetimeDesc();
     }
 
     public FluidRegistry save(FluidRegistry fluidRegistry, Principal principal) {

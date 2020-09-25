@@ -5,4 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface FluidRegistryRepository extends JpaRepository<FluidRegistry, Long>{
 
+	Iterable<FluidRegistry> findAllByOrderByDatetimeDesc();
+
 }
