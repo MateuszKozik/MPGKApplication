@@ -95,7 +95,7 @@ public class ActivityGroupServiceTest {
         Long groupId = 1L;
         try {
             activityGroupService.delete(groupId);
-            Assert.fail("Expected an ActivityGroupNotFountExpection to be thrown");
+            Assert.fail("Expected an ActivityGroupNotFoundExpection to be thrown");
         } catch (ActivityGroupNotFoundException e) {
         }
         activityGroupService.delete(groupId);
@@ -131,7 +131,7 @@ public class ActivityGroupServiceTest {
         ActivityGroup oldActivityGroup = new ActivityGroup(1L, "first", null, null);
         try {
             activityGroupService.update(groupId, oldActivityGroup);
-            Assert.fail("Expected an ActivityGroupNotFountExpection to be thrown");
+            Assert.fail("Expected an ActivityGroupNotFoundExpection to be thrown");
         } catch (ActivityGroupNotFoundException e) {
         }
         activityGroupService.update(groupId, oldActivityGroup);
