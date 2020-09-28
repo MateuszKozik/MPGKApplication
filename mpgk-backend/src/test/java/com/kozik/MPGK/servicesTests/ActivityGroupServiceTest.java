@@ -73,7 +73,7 @@ public class ActivityGroupServiceTest {
     public void shouldNotGetTest() {
         try {
             activityGroupService.get(1L);
-            Assert.fail("Expected an ActivityGroupNotFountExpection to be thrown");
+            Assert.fail("Expected an ActivityGroupNotFoundExpection to be thrown");
         } catch (ActivityGroupNotFoundException e) {
         }
 
