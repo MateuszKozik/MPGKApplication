@@ -19,10 +19,12 @@ import org.hibernate.validator.constraints.Length;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
 @Entity
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "activities")
 public class Activity {
 
@@ -59,4 +61,14 @@ public class Activity {
     @ManyToOne
     @JoinColumn(name = "groupId", nullable = true)
     private ActivityGroup activityGroup;
+
+    public Activity(String name, String type, String emsr, String setting, String listItems, List<Inspection> inspections, ActivityGroup activityGroup){
+        this.name = name;
+        this.type = type;
+        this.emsr = emsr;
+        this.setting = setting;
+        this.listItems = listItems;
+        this.inspections = inspections;
+        this.activityGroup = activityGroup;
+    }
 }
