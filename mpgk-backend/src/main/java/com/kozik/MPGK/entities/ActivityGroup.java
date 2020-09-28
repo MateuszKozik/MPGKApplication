@@ -20,10 +20,12 @@ import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
 @Entity
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "activities_groups")
 public class ActivityGroup {
 
@@ -43,4 +45,10 @@ public class ActivityGroup {
     @ManyToOne
     @JoinColumn(name = "connection_id", nullable = true)
     private Connection connection;
+
+    public ActivityGroup(String name, List<Activity> activities, Connection connection) {
+        this.name = name;
+        this.activities = activities;
+        this.connection = connection;
+    }
 }
