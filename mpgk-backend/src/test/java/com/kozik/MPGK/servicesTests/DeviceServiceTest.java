@@ -96,8 +96,6 @@ public class DeviceServiceTest {
         // Then
         verify(deviceRepository).findById(deviceId);
         assertEquals(device.get(), getDevice);
-        assertTrue(device.isPresent());
-
     }
 
     @Test(expected = DeviceNotFoundException.class)

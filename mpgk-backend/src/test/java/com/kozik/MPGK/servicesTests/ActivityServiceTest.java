@@ -9,7 +9,6 @@ import java.util.stream.Stream;
 import java.util.stream.Collectors;
 import java.util.Optional;
 
-
 import com.google.common.collect.Iterables;
 import com.kozik.MPGK.entities.Activity;
 import com.kozik.MPGK.exceptions.activityExceptions.ActivityAlreadyExistException;
@@ -37,11 +36,12 @@ public class ActivityServiceTest {
     ActivityService activityService;
 
     @Test
-    public void shouldListAllTest(){
-        
+    public void shouldListAllTest() {
+
         // Given
         List<Activity> activities = Stream
-                .of(new Activity(1L,"name","type","emsr","setting","list",null,null), new Activity(2L,"name2","type2","emsr2","setting2","list2",null,null))
+                .of(new Activity(1L, "name", "type", "emsr", "setting", "list", null, null),
+                        new Activity(2L, "name2", "type2", "emsr2", "setting2", "list2", null, null))
                 .collect(Collectors.toList());
         given(activityRepository.findAll()).willReturn(activities);
 
@@ -56,9 +56,9 @@ public class ActivityServiceTest {
     public void shouldSaveTest() {
 
         // Given
-        Activity activity = new Activity("name","type","emsr","setting","list",null,null);
+        Activity activity = new Activity("name", "type", "emsr", "setting", "list", null, null);
         given(activityRepository.save(activity)).willReturn(activity);
-        
+
         // When
         Activity newActivity = activityService.save(activity);
 
@@ -67,16 +67,16 @@ public class ActivityServiceTest {
     }
 
     @Test(expected = ActivityAlreadyExistException.class)
-    public void shouldNotSaveTest(){
-       
+    public void shouldNotSaveTest() {
+
         // Given
-        Activity activity = new Activity(1L,"name","type","emsr","setting","list",null,null);
-       
+        Activity activity = new Activity(1L, "name", "type", "emsr", "setting", "list", null, null);
+
         // When
-        try{
+        try {
             activityService.save(activity);
             Assert.fail("Expected an ActivityAlreadyExistException to be thrown");
-        }catch(ActivityAlreadyExistException e){
+        } catch (ActivityAlreadyExistException e) {
         }
 
         // Then
@@ -85,77 +85,76 @@ public class ActivityServiceTest {
     }
 
     @Test
-    public void shouldGetTest(){
+    public void shouldGetTest() {
 
         // Given
         Long activityId = 1L;
-        Optional<Activity> activity = Optional.of(new Activity(activityId,"name","type","emsr","setting","list",null,null));
+        Optional<Activity> activity = Optional
+                .of(new Activity(activityId, "name", "type", "emsr", "setting", "list", null, null));
         given(activityRepository.findById(activityId)).willReturn(activity);
 
-         // When
-         Activity getActivity = activityService.get(activityId);
+        // When
+        Activity getActivity = activityService.get(activityId);
 
-         // Then
-         verify(activityRepository).findById(activityId);
-         assertEquals(activity.get(), getActivity);
-         assertTrue(activity.isPresent());
-
+        // Then
+        verify(activityRepository).findById(activityId);
+        assertEquals(activity.get(), getActivity);
     }
 
     @Test(expected = ActivityNotFoundException.class)
-    public void shouldNotGetTest(){
+    public void shouldNotGetTest() {
 
-        //When
-        try{
+        // When
+        try {
             activityService.get(1L);
             Assert.fail("Expected an ActivityNotFoundExpection to be thrown");
-        }catch(ActivityNotFoundException e){
+        } catch (ActivityNotFoundException e) {
         }
 
-        //Then
+        // Then
         activityService.get(1L);
     }
 
     @Test
-    public void shouldDeleteTest(){
+    public void shouldDeleteTest() {
 
-        //Given
+        // Given
         Long activityId = 1L;
-        Activity activity = new Activity(1L,"name","type","emsr","setting","list",null,null);
+        Activity activity = new Activity(1L, "name", "type", "emsr", "setting", "list", null, null);
         given(activityRepository.findById(activityId)).willReturn(Optional.of(activity));
-        
-        //When
+
+        // When
         activityService.delete(activityId);
 
-        //Then
+        // Then
         verify(activityRepository).findById(activityId);
         verify(activityRepository).delete(activity);
     }
 
     @Test(expected = ActivityNotFoundException.class)
-    public void shouldNotDeleteTest(){
+    public void shouldNotDeleteTest() {
 
-        //Given
+        // Given
         Long activityId = 1L;
 
-        //When
-        try{
+        // When
+        try {
             activityService.delete(activityId);
             Assert.fail("Expected an ActivityNotFoundExpection to be thrown");
-        }catch(ActivityNotFoundException e){
+        } catch (ActivityNotFoundException e) {
         }
 
-        //Then
+        // Then
         activityService.delete(activityId);
     }
 
     @Test
-    public void shouldIsActivityExistTest(){
+    public void shouldIsActivityExistTest() {
 
-        //Given
+        // Given
         Long activityId = 1L;
         given(activityRepository.existsById(activityId)).willReturn(Boolean.TRUE);
-        
+
         // When
         Boolean isExist = activityService.isActivityExist(activityId);
 
@@ -164,12 +163,12 @@ public class ActivityServiceTest {
     }
 
     @Test
-    public void shouldNotIsActivityExistTest(){
+    public void shouldNotIsActivityExistTest() {
 
-        //Given
+        // Given
         Long activityId = 1L;
         given(activityRepository.existsById(activityId)).willReturn(Boolean.FALSE);
-        
+
         // When
         Boolean isExist = activityService.isActivityExist(activityId);
 
@@ -182,8 +181,8 @@ public class ActivityServiceTest {
 
         // Given
         Long activityId = 1L;
-        Activity oldActivity = new Activity(activityId,"name","type","emsr","setting","list",null,null);
-        Activity newActivity = new Activity(activityId,"name2","type2","emsr2","setting2","list2",null,null);
+        Activity oldActivity = new Activity(activityId, "name", "type", "emsr", "setting", "list", null, null);
+        Activity newActivity = new Activity(activityId, "name2", "type2", "emsr2", "setting2", "list2", null, null);
         given(activityRepository.findById(activityId)).willReturn(Optional.of(oldActivity));
         given(activityRepository.save(oldActivity)).willReturn(newActivity);
 
@@ -201,8 +200,8 @@ public class ActivityServiceTest {
 
         // Given
         Long activityId = 1L;
-        Activity oldActivity = new Activity(1L,"name","type","emsr","setting","list",null,null);
-        
+        Activity oldActivity = new Activity(1L, "name", "type", "emsr", "setting", "list", null, null);
+
         // When
         try {
             activityService.update(activityId, oldActivity);
@@ -213,5 +212,5 @@ public class ActivityServiceTest {
         // Then
         activityService.update(activityId, oldActivity);
     }
-    
+
 }
