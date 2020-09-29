@@ -1,15 +1,10 @@
 package com.kozik.MPGK.servicesTests;
 
 import com.google.common.collect.Iterables;
-import com.kozik.MPGK.entities.Device;
 import com.kozik.MPGK.entities.InspectionType;
-import com.kozik.MPGK.exceptions.deviceExceptions.DeviceAlreadyExistException;
-import com.kozik.MPGK.exceptions.deviceExceptions.DeviceNotFoundException;
 import com.kozik.MPGK.exceptions.inspectionTypeExceptions.InspectionTypeAlreadyExistException;
 import com.kozik.MPGK.exceptions.inspectionTypeExceptions.InspectionTypeNotFoundException;
-import com.kozik.MPGK.repositories.DeviceRepository;
 import com.kozik.MPGK.repositories.InspectionTypeRepository;
-import com.kozik.MPGK.services.DeviceService;
 import com.kozik.MPGK.services.InspectionTypeService;
 
 import org.junit.Assert;
