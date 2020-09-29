@@ -14,12 +14,14 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "devices")
 public class Device {
 
@@ -39,4 +41,10 @@ public class Device {
     @OneToMany(mappedBy = "device")
     @JsonIgnore
     private List<Connection> connections;
+
+    public Device(String name, Boolean status, List<Connection> connections) {
+        this.name = name;
+        this.status = status;
+        this.connections = connections;
+    }
 }
