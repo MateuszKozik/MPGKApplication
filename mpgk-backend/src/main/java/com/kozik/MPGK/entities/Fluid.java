@@ -11,6 +11,7 @@ import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -20,6 +21,7 @@ import javax.persistence.OneToMany;
 @Entity
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "fluids")
 public class Fluid {
 
@@ -35,4 +37,9 @@ public class Fluid {
     @OneToMany(mappedBy = "fluid")
     @JsonIgnore
     private List<FluidRegistry> fluidRegistries;
+
+    public Fluid(String name, List<FluidRegistry> fluidRegistries) {
+        this.name = name;
+        this.fluidRegistries = fluidRegistries;
+    }
 }
