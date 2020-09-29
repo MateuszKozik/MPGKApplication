@@ -13,12 +13,14 @@ import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "fluid_places")
 public class FluidPlace {
 
@@ -34,4 +36,9 @@ public class FluidPlace {
     @OneToMany(mappedBy = "fluidPlace")
     @JsonIgnore
     private List<FluidRegistry> fluidRegistries;
+
+    public FluidPlace(String name, List<FluidRegistry> fluidRegistries) {
+        this.name = name;
+        this.fluidRegistries = fluidRegistries;
+    }
 }
