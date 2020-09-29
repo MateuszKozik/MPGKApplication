@@ -119,7 +119,7 @@ public class DeviceServiceTest {
 
         // Given
         Long deviceId = 1L;
-        Device device = new Device(1L, "first device", true, null);
+        Device device = new Device(deviceId, "first device", true, null);
         given(deviceRepository.findById(deviceId)).willReturn(Optional.of(device));
 
         // When
