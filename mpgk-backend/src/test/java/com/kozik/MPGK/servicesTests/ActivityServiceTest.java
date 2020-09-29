@@ -107,7 +107,7 @@ public class ActivityServiceTest {
         // When
         try {
             activityService.get(1L);
-            Assert.fail("Expected an ActivityNotFoundExpection to be thrown");
+            Assert.fail("Expected an ActivityNotFoundException to be thrown");
         } catch (ActivityNotFoundException e) {
         }
 
@@ -140,7 +140,7 @@ public class ActivityServiceTest {
         // When
         try {
             activityService.delete(activityId);
-            Assert.fail("Expected an ActivityNotFoundExpection to be thrown");
+            Assert.fail("Expected an ActivityNotFoundException to be thrown");
         } catch (ActivityNotFoundException e) {
         }
 
@@ -205,7 +205,7 @@ public class ActivityServiceTest {
         // When
         try {
             activityService.update(activityId, oldActivity);
-            Assert.fail("Expected an ActivityNotFoundExpection to be thrown");
+            Assert.fail("Expected an ActivityNotFoundException to be thrown");
         } catch (ActivityNotFoundException e) {
         }
 

@@ -104,7 +104,7 @@ public class DeviceServiceTest {
         // When
         try {
             deviceService.get(1L);
-            Assert.fail("Expected an DeviceNotFoundExpection to be thrown");
+            Assert.fail("Expected an DeviceNotFoundException to be thrown");
         } catch (DeviceNotFoundException e) {
         }
 
@@ -137,7 +137,7 @@ public class DeviceServiceTest {
         // When
         try {
             deviceService.delete(1L);
-            Assert.fail("Expected an DeviceNotFoundExpection to be thrown");
+            Assert.fail("Expected an DeviceNotFoundException to be thrown");
         } catch (DeviceNotFoundException e) {
         }
 
@@ -203,7 +203,7 @@ public class DeviceServiceTest {
         // When
         try {
             deviceService.update(deviceId, oldDevice);
-            Assert.fail("Expected an DeviceNotFoundExpection to be thrown");
+            Assert.fail("Expected an DeviceNotFoundException to be thrown");
         } catch (DeviceNotFoundException e) {
         }
 
