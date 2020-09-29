@@ -20,7 +20,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import org.mockito.InjectMocks;
@@ -38,107 +37,180 @@ public class ActivityGroupServiceTest {
 
     @Test
     public void shouldListAllTest() {
-        given(activityGroupRepository.findAll()).willReturn(prepareMockData());
 
-        assertEquals(2, Iterables.size(activityGroupService.listAll()));
+        // Given
+        List<ActivityGroup> activitiesGroups = Stream
+                .of(new ActivityGroup(1L, "first", null, null), new ActivityGroup(2L, "second", null, null))
+                .collect(Collectors.toList());
+        given(activityGroupRepository.findAll()).willReturn(activitiesGroups);
+
+        // When
+        Integer size = Iterables.size(activityGroupService.listAll());
+
+        // Then
+        assertEquals(2, size);
     }
 
     @Test
     public void shouldSaveTest() {
+
+        // Given
         ActivityGroup activityGroup = new ActivityGroup("first", null, null);
         given(activityGroupRepository.save(activityGroup)).willReturn(activityGroup);
-        assertEquals(activityGroup, activityGroupService.save(activityGroup));
+
+        // When
+        ActivityGroup newActivityGroup = activityGroupService.save(activityGroup);
+
+        // Then
+        assertEquals(activityGroup, newActivityGroup);
     }
 
     @Test(expected = ActivityGroupAlreadyExistException.class)
     public void shouldNotSaveTest() {
+
+        // Given
         ActivityGroup activityGroup = new ActivityGroup(1L, "first", null, null);
 
+        // When
         try {
             activityGroupService.save(activityGroup);
             Assert.fail("Expected an ActivityGroupAlreadyExistException to be thrown");
         } catch (ActivityGroupAlreadyExistException e) {
         }
+
+        // Then
         activityGroupService.save(activityGroup);
     }
 
     @Test
     public void shouldGetTest() {
-        Optional<ActivityGroup> group = Optional.of(new ActivityGroup(1L, "first", null, null));
-        given(activityGroupRepository.findById(1L)).willReturn(group);
-        assertEquals(group.get(), activityGroupService.get(1L));
+
+        // Given
+        Long groupId = 1L;
+        Optional<ActivityGroup> group = Optional.of(new ActivityGroup(groupId, "first", null, null));
+        given(activityGroupRepository.findById(groupId)).willReturn(group);
+
+        // When
+        ActivityGroup getActivityGroup = activityGroupService.get(groupId);
+
+        // Then
+        verify(activityGroupRepository).findById(groupId);
+        assertEquals(group.get(), getActivityGroup);
     }
 
     @Test(expected = ActivityGroupNotFoundException.class)
     public void shouldNotGetTest() {
+
+        // Given
+        Long groupId = 1L;
+
+        // When
         try {
-            activityGroupService.get(1L);
-            Assert.fail("Expected an ActivityGroupNotFoundExpection to be thrown");
+            activityGroupService.get(groupId);
+            Assert.fail("Expected an ActivityGroupNotFoundException to be thrown");
         } catch (ActivityGroupNotFoundException e) {
         }
 
-        activityGroupService.get(1L);
+        // Then
+        activityGroupService.get(groupId);
     }
 
     @Test
     public void shouldDeleteTest() {
+
+        // Given
         Long groupId = 1L;
-        ActivityGroup activityGroup = new ActivityGroup(1L, "first", null, null);
+        ActivityGroup activityGroup = new ActivityGroup(groupId, "first", null, null);
         Optional<ActivityGroup> optionalGroup = Optional.of(activityGroup);
         given(activityGroupRepository.findById(groupId)).willReturn(optionalGroup);
+
+        // When
         activityGroupService.delete(groupId);
-        verify(activityGroupRepository, times(1)).delete(activityGroup);
+
+        // Then
+        verify(activityGroupRepository).findById(groupId);
+        verify(activityGroupRepository).delete(activityGroup);
     }
 
     @Test(expected = ActivityGroupNotFoundException.class)
     public void shouldNotDeleteTest() {
+
+        // Given
         Long groupId = 1L;
+
+        // When
         try {
             activityGroupService.delete(groupId);
-            Assert.fail("Expected an ActivityGroupNotFoundExpection to be thrown");
+            Assert.fail("Expected an ActivityGroupNotFoundException to be thrown");
         } catch (ActivityGroupNotFoundException e) {
         }
+
+        // Then
         activityGroupService.delete(groupId);
     }
 
     @Test
     public void shouldIsActivityGroupExistTest() {
-        given(activityGroupRepository.existsById(1L)).willReturn(Boolean.TRUE);
-        assertTrue(activityGroupService.isActivityGroupExist(1L));
+
+        // Given
+        Long groupId = 1L;
+        given(activityGroupRepository.existsById(groupId)).willReturn(Boolean.TRUE);
+
+        // When
+        Boolean isExist = activityGroupService.isActivityGroupExist(groupId);
+
+        // Then
+        assertTrue(isExist);
     }
 
     @Test
     public void shouldNotIsActivityGroupExistTest() {
-        given(activityGroupRepository.existsById(1L)).willReturn(Boolean.FALSE);
-        assertFalse(activityGroupService.isActivityGroupExist(1L));
+
+        // Given
+        Long groupId = 1L;
+        given(activityGroupRepository.existsById(groupId)).willReturn(Boolean.FALSE);
+
+        // When
+        Boolean isExist = activityGroupService.isActivityGroupExist(groupId);
+
+        // Then
+        assertFalse(isExist);
     }
 
     @Test
     public void shouldUpdateTest() {
+
+        // Given
         Long groupId = 1L;
-        ActivityGroup oldActivityGroup = new ActivityGroup(1L, "first", null, null);
-        ActivityGroup newActivityGroup = new ActivityGroup(1L, "second", null, null);
-        Optional<ActivityGroup> optionalGroup = Optional.of(oldActivityGroup);
-        given(activityGroupRepository.findById(groupId)).willReturn(optionalGroup);
+        ActivityGroup oldActivityGroup = new ActivityGroup(groupId, "first", null, null);
+        ActivityGroup newActivityGroup = new ActivityGroup(groupId, "second", null, null);
+        given(activityGroupRepository.findById(groupId)).willReturn(Optional.of(oldActivityGroup));
         given(activityGroupRepository.save(oldActivityGroup)).willReturn(newActivityGroup);
-        ActivityGroup updated = activityGroupService.update(groupId, oldActivityGroup);
-        assertEquals(newActivityGroup, updated);
+
+        // When
+        ActivityGroup updatedActivityGroup = activityGroupService.update(groupId, oldActivityGroup);
+
+        // Then
+        verify(activityGroupRepository).findById(groupId);
+        verify(activityGroupRepository).save(oldActivityGroup);
+        assertEquals(newActivityGroup, updatedActivityGroup);
     }
 
     @Test(expected = ActivityGroupNotFoundException.class)
     public void shouldNotUpdateTest() {
+
+        // Given
         Long groupId = 1L;
-        ActivityGroup oldActivityGroup = new ActivityGroup(1L, "first", null, null);
+        ActivityGroup oldActivityGroup = new ActivityGroup(groupId, "first", null, null);
+
+        // When
         try {
             activityGroupService.update(groupId, oldActivityGroup);
-            Assert.fail("Expected an ActivityGroupNotFoundExpection to be thrown");
+            Assert.fail("Expected an ActivityGroupNotFoundException to be thrown");
         } catch (ActivityGroupNotFoundException e) {
         }
-        activityGroupService.update(groupId, oldActivityGroup);
-    }
 
-    private List<ActivityGroup> prepareMockData() {
-        return Stream.of(new ActivityGroup(1L, "first", null, null), new ActivityGroup(2L, "second", null, null))
-                .collect(Collectors.toList());
+        // Then
+        activityGroupService.update(groupId, oldActivityGroup);
     }
 }
