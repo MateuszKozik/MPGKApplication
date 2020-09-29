@@ -12,12 +12,14 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "roles")
 public class Role {
 
@@ -32,4 +34,9 @@ public class Role {
     @JsonIgnore
     @ManyToMany(mappedBy = "role")
     private List<User> users;
+
+    public Role(String name, List<User> users){
+        this.name = name;
+        this.users = users;
+    }
 }
