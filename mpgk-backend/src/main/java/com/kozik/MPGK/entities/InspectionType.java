@@ -13,12 +13,14 @@ import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "inspection_types")
 public class InspectionType {
 
@@ -34,4 +36,9 @@ public class InspectionType {
     @OneToMany(mappedBy = "inspectionType")
     @JsonIgnore
     private List<Connection> connections;
+
+    public InspectionType(String name, List<Connection> connections){
+        this.name = name;
+        this.connections = connections;
+    }
 }
