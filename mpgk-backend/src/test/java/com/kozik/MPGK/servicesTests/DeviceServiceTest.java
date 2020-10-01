@@ -181,10 +181,10 @@ public class DeviceServiceTest {
         Device oldDevice = new Device(deviceId, "device", true, null);
         Device newDevice = new Device(deviceId, "updated device", true, null);
         given(deviceRepository.findById(deviceId)).willReturn(Optional.of(oldDevice));
-        given(deviceRepository.save(oldDevice)).willReturn(newDevice);
+        given(deviceRepository.save(oldDevice)).willReturn(oldDevice);
 
         // When
-        Device updatedDevice = deviceService.update(deviceId, oldDevice);
+        Device updatedDevice = deviceService.update(deviceId, newDevice);
 
         // Then
         verify(deviceRepository).findById(deviceId);
