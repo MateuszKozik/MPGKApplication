@@ -61,4 +61,14 @@ public class Connection {
             @JoinColumn(name = "connection_id", referencedColumnName = "connection_id") }, inverseJoinColumns = {
                     @JoinColumn(name = "person_id", referencedColumnName = "person_id") })
     private List<Person> persons;
+
+    public Connection(String name, Boolean status, Device device, InspectionType inspectionType,
+            List<ActivityGroup> activitiesGroups, List<Person> persons) {
+        this.name = name;
+        this.status = status;
+        this.device = device;
+        this.inspectionType = inspectionType;
+        this.activitiesGroups = activitiesGroups;
+        this.persons = persons;
+    }
 }
