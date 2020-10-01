@@ -195,10 +195,10 @@ public class ActivityServiceTest {
         Activity oldActivity = new Activity(activityId, "name", "type", "emsr", "setting", "list", null, null);
         Activity newActivity = new Activity(activityId, "name2", "type2", "emsr2", "setting2", "list2", null, null);
         given(activityRepository.findById(activityId)).willReturn(Optional.of(oldActivity));
-        given(activityRepository.save(oldActivity)).willReturn(newActivity);
+        given(activityRepository.save(oldActivity)).willReturn(oldActivity);
 
         // When
-        Activity updatedActivity = activityService.update(activityId, oldActivity);
+        Activity updatedActivity = activityService.update(activityId, newActivity);
 
         // Then
         verify(activityRepository).findById(activityId);
