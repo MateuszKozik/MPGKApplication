@@ -29,10 +29,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
 @Entity
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "users")
 public class User implements UserDetails {
 
@@ -100,6 +102,15 @@ public class User implements UserDetails {
             authorities.add(new SimpleGrantedAuthority("ROLE_" + item.getName()));
         });
         return authorities;
+    }
+
+    public User(String username, String password, String confirmPassword, Boolean enabled, List<Role> role, Person person){
+        this.username = username;
+        this.password = password;
+        this.confirmPassword = confirmPassword;
+        this.enabled = enabled;
+        this.role = role;
+        this.person = person;
     }
 
 }
