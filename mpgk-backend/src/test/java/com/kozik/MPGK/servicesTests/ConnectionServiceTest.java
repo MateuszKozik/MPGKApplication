@@ -146,7 +146,7 @@ public class ConnectionServiceTest {
     }
 
     @Test
-    public void shouldDeleteTes() {
+    public void shouldDeleteTest() {
 
         // Given
         Long connectionId = 1L;
