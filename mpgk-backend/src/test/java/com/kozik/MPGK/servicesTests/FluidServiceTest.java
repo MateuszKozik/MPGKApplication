@@ -183,10 +183,10 @@ public class FluidServiceTest {
         Fluid oldFluid = new Fluid(fluidId, "fluid", null);
         Fluid newFluid = new Fluid(fluidId, "updated fluid", null);
         given(fluidRepository.findById(fluidId)).willReturn(Optional.of(oldFluid));
-        given(fluidRepository.save(oldFluid)).willReturn(newFluid);
+        given(fluidRepository.save(oldFluid)).willReturn(oldFluid);
 
         // When
-        Fluid updatedFluid = fluidService.update(fluidId, oldFluid);
+        Fluid updatedFluid = fluidService.update(fluidId, newFluid);
 
         // Then
         verify(fluidRepository).findById(fluidId);
