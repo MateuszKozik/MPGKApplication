@@ -185,10 +185,10 @@ public class ActivityGroupServiceTest {
         ActivityGroup oldActivityGroup = new ActivityGroup(groupId, "first", null, null);
         ActivityGroup newActivityGroup = new ActivityGroup(groupId, "second", null, null);
         given(activityGroupRepository.findById(groupId)).willReturn(Optional.of(oldActivityGroup));
-        given(activityGroupRepository.save(oldActivityGroup)).willReturn(newActivityGroup);
+        given(activityGroupRepository.save(oldActivityGroup)).willReturn(oldActivityGroup);
 
         // When
-        ActivityGroup updatedActivityGroup = activityGroupService.update(groupId, oldActivityGroup);
+        ActivityGroup updatedActivityGroup = activityGroupService.update(groupId, newActivityGroup);
 
         // Then
         verify(activityGroupRepository).findById(groupId);
