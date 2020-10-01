@@ -182,10 +182,10 @@ public class FluidPlaceServiceTest {
         FluidPlace oldFluidPlace = new FluidPlace(placeId, "fluid place", null);
         FluidPlace newFluidPlace = new FluidPlace(placeId, "updated fluid place", null);
         given(fluidPlaceRepository.findById(placeId)).willReturn(Optional.of(oldFluidPlace));
-        given(fluidPlaceRepository.save(oldFluidPlace)).willReturn(newFluidPlace);
+        given(fluidPlaceRepository.save(oldFluidPlace)).willReturn(oldFluidPlace);
 
         // When
-        FluidPlace updatedFluidPlace = fluidPlaceService.update(placeId, oldFluidPlace);
+        FluidPlace updatedFluidPlace = fluidPlaceService.update(placeId, newFluidPlace);
 
         // Then
         verify(fluidPlaceRepository).findById(placeId);
