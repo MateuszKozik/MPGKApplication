@@ -181,10 +181,10 @@ public class InspectionTypeServiceTest {
         InspectionType oldInspectionType = new InspectionType(typeId, "first", null);
         InspectionType newInspectionType = new InspectionType(typeId, "second", null);
         given(inspectionTypeRepository.findById(typeId)).willReturn(Optional.of(oldInspectionType));
-        given(inspectionTypeRepository.save(oldInspectionType)).willReturn(newInspectionType);
+        given(inspectionTypeRepository.save(oldInspectionType)).willReturn(oldInspectionType);
 
         // When
-        InspectionType updatedInspectionType = inspectionTypeService.update(typeId, oldInspectionType);
+        InspectionType updatedInspectionType = inspectionTypeService.update(typeId, newInspectionType);
 
         // Then
         verify(inspectionTypeRepository).findById(typeId);
