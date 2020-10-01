@@ -21,10 +21,12 @@ import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.EqualsAndHashCode;
+import lombok.AllArgsConstructor;
 
 @Entity
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(exclude = "user")
 @Table(name = "persons")
 public class Person {
@@ -57,4 +59,13 @@ public class Person {
     @OneToMany(mappedBy = "person")
     @JsonIgnore
     private List<FluidRegistry> fluidRegistries;
+
+    public Person(String name, String surname, User user, List<Connection> connections, List<Inspection> inspections, List<FluidRegistry> fluidRegistries){
+        this.name = name;
+        this.surname = surname;
+        this.user = user;
+        this.connections = connections;
+        this.inspections = inspections;
+        this.fluidRegistries = fluidRegistries;
+    }
 }
