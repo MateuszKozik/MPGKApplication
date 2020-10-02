@@ -1,5 +1,6 @@
 package com.kozik.MPGK.servicesTests;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -40,6 +41,9 @@ public class FluidRegistryServiceTest {
     @InjectMocks
     FluidRegistryService fluidRegistryService;
 
+    @Mock
+    Principal principal;
+
     @Test
     public void shouldListAllTest() {
 
@@ -55,6 +59,40 @@ public class FluidRegistryServiceTest {
 
         // Then
         assertEquals(2, size);
+    }
+
+    @Test
+    public void shouldSaveTest() {
+
+        // Given
+        Person person = new Person(1L, "Name", "Surname", null, null, null, null);
+        FluidRegistry fluidRegistry = new FluidRegistry(10L, LocalDateTime.now(), null, null, null);
+        given(fluidRegistryRepository.save(fluidRegistry)).willReturn(fluidRegistry);
+        given(principal.getName()).willReturn("test");
+        given(personService.getByUsername("test")).willReturn(person);
+
+        // When
+        FluidRegistry newFluidRegistry = fluidRegistryService.save(fluidRegistry, principal);
+
+        // Then
+        assertEquals(fluidRegistry, newFluidRegistry);
+    }
+
+    @Test(expected = FluidRegistryAlreadyExistException.class)
+    public void shouldNotSaveTest() {
+
+        // Given
+        given(principal.getName()).willReturn("test");
+        FluidRegistry fluidRegistry = new FluidRegistry(1L, 10L, LocalDateTime.now(), null, null, null);
+
+        // When
+        try {
+            fluidRegistryService.save(fluidRegistry, principal);
+            fail("Expected an FluidRegistryAlreadyExistException to be thrown");
+        } catch (FluidRegistryAlreadyExistException e) {
+        }
+
+        fluidRegistryService.save(fluidRegistry, principal);
     }
 
     @Test
