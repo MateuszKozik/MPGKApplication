@@ -13,12 +13,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "fluid_registries")
 public class FluidRegistry {
 
@@ -31,7 +33,7 @@ public class FluidRegistry {
     @Column(name = "quantity", nullable = false)
     private Long quantity;
 
-    //@NotNull(message = "Data dolania płynu jest wymagana")
+    // @NotNull(message = "Data dolania płynu jest wymagana")
     @Column(name = "datetime", nullable = false)
     private LocalDateTime datetime;
 
@@ -58,5 +60,13 @@ public class FluidRegistry {
     public void setDatetime(String datetime) {
         LocalDateTime formatted = LocalDateTime.parse(datetime, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
         this.datetime = formatted;
+    }
+
+    public FluidRegistry(Long quantity, LocalDateTime dateTime, Fluid fluid, Person person, FluidPlace fluidPlace) {
+        this.quantity = quantity;
+        this.datetime = dateTime;
+        this.fluid = fluid;
+        this.person = person;
+        this.fluidPlace = fluidPlace;
     }
 }
