@@ -135,7 +135,7 @@ export class Inspections extends Component {
 									</Grid>
 									<Grid item xs={3}>
 										<Button type="submit" color="primary">
-											Dalej
+											Zapisz
 										</Button>
 									</Grid>
 									<Grid item xs={3} />
