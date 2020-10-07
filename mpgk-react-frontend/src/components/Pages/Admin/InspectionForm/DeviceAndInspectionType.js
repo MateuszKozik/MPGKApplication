@@ -197,12 +197,12 @@ class DeviceAndInpectionType extends Component {
 								<Typography>
 									<b>Raz w roku - </b>
 									System wyświetli przegląd trzy miesiące przed upływem jednego
-									roku do daty wykonania poprzedniego przeglądu rocznego
+									roku od daty wykonania poprzedniego przeglądu rocznego
 								</Typography>
 								<Typography>
 									<b>Na żądanie - </b>
 									Przegląd zawsze widoczny w oknie głównym, ale aktywowany tylko
-									na żądanie operatora. Aktywny prez 2 miesiące od rozpoczęcia
+									na żądanie operatora. Aktywny przez 2 miesiące od rozpoczęcia
 								</Typography>
 							</Paper>
 						</Popover>
