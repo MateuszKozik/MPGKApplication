@@ -318,14 +318,14 @@ class Home extends Component {
 								</Typography>
 							</Grid>
 							<Grid item xs={12} md={6}>
-								<Button color="primary" variant="contained">
-									<Link
-										style={{ textDecoration: "none", color: "#fff" }}
-										to="/performers-list"
-									>
+								<Link
+									style={{ textDecoration: "none", color: "#fff" }}
+									to="/performers-list"
+								>
+									<Button color="primary" variant="contained">
 										Wyświetl
-									</Link>
-								</Button>
+									</Button>
+								</Link>
 							</Grid>
 						</Grid>
 					</Grid>
@@ -340,14 +340,14 @@ class Home extends Component {
 								</Typography>
 							</Grid>
 							<Grid item xs={12} md={6}>
-								<Button color="primary" variant="contained">
-									<Link
-										style={{ textDecoration: "none", color: "#fff" }}
-										to="/nitrogen-list"
-									>
+								<Link
+									style={{ textDecoration: "none", color: "#fff" }}
+									to="/nitrogen-list"
+								>
+									<Button color="primary" variant="contained">
 										Wyświetl
-									</Link>
-								</Button>
+									</Button>
+								</Link>
 							</Grid>
 						</Grid>
 					</Grid>
@@ -364,14 +364,14 @@ class Home extends Component {
 								</Typography>
 							</Grid>
 							<Grid item xs={12} md={6}>
-								<Button color="primary" variant="contained">
-									<Link
-										style={{ textDecoration: "none", color: "#fff" }}
-										to="/new-fluid-registry"
-									>
+								<Link
+									style={{ textDecoration: "none", color: "#fff" }}
+									to="/new-fluid-registry"
+								>
+									<Button color="primary" variant="contained">
 										Wyświetl
-									</Link>
-								</Button>
+									</Button>
+								</Link>
 							</Grid>
 						</Grid>
 					</Grid>
@@ -385,14 +385,14 @@ class Home extends Component {
 					<Grid item xs={8}>
 						<Grid container>
 							<Grid item xs={12}>
-								<Button color="primary" variant="contained">
-									<Link
-										style={{ textDecoration: "none", color: "#fff" }}
-										to="/inspections"
-									>
+								<Link
+									style={{ textDecoration: "none", color: "#fff" }}
+									to="/inspections"
+								>
+									<Button color="primary" variant="contained">
 										Wyszukiwarka przeglądów
-									</Link>
-								</Button>
+									</Button>
+								</Link>
 							</Grid>
 						</Grid>
 					</Grid>
