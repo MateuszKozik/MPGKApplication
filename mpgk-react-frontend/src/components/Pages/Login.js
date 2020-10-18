@@ -46,7 +46,7 @@ export class Login extends Component {
 				<Grid container spacing={2}>
 					<Grid item xs={12}>
 						<img
-							src="logo.jpg"
+							src="logo.png"
 							alt="logo"
 							style={{
 								maxWidth: "100%"
@@ -54,15 +54,11 @@ export class Login extends Component {
 						/>
 					</Grid>
 					<Grid item xs={12}>
-						<Typography variant="h3" className={classes.title}>
-							Oddział Energetyki Cieplnej
+						<Typography variant="h2">
+							Logowanie
 						</Typography>
 					</Grid>
-					<Grid item xs={12}>
-						<Typography variant="h4" className={classes.title}>
-							Przeglądy okresowe
-						</Typography>
-					</Grid>
+					
 					<Grid item xs={12} style={{ marginTop: 15 }}>
 						<Grid container>
 							<Grid item xs={false} md={4} />
