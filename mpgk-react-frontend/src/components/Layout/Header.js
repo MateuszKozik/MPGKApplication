@@ -105,7 +105,7 @@ const Header = (props) => {
 					to="/"
 					className={classes.title}
 				>
-					<Typography variant="h6">MPGK</Typography>
+					<Typography variant="h6">SOIUM</Typography>
 				</Link>
 				{isMobile ? (
 					<>
@@ -148,7 +148,7 @@ const Header = (props) => {
 					to="/"
 					className={classes.title}
 				>
-					<Typography variant="h6">MPGK</Typography>
+					<Typography variant="h6">SOIUM</Typography>
 				</Link>
 				{isMobile ? (
 					<>
