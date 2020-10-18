@@ -101,11 +101,16 @@ const Header = (props) => {
 		<AppBar position="static">
 			<Toolbar>
 				<Link
-					style={{ textDecoration: "none", color: "#fff" }}
 					to="/"
 					className={classes.title}
 				>
-					<Typography variant="h6">SOIUM</Typography>
+					<img
+							src="logo_nav.png"
+							alt="logo_nav"
+							style={{
+								verticalAlign: "inherit"
+							}}
+						/>
 				</Link>
 				{isMobile ? (
 					<>
@@ -144,11 +149,17 @@ const Header = (props) => {
 		<AppBar position="static">
 			<Toolbar>
 				<Link
-					style={{ textDecoration: "none", color: "#fff", marginRight: 20 }}
+					style={{ marginRight: 20 }}
 					to="/"
 					className={classes.title}
 				>
-					<Typography variant="h6">SOIUM</Typography>
+					<img
+							src="logo_nav.png"
+							alt="logo_nav"
+							style={{
+								verticalAlign: "inherit"
+							}}
+						/>
 				</Link>
 				{isMobile ? (
 					<>
