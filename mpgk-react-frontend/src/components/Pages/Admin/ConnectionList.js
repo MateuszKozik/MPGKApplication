@@ -242,6 +242,12 @@ export class ConnectionList extends Component {
 				.toLowerCase()
 				.includes(this.state.search.toLowerCase());
 		});
+		const actualStatus = filtered.filter(
+			(connections) => connections.status === true
+		);
+		const outdatedStatus = filtered.filter(
+			(connections) => connections.status === false
+		);
 		return (
 			<>
 				<Grid container className={classes.container}>
@@ -284,8 +290,69 @@ export class ConnectionList extends Component {
 									</TableRow>
 								</TableHead>
 								<TableBody>
-									{filtered &&
-										filtered.map((connection) => {
+									{actualStatus &&
+										actualStatus.map((connection) => {
+											const { inspectionType } = connection;
+											return (
+												<TableRow key={connection.connectionId}>
+													<TableCell>
+														<Typography>
+															<Link
+																style={{
+																	color: "#000",
+																	textDecoration: "none"
+																}}
+																to={`/inspections/list/${connection.connectionId}/activity`}
+															>
+																{connection.name}
+															</Link>
+														</Typography>
+													</TableCell>
+													<TableCell>
+														<Typography align="center">
+															{connection.status === true
+																? "Aktywny"
+																: "Nieaktywny"}
+														</Typography>
+													</TableCell>
+													<TableCell align="center">
+														<Tooltip title="Edytuj">
+															<IconButton
+																color="primary"
+																onClick={() => this.handleEditOpen(connection)}
+															>
+																<EditIcon />
+															</IconButton>
+														</Tooltip>
+														<Tooltip title="Dodaj pracowników">
+															<IconButton
+																onClick={() =>
+																	this.handleEditEmployeesOpen(connection)
+																}
+															>
+																<GroupAddIcon />
+															</IconButton>
+														</Tooltip>
+														{inspectionType.name &&
+														connection.status !== false &&
+														inspectionType.name !== "Na żądanie" ? (
+															<Tooltip title="Wygeneruj przegląd">
+																<IconButton
+																	color="inherit"
+																	onClick={() =>
+																		this.createInspections(connection)
+																	}
+																>
+																	<FormatListBulletedIcon />
+																</IconButton>
+															</Tooltip>
+														) : null}
+													</TableCell>
+												</TableRow>
+											);
+										})}
+										{outdatedStatus &&
+										outdatedStatus.map((connection) => {
 											const { inspectionType } = connection;
 											return (
 												<TableRow key={connection.connectionId}>
