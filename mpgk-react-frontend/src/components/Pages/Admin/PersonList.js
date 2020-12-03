@@ -229,6 +229,12 @@ class PersonList extends Component {
 				person.surname.toLowerCase().includes(this.state.search.toLowerCase())
 			);
 		});
+		const actualStatus = filtered.filter(
+			(persons) => persons.user.enabled === true
+		);
+		const outdatedStatus = filtered.filter(
+			(persons) => persons.user.enabled === false
+		);
 
 		return (
 			<>
@@ -275,8 +281,61 @@ class PersonList extends Component {
 									</TableRow>
 								</TableHead>
 								<TableBody>
-									{filtered &&
-										filtered.map((person) => {
+									{actualStatus &&
+										actualStatus.map((person) => {
+											return (
+												<TableRow key={person.personId}>
+													<TableCell>
+														<Typography>
+															{person.name + " " + person.surname}
+														</Typography>
+													</TableCell>
+													<TableCell align="center">
+														{person.user &&
+															person.user.role &&
+															person.user.role.map((role, index) => (
+																<Typography key={index}>
+																	{role.name && role.name.toLowerCase()}
+																</Typography>
+															))}
+													</TableCell>
+													<TableCell align="center">
+														<Typography>
+															<b>Login: </b>
+															{person.user && person.user.username}
+														</Typography>
+														<Typography>
+															<b>Status: </b>
+															{person.user && person.user.enabled
+																? " Aktywne"
+																: " Wyłączone"}
+														</Typography>
+													</TableCell>
+													<TableCell align="center">
+														<Tooltip title="Edytuj">
+															<IconButton
+																color="primary"
+																onClick={() => this.handleEditOpen(person)}
+															>
+																<EditIcon />
+															</IconButton>
+														</Tooltip>
+
+														<Tooltip title="Zmień hasło">
+															<IconButton
+																onClick={() =>
+																	this.handleEditPasswordOpen(person)
+																}
+															>
+																<LockIcon color="error" />
+															</IconButton>
+														</Tooltip>
+													</TableCell>
+												</TableRow>
+											);
+										})}
+										{outdatedStatus &&
+										outdatedStatus.map((person) => {
 											return (
 												<TableRow key={person.personId}>
 													<TableCell>
