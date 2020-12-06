@@ -7,7 +7,7 @@ import {
 	GET_CONNECTION
 } from "./types";
 import isUserLogin from "../securityUtils/isUserLogin";
-import {hostName} from "./host";
+import { hostName } from "./host";
 
 export const addActivity = (activity) => async (dispatch) => {
 	try {
@@ -68,17 +68,19 @@ export const updateActivity = (activityId, updatedActivity) => async (
 	}
 };
 
-
 export const getActivitiesByConnection = (connectionId, history) => async (
 	dispach
 ) => {
 	try {
 		if (isUserLogin()) {
-			const res = await axios.get(`${hostName}/api/activities/list/${connectionId}`);
+			const res = await axios.get(
+				`${hostName}/api/activities/list/${connectionId}`
+			);
 			dispach({
 				type: GET_CONNECTION,
 				payload: res.data
 			});
+			return res;
 		}
 	} catch (error) {
 		history.push("/");

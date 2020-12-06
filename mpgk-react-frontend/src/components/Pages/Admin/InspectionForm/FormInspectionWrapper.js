@@ -11,6 +11,8 @@ import Employees from "./Employees";
 import { clearDeviceState } from "../../../../actions/deviceActions";
 import { clearPersonState } from "../../../../actions/personActions";
 import { clearInspectionTypeState } from "../../../../actions/inspectionTypeActions";
+import { clearConnectionState } from "../../../../actions/connectionActions";
+import { clearInspectionsListState } from "../../../../actions/inspectionActions";
 
 const steps = [
 	"Podaj nazwę oraz status przeglądu",
@@ -48,6 +50,8 @@ class FormInspectionWrapper extends Component {
 		this.props.clearDeviceState();
 		this.props.clearInspectionTypeState();
 		this.props.clearPersonState();
+		this.props.clearInspectionsListState();
+		this.props.clearConnectionState();
 	}
 
 	// Proceed to next step
@@ -155,6 +159,32 @@ class FormInspectionWrapper extends Component {
 		this.props.history.push("/connections");
 	};
 
+	// Get inspection items and set them to the state
+	setInspectionItems = (items) => {
+		let list = [];
+		items.map((item, index) => {
+			const { activityGroup, activities } = item;
+
+			list[index] = {
+				name: activityGroup.name,
+				activities: []
+			};
+			activities.map((activity, i) => {
+				const { name, type, emsr, setting, listItems } = activity;
+				list[index]["activities"][i] = {
+					name: name,
+					type: type,
+					emsr: emsr,
+					setting: setting,
+					listItems: listItems
+				};
+				return null;
+			});
+			return null;
+		});
+		this.setState({ activitiesGroups: list });
+	};
+
 	render() {
 		const { step } = this.state;
 
@@ -254,6 +284,7 @@ class FormInspectionWrapper extends Component {
 							handleAddActivityGroupClick={this.handleAddActivityGroupClick}
 							handleAddActivityClick={this.handleAddActivityClick}
 							handleHistoryPush={this.handleHistoryPush}
+							setInspectionItems={this.setInspectionItems}
 							values={values}
 						/>
 					</>
@@ -268,7 +299,9 @@ class FormInspectionWrapper extends Component {
 FormInspectionWrapper.propTypes = {
 	clearDeviceState: PropTypes.func.isRequired,
 	clearInspectionTypeState: PropTypes.func.isRequired,
-	clearPersonState: PropTypes.func.isRequired
+	clearPersonState: PropTypes.func.isRequired,
+	clearConnectionState: PropTypes.func.isRequired,
+	clearInspectionsListState: PropTypes.func.isRequired
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -281,6 +314,12 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		clearPersonState: () => {
 			dispatch(clearPersonState());
+		},
+		clearConnectionState: () => {
+			dispatch(clearConnectionState());
+		},
+		clearInspectionsListState: () => {
+			dispatch(clearInspectionsListState());
 		}
 	};
 };
