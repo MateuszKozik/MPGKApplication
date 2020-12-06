@@ -100,17 +100,14 @@ const Header = (props) => {
 	const userIsAuthenticated = (
 		<AppBar position="static">
 			<Toolbar>
-				<Link
-					to="/"
-					className={classes.title}
-				>
+				<Link to="/" className={classes.title}>
 					<img
-							src="logo_nav.png"
-							alt="logo_nav"
-							style={{
-								verticalAlign: "inherit"
-							}}
-						/>
+						src={"/logo.png"}
+						alt="logo_nav"
+						style={{
+							verticalAlign: "inherit"
+						}}
+					/>
 				</Link>
 				{isMobile ? (
 					<>
@@ -148,18 +145,14 @@ const Header = (props) => {
 	const adminIsAuthenticated = (
 		<AppBar position="static">
 			<Toolbar>
-				<Link
-					style={{ marginRight: 20 }}
-					to="/"
-					className={classes.title}
-				>
+				<Link style={{ marginRight: 20 }} to="/" className={classes.title}>
 					<img
-							src="logo_nav.png"
-							alt="logo_nav"
-							style={{
-								verticalAlign: "inherit"
-							}}
-						/>
+						src={"/logo_nav.png"}
+						alt="logo_nav"
+						style={{
+							verticalAlign: "inherit"
+						}}
+					/>
 				</Link>
 				{isMobile ? (
 					<>
