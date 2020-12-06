@@ -197,7 +197,7 @@ class Row extends Component {
 					</Grid>
 					<Grid item xs={12} md={1}>
 						{status === "Wykonany" ? (
-							<CheckCircleIcon fontSize="large" color="primary" />
+							<CheckCircleIcon fontSize="large" style={{ color: "#16a307" }} />
 						) : status === "Nowy" ? (
 							<CancelIcon fontSize="large" color="primary" />
 						) : (

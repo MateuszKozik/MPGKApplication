@@ -112,7 +112,7 @@ class Home extends Component {
 																	periodic.active ? (
 																		<CheckCircleIcon
 																			fontSize="large"
-																			color="primary"
+																			style={{ color: "#16a307" }}
 																		/>
 																	) : (
 																		periodic.active && (
@@ -240,7 +240,7 @@ class Home extends Component {
 																	onDemand.active ? (
 																		<CheckCircleIcon
 																			fontSize="large"
-																			color="primary"
+																			style={{ color: "#16a307" }}
 																		/>
 																	) : (
 																		onDemand.active && (

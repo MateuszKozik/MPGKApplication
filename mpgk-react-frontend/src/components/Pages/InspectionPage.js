@@ -100,7 +100,7 @@ class InspectionPage extends Component {
 														{inspection.inspectionStatus === "Wykonany" ? (
 															<CheckCircleIcon
 																fontSize="large"
-																color="primary"
+																style={{ color: "#16a307" }}
 															/>
 														) : (
 															<CancelIcon fontSize="large" color="primary" />
