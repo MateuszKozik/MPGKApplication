@@ -102,8 +102,8 @@ const Header = (props) => {
 			<Toolbar>
 				<Link to="/" className={classes.title}>
 					<img
-						src={"/logo.png"}
-						alt="logo_nav"
+						src={"/logo_nav.png"}
+						alt="logo"
 						style={{
 							verticalAlign: "inherit"
 						}}
