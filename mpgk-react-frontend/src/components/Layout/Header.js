@@ -13,6 +13,7 @@ import Menu from "@material-ui/core/Menu";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { withRouter, Link } from "react-router-dom";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import HomeIcon from '@material-ui/icons/Home';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -100,6 +101,14 @@ const Header = (props) => {
 	const userIsAuthenticated = (
 		<AppBar position="static">
 			<Toolbar>
+			<Link style={{ marginRight: 15 }} to="/" >
+					<HomeIcon 	
+						style={{
+							verticalAlign: "inherit",
+							color: "white"
+						}}
+					/>
+				</Link>
 				<Link to="/" className={classes.title}>
 					<img
 						src={"/logo_nav.png"}
@@ -145,6 +154,14 @@ const Header = (props) => {
 	const adminIsAuthenticated = (
 		<AppBar position="static">
 			<Toolbar>
+			<Link style={{ marginRight: 15 }}  to="/" >
+					<HomeIcon 	
+						style={{
+							verticalAlign: "inherit",
+							color: "white"
+						}}
+					/>
+				</Link>
 				<Link style={{ marginRight: 20 }} to="/" className={classes.title}>
 					<img
 						src={"/logo_nav.png"}
@@ -154,6 +171,7 @@ const Header = (props) => {
 						}}
 					/>
 				</Link>
+				
 				{isMobile ? (
 					<>
 						<IconButton
