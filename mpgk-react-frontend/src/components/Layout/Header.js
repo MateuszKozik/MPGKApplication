@@ -101,20 +101,21 @@ const Header = (props) => {
 	const userIsAuthenticated = (
 		<AppBar position="static">
 			<Toolbar>
-			<Link style={{ marginRight: 15 }} to="/" >
-					<HomeIcon 	
+			<Link style={{ marginRight: 20 }} to="/" >
+					<img
+						src={"/logo_nav.png"}
+						alt="logo_nav"
+						style={{
+							verticalAlign: "inherit"
+						}}
+					/>
+			</Link>
+			<Link style={{ marginRight: 15 }}  to="/" className={classes.title}>
+					<HomeIcon 
+						fontSize="large"	
 						style={{
 							verticalAlign: "inherit",
 							color: "white"
-						}}
-					/>
-				</Link>
-				<Link to="/" className={classes.title}>
-					<img
-						src={"/logo_nav.png"}
-						alt="logo"
-						style={{
-							verticalAlign: "inherit"
 						}}
 					/>
 				</Link>
@@ -154,15 +155,7 @@ const Header = (props) => {
 	const adminIsAuthenticated = (
 		<AppBar position="static">
 			<Toolbar>
-			<Link style={{ marginRight: 15 }}  to="/" >
-					<HomeIcon 	
-						style={{
-							verticalAlign: "inherit",
-							color: "white"
-						}}
-					/>
-				</Link>
-				<Link style={{ marginRight: 20 }} to="/" className={classes.title}>
+			<Link style={{ marginRight: 20 }} to="/" >
 					<img
 						src={"/logo_nav.png"}
 						alt="logo_nav"
@@ -170,8 +163,16 @@ const Header = (props) => {
 							verticalAlign: "inherit"
 						}}
 					/>
+			</Link>
+			<Link style={{ marginRight: 15 }}  to="/" className={classes.title}>
+					<HomeIcon 
+						fontSize="large"	
+						style={{
+							verticalAlign: "inherit",
+							color: "white"
+						}}
+					/>
 				</Link>
-				
 				{isMobile ? (
 					<>
 						<IconButton
