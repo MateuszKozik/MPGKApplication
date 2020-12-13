@@ -49,13 +49,18 @@ export class Login extends Component {
 							src="logo.png"
 							alt="logo"
 							style={{
-								maxWidth: "100%"
+								maxWidth: "100%",
+								marginBottom: "20px"
 							}}
 						/>
 					</Grid>
+					
 					<Grid item xs={12}>
-						<Typography variant="h2">
-							Logowanie
+						<Typography variant="h5">
+							MPGK Krosno - Oddział Energetyki Cieplnej
+						</Typography>
+						<Typography variant="h5">
+							Przeglądy okresowe
 						</Typography>
 					</Grid>
 					
