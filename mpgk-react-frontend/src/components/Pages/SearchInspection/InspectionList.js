@@ -12,6 +12,7 @@ import {
 } from "../../../actions/inspectionActions";
 import { Button, Grid, Typography } from "@material-ui/core";
 import { generateInspectionReport } from "../../../actions/pdfGeneratorActions";
+import { Link } from "react-router-dom";
 
 class InspectionList extends Component {
 	componentDidMount() {
@@ -24,6 +25,8 @@ class InspectionList extends Component {
 			endTime,
 			this.props.history
 		);
+
+		this.setState(this.props.history.location.state);
 	}
 
 	componentWillUnmount() {
@@ -44,6 +47,30 @@ class InspectionList extends Component {
 						style={{ textAlign: "left" }}
 					>
 						<Grid item xs={12}>
+							<Button
+								variant="contained"
+								color="primary"
+								style={{ padding: 0 }}
+								onClick={() => {
+									this.props.history.location.state = this.state;
+								}}
+							>
+								<Link
+									style={{
+										color: "#fff",
+										textDecoration: "none",
+										paddingTop: 6,
+										paddingBottom: 6,
+										paddingLeft: 16,
+										paddingRight: 16
+									}}
+									to={"/inspections"}
+								>
+									Powrót
+								</Link>
+							</Button>
+						</Grid>
+						<Grid item xs={12} style={{ marginTop: 20 }}>
 							<Button
 								variant="contained"
 								color="primary"

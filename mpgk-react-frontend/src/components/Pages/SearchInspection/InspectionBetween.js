@@ -69,6 +69,12 @@ class InspectionBetween extends Component {
 		this.props.getConnections();
 		this.props.getDevices();
 		this.props.getPersons();
+
+		if (this.props.history.location.state) {
+			this.setState(this.props.history.location.state, () =>
+				this.handleSubmit()
+			);
+		}
 	}
 
 	deleteConnections = (inspection) => {
@@ -372,15 +378,27 @@ class InspectionBetween extends Component {
 												<TableCell>
 													<Typography>
 														{inspection.connection && (
-															<Link
-																style={{
-																	color: "#000",
-																	textDecoration: "none"
-																}}
-																to={`/inspections/list/${inspection.connection.connectionId}/${inspection.startTime}/to/${inspection.endTime}/show`}
+															<Button
+																style={{ padding: 0 }}
+																onClick={() =>
+																	(this.props.history.location.state = this.state)
+																}
 															>
-																{inspection.connection.name}
-															</Link>
+																<Link
+																	style={{
+																		color: "#000",
+																		textDecoration: "none",
+																		fontWeight: 400,
+																		paddingTop: 6,
+																		paddingBottom: 6,
+																		paddingLeft: 8,
+																		paddingRight: 8
+																	}}
+																	to={`/inspections/list/${inspection.connection.connectionId}/${inspection.startTime}/to/${inspection.endTime}/show`}
+																>
+																	{inspection.connection.name}
+																</Link>
+															</Button>
 														)}
 													</Typography>
 												</TableCell>
