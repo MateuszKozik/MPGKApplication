@@ -12,6 +12,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>MPGK</name>
 	<description>MPGK Application</description>
+	<packaging>jar</packaging>
 
 	<properties>
 		<java.version>11</java.version>
