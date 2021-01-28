@@ -87,7 +87,7 @@ public class InspectionController {
 
     // Update overdue inspection
     @ApiOperation(value = "Update overdue inspection with role 'KIEROWNIK'")
-    @PreAuthorize("hasRole('KIEROWNIK')")
+    @PreAuthorize("hasRole('KIEROWNIK') or hasRole('ADMIN')")
     @PutMapping("/overdue/{inspectionId}")
     public ResponseEntity<?> updateOverdueInspection(
             @ApiParam(value = "Id that need to be updated", example = "123") @PathVariable Long inspectionId,
